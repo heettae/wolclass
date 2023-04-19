@@ -21,11 +21,20 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 		<!-- adminlte -->
-	    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	    <link href="/resources/adminlte_bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	    <link href="/resources/adminlte_dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	    <link href="/resources/adminlte_dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/morris.js/morris.css">
+		<link rel="stylesheet" href="/resources/adminlte/bower_components/jvectormap/jquery-jvectormap.css">
+		<link rel="stylesheet" href="/resources/adminlte/dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/dist/css/skins/skin-blue.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="/resources/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+		<!-- Google Font -->
+		<link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<!-- adminlte -->
 
         <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
@@ -64,7 +73,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
-
+ <div class="search-form wow pulse animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: pulse;">
                             <form action="" class=" form-inline">
                                 <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
 
@@ -73,8 +82,9 @@
                                 </div>
                                 <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding-right: 30px">
-                       			  <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('register.html')" data-wow-delay="0.4s">Login</button>
-                      			  <button class="navbar-btn nav-button wow fadeInRight" onclick=" window.open('submit-property.html')" data-wow-delay="0.5s">Submit</button>
+                       			  <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('register.html')" data-wow-delay="0.4s">클래스 등록</button>
+                       			  <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('register.html')" data-wow-delay="0.4s">로그인</button>
+                      			  <button class="navbar-btn nav-button wow fadeInRight" onclick=" window.open('submit-property.html')" data-wow-delay="0.5s">회원가입</button>
                   			    </div>
                                 <div style="display: none;" class="search-toggle">
 
@@ -82,7 +92,16 @@
 
                                         <div class="form-group mar-r-20">
                                             <label for="price-range">Price range ($):</label>
-                                            <div class="sliderrange slider slider-horizontal" style="width: 100px;"><div class="slider-track"><div class="slider-selection" style="left: 0%; width: 75%;"></div><div class="slider-handle round left-round" style="left: 0%;"></div><div class="slider-handle round" style="left: 75%;"></div></div><div class="tooltip top" style="top: -14px; left: 0px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">0 : 450</div></div><input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[0,450]" id="price-range" style=""></div><br>
+                                            <div class="sliderrange slider slider-horizontal" style="width: 100px;">
+                                            <div class="slider-track"><div class="slider-selection" style="left: 0%; width: 75%;"></div>
+                                            <div class="slider-handle round left-round" style="left: 0%;"></div>
+                                            <div class="slider-handle round" style="left: 75%;"></div></div>
+                                            <div class="tooltip top" style="top: -14px; left: 0px;">
+                                            	<div class="tooltip-arrow"></div><div class="tooltip-inner">0 : 450
+                                            	</div>
+                                            </div>
+                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[0,450]" id="price-range" style="">
+                                            </div><br>
                                             <b class="pull-left color">2000$</b> 
                                             <b class="pull-right color">100000$</b>
                                         </div>
@@ -227,8 +246,8 @@
                             </form>
                     <ul class="main-nav nav navbar-nav navbar-right">
 
-
                     </ul>
+				</div>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
