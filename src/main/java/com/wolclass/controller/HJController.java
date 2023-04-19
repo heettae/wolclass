@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HJController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HJController.class);
-	
 	@RequestMapping(value = "/main")
 	public void mainGET() {
 		logger.info(" mainGET() 호출 ");
