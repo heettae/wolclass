@@ -10,13 +10,12 @@
 		<!-- 인기검색어 출력  -->
 		<div class="col-xs-10 page-subheader sorting pl0">
 			인기 검색어<br>
-			<c:if test="${keywordList != null && keywordList.size() > 0}">
+			<c:if test="${popularSearchVOList != null && popularSearchVOList.size() > 0}">
 			<c:forEach var="vo" items="${popularSearchVOList }">
-				<a href="/hj/list?search=${keyword }">${vo.ps_text }</a>
+				<button class="btn border-btn more-black"
+				onclick="location.href='/hj/list?search=${vo.ps_text }'">${vo.ps_text }</button>
 			</c:forEach>
 			</c:if>
-				<a href="/hj/list?search=${keyword }">키워드</a>
-			테스트&nbsp;테스트테스트
 		</div>
 		<!-- 인기검색어 출력  -->
 		
@@ -276,14 +275,17 @@
 			<div class="col-md-12"> 
 			    <div class="pull-right">
 			        <div class="pagination">
-			            <ul>
-			                <li><a href="#">Prev</a></li>
-			                <li><a href="#">1</a></li>
-			                <li><a href="#">2</a></li>
-			                <li><a href="#">3</a></li>
-			                <li><a href="#">4</a></li>
-			                <li><a href="#">Next</a></li>
-			            </ul>
+						<ul>
+							<c:if test="${map.startPage > map.pageBlock }">
+							<li><a href="${root }/hj/list?pageNum=${map.startPage-1}&search=${map.search}">이전</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
+							<li><a href="${root }/boards/list?pageNum=${i }&search=${map.search}">${i }</a></li>
+							</c:forEach>
+							<c:if test="${map.pageCount > map.endPage }">
+							<li><a href="${root }/boards/list?pageNum=${map.endPage+1}&search=${map.search}">다음</a></li>
+							</c:if>
+						</ul>
 			        </div>
 			    </div>                
 			</div>

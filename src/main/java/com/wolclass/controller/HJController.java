@@ -32,6 +32,7 @@ public class HJController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void listGET(@RequestParam Map<String,Object> map, Model model) throws Exception {
 		model.addAttribute(service.getPSList());
+		logger.info(service.getPSList().toString());
 	}
 	//클래스리스트 검색결과 출력 hj
 }
