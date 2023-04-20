@@ -13,18 +13,19 @@
 					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;">
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
-							<img src="sub.jpg" alt="GTA V">
+							<img src="/resources/img/sub.PNG" alt="구독">
 						</div>
 					</div>
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
-							<img src="assets/img/slide1/slider-image-2.jpg"
-								alt="The Last of us">
+							<a href="/tj/sub"> <img src="/resources/img/review.PNG"
+								alt="리뷰"> </a>
 						</div>
 					</div>
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
-							<img src="assets/img/slide1/slider-image-1.jpg" alt="GTA V">
+							<a href="/tj/sub"> <img src="/resources/img/review.PNG"
+								alt="리뷰"> </a>
 						</div>
 					</div>
 				</div>
@@ -44,18 +45,6 @@
 						<span class=""></span>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	<div class="slider-content">
-		<div class="row">
-			<div
-				class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-				<h2>property Searching Just Got So Easy</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Eligendi deserunt deleniti, ullam commodi sit ipsam laboriosam
-					velit adipisci quibusdam aliquam teneturo!</p>
-
 			</div>
 		</div>
 	</div>

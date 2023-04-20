@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.service.ClassService;
+import com.wolclass.service.TJService;
 
 @Controller
 @RequestMapping("/tj/*")
@@ -22,6 +23,8 @@ public class TJController {
 	private static final Logger logger = LoggerFactory.getLogger(TJController.class);
 	@Autowired
 	private ClassService service;
+	
+	private TJService tjService;
 	
 	// http://localhost:8080/tj/main
 	@RequestMapping(value = "/main")
@@ -39,7 +42,14 @@ public class TJController {
 	@RequestMapping(value = "/addClass", method = RequestMethod.GET)
 	public void addClassGET() {
 		logger.info(" addClassGET() 호출 ");
-		
+	}
+	
+	@RequestMapping(value = "/addClass", method = RequestMethod.POST)
+	public String addClassPOST(ClassVO vo) throws Exception{
+		logger.info(" addClassPOST() 호출 ");
+		tjService.addClass(vo);
+		logger.info("클래스 등록 완료@@@@@@@@@@@@");
+		return "redirect:/tj/main";
 	}
 	
 	

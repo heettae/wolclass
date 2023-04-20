@@ -86,7 +86,7 @@
                                 </div>
                                 <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding-right: 30px">
-                       			  <button class="navbar-btn nav-button wow bounceInRight class" onclick="location.href='/tj/addClass';" data-wow-delay="0.4s">클래스 등록</button>
+                       			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s">클래스 등록</button>
                        			  <button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.4s">로그인</button>
                       			  <button class="navbar-btn nav-button wow fadeInRight"  data-wow-delay="0.5s">회원가입</button>
                   			    </div>
@@ -274,5 +274,12 @@
         </nav>
         <!-- End of nav bar -->
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.class').click(function(){
+			location.href='/tj/addClass';
+		})
+	});
+</script>
 </body>
 </html>
