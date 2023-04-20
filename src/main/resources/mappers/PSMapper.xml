@@ -10,7 +10,7 @@
 	<![CDATA[  
 		select ps_text
 		from wc_popular_search
-		where datediff(now(), ps_regdate) < 1
+		where datediff(now(), ps_regdate) < 7
 		group by ps_text
 		order by count(*) desc, max(ps_regdate) desc
 		limit 10
