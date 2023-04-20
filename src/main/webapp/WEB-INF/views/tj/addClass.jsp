@@ -14,9 +14,9 @@
 <div class="box-body">
 <div class="form-group">
 <label for="exampleInputEmail1">오프라인</label>
-<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="on">
-<label for="exampleInputEmail1">온라인</label>
 <input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="off">
+<label for="exampleInputEmail1">온라인</label>
+<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="on">
 </div>
 <div class="form-group">
 <label for="exampleInputPassword1">클래스명(필수)</label>
@@ -71,6 +71,8 @@ placeholder="클래스명을 입력하세요." name="c_name">
                     <!--  <label for="addr_detail">상세주소</label> -->
                     <div class="group">
                      <input type="text" id="detailAddress" name="c_addrdetails" placeholder="상세주소" />
+                     <input type="text" id="sample6_extraAddress" name="c_addr2" placeholder="참고항목">
+                     <span class="error"></span>
                     </div>
                   </div>
 
@@ -147,19 +149,6 @@ placeholder="클래스명을 입력하세요." name="c_name">
 <input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
 </div>
 
-<div class="form-group">
-                     <label for="addr_num">주소</label>
-                     <div class="group">
-                     <input type="text" id="postcode" name="postcode" placeholder="우편번호" />
-                     <input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
-                     </div>
-                 <!--     <label for="addr">주소</label> -->
-                     <input type="text" id="address" name="c_addr1" placeholder="주소"/><br>
-                    <!--  <label for="addr_detail">상세주소</label> -->
-                    <div class="group">
-                     <input type="text" id="detailAddress" name="c_addrdetails" placeholder="상세주소" />
-                    </div>
-                  </div>
 
 <div class="form-group">
 <label for="exampleInputPassword1">강사소개</label>
@@ -172,17 +161,11 @@ placeholder="클래스명을 입력하세요." name="c_name">
 </div>
 </div>
 
-<div class="form-group">
-<label for="exampleInputPassword1">클래스 참여가능 인원(필수)</label>
-<input type="number" class="form-control" id="exampleInputPassword1" min="1" max="30" name="c_maxperson">
-</div>
-
 <div class="box-footer">
 <button type="submit" class="btn btn-primary">등록하기</button>
 </div>
 </form>
 <!-- 온라인 폼 -->
-
 </div>
 
 
@@ -247,14 +230,26 @@ placeholder="클래스명을 입력하세요." name="c_name">
 // 	  $('input[name=way]').on('click', function() {
 // 	    alert($(this).val());
 // 	  });
-var a = $(this).val();
-
-alert('d222222');
-$('input[name=way]').click(function(){
-	if(a == 'on'){
+var a = null;
+var formObj = $('form[role="form"]');
+// alert('d222222');
+		$('input[name=way]').click(function(){
+			a = $(this).val();
+			if(a == 'on'){
+				$('#online').show();
+				$('#offline').hide();
+			} 
+			if(a == 'off'){
+				$('#online').hide();
+				$('#offline').show();
+			}
+			
+		});
 		
-	}
-});
+		$('.btn-primary').click(function(){
+			formObj.attr("action","/tj/addClass");
+			formObj.attr("method","post");
+		});
 
 
 	});

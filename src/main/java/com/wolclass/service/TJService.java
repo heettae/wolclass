@@ -1,5 +1,7 @@
 package com.wolclass.service;
 
-public interface TJService {
+import com.wolclass.domain.ClassVO;
 
+public interface TJService {
+	public void addClass(ClassVO vo) throws Exception;
 }
