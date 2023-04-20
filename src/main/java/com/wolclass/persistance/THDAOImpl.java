@@ -1,0 +1,42 @@
+package com.wolclass.persistance;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
+import com.wolclass.domain.ClassVO;
+
+@Repository
+public class THDAOImpl implements THDAO{
+
+	
+	@Inject
+	private SqlSession sqlSession; // 업캐스팅을 통한 약한결합을 만들고 주입을 함
+	
+	// mapper Namespace정보
+	private static final String NAMESPACE = "com.wolclass.mappers.THMapper";
+
+	private static final Logger logger = LoggerFactory.getLogger(THDAOImpl.class);
+	
+	@Override
+	public String getDBTime() {
+		logger.info(" 디비연결정보 : "+sqlSession);
+		return sqlSession.selectOne(NAMESPACE+".getTime");
+	}
+	
+	
+	
+	@Override
+	public ClassVO selectClass(Integer c_no) throws Exception {
+		logger.info("dao-sql호출");
+		ClassVO resultVO = sqlSession.selectOne(NAMESPACE+".selectClass",c_no);
+		logger.info("dao-resultVO: "+resultVO);
+		return resultVO;
+	}
+	
+	
+	
+}

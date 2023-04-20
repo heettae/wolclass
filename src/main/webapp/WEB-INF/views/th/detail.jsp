@@ -3,6 +3,90 @@
 
 <%@ include file="../include/header.jsp" %>
 
+<meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Insert title here</title>
+<script type="text/javascript">
+//특정날짜들 배열
+var disabledDays = ["2023-4-21","2023-4-24","2013-7-26"];
+$( function() {
+    $( "#datepicker" ).datepicker({
+    	 dateFormat: 'yy-mm-dd',
+         prevText: '이전 달',
+         nextText: '다음 달',
+         monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+         monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+         dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+         dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+         showMonthAfterYear: true,
+         yearSuffix: '년',
+         minDate: 0,
+         beforeShowDay: disableAllTheseDays 
+    });
+});
+  
+	$(document).ready(function(){
+      fnDatepicker("#datepicker");
+      $("#datepicker").val(getToday('yyyy-mm-dd'));
+    });
+
+/*     function fnDatepicker(selector){
+	  $(selector).datepicker({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+      });
+      $(selector).mask('0000-00-00');
+      $(selector).attr("maxlength", "10");
+    } */
+
+    // 현재 날짜
+    function getToday(type){
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth()+1;
+      var day = date.getDate();
+      if(month < 10){
+        month = "0"+month;
+      }
+      if(day < 10){
+        day = "0"+day;
+      }
+
+      var today = '';
+      if(type == 'yyyy-mm-dd'){
+        today = year + "-" + month + "-" + day;
+      }else {
+        today = year + "" + month + "" + day;
+      }
+
+      return today;
+    }
+    
+	 // 특정일 선택막기
+    function disableAllTheseDays(date) {
+        var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+        for (i = 0; i < disabledDays.length; i++) {
+            if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
+                return [false];
+            }
+        }
+        return [true];
+    }
+
+</script>
+<body>
+
         <!-- property area -->
         <div class="content-area single-property" style="background-color: #FCFCFC;">&nbsp;
             <div class="container">   
@@ -42,39 +126,42 @@
 
                         <div class="single-property-wrapper">
                             <div class="single-property-header">                                          
-                                <h1 class="property-title pull-left">Villa in Coral Gables</h1>
-                                <span class="property-price pull-right">$825,000</span>
+                                <h1 class="property-title pull-left">${classVO.c_name }</h1>
+                                <span class="property-price pull-right">
+                               <fmt:formatNumber value="${classVO.c_price }" groupingUsed="true"/>
+                                </span>
                             </div>
 
                             <div class="property-meta entry-meta clearfix ">   
-
-                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-tag">                                        
-                                        <img src="assets/img/icon/sale-orange.png">
-                                    </span>
-                                    <span class="property-info-entry">
-                                        <span class="property-info-label">Status</span>
-                                        <span class="property-info-value">For Sale</span>
-                                    </span>
-                                </div>
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
                                     <span class="property-info icon-area">
                                         <img src="assets/img/icon/room-orange.png">
                                     </span>
                                     <span class="property-info-entry">
-                                        <span class="property-info-label">Area</span>
-                                        <span class="property-info-value">3500<b class="property-info-unit">Sq Ft</b></span>
+                                        <span class="property-info-label">주소</span>
+                                        <span class="property-info-value">${classVO.c_addr1 }<b class="property-info-unit">Sq Ft</b></span>
                                     </span>
                                 </div>
+                                
+                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
+                                    <span class="property-info-icon icon-tag">                                        
+                                        <img src="assets/img/icon/sale-orange.png">
+                                    </span>
+                                    <span class="property-info-entry">
+                                        <span class="property-info-label">수업소요시간</span>
+                                        <span class="property-info-value">${classVO.c_time }</span>
+                                    </span>
+                                </div>
+
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
                                     <span class="property-info-icon icon-bed">
                                         <img src="assets/img/icon/bed-orange.png">
                                     </span>
                                     <span class="property-info-entry">
-                                        <span class="property-info-label">Bedrooms</span>
-                                        <span class="property-info-value">3</span>
+                                        <span class="property-info-label">레벨</span>
+                                        <span class="property-info-value">${classVO.c_level }</span>
                                     </span>
                                 </div>
 
@@ -83,38 +170,8 @@
                                         <img src="assets/img/icon/cars-orange.png">
                                     </span>
                                     <span class="property-info-entry">
-                                        <span class="property-info-label">Car garages</span>
-                                        <span class="property-info-value">1</span>
-                                    </span>
-                                </div>
-
-                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-bath">
-                                        <img src="assets/img/icon/os-orange.png">
-                                    </span>
-                                    <span class="property-info-entry">
-                                        <span class="property-info-label">Bathrooms</span>
-                                        <span class="property-info-value">3.5</span>
-                                    </span>
-                                </div>
-
-                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-garage">
-                                        <img src="assets/img/icon/room-orange.png">
-                                    </span>
-                                    <span class="property-info-entry">
-                                        <span class="property-info-label">Garages</span>
-                                        <span class="property-info-value">2</span>
-                                    </span>
-                                </div>
-                                
-                                <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-garage">
-                                        <img src="assets/img/icon/shawer-orange.png">
-                                    </span>
-                                    <span class="property-info-entry">
-                                        <span class="property-info-label">Garages</span>
-                                        <span class="property-info-value">2</span>
+                                        <span class="property-info-label">최대인원</span>
+                                        <span class="property-info-value">${classVO.c_maxperson }</span>
                                     </span>
                                 </div>
 
@@ -125,7 +182,7 @@
                             <div class="section">
                                 <h4 class="s-property-title">Description</h4>
                                 <div class="s-property-content">
-                                    <p>Nulla quis dapibus nisl. Suspendisse ultricies Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu nec pretium. Nullam sed arcu ultricies commodo arcu nec pretium. Nullam sed arcu ultricies Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu nec pretium. Nullam sed arcu ultricies Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu nec pretium. Nullam sed arcu ultricies                                </p>
+									<p>${classVO.c_content }</p>
                                 </div>
                             </div>
                             <!-- End description area  -->
@@ -218,8 +275,9 @@
                     <div class="col-md-4 p0">
                         <aside class="sidebar sidebar-property blog-asside-right">
                        
-                        
-                            <div class="dealer-widget">
+                     <div id="datepicker"></div>
+                 	
+<!--                             <div class="dealer-widget">
                                 <div class="dealer-content">
                                     <div class="inner-wrapper">
 
@@ -266,7 +324,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">
                                 <div class="panel-heading">
@@ -533,5 +591,5 @@
                 });
             });
         </script>
-
+</body>
 <%@ include file="../include/footer.jsp" %>
