@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wolclass.mappers.THMapper">
+	
+
+ 	
+	<!-- 클래스 조회 -->
+	<select id="selectClass" resultType="ClassVO">
+	select * from wc_class where c_no=#{c_no}
+	</select>
+	
+	<!--  -->
+	<select id="getTimetable" resultType="TimetableVO">
+	select * from wc_timetable where c_no=#{c_no}
+	</select>
+</mapper>	
