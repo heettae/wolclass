@@ -16,11 +16,15 @@ body{
 </style>
 </head>
 <body>
-
-<!-- 지도 api 테스트중 -->
+<!-- 카카오맵 api -->
 <div id="kakaoMapApi"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services,clusterer,drawing"></script>
 <script>
+	window.addEventListener("message", function(event) {
+	  var message = event.data;
+	  console.log("팝업 창에서 수신한 데이터: " + message.get("d"));
+	});
+	
 	var container = document.getElementById('kakaoMapApi');
 	var options = {
 		center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -182,7 +186,6 @@ body{
 	}   
 	// geolocaion 주변 검색
 </script>
-<!-- 지도 api 테스트중 -->
-
+<!-- 카카오맵 api -->
 </body>
 </html>
