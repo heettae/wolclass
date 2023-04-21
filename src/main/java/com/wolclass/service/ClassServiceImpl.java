@@ -27,11 +27,6 @@ public class ClassServiceImpl implements ClassService {
 		if(!map.containsKey("lowlv")) map.put("lowlv", 0);
 		if(!map.containsKey("midlv")) map.put("midlv", 0);
 		if(!map.containsKey("highlv")) map.put("highlv", 0);
-		if(((int)map.get("lowlv"))+((int)map.get("midlv"))+((int)map.get("highlv")) == 0) {
-			map.put("lowlv", 1);
-			map.put("midlv", 2);
-			map.put("highlv", 3);
-		}
 		if(!map.containsKey("category")) map.put("category", "");
 		if(!map.containsKey("addr")) map.put("addr", "");
 		if(!map.containsKey("order") || ((String)map.get("order")).equals("")) map.put("order", 0);
