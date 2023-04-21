@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+-<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 
@@ -57,7 +57,7 @@
         </div>
 
         <script src="/resources/assets/js/modernizr-2.6.2.min.js"></script>
-        <script src="/resources/assets/js/jquery-1.10.2.min.js"></script>
+<!--         <script src="/resources/assets/js/jquery-1.10.2.min.js"></script> -->
         <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
         <script src="/resources/assets/js/bootstrap-select.min.js"></script>
         <script src="/resources/assets/js/bootstrap-hover-dropdown.js"></script>
@@ -75,7 +75,7 @@
 <!-- 		</script> -->
 		<script src="/resources/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/resources/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-		<script src="/resources/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- 		<script src="/resources/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> 달력 먹통 범인 -->
 		<script src="/resources/adminlte/bower_components/chart.js/Chart.js"></script>
 		<script src="/resources/adminlte/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- 		<script src="/resources/adminlte/bower_components/jquery/dist/jquery.min.js"></script> 검색 드롭다운 먹통 범인 -->
