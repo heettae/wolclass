@@ -3,25 +3,10 @@
     
 <%@ include file="../include/header.jsp" %>
 
-<!-- 클래스 리스트 메인 / 최형준 -->
-
-<!-- 지도 api 테스트중 -->	
-<div id="map" style="width:500px;height:400px;"></div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services,clusterer,drawing"></script>
-<script>
-	var container = document.getElementById('map');
-	var options = {
-		center: new kakao.maps.LatLng(33.450701, 126.570667),
-		level: 3
-	};
-
-	var map = new kakao.maps.Map(container, options);
-	alert(new kakao.maps.Coords(400207.5, -11710).toLatLng().toString());
-</script>
-<!-- 지도 api 테스트중 -->
+<!-- 클래스 리스트 hj -->
 
 <div class="col-md-12  padding-top-40 properties-page">
-	
+	<!-- 버튼 컨테이너 -->
 	<div class="col-md-12 "> 
 		<!-- 인기검색어 출력  -->
 		<div class="col-xs-10 page-subheader sorting pl0">
@@ -34,15 +19,28 @@
 			</c:if>
 		</div>
 		<!-- 인기검색어 출력  -->
-		
-		<!-- 지도선택버튼  -->
+		<!-- 지도 열기 버튼  -->
         <div class="col-xs-2 layout-switcher">
-            <a class="layout-list" href="javascript:void(0);"> <i class="fa fa-th-list"></i>  </a>
-            <a class="layout-grid active" href="javascript:void(0);"> <i class="fa fa-th"></i> </a>                          
-        </div><!--/ .layout-switcher-->
-		<!-- 지도선택버튼  -->
+            <button class="btn border-btn more-black" onclick="openMap('local')"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
+            <button class="btn border-btn more-black" onclick="openMap('marker')"><i class="fa fa-map-marker"></i> 지도 표시</button>
+        </div>
+		<!-- 지도 열기 버튼  -->
+		<!-- 정렬 조건 설정  -->
+
+		<!-- 정렬 조건 설정  -->
+        
+        <!-- 팝업창에 데이터 전송 -->
+        <input type="hidden" id="mapOption">
+        <script type="text/javascript">
+       	function openMap(option){
+       		document.getElementById("mapOption").value = option;
+       		window.open('./popupMap','지도 검색','width=500,height=800,top=50%,left=50%');
+       	}
+        </script>
+        <!-- 팝업창에 데이터 전송 -->
+		<!-- 지도 열기 버튼  -->
 	</div>
-	
+	<!-- 버튼 컨테이너 -->
 	<!-- 리스트 컨테이너 -->
 	<div class="col-md-12 "> 
 		<div id="list-type" class="proerty-th">
@@ -88,6 +86,7 @@
 			    </div>                
 			</div>
 			<!-- 페이징 처리 -->
+			
 			<!-- 페이지 이동시 데이터 처리 -->
 			<form role="srch_frm" method="get">
 				<input type="hidden" name="timestart" value="${map.timestart }">
@@ -115,7 +114,8 @@
 				
 				// pageNum			
 				$(".pageNumbers").click(function(){
-					$('input[name="pageNum"]').val(this.html());
+					console.log(1);
+					$('input[name="pageNum"]').val($(this).html());
 					formObj.submit();
 				});	
 				
@@ -131,6 +131,6 @@
 	</div>
 	<!-- 리스트 컨테이너 -->
 </div>
-<!-- 클래스 리스트 부분 / 최형준 -->
+<!-- 클래스 리스트 hj-->
 
 <%@ include file="../include/footer.jsp" %>
