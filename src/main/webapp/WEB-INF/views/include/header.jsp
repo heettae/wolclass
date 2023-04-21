@@ -17,8 +17,8 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
         <!-- Place favicon.ico  the root directory -->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
+<!--         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
+<!--         <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 
 		<!-- adminlte -->
 		<link rel="stylesheet" href="/resources/admibower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -56,9 +56,7 @@
         <noscript>
         <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css" />
         </noscript>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
-        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
 <body>
 <nav class="navbar navbar-default " style="position: ; top: 0; left: 0; width: 100%; z-index: 9999;">
