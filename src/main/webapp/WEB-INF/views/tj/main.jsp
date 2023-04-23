@@ -3,6 +3,32 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<style>
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 24px;
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn.active i:first-child {
+  display: none;
+}
+
+.wishlist-btn.active i:last-child {
+  display: inline;
+  color: #f44336;
+}
+
+</style>
+
+
 <div class="slider-area">
 	<div class="slider">
 		<div id="bg-slider" class="owl-carousel owl-theme"
@@ -59,30 +85,31 @@
 				<h2>Top submitted property</h2>
 				<p>Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu
 					nec pretium. Nullam sed arcu ultricies .</p>
-			</div>
+			</div>ㅉ
 		</div>
 
 		<div class="row">
 			<div class="proerty-th">
-				<c:forEach items="${classVOList }" var="vo">
-					<div class="col-sm-6 col-md-3 p0">
-						<div class="box-two proerty-item">
-							<div class="item-thumb">
-								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/no_img.PNG"></a>
-							</div>
-							<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
-					    <span class="pull-left"><b>${vo.c_addr1 }</b> </span><br>
-					    <span class="proerty-price pull-left">
-					    <fmt:formatNumber value="${vo.c_price }"/> 원
-					    </span>
-					    <span class="pull-right"> 평점 :  </span>
-					</div>
-						</div>
-					</div>
+				<c:forEach items="${classVOList}" var="vo">
+				  <div class="col-sm-6 col-md-3 p0">
+				    <div class="box-two proerty-item">
+				      <div class="item-thumb">
+				        <a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/no_img.PNG"></a>
+				      </div>
+				      <div class="item-entry overflow">
+				        <h4><a href="/class/detail?c_no=${vo.c_no}">${vo.c_name}</a></h4>
+				        <span class="pull-left"><b>${vo.c_addr1}</b> </span><br>
+				        <span class="proerty-price pull-left">
+				          <fmt:formatNumber value="${vo.c_price}"/> 원
+				        </span>
+				        <span class="pull-right"> 평점 : </span>
+				        <button class="wishlist-btn">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
 				</c:forEach>
-
-
 				<div class="col-sm-6 col-md-3 p0">
 					<div class="box-tree more-proerty text-center">
 						<div class="item-tree-icon">
@@ -103,4 +130,15 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+wishlistBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('active');
+  });
+});
+
+</script>
+
 <%@ include file="../include/footer.jsp"%>

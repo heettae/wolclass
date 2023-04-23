@@ -57,6 +57,12 @@
         <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css" />
         </noscript>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        
+        <!-- Font Awesome CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
+		integrity="sha512-......" 
+		crossorigin="anonymous" />
+        <!-- Font Awesome CSS -->
     </head>
 <body>
 <nav class="navbar navbar-default " style="position: ; top: 0; left: 0; width: 100%; z-index: 9999;">
@@ -67,7 +73,7 @@
 <!--                         <span class="icon-bar"></span> -->
 <!--                         <span class="icon-bar"></span> -->
 <!--                     </button> -->
-                    <a class="navbar-brand" href="/tj/main"><img src="/resources/img/no_img.PNG" alt="wolClass" style="height: 90px;"></a>
+                    <a class="navbar-brand" href="/tj/main"><img src="/resources/img/logo.PNG" alt="wolClass" style="height: 90px;"></a>
                 </div>
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -75,7 +81,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
  <div class="search-form wow pulse animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; border: 0px; box-shadow: 0px 0px 0px; 
-  animation-name: pulse;">
+  animation-name: pulse; background: none;">
                             <form action="" class=" form-inline">
                                 <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
 
