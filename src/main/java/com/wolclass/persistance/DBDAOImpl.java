@@ -18,20 +18,26 @@ public class DBDAOImpl implements DBDAO{
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
+	// 회원가입 - 다빈
 	@Override
 	public void memberJoin(Map<String,Object> map) throws Exception {
 		sqlSession.insert(NAMESPACE+".memberJoin",map);
 	}
-	
+	// 아이디 중복검사 - 다빈
 	@Override
 	public Integer idCheck(String m_id) {
 		return sqlSession.selectOne(NAMESPACE+".idCheck",m_id);
 	}
-	
+	// 로그인 - 다빈
 	@Override
 	public MemberVO memberLogin(MemberVO vo) throws Exception {
 		MemberVO resultVO = sqlSession.selectOne(NAMESPACE+".loginMember", vo);
 		return resultVO;
+	}
+	// 아이디 찾기 - 다빈
+	@Override
+	public MemberVO findId(MemberVO vo) throws Exception {
+		MemberVO findIdVO = sqlSession.selectOne(NAMESPACE+".findId",vo);
+		return findIdVO;
 	}
 }

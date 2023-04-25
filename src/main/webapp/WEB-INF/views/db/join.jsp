@@ -13,7 +13,7 @@
                                       placeholder="아이디를 입력하세요. (영문,숫자 조합하여 8~16자)" maxlength="16">
 	                                <span class="id_input_re_1" style="color: green; display: none">사용 가능한 아이디입니다.</span>
 								    <span class="id_input_re_2" style="color: red; display: none">아이디가 이미 존재합니다.</span>
-								    <span class="id_input_re_3" style="color: red; display: none">형식에 맞게 입력하시오.</span>
+								    <span class="id_input_re_3" style="color: red; display: none">형식에 맞게 입력하시오(영문,숫자 조합하여 8~16자)</span>
 		                            <span class="final_id_ck" style="display: none">아이디를 입력해주세요.</span>
                                 </div>
 								
@@ -23,7 +23,7 @@
                                     placeholder="비밀번호를 입력하세요. (영문,숫자,특수문자 조합하여 8~16자)" maxlength="16">
 
                                     <span class="final_pw_ck" style="display: none">비밀번호를 입력해주세요.</span>
-                					<span class="pwck_input_re_3" style="color: red; display: none">형식에 맞게 입력하시오.</span>
+                					<span class="pwck_input_re_3" style="color: red; display: none">형식에 맞게 입력하시오(영문,숫자,특수문자 조합하여 8~16자)</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="m_pw2">비밀번호 확인</label> 
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>         -->
+                
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 // 전화번호 - 자동 붙이기 - 다빈
@@ -194,7 +194,7 @@ $(document).ready(function(){
 		}
 		// 최종 유효성 검사
 		if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&mailCheck&&mailnumCheck&&phoneCheck&&nameCheck){
-		 	$("#join_form").submit(); // &&phoneCheck&&nameCheck
+		 	$("#join_form").submit(); 
         }
 	});
     

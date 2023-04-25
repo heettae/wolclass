@@ -134,6 +134,36 @@ public class DBController {
 		}
 	}
 	
+	// 로그아웃
+	@RequestMapping(value = "/logout",method = RequestMethod.GET)
+	public String logoutGET(HttpSession session) {
+		logger.info("logoutGET() 호출!");
+		session.invalidate();
+		
+		return "redirect:/db/main";
+	}
+	
+	// 아이디 찾기form
+	@RequestMapping(value = "/findId",method = RequestMethod.GET)
+	public String findIdGET() {
+		logger.info("findIdGET() 호출");
+		return "/db/findId";
+	}
+	
+	// 아이디 찾기 기능
+	@RequestMapping(value = "/findId",method = RequestMethod.POST)
+	@ResponseBody
+	public int findIdPOST(MemberVO vo,Model model) throws Exception {
+		logger.info("findIdPOST() 호출");
+		MemberVO findIdVO = service.findId(vo);
+		if(findIdVO == null) {
+			return 0;
+		}else {
+			model.addAttribute("id",findIdVO.getM_id());
+			return 1;
+		}
+	}
+	
 	
 	
 

@@ -40,7 +40,7 @@
 					<input type="password" class="form-control" id="m_pw" name="m_pw">
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-default">로그인</button>
+					<button type="submit" class="btn btn-default" id="loginBtn">로그인</button>
 				</div>
 			</form>
 			<div class="text-center">
@@ -67,7 +67,7 @@
 
 <script type="text/javascript">
 
-$("").click(function(){
+$("loginBtn").click(function(){
 	  $("#login_form").submit();
 });
 
