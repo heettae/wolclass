@@ -1,6 +1,7 @@
 package com.wolclass.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,14 @@ public class ClassServiceImpl implements ClassService {
 	@Autowired
 	private ClassDAO dao;
 	
+	@Override
+	public List<ClassVO> getNearbyClassList(Object lat, Object lng) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userLat",Double.parseDouble(lat.toString()));
+		map.put("userLng",Double.parseDouble(lng.toString()));
+		return dao.getNearbyClassList(map);
+	}
+
 	// 클래스 리스트 조회 hj
 	@Override
 	public List<ClassVO> getClassList(Map<String, Object> map) throws Exception {
@@ -32,6 +41,8 @@ public class ClassServiceImpl implements ClassService {
 		if(!map.containsKey("order") || ((String)map.get("order")).equals("")) map.put("order", 0);
 		if(!map.containsKey("search")) map.put("search", "");
 		if(!map.containsKey("pageNum")) map.put("pageNum", "1");
+		map.put("userLat", Double.parseDouble(map.get("userLat").toString()));
+		map.put("userLng", Double.parseDouble(map.get("userLng").toString()));
 		// 데이터 전처리
 
 		// 페이징 계산

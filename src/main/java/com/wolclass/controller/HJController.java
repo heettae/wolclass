@@ -16,11 +16,10 @@ public class HJController {
 	
 	@Autowired
 	private HJService service;
-	
 
-	@RequestMapping("/test")
-	public String test() {
-		
-		return "/class/getLatLng";
-	}
+	@RequestMapping("/getLatLng")
+	public void getLatLng() {}
+	
+	@RequestMapping("/geolocationtest")
+	public void geolocationtest() {}
 }

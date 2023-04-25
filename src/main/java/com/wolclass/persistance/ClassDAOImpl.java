@@ -15,6 +15,11 @@ public class ClassDAOImpl implements ClassDAO{
 	@Autowired
 	private SqlSession session;
 
+	@Override
+	public List<ClassVO> getNearbyClassList(Map<String, Object> map) throws Exception {
+		return session.selectList(NAMESPACE+"nearbyClassList", map);
+	}
+
 	// 페이징 처리를 위한 클래스 리스트 갯수 조회 hj
 	@Override
 	public int getClassListCnt(Map<String, Object> map) throws Exception {

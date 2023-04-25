@@ -26,4 +26,6 @@ public class ClassVO {
 	
 	// 출력용 평점
 	private Double score;
+	// 출력용 거리
+	private Double distance;
 }

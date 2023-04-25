@@ -6,8 +6,14 @@
 <!-- 팝업창 제어 -->
 <input type="hidden" id="srchdata" value='${jsonStr}'>
 <script type="text/javascript">
-function openMap(option){
+function openMap(){
 	let popup = window.open('./popupMap','지도 검색','width=500,height=800,top=50%,left=50%,location=no');
+	window.addEventListener("beforeunload", function() {
+		popup.close();
+	});
+}
+function openLocation(){
+	let popup = window.open('./popupLocation','주변 검색','width=500,height=800,top=50%,left=50%,location=no');
 	window.addEventListener("beforeunload", function() {
 		popup.close();
 	});
@@ -31,8 +37,8 @@ function openMap(option){
 		<!-- 인기검색어 출력  -->
 		<!-- 지도 열기 버튼  -->
         <div class="col-xs-2 layout-switcher">
-            <button class="btn border-btn more-black" onclick="openMap('local')"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
-            <button class="btn border-btn more-black" onclick="openMap('marker')"><i class="fa fa-map-marker"></i> 지도 열기</button>
+            <button class="btn border-btn more-black" onclick="openLocation()"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
+            <button class="btn border-btn more-black" onclick="openMap()"><i class="fa fa-map-marker"></i> 지도 열기</button>
         </div>
 		<!-- 지도 열기 버튼  -->
 		<!-- 정렬 조건 설정  -->
@@ -58,6 +64,16 @@ function openMap(option){
 					<div class="item-entry overflow">
 					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
 					    <span class="pull-left"><b>${vo.c_addr1 }&nbsp;${vo.c_addr2 }</b> </span><br>
+					    <c:if test="${sessionScope.userLat != null && sessionScope.userLat != ''}">
+						    <span class="pull-left">
+							    <c:if test="${vo.distance > 1}">
+							    <b><fmt:formatNumber value="${vo.distance}" pattern="'약' 0.0'km'" /></b> 
+							    </c:if>
+							    <c:if test="${vo.distance <= 1}">
+							    <b><fmt:formatNumber value="${vo.distance}" pattern="'약' 000'm'" /></b> 
+							    </c:if>
+						    </span><br>
+					     </c:if>
 					    <span class="proerty-price pull-left"><fmt:formatNumber value="${vo.c_price}" type="currency" currencyCode="KRW" /></span>
 					    <span class="pull-right"> 평점 : ${vo.score } </span>
 					</div>
