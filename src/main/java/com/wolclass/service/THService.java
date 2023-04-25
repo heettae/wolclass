@@ -3,6 +3,7 @@ package com.wolclass.service;
 import java.util.List;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 
 public interface THService {
@@ -21,4 +22,7 @@ public interface THService {
 	
 	// 예약가능한 최대 인원 가져오기 TH
 	public TimetableVO getRemainNum(TimetableVO vo) throws Exception;
+	
+	// 구독정보 조회
+	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
 }

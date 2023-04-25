@@ -143,8 +143,8 @@ function changePNum(){
 	 	}
 }
 $(document).ready(function(){
-	  $('#pNum').on('input', function(){
-	    var price = ${classVO.c_price}*$("#pNum").val();
+	  $('#pNum, #point, #subs').on('input', function(){
+	    var price = (${classVO.c_price}*$("#pNum").val())-$('#point').val();
         var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격을 포맷합니다
         $("#priceDisplay").text(formattedPrice + "원"); // 가격을 출력합니다
 	   
@@ -215,6 +215,10 @@ for(var i=0; i<ableDays.length; i++){
 
 </script>
 <body>
+<h1>${id }</h1>
+${memberVO }
+${memberVO.m_point }
+
 
         <!-- property area -->
         <div class="content-area single-property" style="background-color: #FCFCFC;">&nbsp;
@@ -403,22 +407,27 @@ for(var i=0; i<ableDays.length; i++){
 
                     <div class="col-md-4 p0">
                         <aside class="sidebar sidebar-property blog-asside-right">
-                       
+                     
                      <div id="thdatepicker"></div>
+                     시간 선택
                      <select id="time" class="selectpicker show-tick form-control" onchange="timeSelected()"></select>
                      
                      <!-- <div id="timeBtn"></div> -->
-                     <input type="number" id="pNum"class="selectpicker show-tick form-control" min="1" onchange="changePNum">
+                     인원 선택
+                     <input type="number" id="pNum" class="selectpicker show-tick form-control" min="1" onchange="changePNum">
+					<c:if test="${id!=null }">
+					보유 포인트 ${memberVO.m_point } p
+					 <input id="point" type="number" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0">
+					<c:if test="${subscriptionVO!=null }">
+					<input type="checkbox" id="subs">구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt })
+					</c:if>
+					</c:if>
+					<div id="price" class="single-property-header">
+						<span id="priceDisplay" class="property-price pull-right"></span>
+					</div>
 
 
-						<div id="price" class="single-property-header">
-							<span id="priceDisplay" class="property-price pull-right"> 
-<%-- 							<fmt:formatNumber value="${price }" groupingUsed="true" />원 --%>
-							</span>
-						</div>
-
-
-							<!--                             <div class="dealer-widget">
+							                           <div class="dealer-widget">
                                 <div class="dealer-content">
                                     <div class="inner-wrapper">
 
@@ -465,7 +474,7 @@ for(var i=0; i<ableDays.length; i++){
 
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
 							<div
 								class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">

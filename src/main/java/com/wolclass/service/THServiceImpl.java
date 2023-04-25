@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 import com.wolclass.persistance.THDAO;
 
@@ -52,6 +53,12 @@ public class THServiceImpl implements THService {
 		logger.info("service도착");
 		TimetableVO resultVO = dao.getRemainNum(vo);
 		return resultVO;
+	}
+
+	@Override
+	public SubscriptionVO getSubsInfo(String m_id) throws Exception {
+		
+		return dao.getSubsInfo(m_id);
 	}
 	
 	

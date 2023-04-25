@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 
 public interface THDAO {
@@ -23,4 +24,7 @@ public interface THDAO {
 	
 	// 예약 가능한 최대 인원 TH
 	public TimetableVO getRemainNum(TimetableVO vo) throws Exception;
+	
+	// 구독정보 조회
+	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
 }
