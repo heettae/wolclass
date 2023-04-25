@@ -34,5 +34,11 @@ public class DBServiceImpl implements DBService{
 		MemberVO loginResultVO = dbdao.memberLogin(vo);
 		return loginResultVO;
 	}
+	// 아이디 찾기 - 다빈
+	@Override
+	public MemberVO findId(MemberVO vo) throws Exception {
+		MemberVO findIdVO = dbdao.findId(vo);
+		return findIdVO;
+	}
 	
 }
