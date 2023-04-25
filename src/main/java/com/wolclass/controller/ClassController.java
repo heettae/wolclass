@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wolclass.service.ClassService;
-import com.wolclass.service.PSService;
+import com.wolclass.service.SearchDataService;
 
 @Controller
 @RequestMapping("/class/*")
@@ -26,14 +26,16 @@ public class ClassController {
 	@Autowired
 	private ClassService cservice;
 	@Autowired
-	private PSService psservice;
+	private SearchDataService sdservice;
 	
 	//클래스리스트 검색결과 출력 hj
 	//http://localhost:8080/class/list
-	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void listPOST(@RequestParam Map<String,Object> map, Model model, HttpServletRequest request) throws Exception {
 		logger.info(" ClassController-listPOST() 호출 ");
-		model.addAttribute("psList", psservice.getPSList());
+		
+		// 인기검색어 리스트
+		model.addAttribute("psList", sdservice.getPSList());
 		
 		// 사용자 위치정보 예외처리
 		String userLat = (String)request.getSession().getAttribute("userLat");
@@ -44,8 +46,18 @@ public class ClassController {
 			map.put("userLat", "0");
 			map.put("userLng", "0");
 		}
-		// 사용자 위치정보 예외처리
 		
+		// 검색데이터 분석 및 저장
+		new Thread(() -> {
+			if(map.containsKey("search"))
+				try {
+					sdservice.analyze(map.get("search"));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}).start();
+		
+		// 검색결과 및 페이징데이터 반환
 		List list = cservice.getClassList(map);
 		model.addAttribute(list);
 		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(list));
