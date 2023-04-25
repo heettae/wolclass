@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wolclass.mappers.TJMapper">
+<!-- 클래스 등록 -->
 	<insert id="addClass">
 		insert into wc_class *
 		values(c_name=#{c_name}, m_id=#{m_id}, c_maxperson=#{c_maxperson}, c_addr=#{c_addr1},

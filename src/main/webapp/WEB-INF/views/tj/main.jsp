@@ -27,58 +27,88 @@
   color: #f44336;
 }
 /* 위시리스트 */
-
 </style>
 
 
-<div class="slider-area">
-	<div class="slider">
-		<div id="bg-slider" class="owl-carousel owl-theme"
-			style="opacity: 1; display: block;">
+<!-- <div class="slider-area"> -->
+<!-- 	<div class="slider"> -->
+<!-- 		<div id="bg-slider" class="owl-carousel owl-theme" -->
+<!-- 			style="opacity: 1; display: block;"> -->
 
-			<div class="owl-wrapper-outer">
-				<div class="owl-wrapper"
-					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;">
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-							<a href="#">
-							<img src="/resources/img/sub.PNG" alt="구독">
-							</a>
-						</div>
-					</div>
+<!-- 			<div class="owl-wrapper-outer"> -->
+<!-- 				<div class="owl-wrapper" -->
+<!-- 					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;"> -->
+<!-- 					<div class="owl-item" style="width: 1903px;"> -->
+<!-- 						<div class="item"> -->
+<!-- 							<a href="#"> -->
+<!-- 							<img src="/resources/img/sub.PNG" alt="구독"> -->
+<!-- 							</a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-							<a href="/tj/sub"> <img src="/resources/img/review.PNG"
-								alt="리뷰"> </a>
-						</div>
-					</div>
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-							<a href="#"> <img src="/resources/img/no_img.PNG"
-								alt="국제 강아지의 날"> </a>
-						</div>
-					</div>
-				</div>
-			</div>
+<!-- 					<div class="owl-item" style="width: 1903px;"> -->
+<!-- 						<div class="item"> -->
+<!-- 							<a href="/tj/sub"> <img src="/resources/img/review.PNG" -->
+<!-- 								alt="리뷰"> </a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="owl-item" style="width: 1903px;"> -->
+<!-- 						<div class="item"> -->
+<!-- 							<a href="#"> <img src="/resources/img/no_img.PNG" -->
+<!-- 								alt="국제 강아지의 날"> </a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 
 
 
-			<div class="owl-controls clickable">
-				<div class="owl-pagination">
-					<div class="owl-page">
-						<span class=""></span>
-					</div>
-					<div class="owl-page">
-						<span class=""></span>
-					</div>
-					<div class="owl-page active">
-						<span class=""></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- 			<div class="owl-controls clickable"> -->
+<!-- 				<div class="owl-pagination"> -->
+<!-- 					<div class="owl-page"> -->
+<!-- 						<span class=""></span> -->
+<!-- 					</div> -->
+<!-- 					<div class="owl-page"> -->
+<!-- 						<span class=""></span> -->
+<!-- 					</div> -->
+<!-- 					<div class="owl-page active"> -->
+<!-- 						<span class=""></span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<div class="slider-area">
+  <div class="slider">
+    <div id="bg-slider" class="owl-carousel owl-theme">
+
+      <div class="item">
+        <a href="#">
+          <img src="/resources/img/sub.PNG" alt="구독">
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#">
+          <img src="/resources/img/review.PNG" alt="리뷰">
+        </a>
+      </div>
+
+      <div class="item">
+        <a href="#">
+          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+3" alt="Slide 3">
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+4" alt="Slide 4">
+        </a>
+      </div>
+
+    </div>
+
+  </div>
 </div>
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
@@ -91,11 +121,10 @@
 				<p>내 주변 검색 & 지도</p>
 			</div>
 		</div>
-		
 		<!-- 추천리스트 -->
+		<c:if test="${not empty recClass }">
 		<div class="row">
 			<div class="proerty-th">
-			<c:if test="${not empty recClass }">
 			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
 					<h2>${sessionScope.id }님의 추천 클래스</h2>
 				</div>
@@ -116,9 +145,9 @@
 						</div>
 					</div>
 				</c:forEach>
-			</c:if>
 			</div>
 		</div>
+			</c:if>
 		<!-- 추천리스트 -->
 
 		<!-- 일반 리스트 -->
@@ -155,7 +184,6 @@
 		</div>
 	</div>
 </div>
-
 <script type="text/javascript">
 // 위시 리스트 
 const wishlistBtns = document.querySelectorAll('.wishlist-btn');
@@ -166,6 +194,57 @@ wishlistBtns.forEach(function(btn) {
 });
 // 위시 리스트 
 
+// 슬라이드 페이징 처리
+var currentPage = 1;
+var itemsPerPage = 10;
+
+function getList() {
+  $.ajax({
+    url: "/getList",
+    method: "POST",
+    data: { currentPage: currentPage, itemsPerPage: itemsPerPage },
+    dataType: "json",
+    success: function (data) {
+      // 서버에서 받은 데이터를 가지고 HTML 생성
+      var html = "";
+      for (var i = 0; i < data.length; i++) {
+        html += "<div>" + data[i].title + "</div>";
+      }
+      $("#list").html(html);
+      // 페이징 처리를 위한 라이브러리 사용
+      $("#pagination").pagination({
+        items: data.totalCount,
+        itemsOnPage: itemsPerPage,
+        currentPage: currentPage,
+        cssStyle: "light-theme",
+        onPageClick: function (pageNumber) {
+          currentPage = pageNumber;
+          getList();
+        }
+      });
+    },
+    error: function () {
+      alert("서버와의 통신에 실패했습니다.");
+    }
+  });
+}
+
+// 상단 베너
+$(document).ready(function() {
+
+  $("#bg-slider").owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 10000,
+    smartSpeed: 1000,
+    nav: false,
+    dots: false
+  });
+
+});
+
+// 상단 베너
 </script>
 
 <%@ include file="../include/footer.jsp"%>
