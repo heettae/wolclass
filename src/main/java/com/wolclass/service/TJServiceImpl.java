@@ -1,5 +1,8 @@
 package com.wolclass.service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +67,13 @@ public class TJServiceImpl implements TJService{
 	@Override
 	public void markAlertAsRead(Integer a_no) throws Exception {
 		dao.updateAlertReadStatus(a_no);
+	}
+
+	@Override
+	public Integer calculateAge(Timestamp birth) throws Exception {
+		LocalDate birthDate = birth.toLocalDateTime().toLocalDate();
+		LocalDate now = LocalDate.now();
+		return Period.between(birthDate, now).getYears();
 	}
 
 	

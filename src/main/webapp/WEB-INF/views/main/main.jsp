@@ -13,18 +13,20 @@
 					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;">
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
+						<a href="#">
 							<img src="/resources/img/sub.PNG" alt="구독">
+						</a>
 						</div>
 					</div>
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
-							<a href="/tj/sub"> <img src="/resources/img/review.PNG"
+							<a href="#"> <img src="/resources/img/review.PNG"
 								alt="리뷰"> </a>
 						</div>
 					</div>
 					<div class="owl-item" style="width: 1903px;">
 						<div class="item">
-							<a href="/tj/sub"> <img src="/resources/img/review.PNG"
+							<a href="#"> <img src="/resources/img/review.PNG"
 								alt="리뷰"> </a>
 						</div>
 					</div>
@@ -61,7 +63,8 @@
 					nec pretium. Nullam sed arcu ultricies .</p>
 			</div>
 		</div>
-
+		
+		<!-- 일반 리스트 -->
 		<div class="row">
 			<div class="proerty-th">
 				<c:forEach items="${classVOList }" var="vo">
@@ -101,6 +104,7 @@
 
 			</div>
 		</div>
+		<!-- 일반 리스트 -->
 	</div>
 </div>
 <%@ include file="../include/footer.jsp"%>
