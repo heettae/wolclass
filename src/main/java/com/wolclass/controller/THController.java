@@ -103,6 +103,10 @@ public class THController {
 	// 클래스 예약 가능한 인원 가져오기 TH
 	
 	
+	// 정보 가져오기
+	
+	
+	
 	
 	// http://localhost:8080/th/calender
 	@RequestMapping(value = "/calender")
