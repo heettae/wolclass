@@ -44,7 +44,7 @@
 				</div>
 			</form>
 			<div class="text-center">
-				<a href="#" style="color: black;">아이디</a>/<a href="#" style="color: black;">비밀번호 찾기</a>  
+				<a href="/db/findId" style="color: black;">아이디</a>/<a href="/db/findPw" style="color: black;">비밀번호 찾기</a>  
 				<a href="/db/join" style="margin-left: 3px; color: black;">회원가입</a>	
 			</div>
 	
@@ -66,10 +66,14 @@
 
 
 <script type="text/javascript">
-
-$("loginBtn").click(function(){
-	  $("#login_form").submit();
-});
-
+	$("loginBtn").click(function(){
+		  $("#login_form").submit();
+	});
+	
+	$(document).ready(function(){
+       <% if (request.getAttribute("result") != null && (int)request.getAttribute("result") == 0) { %>
+       		alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.");
+       <% } %>
+    });
 </script>
 <%@ include file="../include/footer.jsp"%>

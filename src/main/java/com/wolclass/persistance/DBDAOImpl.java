@@ -40,4 +40,10 @@ public class DBDAOImpl implements DBDAO{
 		MemberVO findIdVO = sqlSession.selectOne(NAMESPACE+".findId",vo);
 		return findIdVO;
 	}
+	
+	// 비밀번호 찾기(임시비밀번호) - 다빈
+	@Override
+	public void findPw(MemberVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".findPw", vo);
+	}
 }

@@ -2,6 +2,8 @@ package com.wolclass.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.wolclass.domain.MemberVO;
 
 public interface DBService {
@@ -17,5 +19,8 @@ public interface DBService {
 	
 	// 아이디 찾기 - 다빈
 	public MemberVO findId(MemberVO vo) throws Exception;
+	
+	// 비밀번호 찾기 - 다빈
+	public void findPw(MemberVO vo) throws Exception;
 	
 }

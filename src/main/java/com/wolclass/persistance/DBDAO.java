@@ -17,4 +17,8 @@ public interface DBDAO {
 	
 	// 아이디 찾기 - 다빈
 	public MemberVO findId(MemberVO vo) throws Exception;
+	
+	// 비밀버호 찾기(임시 비밀번호) - 다빈
+	public void findPw(MemberVO vo) throws Exception;
+	
 }
