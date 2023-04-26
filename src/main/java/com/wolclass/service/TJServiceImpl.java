@@ -3,7 +3,9 @@ package com.wolclass.service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.persistance.ClassDAO;
 import com.wolclass.persistance.TJDAO;
 
 @Service
@@ -18,20 +21,11 @@ public class TJServiceImpl implements TJService{
 	
 	@Autowired
 	TJDAO dao;
-
 	@Override
 	public void addClass(ClassVO vo) throws Exception {
 		dao.addClass(vo);
 	}
 
-//	@Override
-//	public List<ClassVO> getRecommendations(String m_id) {
-//		
-//	
-//		
-//		return null;
-//	}
-//
 	@Override
 	public MemberVO getMemberInfo(String m_id) throws Exception {
 
@@ -44,8 +38,10 @@ public class TJServiceImpl implements TJService{
 		return dao.findByCategory(c_category);
 	}
 
+	// 카테고리별 클래스 리스트 조회
 	@Override
 	public List<ClassVO> getCategoryClassList() throws Exception{
+		
 		return dao.getCategoryClassList();
 	}
 

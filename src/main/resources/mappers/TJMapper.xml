@@ -26,13 +26,28 @@
 	</select>
 	
 	<select id="getCategoryClassList" resultType="ClassVO">
-		SELECT * FROM wc_class
-		order by c_category asc;
+		SELECT *
+		FROM wc_class
+		WHERE c_category IN (
+		    SELECT DISTINCT c_category
+		    FROM wc_class
+		)
+		ORDER BY c_category
 	</select>
 	
-	<insert id="insertAlert">
-	</insert>
+	<select id="getCategoryClassListPage" resultType="ClassVO">
+		SELECT * 
+		FROM wc_class
+		order by c_no asc
+		limit #{page}, 4
+	</select>
 	
+	<select id="getClasslistByCategory" resultType="ClassVO">
+		select *
+		from wc_class
+		where category = #{category}
+		limit #{offset}, #{limit}
+	</select>
 	
 	
 </mapper>	
