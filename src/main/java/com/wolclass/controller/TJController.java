@@ -53,11 +53,11 @@ public class TJController {
 	public void mainGET(@RequestParam Map<String, Object> map, Model model, HttpSession session)
 			throws Exception {
 		logger.info(" mainGET() 호출 ");
+		List<ClassVO> recommendedClass;
 		
 		// 카테고리별 리스트 출력
 		Map<String, List<ClassVO>> classMap = new HashMap<String, List<ClassVO>>();
 		List<ClassVO> categoryClassList = tjService.getCategoryClassList();
-		List<ClassVO> recommendedClass;
 		for (ClassVO classVO : categoryClassList) {
 			String category = classVO.getC_category();
 			List<ClassVO> categoryList = classMap.get(category);

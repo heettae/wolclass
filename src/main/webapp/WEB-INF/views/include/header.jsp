@@ -57,7 +57,6 @@
         <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css" />
         </noscript>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        
         <!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
 		integrity="sha512-......" 
@@ -125,6 +124,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- 로그인 모달 라이브러리 - 다빈 -->
+
+<!-- Owl Carousel 라이브러리 추가 -->
+<!-- jQuery 라이브러리 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<!-- Owl Carousel 라이브러리 추가 -->
+
     </head>
 <body>
 <nav class="navbar navbar-default " style="position: ; top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
@@ -186,8 +194,7 @@
 								</div>
 								<!-- 마이페이지 -->
 
-
-                      			  <button class="navbar-btn nav-button wow fadeInRight" id="join" data-wow-delay="0.5s">로그아웃</button>
+                      			  <button class="navbar-btn nav-button wow fadeInRight" id="logout" data-wow-delay="0.5s">로그아웃</button>
 								</c:if>
                   			    </div>
                   			    
@@ -430,6 +437,12 @@
 			return false;
 		})
 		
+		$('#logout').click(function(){
+			alert('ddddddddddd');
+			location.href="/db/logout";
+			return false;
+		});
+		
 		$('#addClass').click(function(){
 			alert('클래스 등록');
 			location.href="/tj/addClass";
@@ -437,6 +450,14 @@
 		});
 	});
 	
+	// 모달창 id,pw 이벤트 전파 막기
+	$("#m_id").click(function(event){
+	    event.stopPropagation(); 
+	  });
+	$("#m_pw").click(function(event){
+	    event.stopPropagation(); 
+	  });
+	// 모달창 id,pw 이벤트 전파 막기
 	// 로그인 submit - 다빈
 	$("#login_form").click(function(){
 		  $("#login_form").submit();

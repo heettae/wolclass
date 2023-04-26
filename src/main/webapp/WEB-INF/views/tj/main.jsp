@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp"%>
-
 <style>
 /* 위시리스트 */
 .wishlist-btn {
@@ -27,58 +26,10 @@
   color: #f44336;
 }
 /* 위시리스트 */
+
 </style>
 
 
-<!-- <div class="slider-area"> -->
-<!-- 	<div class="slider"> -->
-<!-- 		<div id="bg-slider" class="owl-carousel owl-theme" -->
-<!-- 			style="opacity: 1; display: block;"> -->
-
-<!-- 			<div class="owl-wrapper-outer"> -->
-<!-- 				<div class="owl-wrapper" -->
-<!-- 					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;"> -->
-<!-- 					<div class="owl-item" style="width: 1903px;"> -->
-<!-- 						<div class="item"> -->
-<!-- 							<a href="#"> -->
-<!-- 							<img src="/resources/img/sub.PNG" alt="구독"> -->
-<!-- 							</a> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="owl-item" style="width: 1903px;"> -->
-<!-- 						<div class="item"> -->
-<!-- 							<a href="/tj/sub"> <img src="/resources/img/review.PNG" -->
-<!-- 								alt="리뷰"> </a> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="owl-item" style="width: 1903px;"> -->
-<!-- 						<div class="item"> -->
-<!-- 							<a href="#"> <img src="/resources/img/no_img.PNG" -->
-<!-- 								alt="국제 강아지의 날"> </a> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-
-
-<!-- 			<div class="owl-controls clickable"> -->
-<!-- 				<div class="owl-pagination"> -->
-<!-- 					<div class="owl-page"> -->
-<!-- 						<span class=""></span> -->
-<!-- 					</div> -->
-<!-- 					<div class="owl-page"> -->
-<!-- 						<span class=""></span> -->
-<!-- 					</div> -->
-<!-- 					<div class="owl-page active"> -->
-<!-- 						<span class=""></span> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- </div> -->
 <div class="slider-area">
   <div class="slider">
     <div id="bg-slider" class="owl-carousel owl-theme">
@@ -141,7 +92,12 @@
 					    <fmt:formatNumber value="${rvo.c_price }"/> 원
 					    </span>
 					    <span class="pull-right"> 평점 :  </span>
-					</div>
+					    <!-- 위시리스트 버튼 -->
+				        <button class="wishlist-btn">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        <!-- 위시리스트 버튼 -->
+						</div>
 						</div>
 					</div>
 				</c:forEach>
@@ -149,38 +105,35 @@
 		</div>
 			</c:if>
 		<!-- 추천리스트 -->
-
-		<!-- 일반 리스트 -->
+		<!-- 일반 리스트(슬라이드 리스트) -->
 		<div class="row">
-			<div class="proerty-th">
-				<c:forEach items="${categoryList}" var="vo">
-				<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-					<h2>${vo.key }</h2>
-				</div>
-				  <c:forEach items="${vo.value }" var="classVO">
-				  <div class="col-sm-6 col-md-3 p0">
-				    <div class="box-two proerty-item">
-				      <div class="item-thumb">
-				        <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/no_img.PNG"></a>
-				      </div>
-				      <div class="item-entry overflow">
-				        <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>
-				        <span class="pull-left"><b>${classVO.c_addr1}</b> </span><br>
-				        <span class="proerty-price pull-left">
-				          <fmt:formatNumber value="${classVO.c_price}"/> 원
-				        </span>
-				        <span class="pull-right"> 평점 : </span>
-				        <!-- 위시리스트 버튼 -->
-				        <button class="wishlist-btn">
-				          <i class="fas fa-heart"></i>
-				        </button>
-				        <!-- 위시리스트 버튼 -->
-				      </div>
-				    </div>
-				  </div>
-				  </c:forEach>
-				</c:forEach>
-			</div>
+		  <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+		    <c:forEach items="${categoryList}" var="vo">
+		      <h2>${vo.key }</h2>
+		      <div class="proerty-th owl-carousel">
+		        <c:forEach items="${vo.value }" var="classVO">
+		          <div class="proerty-item">
+		            <div class="item-thumb">
+		              <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/no_img.PNG"></a>
+		            </div>
+		            <div class="item-entry overflow">
+		              <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>
+		              <span class="pull-left"><b>${classVO.c_addr1}</b> </span><br>
+		              <span class="proerty-price pull-left">
+		                <fmt:formatNumber value="${classVO.c_price}"/> 원
+		              </span>
+		              <span class="pull-right"> 평점 : </span>
+		              <!-- 위시리스트 버튼 -->
+		              <button class="wishlist-btn">
+		                <i class="fas fa-heart"></i>
+		              </button>
+		              <!-- 위시리스트 버튼 -->
+		            </div>
+		          </div>
+		        </c:forEach>
+		      </div>
+		    </c:forEach>
+		  </div>
 		</div>
 	</div>
 </div>
@@ -193,41 +146,6 @@ wishlistBtns.forEach(function(btn) {
   });
 });
 // 위시 리스트 
-
-// 슬라이드 페이징 처리
-var currentPage = 1;
-var itemsPerPage = 10;
-
-function getList() {
-  $.ajax({
-    url: "/getList",
-    method: "POST",
-    data: { currentPage: currentPage, itemsPerPage: itemsPerPage },
-    dataType: "json",
-    success: function (data) {
-      // 서버에서 받은 데이터를 가지고 HTML 생성
-      var html = "";
-      for (var i = 0; i < data.length; i++) {
-        html += "<div>" + data[i].title + "</div>";
-      }
-      $("#list").html(html);
-      // 페이징 처리를 위한 라이브러리 사용
-      $("#pagination").pagination({
-        items: data.totalCount,
-        itemsOnPage: itemsPerPage,
-        currentPage: currentPage,
-        cssStyle: "light-theme",
-        onPageClick: function (pageNumber) {
-          currentPage = pageNumber;
-          getList();
-        }
-      });
-    },
-    error: function () {
-      alert("서버와의 통신에 실패했습니다.");
-    }
-  });
-}
 
 // 상단 베너
 $(document).ready(function() {
@@ -245,6 +163,34 @@ $(document).ready(function() {
 });
 
 // 상단 베너
+
+
+// 슬라이드
+$(document).ready(function(){
+  $('.owl-carousel').each(function() {
+    $(this).owlCarousel({
+      loop:false, // 무한 반복 여부
+      margin:20, // 사이드 간격
+      nav:true, // 네비게이션 활성화 여부
+      dots:false, // 도트 활성화 여부
+      autoplay:true, // 자동 재생 여부
+      autoplayTimeout:5000, // 자동 재생 시간 간격
+      autoplayHoverPause:true, // 마우스 오버시 자동 재생 멈춤 여부
+      responsive:{
+          0:{
+              items:1 // 브라우저 창이 0~767px 일때 1개 아이템 출력
+          },
+          768:{
+              items:2 // 브라우저 창이 768~991px 일때 2개 아이템 출력
+          },
+          992:{
+              items:4 // 브라우저 창이 992px 이상 일때 4개 아이템 출력
+          }
+      }
+    });
+  });
+});
+// 슬라이드
 </script>
 
 <%@ include file="../include/footer.jsp"%>
