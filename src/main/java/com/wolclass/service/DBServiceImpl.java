@@ -2,6 +2,8 @@ package com.wolclass.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +43,9 @@ public class DBServiceImpl implements DBService{
 		return findIdVO;
 	}
 	
+	// 비밀번호 찾기 - 다빈
+	@Override
+	public void findPw(MemberVO vo) throws Exception {
+		dbdao.findPw(vo);
+	}
 }

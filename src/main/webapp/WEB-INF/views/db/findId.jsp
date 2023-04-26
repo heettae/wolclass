@@ -28,6 +28,9 @@
 					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#findIdModal" id="findIdBtn">
 					  아이디 찾기
 					</button>
+					<button type="button" class="btn btn-default" id="loginBtn">
+					  로그인
+					</button>
 				</div>
 			</form>
 		</div>
@@ -35,23 +38,47 @@
 </div>
 
 <script type="text/javascript">
-	$("#findIdBtn").click(function(){
-		$.ajax({
-			url: "/db/findId",
-			type: "POST",
-			data: {m_name : $("#m_name").val(), m_email : $("#m_email").val()},
-			success: function(data) {
-				if (data != null) {
-					console.log(data);
-				} else {
-					console.log(data);
-				}
-			},
-			error: function(xhr, status, error) {
-				console.log(error);
-			}
-		});		
+	// 로그인 페이지 이동 - 다빈
+	$("#loginBtn").click(function(){
+		location.href="/db/login";
 	});
+	// 아이디 찾기(암호화) - 다빈
+	$(document).ready(function() {
+		$("#findIdBtn").click(function() {
+			$.ajax({
+				url: "/db/findId",
+				type: "POST",
+				data: $("#findIdForm").serialize(),
+				dataType: "json",
+				success: function(data) {
+					if (data.check == 0) {
+					    var id = data.id;
+					    var len = id.length;
+					    var visible = id.charAt(0) + id.substring(1, len-1).replace(/./g, "*") + id.charAt(len-1);
+					    var randomIndexes = [];
+					    while (randomIndexes.length < 4) {
+					        var index = Math.floor(Math.random() * (len - 2)) + 1;
+					        if (!randomIndexes.includes(index)) {
+					            randomIndexes.push(index);
+					        }
+					    }
+					    for (var i = 0; i < randomIndexes.length; i++) {
+					        visible = visible.substring(0, randomIndexes[i]) + id.charAt(randomIndexes[i]) + visible.substring(randomIndexes[i]+1, len);
+					    }
+					    $("#findIdModal .modal-body").html("<h2>귀하의 아이디는</h2><h1>" + visible + "</h1>");
+					} else {
+					    $("#findIdModal .modal-body").html("<h2>일치하는 정보가 존재하지 않습니다.</h2>");
+					}
+					$("#findIdModal").modal("show");
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			});
+		});
+	});
+	
+	
 </script>
 
 <!-- Modal 내용 -->
@@ -64,20 +91,22 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+        <div class="modal-body">
 	      <div class="col-md-6" style="position: absolute; display: contents;">
 			<div class="box-for overflow" >
 				<!-- 이름과 이메일이 일치하지 않을때 -->
-				<c:if test="${check == 1 }">
-					<h2>일치하는 정보가 존재하지 않습니다.</h2>
-				</c:if>
+<%-- 				<c:if test="${check == 1 }"> --%>
+<!-- 					<h2>일치하는 정보가 존재하지 않습니다.</h2> -->
+<%-- 				</c:if> --%>
 				
 				<!-- 이름과 이메일이 일치할때 -->
-				<c:if test="${check == 0 }">
-					<h2>귀하의 아이디는</h2>
-					<h1>${id }</h1>
-				</c:if>
+<%-- 				<c:if test="${check == 0 }"> --%>
+<!-- 					<h2>귀하의 아이디는</h2> -->
+<%-- 					<h1>${id }</h1> --%>
+<%-- 				</c:if> --%>
 			</div>
-		</div>
+		  </div>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>

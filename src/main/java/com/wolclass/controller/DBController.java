@@ -2,6 +2,7 @@ package com.wolclass.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -43,13 +44,13 @@ public class DBController {
 		logger.info(" mainGET() 호출 ");
 	}
 	// http://localhost:8080/db/join
-	// 회원가입 페이지 이동 
+	// 회원가입 페이지 이동 - 다빈 
 	@RequestMapping(value = "/join",method = RequestMethod.GET)
 	public void joinGET(MemberVO vo) {
 		logger.info("JoinGET() 호출!");
 	}
 	
-	// 회원가입 
+	// 회원가입 - 다빈 
 	@RequestMapping(value = "/join",method = RequestMethod.POST)
 	public String joinPOST(@RequestParam Map<String, Object> map) throws Exception{
 		logger.info("join 실행 {}",map);
@@ -58,7 +59,7 @@ public class DBController {
 		return "redirect:/db/login";
 	}
 	
-	//아이디 중복검사
+	//아이디 중복검사 - 다빈 
 	@RequestMapping(value = "/memberIdChk",method = RequestMethod.POST)
 	@ResponseBody
 	public String memberIdChk(String m_id) throws Exception{
@@ -79,12 +80,12 @@ public class DBController {
 	public String mailCheckGET(String email) throws Exception{
 		logger.info("이메일 데이터 전송 확인");
 		
-		// 인증번호 생성
+		// 인증번호 생성 - 다빈 
 		Random random = new Random();
 		int checkNum = random.nextInt(888888)+111111;
 		logger.info("인증번호 "+checkNum);
 		
-		// 이메일 보내기 
+		// 이메일 보내기 - 다빈 
 		String setFrom = "eksjqls1@naver.com";
 		String toMail = email;
 		String title = "회원가입 인증 이메일 입니다.";
@@ -107,16 +108,16 @@ public class DBController {
 		return num;
 	}
 	
-	// 로그인 페이지 이동 db
+	// 로그인 페이지 이동 - 다빈 
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	public void loginGET() {
+	public void loginGET() throws Exception{
 		logger.info("loginGET() 호출!");
 	}
 	
 	// http://localhost:8080/db/login
-	// 로그인 처리
+	// 로그인 처리 - 다빈 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(MemberVO vo,HttpSession session) throws Exception{
+	public String loginPOST(MemberVO vo,HttpSession session,RedirectAttributes rttr) throws Exception{
 		logger.info("loginPOST() 호출!");
 		MemberVO loginResultVO = service.memberLogin(vo);
 		if(loginResultVO != null) {
@@ -125,16 +126,18 @@ public class DBController {
 			// 아이디정보를 세션에 저장
 			session.setAttribute("id", loginResultVO.getM_id());
 			// main 페이지 이동
-			return "redirect:/tj/main";
+			return "redirect:/db/main";
 		}else {
 			// 로그인 실패
 			logger.info("로그인 실패!");
+			// int result = 0;
+			rttr.addFlashAttribute("result",0);
 			// 로그인 페이지 이동
 			return "redirect:/db/login";
 		}
 	}
 	
-	// 로그아웃
+	// 로그아웃 - 다빈 
 	@RequestMapping(value = "/logout",method = RequestMethod.GET)
 	public String logoutGET(HttpSession session) {
 		logger.info("logoutGET() 호출!");
@@ -143,31 +146,82 @@ public class DBController {
 		return "redirect:/db/main";
 	}
 	
-	// 아이디 찾기form
+	// http://localhost:8080/db/findId
+	// 아이디 찾기form - 다빈 
 	@RequestMapping(value = "/findId",method = RequestMethod.GET)
 	public String findIdGET() {
 		logger.info("findIdGET() 호출");
 		return "/db/findId";
 	}
 	
-	// 아이디 찾기 기능
-	@RequestMapping(value = "/findId",method = RequestMethod.POST)
+	// 아이디 찾기 기능 - 다빈 
+	@RequestMapping(value = "/findId", method = RequestMethod.POST)
 	@ResponseBody
-	public int findIdPOST(MemberVO vo,Model model) throws Exception {
+	public Map<String, Object> findIdPOST(MemberVO vo) throws Exception {
 		logger.info("findIdPOST() 호출");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		MemberVO findIdVO = service.findId(vo);
-		if(findIdVO == null) {
-			return 0;
-		}else {
-			model.addAttribute("id",findIdVO.getM_id());
-			return 1;
+		if (findIdVO == null) {
+			resultMap.put("check", 1);
+		} else {
+			resultMap.put("check", 0);
+			resultMap.put("id", findIdVO.getM_id());
 		}
+		return resultMap;
 	}
 	
+	// http://localhost:8080/db/findPw
+	// 비밀번호 찾기 form - 다빈
+	@RequestMapping(value = "/findPw",method = RequestMethod.GET)
+	public String findPwGET() {
+		logger.info("findPwGET() 호출");
+		return "/db/findPw";
+	}
+	// 비밀번호 찾기 처리 - 다빈
+	@RequestMapping(value = "/findPw",method = RequestMethod.POST)
+	public String findPwPOST(MemberVO vo) throws Exception{
+		logger.info("findPwPOST() 호출");
+		service.findPw(vo);
+		return "redirect:/db/login";
+	}
 	
-	
-
-	
+	// 비밀번호 찾기 - 이메일 인증 - 다빈
+	@RequestMapping(value = "/pwMailCheck",method = RequestMethod.GET)
+	@ResponseBody
+	public String pwMailCheckGET(String email,MemberVO vo) throws Exception{
+		logger.info("pwMailCheckGET() 호출");
+		
+		// Temporary password generation - 다빈
+		Random random = new Random();
+		String tempPassword = "";
+		for (int i = 0; i < 8; i++) {
+		    int digit = random.nextInt(10);
+		    tempPassword += String.valueOf(digit);
+		}
+		logger.info("Temporary password: " + tempPassword);
+		
+		// 이메일 보내기 - 다빈 
+		String setFrom = "eksjqls1@naver.com";
+		String toMail = email;
+		String title = "임시 비밀번호입니다.";
+		String content = "비밀번호는 " + tempPassword + "입니다." +
+				"<br>" +
+				"해당 비밀번호로 로그인 후 비밀번호 변경 해주세요.";
+		
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content,true);
+			mailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String num = tempPassword;
+		return num;
+	}
 
 	
 	
