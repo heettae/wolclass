@@ -32,11 +32,25 @@
 	</select>
 	
 	<!-- 예약가능한 최대 인원 구하기 TH -->
-		<select id="getRemainNum" resultType="TimetableVO"> 
+	<select id="getRemainNum" resultType="TimetableVO"> 
 	<![CDATA[
 	select t_rem_p from wc_timetable
 	where c_no=#{c_no} and t_date = #{t_date} and t_start=#{t_start}
 	]]>
 	</select>
+	
+	<!-- 구독정보 조회 -->
+	<select id="getSubsInfo" resultType="SubscriptionVO">
+	select * from wc_subscription where m_id=#{m_id} and s_end>=now()
+	</select>
+	
+	
+	<!-- 결제 테이블 isnert -->
+	<insert id="insertPay">
+	insert into wc_rsrv_pay(m_id, c_no, p_price, p_rsrvdate, p_key, p_peoplenum)
+	values(#{m_id},#{c_no},#{p_price},#{p_rsrvdate}, 'p_key', #{p_peoplenum})
+	</insert>
+	
+	
 	
 </mapper>	

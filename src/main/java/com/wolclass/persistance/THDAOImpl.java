@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 
 @Repository
@@ -74,6 +75,17 @@ public class THDAOImpl implements THDAO{
 		TimetableVO resultVO = sqlSession.selectOne(NAMESPACE+".getRemainNum",vo);
 		logger.info("dao-resultVO: "+resultVO);
 		System.out.println(resultVO);
+		return resultVO;
+	}
+
+
+
+	@Override
+	public SubscriptionVO getSubsInfo(String m_id) throws Exception {
+		logger.info("dao.getSubInfo: "+m_id);
+		SubscriptionVO resultVO = sqlSession.selectOne(NAMESPACE+".getSubsInfo",m_id);
+		logger.info("dao.getSubInfo-resultVO: "+resultVO);
+		
 		return resultVO;
 	}
 	
