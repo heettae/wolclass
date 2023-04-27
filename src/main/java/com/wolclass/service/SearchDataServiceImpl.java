@@ -1,8 +1,11 @@
 package com.wolclass.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,15 +37,20 @@ public class SearchDataServiceImpl implements SearchDataService{
 		
 		KomoranResult analyzeResultList = komoran.analyze(searchData);
 		List<Token> tokenList = analyzeResultList.getTokenList();
-		Map<String,Object> map = new HashMap<>();
 		
-		for(Token t : tokenList) {
-			if((t.getPos().equals("NNG") || t.getPos().equals("NNP")) && (t.getMorph() != null)) {
-				map.put("word",t.getMorph());
-				if(dao.getClassCount(t.getMorph())) map.put("exist",'Y');
-				else map.put("exist",'N');
-				dao.insert(map);
-			}
+		// 고유명사, 일반명사 추출
+		Set<String> set = new HashSet<>();
+		for(Token t : tokenList) if(t.getPos().equals("NNG") || t.getPos().equals("NNP")) set.add(t.getMorph());
+
+		// 데이터 베이스에 존재하는 키워드인지 확인
+		Iterator<String> iter = set.iterator();
+		while(iter.hasNext()) {
+			Map<String,Object> map = new HashMap<>();
+			String word = iter.next();
+			map.put("word",word);
+			if(dao.getClassCount(word)) map.put("exist",'Y');
+			else map.put("exist",'N');
+			dao.insert(map);
 		}
 	}
 

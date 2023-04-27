@@ -8,7 +8,7 @@
 	<!-- 페이징 처리를 위한 전채 글 갯수 hj -->
 	<select id="classListCnt" parameterType="map" resultType="int">
 	<![CDATA[  
-		select count(*)
+		select count(c_no)
 		from wc_class c
 		where c_confirm = 'Y'
 		and c_no in (select c_no from wc_timetable where time(t_start) >= #{timestart} and time(t_end) <= #{timeend})
@@ -44,16 +44,16 @@
 	order by
 	<choose>
 		<when test="order == 1">
-		r.cnt*r.score desc
+		r.cnt*r.score desc, c.c_regdate desc
 		</when>
 		<when test="order == 2">
-		distance
+		distance, c.c_regdate desc
 		</when>
 		<when test="order == 3">
-		c.c_price
+		c.c_price, c.c_regdate desc
 		</when>
 		<when test="order == 4">
-		c.c_price desc
+		c.c_price desc, c.c_regdate desc
 		</when>
 		<otherwise>
 		c.c_regdate desc

@@ -34,6 +34,16 @@ function openLocation(){
 			</c:forEach>
 			</c:if>
 		</div>
+		<div class="col-xs-10 page-subheader sorting pl0">
+		<hr>
+			<select id="orderSelector">
+		  		<option value="0" ${map.order == 0 ? 'selected' : ''}>최신순</option>
+				<option value="1" ${map.order == 1 ? 'selected' : ''}>인기순</option>
+				<option value="2" ${map.order == 2 ? 'selected' : ''}>거리순</option>
+				<option value="3" ${map.order == 3 ? 'selected' : ''}>낮은 가격순</option>
+				<option value="4" ${map.order == 4 ? 'selected' : ''}>높은 가격순</option>
+			</select>
+		</div>
 		<!-- 인기검색어 출력  -->
 		<!-- 지도 열기 버튼  -->
         <div class="col-xs-2 layout-switcher">
@@ -137,6 +147,13 @@ function openLocation(){
 				// next
 				$("#next").click(function(){
 					$('input[name="pageNum"]').val("${map.endPage+1}");
+					formObj.submit();
+				});	
+				
+				// 정렬기준 변경
+				$("#orderSelector").change(function(){
+					$('input[name="pageNum"]').val(1);
+					$('input[name="order"]').val($(this).val());
 					formObj.submit();
 				});	
 			});
