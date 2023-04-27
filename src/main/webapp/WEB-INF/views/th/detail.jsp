@@ -39,6 +39,10 @@
 <meta charset="UTF-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
+
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <title>Insert title here</title>
 <script>
@@ -50,6 +54,7 @@ var date = null;
 var time = null;
 var t_start = new Array();
 var pNum = null;
+
 $(document).ready(function() {
 	console.log(date)
 	$("#time").hide();
@@ -1025,6 +1030,36 @@ $(document).ready(function(){
 			 }
 			 
 				 alert('결제창띄우기');
+			        var IMP = window.IMP; 
+			        IMP.init("imp75550270"); 
+				
+					  
+							alert('@');
+						    IMP.request_pay({
+						      pg: "html5_inicis.INIpayTest",
+						      pay_method: "card",
+						      merchant_uid: "ORD20180131-0000222",   // 주문번호
+						      name: "주문명:결제테스트",
+						      amount: 100,                         // 숫자 타입
+						      buyer_email: ${memberVO.m_email},
+						      buyer_name: ${memberVO.m_name},
+						      buyer_tel: ${memberVO.m_phone},
+						      buyer_addr: "서울특별시 강남구 신사동",
+						      buyer_postcode: "01181"
+						    }, function (rsp) { // callback
+						      if (rsp.success) {
+						        // 결제 성공 시 로직
+						        
+					                console.log(rsp);
+					                formObj.submit();
+						        
+						      } else {
+						        // 결제 실패 시 로직
+						      }
+						    });
+						  
+		
+					  
 		  });
 
 		  // 수정하기
