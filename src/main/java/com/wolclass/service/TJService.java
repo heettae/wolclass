@@ -16,7 +16,7 @@ public interface TJService {
 	public MemberVO getMemberInfo(String m_id) throws Exception;
 	
 	// 사용자 기반 카테고리별 추천 리스트
-	public List<ClassVO> findByCategory(String c_category) throws Exception;
+	public List<ClassVO> findByKeyword(String keyword) throws Exception;
 	
 	// 반려견 나이 계산
 	public Integer calculateAge(Timestamp birth) throws Exception;
@@ -24,18 +24,8 @@ public interface TJService {
 	// 카테고리별 클래스 리스트
 	public List<ClassVO> getCategoryClassList() throws Exception;
 	
-	
-	// 알림 등록
-	public void addAlert(AlertVO vo) throws Exception;
-	
-	// 알림 리스트
-	public List<AlertVO> getAlertList(String m_id) throws Exception;
-	
-	// 안 읽은 알림 리스트
-	public List<AlertVO> getUnreadAlertList(String m_id) throws Exception;
-	
-	// 읽음 안 읽음 상태
-	public void markAlertAsRead(Integer a_no) throws Exception;
+	// 반려견 생일 1주일 전 계산
+	public int oneWeekBeforeBirth(String m_id) throws Exception;
 	
 
 }
