@@ -25,8 +25,18 @@ public class DBDAOImpl implements DBDAO{
 	}
 	// 아이디 중복검사 - 다빈
 	@Override
-	public Integer idCheck(String m_id) {
+	public Integer idCheck(String m_id) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+".idCheck",m_id);
+	}
+	// 이메일 중복검사 - 다빈
+	@Override
+	public Integer emailCheck(String m_email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+".emailCheck", m_email);
+	}
+	// 전화번호 중복검사 - 다빈
+	@Override
+	public Integer phoneCheck(String m_phone) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+".phoneCheck", m_phone);
 	}
 	// 로그인 - 다빈
 	@Override
@@ -43,7 +53,14 @@ public class DBDAOImpl implements DBDAO{
 	
 	// 비밀번호 찾기(임시비밀번호) - 다빈
 	@Override
-	public void findPw(MemberVO vo) throws Exception {
-		sqlSession.update(NAMESPACE+".findPw", vo);
+	public int findPw(MemberVO vo) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".findPw", vo);
 	}
+	// 비밀번호 찾기(임시비밀번호) - 다빈
+	@Override
+	public void updateTempPw(MemberVO vo) {
+		sqlSession.update(NAMESPACE+".updatePw", vo);
+	}
+	
+	
 }

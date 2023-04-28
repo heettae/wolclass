@@ -1,7 +1,5 @@
 package com.wolclass.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -16,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolclass.domain.MemberVO;
@@ -64,7 +62,6 @@ public class DBController {
 	@ResponseBody
 	public String memberIdChk(String m_id) throws Exception{
 		logger.info("memberIdChk() 호출!");
-		
 		int result = service.idCheck(m_id);
 		
 		if(result != 0) {
@@ -73,6 +70,35 @@ public class DBController {
 			return "success";
 		}
 	}
+	
+	// 이메일 중복검사 - 다빈
+	@PostMapping("/emailCheck")
+	@ResponseBody
+	public String emailCheck(String m_email) throws Exception{
+		logger.info("emailCheck() 호출");
+		int result = service.emailCheck(m_email);
+		
+		if(result != 0) {
+			return "fail";
+		}else {
+			return "success";
+		}
+		
+	}
+	// 전화번호 중복검사 - 다빈
+		@PostMapping("/phoneCheck")
+		@ResponseBody
+		public String phoneCheck(String m_phone) throws Exception{
+			logger.info("phoneCheck() 호출");
+			int result = service.phoneCheck(m_phone);
+			
+			if(result != 0) {
+				return "fail";
+			}else {
+				return "success";
+			}
+			
+		}
 	
 	// 이메일 인증 - 다빈
 	@RequestMapping(value = "/mailCheck",method = RequestMethod.GET)
@@ -130,10 +156,9 @@ public class DBController {
 		}else {
 			// 로그인 실패
 			logger.info("로그인 실패!");
-			// int result = 0;
 			rttr.addFlashAttribute("result",0);
 			// 로그인 페이지 이동
-			return "redirect:/db/login";
+			return "redirect:/db/main";
 		}
 	}
 	
@@ -179,49 +204,46 @@ public class DBController {
 	}
 	// 비밀번호 찾기 처리 - 다빈
 	@RequestMapping(value = "/findPw",method = RequestMethod.POST)
-	public String findPwPOST(MemberVO vo) throws Exception{
+	@ResponseBody
+	public int findPwPOST(MemberVO vo) throws Exception{
 		logger.info("findPwPOST() 호출");
-		service.findPw(vo);
-		return "redirect:/db/login";
+		if(service.findPw(vo)) {
+			Random random = new Random();
+			String tempPassword = "";
+			for (int i = 0; i < 8; i++) {
+			    int digit = random.nextInt(10);
+			    tempPassword += String.valueOf(digit);
+			}
+			logger.info("Temporary password: " + tempPassword);
+			// 이메일 보내기 - 다빈 
+			vo.setM_pw(tempPassword);
+			String setFrom = "eksjqls1@naver.com";
+			String toMail = vo.getM_email();
+			String title = "임시 비밀번호입니다.";
+			String content = "비밀번호는 " + tempPassword + "입니다." +
+					"<br>" +
+					"해당 비밀번호로 로그인 후 비밀번호 변경 해주세요.";
+			new Thread(() -> {
+				try {
+					MimeMessage message = mailSender.createMimeMessage();
+					MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
+					helper.setFrom(setFrom);
+					helper.setTo(toMail);
+					helper.setSubject(title);
+					helper.setText(content,true);
+					mailSender.send(message);
+					
+					service.updateTempPw(vo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}).start();
+			return 1;
+		}
+		return 0;
 	}
 	
-	// 비밀번호 찾기 - 이메일 인증 - 다빈
-	@RequestMapping(value = "/pwMailCheck",method = RequestMethod.GET)
-	@ResponseBody
-	public String pwMailCheckGET(String email,MemberVO vo) throws Exception{
-		logger.info("pwMailCheckGET() 호출");
-		
-		// Temporary password generation - 다빈
-		Random random = new Random();
-		String tempPassword = "";
-		for (int i = 0; i < 8; i++) {
-		    int digit = random.nextInt(10);
-		    tempPassword += String.valueOf(digit);
-		}
-		logger.info("Temporary password: " + tempPassword);
-		
-		// 이메일 보내기 - 다빈 
-		String setFrom = "eksjqls1@naver.com";
-		String toMail = email;
-		String title = "임시 비밀번호입니다.";
-		String content = "비밀번호는 " + tempPassword + "입니다." +
-				"<br>" +
-				"해당 비밀번호로 로그인 후 비밀번호 변경 해주세요.";
-		
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content,true);
-			mailSender.send(message);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String num = tempPassword;
-		return num;
-	}
+	
 
 	
 	

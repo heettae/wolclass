@@ -14,8 +14,8 @@
 				<div class="form-group">
 					<label for="m_email">이메일</label> 
 					<input type="text" class="form-control" id="m_email" name="m_email">
-					<button class="btn btn-warning" id="email_auth_btn">인증번호 전송</button>
-					<sapn class="mail_input_box_warn"></sapn>
+					<sapn class="mail_input_box_warn" style="display:none">
+					ID 이메일 정보가 일치하지 않습니다</sapn>
 				</div>
 				<div class="text-center">
 					<button type="button" class="btn btn-default" id="findPwBtn">
@@ -29,14 +29,24 @@
 
 <script type="text/javascript">
 //이메일 인증번호 전송
-$(".btn-warning").click(function(){
+$("#findPwBtn").click(function(){
 	var email = $("#m_email").val();
+	var id = $("#m_id").val();
 	var warnMsg = $(".mail_input_box_warn");
 	
 	$.ajax({
-		type : "GET",
-		url : "pwMailCheck?email="+email,
+		type : "post",
+		url : "/db/findPw",
+		data : $("#findPwForm").serialize(),
 		success : function(data){
+			if (data == 0) { // 이메일과 아이디가 일치하지 않을 경우
+				$(".mail_input_box_warn").css("color","red");
+				$(".mail_input_box_warn").css("display","inline-block");
+			} else { // 이메일과 아이디가 일치할 경우
+				// 인증번호 전송 성공 처리
+				alert("임시 비밀번호가 전송되었습니다. 이메일을 확인해주세요");
+				location.href="/db/login";
+			}
 		}
 	});
 });
