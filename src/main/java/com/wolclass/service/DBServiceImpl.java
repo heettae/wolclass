@@ -24,11 +24,20 @@ public class DBServiceImpl implements DBService{
 	public void memberJoin(Map<String,Object> map) throws Exception {
 		dbdao.memberJoin(map);
 	}
-	
-	// 아이디 중복검사
+	// 아이디 중복검사 - 다빈
 	@Override
 	public Integer idCheck(String m_id) throws Exception {
 		return dbdao.idCheck(m_id);
+	}
+	// 이메일 중복검사 - 다빈
+	@Override
+	public Integer emailCheck(String m_email) throws Exception {
+		return dbdao.emailCheck(m_email);
+	}
+	// 전화번호 중복검사 - 다빈
+	@Override
+	public Integer phoneCheck(String m_phone) throws Exception {
+		return dbdao.phoneCheck(m_phone);
 	}
 	// 로그인 - 다빈
 	@Override
@@ -45,7 +54,14 @@ public class DBServiceImpl implements DBService{
 	
 	// 비밀번호 찾기 - 다빈
 	@Override
-	public void findPw(MemberVO vo) throws Exception {
-		dbdao.findPw(vo);
+	public boolean findPw(MemberVO vo) throws Exception {
+		return dbdao.findPw(vo) > 0;
 	}
+	// 임시비밀번호 설정 - 다빈
+	@Override
+	public void updateTempPw(MemberVO vo) {
+		dbdao.updateTempPw(vo);
+	}
+	
+	
 }

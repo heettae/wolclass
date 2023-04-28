@@ -60,6 +60,8 @@
                                     <label for="m_phone">전화번호</label>  <span style="color: red">(필수)</span>
                                     <input type="text" class="form-control" id="m_phone" name="m_phone" required
                                      oninput="hypenTel(this)" maxlength="13" placeholder="전화번호를 입력하세요">
+                                     <span class="phone_input_re_1" style="color: green; display: none">사용 가능한 전화번호입니다.</span>
+								     <span class="phone_input_re_2" style="color: red; display: none">전화번호가 이미 존재합니다.</span>
                                      <span class="final_phone_ck" style="display: none">전화번호를 입력해주세요.</span>
                                 </div>
                                   <div class="form-group">
@@ -131,6 +133,7 @@ $(document).ready(function(){
 	var nameCheck = false; // 이름
 	var mailCheck = false; // 이메일
     var mailnumCheck = false; // 이메일 인증번호 확인
+    var mailCheck2 = false;   // 이메일 중복체크
     var phoneCheck = false; // 전화번호 
     
 	// 회원가입 버튼(기능) - 다빈
@@ -180,9 +183,11 @@ $(document).ready(function(){
 		if(mail == ""){
 			$('.final_mail_ck').css('display','block');
 			mailCheck = false;
+			mailCheck2 = false;
 		}else{
 			$('.final_mail_ck').css('display','none');
-			mailCheck = true;			
+			mailCheck = true;	
+			mailCheck2 = true;
 		}
 		// 전화번호 유효성 검사
 		if(phone == ""){
@@ -193,43 +198,56 @@ $(document).ready(function(){
 			phoneCheck = true;
 		}
 		// 최종 유효성 검사
-		if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&mailCheck&&mailnumCheck&&phoneCheck&&nameCheck){
+		if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&mailCheck&&mailCheck2&&mailnumCheck&&phoneCheck&&nameCheck){
 		 	$("#join_form").submit(); 
         }
 	});
-    
+	
 	// 이메일 인증번호 전송
 	$(".btn-warning").click(function(){
-		var email = $('#m_email').val();
-		var checkBox = $("#email_auth_key");
-		var checkBtn = $("#email_auth_btn");
-		var warnMsg = $(".mail_input_box_warn");
-		
-		if(mailFormCheck(email)){
-			warnMsg.html("이메일이 전송 되었습니다. 이메일을 확인해주세요.");
-			warnMsg.css("display","inline-block");
-		}else{
-			warnMsg.html("올바르지 못한 이메일 형식입니다.");
-			warnMsg.css("display","inline-block");
-			return false;
-		}
-		
-		$.ajax({
-			type : "GET",
-			url : "mailCheck?email="+email,
-			success : function(data){
-				checkBox.attr("disabled",false);
-				checkBtn.attr("id","email_auth_btn_true");
-			    code = data;
-			}
-		});
+	    var email = $('#m_email').val();
+	    var checkBox = $("#email_auth_key");
+	    var checkBtn = $("#email_auth_btn");
+	    var warnMsg = $(".mail_input_box_warn");
+	    
+	    if(mailFormCheck(email)){
+	        if(mailCheck2) { // mailCheck2가 true일 경우에만 이메일 전송
+	            $.ajax({
+	                type : "GET",
+	                url : "mailCheck?email="+email,
+	                success : function(data){
+	                    checkBox.attr("disabled",false);
+	                    checkBtn.attr("id","email_auth_btn_true");
+	                    code = data;
+	                }
+	            });
+	            warnMsg.html("이메일이 전송 되었습니다. 이메일을 확인해주세요.");
+	            warnMsg.css("display","inline-block").css("color", "black");
+	        } else { // 이미 존재하는 이메일일 경우
+	            warnMsg.html("이미 존재하는 이메일입니다.");
+	            warnMsg.css("display","inline-block").css("color", "red");
+	        }
+	    } else { // 이메일 형식이 올바르지 않을 경우
+	        warnMsg.html("올바르지 못한 이메일 형식입니다.");
+	        warnMsg.css("display","inline-block").css("color", "black");
+	        return false;
+	    }
 	});
+
+	//입력 이메일 형식 유효성 검사
+	function mailFormCheck(email){
+	   var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		return form.test(email);
+	}
 	
 	// 인증번호 비교
-	$("#email_auth_key").blur(function(){
+	$("#email_auth_key").on("input",function(){
 		var inputCode = $("#email_auth_key").val();  // 입력코드
+		if(inputCode.length<6){
+			return;
+		}
 		var checkResult = $("#mail_check_input_box_warn"); // 비교 결과
-	
+	                                                                                                     
 		if(inputCode == code){
 			checkResult.css("color","green");
 			checkResult.html("인증번호가 일치합니다.");
@@ -244,73 +262,113 @@ $(document).ready(function(){
 	});
 	
 	
-});
-
-// 아이디 중복검사 - 다빈
-$('#m_id').on('input',function(){
-	var m_id = $('#m_id').val();
-	var data = {m_id : m_id}
-	var idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/; 
-	
-	if(!idRegex.test(m_id)){
-		$('.id_input_re_3').css("display","inline-block");
-		$('.id_input_re_1').css("display","none");
-		$('.id_input_re_2').css("display", "none");
-		idckCheck = false;
-		return;
-	}
-	
-	$.ajax({
-		url : "/db/memberIdChk",
-		type : "post",
-		data : data,
-		success : function(result){
-			if(result != 'fail'){
-				$('.id_input_re_1').css("display","inline-block");
-				$('.id_input_re_2').css("display", "none");		
-				$('.id_input_re_3').css("display","none");
-				idckCheck = true;
-			} else {
-				$('.id_input_re_2').css("display","inline-block");
-				$('.id_input_re_1').css("display", "none");
-				$('.id_input_re_3').css("display","none");
-				idckCheck = false;
+	// 아이디 중복검사 - 다빈
+	$('#m_id').on('input',function(){
+		var m_id = $('#m_id').val();
+		var data = {m_id : m_id}
+		var idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/; 
+		
+		if(!idRegex.test(m_id)){
+			$('.id_input_re_3').css("display","inline-block");
+			$('.id_input_re_1').css("display","none");
+			$('.id_input_re_2').css("display", "none");
+			idckCheck = false;
+			return;
+		}
+		
+		$.ajax({
+			url : "/db/memberIdChk",
+			type : "post",
+			data : data,
+			success : function(result){
+				if(result != 'fail'){
+					$('.id_input_re_1').css("display","inline-block");
+					$('.id_input_re_2').css("display", "none");		
+					$('.id_input_re_3').css("display","none");
+					idckCheck = true;
+				} else {
+					$('.id_input_re_2').css("display","inline-block");
+					$('.id_input_re_1').css("display", "none");
+					$('.id_input_re_3').css("display","none");
+					idckCheck = false;
+				}
 			}
+		});
+	});
+
+	// 이메일 중복검사 - 다빈
+		$('#m_email').on('input',function(){
+		var m_email = $('#m_email').val();
+		var data = {m_email : m_email}
+		
+		$.ajax({
+			url : "/db/emailCheck",
+			type : "post",
+			data : data,
+			success : function(result){
+				if(result != 'fail'){
+					mailCheck2 = true;
+				} else {
+					mailCheck2 = false;
+				}
+			}
+		});
+	});
+	
+		// 전화번호 중복검사 - 다빈
+		$('#m_phone').on('input',function(){
+			var m_phone = $('#m_phone').val();
+			if(m_phone.length < 13){
+				return;
+			}
+			var data = {m_phone : m_phone}
+			
+			$.ajax({
+				url : "/db/phoneCheck",
+				type : "post",
+				data : data,
+				success : function(result){
+					if(result != 'fail'){
+						$('.phone_input_re_1').css("display","inline-block");
+						$('.phone_input_re_2').css("display", "none");		
+						phoneCheck = true;
+					} else {
+						$('.phone_input_re_2').css("display","inline-block");
+						$('.phone_input_re_1').css("display", "none");
+						phoneCheck = false;
+					}
+				}
+			});
+		});
+
+
+	// 비밀버호 재확인 - 다빈
+	$("#m_pw2").on('input',function(){
+		var pw = $("#m_pw").val();
+		var pwck = $("#m_pw2").val();
+		var pwRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+		$('.final_pwck_ck').css('display','none');
+		
+		if(!pwRegex.test(pw)){
+			$('.pwck_input_re_3').css("display","inline-block");
+			pwCheck = false;
+		}else {
+			$('.pwck_input_re_3').css("display","none");
+			pwCheck = true;
+		}
+		
+		if(pw == pwck){
+			$('.pwck_input_re_1').css('display','block');
+			$('.pwck_input_re_2').css('display','none');
+			pwckcorCheck = true;
+		}else{
+			$('.pwck_input_re_1').css('display','none');
+			$('.pwck_input_re_2').css('display','block');
+			pwckcorCheck = false;
 		}
 	});
 });
 
-// 비밀버호 재확인 - 다빈
-$("#m_pw2").on('input',function(){
-	var pw = $("#m_pw").val();
-	var pwck = $("#m_pw2").val();
-	var pwRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
-	$('.final_pwck_ck').css('display','none');
-	
-	if(!pwRegex.test(pw)){
-		$('.pwck_input_re_3').css("display","inline-block");
-		pwCheck = false;
-	}else {
-		$('.pwck_input_re_3').css("display","none");
-		pwCheck = true;
-	}
-	
-	if(pw == pwck){
-		$('.pwck_input_re_1').css('display','block');
-		$('.pwck_input_re_2').css('display','none');
-		pwckcorCheck = true;
-	}else{
-		$('.pwck_input_re_1').css('display','none');
-		$('.pwck_input_re_2').css('display','block');
-		pwckcorCheck = false;
-	}
-});
-
-// 입력 이메일 형식 유효성 검사
-function mailFormCheck(email){
-   var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-	return form.test(email);
-}
 
 </script>
                 

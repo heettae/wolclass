@@ -44,7 +44,7 @@
 				</div>
 			</form>
 			<div class="text-center">
-				<a href="/db/findId" style="color: black;">아이디</a>/<a href="/db/findPw" style="color: black;">비밀번호 찾기</a>  
+				<a href="/db/findId" style="color: black;">아이디 찾기</a>/<a href="/db/findPw" style="color: black;">비밀번호 찾기</a>  
 				<a href="/db/join" style="margin-left: 3px; color: black;">회원가입</a>	
 			</div>
 	
@@ -66,7 +66,7 @@
 
 
 <script type="text/javascript">
-	$("loginBtn").click(function(){
+	$("#loginBtn").click(function(){
 		  $("#login_form").submit();
 	});
 	
