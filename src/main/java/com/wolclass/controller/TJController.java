@@ -1,8 +1,5 @@
 package com.wolclass.controller;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +51,7 @@ public class TJController {
 			throws Exception {
 		logger.info(" mainGET() 호출 ");
 		List<ClassVO> recommendedClass;
-		
+		String keyword;
 		// 카테고리별 리스트 출력
 		Map<String, List<ClassVO>> classMap = new HashMap<String, List<ClassVO>>();
 		List<ClassVO> categoryClassList = tjService.getCategoryClassList();
@@ -67,22 +64,28 @@ public class TJController {
 			} 
 			categoryList.add(classVO);
 		}
-		
 		String id = (String) session.getAttribute("id");
 		// 특정일 기준
 //		List<ClassVO> list = service.getClassList(map);
 
-		// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
 		if (id != null) {
 		    MemberVO vo = tjService.getMemberInfo(id);
-		    Timestamp birth = vo.getM_dogbirth();
-		    if (birth != null) {
-		    	int age = tjService.calculateAge(birth);
-		    	if(age >= 8) {
-		    		recommendedClass = tjService.findByCategory("건강");
+		    if (vo.getM_dogbirth() != null) {
+		    	int age = tjService.calculateAge(vo.getM_dogbirth());
+		    	int birth =tjService.oneWeekBeforeBirth(vo.getM_id());
+		    	if(age >= 8 && birth > 0) {
+		    		// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
+		    		keyword = "건강|훈련|영양|생일";
+		    		recommendedClass = tjService.findByKeyword(keyword);
 		    		model.addAttribute("recClass", recommendedClass);
-		    	} else {
-		    		recommendedClass = tjService.findByCategory("체험");
+		    	}else if(age >= 8) {
+		    		keyword = "건강|훈련|영양";
+		    		recommendedClass = tjService.findByKeyword(keyword);
+		    		model.addAttribute("recClass", recommendedClass);
+		    	}
+		    	else if(birth > 0){
+		    		keyword = "명절|생일";
+		    		recommendedClass = tjService.findByKeyword(keyword);
 		    		model.addAttribute("recClass", recommendedClass);
 		    	}
 		    	logger.info("반려견 나이 : "+age);

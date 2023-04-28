@@ -12,19 +12,25 @@
 		 c_level=#{c_level}, c_time=#{c_time}, c_category=#{c_category}, c_content=#{c_content}, 
 		 c_img=#{c_img}, c_price=#{c_price}, c_confirm=#{c_confirm})
 	</insert>	
+<!-- 클래스 등록 -->
 	
-	<select id="findByCategory" resultType="ClassVO">
+	<!-- 해당 키워드 리스트 출력 -->
+	<select id="findByKeyword" resultType="ClassVO">
 		select *
 		from wc_class
-		where c_category=#{c_category}
+		WHERE c_name REGEXP #{keyword}
 	</select>
+	<!-- 해당 키워드 리스트 출력 -->
 	
+	<!-- 회원 정보 -->	
 	<select id="getMemberInfo" resultType="MemberVO">
 		select *
 		from wc_member
 		where m_id = #{m_id}
 	</select>
+	<!-- 회원 정보 -->	
 	
+	<!-- 카테고리별 리스트 출력 -->	
 	<select id="getCategoryClassList" resultType="ClassVO">
 		SELECT *
 		FROM wc_class
@@ -33,21 +39,20 @@
 		    FROM wc_class
 		)
 		ORDER BY c_category
+		
 	</select>
+	<!-- 카테고리별 리스트 출력 -->	
+
+	<!-- 반려견 생일 7일전 -->	
+	<select id="oneWeekBeforeBirth" resultType="int">
+	SELECT count(m_id) 
+	FROM wc_member 
+	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 7 DAY), '%m-%d') AND DATE_FORMAT(NOW(), '%m-%d') 
+	and m_id=#{m_id};
+	</select>
+	<!-- 반려견 생일 7일전 -->	
 	
-	<select id="getCategoryClassListPage" resultType="ClassVO">
-		SELECT * 
-		FROM wc_class
-		order by c_no asc
-		limit #{page}, 4
-	</select>
 	
-	<select id="getClasslistByCategory" resultType="ClassVO">
-		select *
-		from wc_class
-		where category = #{category}
-		limit #{offset}, #{limit}
-	</select>
 	
 	
 </mapper>	

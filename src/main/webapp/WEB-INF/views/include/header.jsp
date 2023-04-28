@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
@@ -56,13 +57,32 @@
         <noscript>
         <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css" />
         </noscript>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
 		integrity="sha512-......" 
 		crossorigin="anonymous" />
         <!-- Font Awesome CSS -->
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+      
+
+<!-- 로그인 모달 라이브러리 - 다빈 -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 로그인 모달 css 충돌 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- 로그인 모달 라이브러리 - 다빈 -->
+
+<!-- slick 라이브러리 추가 - ㅌㅈ -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<!-- slick 라이브러리 추가 - ㅌㅈ -->
+
+
 <!-- 알림 버튼 css -->
 <style type="text/css">
 .button {
@@ -115,27 +135,9 @@
 </style>
 <!-- 알림 버튼 css -->
 
-<!-- 로그인 모달 라이브러리 - 다빈 -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 로그인 모달 css 충돌 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<!-- 로그인 모달 라이브러리 - 다빈 -->
-
-<!-- Owl Carousel 라이브러리 추가 -->
-<!-- jQuery 라이브러리 추가 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<!-- Owl Carousel 라이브러리 추가 -->
-
     </head>
 <body>
-<nav class="navbar navbar-default " style="position: ; top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
+<nav class="navbar navbar-default " style="top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
                 <div class="navbar-header" style="margin-left: 100px;">
 <!--                         <span class="">WolClass</span> -->
 <!--                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"> -->
@@ -398,11 +400,11 @@
 			<form method="post" id="login_form">
 				<div class="form-group">
 					<label for="m_id">아이디</label> 
-					<input type="text" class="form-control" id="m_id" name="m_id">
+					<input type="text" class="form-control" name="m_id">
 				</div>
 				<div class="form-group">
 					<label for="m_pw">비밀번호</label> 
-					<input type="password" class="form-control" id="m_pw" name="m_pw">
+					<input type="password" class="form-control" name="m_pw">
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-default">로그인</button>
@@ -431,6 +433,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		var id = '${sessionScope.id}';
 		$('#join').click(function(){
 			alert('회원가입');
 			location.href="/db/join";
@@ -444,10 +447,17 @@
 		});
 		
 		$('#addClass').click(function(){
-			alert('클래스 등록');
-			location.href="/tj/addClass";
+			
+			if(id == null){
+				$('#loginModal').modal('show');
+				alert('로그인 창');
+			}else{
+				location.href="/tj/addClass";
+				alert('클래스 등록');
+			}
 			return false;
 		});
+		
 	});
 	
 	// 모달창 id,pw 이벤트 전파 막기
@@ -459,9 +469,16 @@
 	  });
 	// 모달창 id,pw 이벤트 전파 막기
 	// 로그인 submit - 다빈
-	$("#login_form").click(function(){
+	$("#LoginBtn").click(function(){
+		  $("#login_form").attr("action","/db/login");
 		  $("#login_form").submit();
 	});
+	$(document).ready(function(){
+     <% if (request.getAttribute("result") != null && (int)request.getAttribute("result") == 0) { %>
+     		alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.");
+     <% } %>
+    });
+	
 	
 	// 알림창 js 코드 - 태준
 	const notificationButton = document.getElementById('notification-button');
@@ -485,5 +502,7 @@
 	});
 	// 알림창 js 코드 - 태준
 
+	
+	
 </script>
 
