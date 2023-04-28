@@ -27,4 +27,7 @@ public interface THDAO {
 	
 	// 구독정보 조회
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
+	
+	// 주문번호+1
+	public int makeP_no() throws Exception;
 }

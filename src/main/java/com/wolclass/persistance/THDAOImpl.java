@@ -88,6 +88,14 @@ public class THDAOImpl implements THDAO{
 		
 		return resultVO;
 	}
+
+
+
+	@Override
+	public int makeP_no() throws Exception {
+		int maxPno = sqlSession.selectOne(NAMESPACE+".maxP_no");
+		return maxPno+1;
+	}
 	
 	
 	

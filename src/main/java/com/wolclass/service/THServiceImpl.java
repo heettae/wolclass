@@ -60,6 +60,12 @@ public class THServiceImpl implements THService {
 		
 		return dao.getSubsInfo(m_id);
 	}
+
+	@Override
+	public int makeP_no() throws Exception {
+		int pno = dao.makeP_no();
+		return pno;
+	}
 	
 	
 	
