@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.util.List;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.PayDTO;
+import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 
@@ -27,4 +29,10 @@ public interface THDAO {
 	
 	// 구독정보 조회
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
+	
+	// 주문번호+1
+	public int makeP_no() throws Exception;
+	
+	// 결제정보 디비에 등록
+	public RsrvPayVO insertPay(PayDTO pdto) throws Exception;
 }

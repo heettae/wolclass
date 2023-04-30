@@ -1,22 +1,28 @@
 package com.wolclass.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.PayDTO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 import com.wolclass.service.THService;
@@ -103,9 +109,49 @@ public class THController {
 	// 클래스 예약 가능한 인원 가져오기 TH
 	
 	
-	// 정보 가져오기
+	// 주문번호 가져오기 TH
+	@RequestMapping(value = "/getP_no", method = RequestMethod.POST)
+	@ResponseBody
+	public int p_noPost() throws Exception{
+
+		logger.info(" p_noPost() 호출 ");
+
+		int pno = service.makeP_no();
+		//logger.info("cvo : "+cvo );
+		logger.info("pno : "+pno);
+	
+		return pno;
+	}
+	// 주문번호 가져오기 TH
 	
 	
+	 //결제 처리하기 TH
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	public String payment(@ModelAttribute PayDTO pdto, HttpSession session) throws Exception{
+		logger.info("payment() 실행 ");
+		String id = (String) session.getAttribute("id");
+
+		logger.info("pdto : "+pdto);
+		service.payment(pdto);
+		logger.info(service.payment(pdto)+"@@");
+		return "redirect:/th/payList";
+		
+	}
+	 //결제 처리하기 TH
+	
+	
+	// 테스트
+//	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+//	public String paymentPOST(@RequestParam("datepicker") String datepicker,
+//	                                    @RequestParam("t_start") String t_start,
+//	                                    @RequestParam("pNum") int pNum,
+//	                                    @RequestParam("point") int point,
+//	                                    @RequestParam("subs") boolean subs) {
+//		logger.info("paymentPOST() 실행 ");
+//		logger.info("dd"+datepicker+t_start+pNum+point+subs);
+//	    return "redirect:/th/payList"; // 결과를 보여줄 뷰 이름을 반환합니다.
+//	
+//	}
 	
 	
 	// http://localhost:8080/th/calender

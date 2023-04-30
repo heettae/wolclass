@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.PayDTO;
+import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 
@@ -86,6 +88,25 @@ public class THDAOImpl implements THDAO{
 		SubscriptionVO resultVO = sqlSession.selectOne(NAMESPACE+".getSubsInfo",m_id);
 		logger.info("dao.getSubInfo-resultVO: "+resultVO);
 		
+		return resultVO;
+	}
+
+
+
+	@Override
+	public int makeP_no() throws Exception {
+		int maxPno = sqlSession.selectOne(NAMESPACE+".maxP_no");
+		return maxPno+1;
+	}
+
+
+
+	@Override
+	public RsrvPayVO insertPay(PayDTO pdto) throws Exception {
+		logger.info("dao.insertPay() 실행");
+		RsrvPayVO resultVO = sqlSession.selectOne(NAMESPACE+".insertPay");
+		
+		logger.info("dao.insertPay()-resultVO"+resultVO);
 		return resultVO;
 	}
 	
