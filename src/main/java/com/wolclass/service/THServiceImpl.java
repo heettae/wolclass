@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.wolclass.domain.ClassVO;
+import com.wolclass.domain.PayDTO;
+import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 import com.wolclass.persistance.THDAO;
@@ -60,6 +62,29 @@ public class THServiceImpl implements THService {
 		
 		return dao.getSubsInfo(m_id);
 	}
+
+	@Override
+	public int makeP_no() throws Exception {
+		int pno = dao.makeP_no();
+		return pno;
+	}
+
+	@Override
+	public RsrvPayVO payment(PayDTO pdto) throws Exception {
+		logger.info("service도착");
+		
+		double subs = (double) (pdto.isSubs() ? 0.5 : 1);
+		int totalPrice = (int) ((pdto.getC_price()*subs))+(pdto.getC_price()*(pdto.getPNum()-1))-pdto.getPoint();
+		logger.info("totalPrice"+totalPrice);
+		if(totalPrice!=pdto.getPrice()) {
+			return null;
+		}
+		
+		RsrvPayVO resultVO = dao.insertPay(pdto);
+		logger.info("service.payment-resultVO"+resultVO);
+		return resultVO;
+	}
+	
 	
 	
 	

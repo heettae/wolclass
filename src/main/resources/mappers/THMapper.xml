@@ -48,8 +48,15 @@
 	<!-- 결제 테이블 isnert -->
 	<insert id="insertPay">
 	insert into wc_rsrv_pay(m_id, c_no, p_price, p_rsrvdate, p_key, p_peoplenum)
-	values(#{m_id},#{c_no},#{p_price},#{p_rsrvdate}, 'p_key', #{p_peoplenum})
+	values(#{m_id},#{c_no},#{price},#{selectedDate}, #{p_key}, #{pNum})
 	</insert>
+	
+	<!-- 마지막 주문번호 조회 -->
+	<select id="maxP_no" resultType="int">
+	select max(p_no) from wc_rsrv_pay;
+	</select>
+	
+	
 	
 	
 	
