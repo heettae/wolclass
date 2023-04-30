@@ -5,7 +5,12 @@
 
 <mapper namespace="com.wolclass.mappers.ClassMapper">
 	
-	<!-- 페이징 처리를 위한 전채 글 갯수 hj -->
+	<!-- 클래스 조회 TH -->
+	<select id="selectClass" resultType="ClassVO">
+	select * from wc_class where c_no=#{c_no}
+	</select>
+	
+	<!-- 페이징 처리를 위한 전채 글 갯수 HJ -->
 	<select id="classListCnt" parameterType="map" resultType="int">
 	<![CDATA[  
 		select count(c_no)
@@ -21,9 +26,9 @@
 		and c.c_level in (#{lowlv},#{midlv},#{highlv})
 	</if> 
 	</select>
-	<!-- 페이징 처리를 위한 전채 글 갯수 hj -->
+	<!-- 페이징 처리를 위한 전채 글 갯수 HJ -->
 	
-	<!-- 클래스 검색 조회 및 페이징 hj -->
+	<!-- 클래스 검색 조회 및 페이징 HJ -->
 	<!-- 최신0 인기1 거리2 낮은3 높은4 -->
 	<select id="classList" resultType="ClassVO">
 	<![CDATA[  
@@ -65,9 +70,9 @@
 	]]> 
 	</select>
 	<!-- 최신0 인기1 거리2 낮은3 높은4 -->
-	<!-- 클래스 검색 조회 및 페이징 hj -->
+	<!-- 클래스 검색 조회 및 페이징 HJ -->
 	
-	<!-- 주변검색 기능 hj -->
+	<!-- 주변검색 기능 HJ -->
 	<select id="nearbyClassList" resultType="ClassVO">
 	<![CDATA[  
 		select c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score,
@@ -80,7 +85,7 @@
 		limit 30
 	]]> 
 	</select>
-	<!-- 주변검색 기능 hj -->
+	<!-- 주변검색 기능 HJ -->
 	
 	<insert id="insert">
 	

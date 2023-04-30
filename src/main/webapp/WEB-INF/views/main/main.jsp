@@ -2,54 +2,138 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp"%>
+<style>
+/* 위시리스트 */
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 24px;
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn.active i:first-child {
+  display: none;
+}
+
+.wishlist-btn.active i:last-child {
+  display: inline;
+  color: #f44336;
+}
+/* 위시리스트 */
+
+
+/* 도트 모양 스타일 */
+/* 도트 위치 조정 */
+.slick-dots {
+    bottom: 20px;
+}
+
+/* 도트 모양 제거 */
+.slick-dots li button:before {
+    content: none;
+}
+
+/* 도트 활성화 모양 */
+.slick-dots li.slick-active button:before {
+    content: "\f111";
+    font-family: FontAwesome;
+    font-size: 10px;
+    color: #fff;
+    opacity: 1;
+}
+
+/* 화살표 모양 제거 */
+.slick-prev:before, .slick-next:before {
+    content: none;
+}
+
+/* 화살표 스타일 */
+.slick-prev, .slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.slick-prev:hover, .slick-next:hover {
+    background: #ccc;
+}
+
+.slick-prev {
+    left: 20px;
+}
+
+.slick-next {
+    right: 20px;
+}
+
+.slick-prev:after {
+    content: "\f053";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin: -1px 0 0 -1px;
+}
+
+.slick-next:after {
+    content: "\f054";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin: -1px 0 0 -1px;
+}
+/* 도트 모양 스타일 */
+
+</style>
+
 
 <div class="slider-area">
-	<div class="slider">
-		<div id="bg-slider" class="owl-carousel owl-theme"
-			style="opacity: 1; display: block;">
+  <div class="slider">
+    <div id="bg-slider" class="owl-carousel owl-theme">
 
-			<div class="owl-wrapper-outer">
-				<div class="owl-wrapper"
-					style="width: 11418px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(-3806px, 0px, 0px); transform-origin: 4757.5px center; perspective-origin: 4757.5px center;">
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-						<a href="#">
-							<img src="/resources/img/sub.PNG" alt="구독">
-						</a>
-						</div>
-					</div>
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-							<a href="#"> <img src="/resources/img/review.PNG"
-								alt="리뷰"> </a>
-						</div>
-					</div>
-					<div class="owl-item" style="width: 1903px;">
-						<div class="item">
-							<a href="#"> <img src="/resources/img/review.PNG"
-								alt="리뷰"> </a>
-						</div>
-					</div>
-				</div>
-			</div>
+      <div class="item">
+        <a href="#">
+          <img src="/resources/img/sub.PNG" alt="구독">
+        </a>
+      </div>
 
+      <div class="item">
+        <a href="#">
+          <img src="/resources/img/review.PNG" alt="리뷰">
+        </a>
+      </div>
 
+      <div class="item">
+        <a href="#">
+          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+3" alt="Slide 3">
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+4" alt="Slide 4">
+        </a>
+      </div>
 
-			<div class="owl-controls clickable">
-				<div class="owl-pagination">
-					<div class="owl-page">
-						<span class=""></span>
-					</div>
-					<div class="owl-page">
-						<span class=""></span>
-					</div>
-					<div class="owl-page active">
-						<span class=""></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    </div>
+
+  </div>
 </div>
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
@@ -58,53 +142,140 @@
 			<div
 				class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
 				<!-- /.feature title -->
-				<h2>Top submitted property</h2>
-				<p>Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu
-					nec pretium. Nullam sed arcu ultricies .</p>
+				<h2>인기/추천 검색어</h2>
+				<p>내 주변 검색 & 지도</p>
 			</div>
 		</div>
-		
-		<!-- 일반 리스트 -->
+		<!-- 추천리스트 -->
+		<c:if test="${not empty recClass }">
 		<div class="row">
 			<div class="proerty-th">
-				<c:forEach items="${classVOList }" var="vo">
+			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+					<h2>${sessionScope.id }님의 추천 클래스</h2>
+				</div>
+				<div class="slick-slider col-sm-12">
+				<c:forEach items="${recClass }" var="rvo">
 					<div class="col-sm-6 col-md-3 p0">
 						<div class="box-two proerty-item">
 							<div class="item-thumb">
-								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/no_img.PNG"></a>
+								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/no_img.PNG"></a>
 							</div>
 							<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
-					    <span class="pull-left"><b>${vo.c_addr1 }</b> </span><br>
+					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${rvo.c_name }</a></h4>
+					    <span class="pull-left"><b>${rvo.c_addr1 }</b> </span><br>
 					    <span class="proerty-price pull-left">
-					    <fmt:formatNumber value="${vo.c_price }"/> 원
+					    <fmt:formatNumber value="${rvo.c_price }"/> 원
 					    </span>
 					    <span class="pull-right"> 평점 :  </span>
-					</div>
+					    <!-- 위시리스트 버튼 -->
+				        <button class="wishlist-btn">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        <!-- 위시리스트 버튼 -->
+						</div>
 						</div>
 					</div>
 				</c:forEach>
-
-
-				<div class="col-sm-6 col-md-3 p0">
-					<div class="box-tree more-proerty text-center">
-						<div class="item-tree-icon">
-							<i class="fa fa-th"></i>
-						</div>
-						<div class="more-entry overflow">
-							<h5>
-								<a href="property-1.html">CAN'T DECIDE ? </a>
-							</h5>
-							<h5 class="tree-sub-ttl">Show all properties</h5>
-							<button class="btn border-btn more-black" value="All properties">All
-								properties</button>
-						</div>
-					</div>
 				</div>
-
 			</div>
 		</div>
+			</c:if>
+		<!-- 추천리스트 -->
 		<!-- 일반 리스트 -->
+		<div class="row">
+		  <div class="proerty-th">
+		    <c:forEach items="${categoryList}" var="vo">
+		      <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+		        <h2>${vo.key }</h2>
+		      </div>
+		      <div class="slick-slider col-sm-12">
+		        <c:forEach items="${vo.value }" var="classVO">
+		          <div class="col-sm-6 col-md-3 p0">
+		            <div class="box-two proerty-item">
+		              <div class="item-thumb">
+		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/no_img.PNG"></a>
+		              </div>
+		              <div class="item-entry overflow">
+		                <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>
+		                <span class="pull-left"><b>${classVO.c_addr1}</b> </span><br>
+		                <span class="proerty-price pull-left">
+		                  <fmt:formatNumber value="${classVO.c_price}"/> 원
+		                </span>
+		                <span class="pull-right"> 평점 : </span>
+		                <!-- 위시리스트 버튼 -->
+		                <button class="wishlist-btn">
+		                  <i class="fas fa-heart"></i>
+		                </button>
+		                <!-- 위시리스트 버튼 -->
+		              </div>
+		            </div>
+		          </div>
+		        </c:forEach>
+		      </div>
+		    </c:forEach>
+		  </div>
+		</div>
 	</div>
 </div>
+<script type="text/javascript">
+
+// 위시 리스트 
+const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+wishlistBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('active');
+  });
+});
+// 위시 리스트 
+
+// 상단 베너
+$(document).ready(function() {
+
+  $("#bg-slider").owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 10000,
+    smartSpeed: 1000,
+    nav: false,
+    dots: false
+  });
+
+});
+
+// 상단 베너
+
+// 슬라이드
+$('.slick-slider').slick({
+    slidesToShow: 4, // 4개씩 보여줍니다.
+    slidesToScroll: 4, // 4개씩 스크롤합니다.
+    infinite: true, // 무한 루프를 사용합니다.
+    dots: true, // 도트 표시를 사용합니다.
+    responsive: [
+      {
+        breakpoint: 992, // 화면 크기가 992px 이하일 때 옵션을 변경합니다.
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 768, // 화면 크기가 768px 이하일 때 옵션을 변경합니다.
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 576, // 화면 크기가 576px 이하일 때 옵션을 변경합니다.
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+ });
+// 슬라이드
+</script>
+
 <%@ include file="../include/footer.jsp"%>

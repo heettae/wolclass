@@ -5,6 +5,15 @@
 
 <mapper namespace="com.wolclass.mappers.TimetableMapper">
 	
+		<!-- 예약가능한 타임테이블 TH -->	
+	<select id="getTimetable" resultType="TimetableVO">
+	<![CDATA[  
+	select * from wc_timetable
+	where t_rem_p >0
+	and c_no = #{c_no}
+	]]>
+	</select>
+	
 	<select id="cnt" resultType="int">
 	<![CDATA[  
 	

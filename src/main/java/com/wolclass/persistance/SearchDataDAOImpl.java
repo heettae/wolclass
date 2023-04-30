@@ -16,18 +16,18 @@ public class SearchDataDAOImpl implements SearchDataDAO{
 	// 인기검색어 조회 hj
 	@Override
 	public List<String> getPSList() throws Exception {
-		return session.selectList(NAMESPACE+"pslist");
+		return session.selectList(NAMESPACE+".pslist");
 	}
 	// 인기검색어 조회 hj
 
 	@Override
 	public boolean getClassCount(String word) {
-		return ((int)session.selectOne(NAMESPACE+"classCount", word)) > 0;
+		return ((int)session.selectOne(NAMESPACE+".classCount", word)) > 0;
 	}
 
 	@Override
 	public void insert(Map<String, Object> map) throws Exception {
-		session.insert(NAMESPACE+"insert", map);
+		session.insert(NAMESPACE+".insert", map);
 	}
 
 }

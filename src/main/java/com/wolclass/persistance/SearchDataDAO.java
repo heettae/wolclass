@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SearchDataDAO {
-	String NAMESPACE = "com.wolclass.mappers.PSMapper.";
+	String NAMESPACE = "com.wolclass.mappers.PSMapper";
 	
 	// 인기검색어 조회 hj
 	public List<String> getPSList() throws Exception;

@@ -2,17 +2,64 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp" %>
+<!-- <head> -->
+<!--         <meta charset="utf-8"> -->
+<!--         <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+<!--         <title>GARO ESTATE | Property  page</title> -->
+<!--         <meta name="description" content="GARO is a real-estate template"> -->
+<!--         <meta name="author" content="Kimarotec"> -->
+<!--         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template"> -->
+<!--         <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
+<!--         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800" rel="stylesheet" type="text/css"> -->
+
+<!--         Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!--         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
+<!--         <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+
+<!--         <link rel="stylesheet" href="/resources/assets/css/normalize.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/font-awesome.min.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/fontello.css"> -->
+<!--         <link href="/resources/assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet"> -->
+<!--         <link href="/resources/assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet"> -->
+<!--         <link href="/resources/assets/css/animate.css" rel="stylesheet" media="screen"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/bootstrap-select.min.css">  -->
+<!--         <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/icheck.min_all.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/price-range.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">   -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/owl.theme.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/owl.transitions.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/lightslider.min.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/style.css"> -->
+<!--         <link rel="stylesheet" href="/resources/assets/css/responsive.css"> -->
+<!--     </head> -->
+
+<%@ include file="detailSide.jsp" %>
 <meta charset="UTF-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
+
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <title>Insert title here</title>
-<script type="text/javascript">
+<script>
 //특정날짜들 배열
-var disabledDays = ["2023-4-21","2023-4-24","2013-7-26"];
-$( function() {
-    $( "#datepicker" ).datepicker({
+//var disabledDays = ["2023-4-23","2023-4-24","2023-5-1"];
+var ableDays = new Array();
+var c_no = ${classVO.c_no};
+var date = null;
+var time = null;
+var t_start = new Array();
+var pNum = null;
+
+$(document).ready(function() {
+	console.log(date)
+	$("#time").hide();
+	$("#pNum").hide();
+    $( "#thdatepicker" ).datepicker({
     	 dateFormat: 'yy-mm-dd',
          prevText: '이전 달',
          nextText: '다음 달',
@@ -24,31 +71,134 @@ $( function() {
          showMonthAfterYear: true,
          yearSuffix: '년',
          minDate: 0,
-         beforeShowDay: disableAllTheseDays 
+         beforeShowDay: ableAllTheseDays,
+         onSelect: getTime
+
     });
-});
-  
+    
+
+    function getTime() { 
+   	 date = $.datepicker.formatDate("yy-mm-dd",$("#thdatepicker").datepicker("getDate")); 
+                                 
+   	 date = $("#thdatepicker").val();
+        alert(date);
+        if(date!=null){
+       	 console.log(date+"null아님~!1111");
+       	 
+       	 //시간 선택
+       	 $.ajax({
+				url:"/th/getTime",
+				type:"post",
+			 	data: JSON.stringify({t_date:date, c_no:c_no}),
+			 	contentType: "application/json; charset=utf-8",
+				dataType:"json",
+				success:function(data){
+					alert("성공");
+					console.log(data);
+				/* 	for(i=0; i<data.length; i++) {
+						t_start[i] = data[i].t_start;
+						$("#time").append(t_start[i]);
+					}  */
+					
+				 	$("#time").show();
+					/*
+					$('select').empty();
+					$('select').append("<option>"+data[0].t_start+"</option>");
+					$('#timeBtn').append("<input type='button' value="+data[0].t_start+">");
+*/
+			        var $time = $("#time");
+			        $time.empty(); // 기존 옵션을 모두 지웁니다.
+			       	var $dft = $("<option>").text("시간 선택").val(null);
+			        $time.append($dft);
+			        $.each(data, function(index, time) {
+			            var $option = $("<option>").text(time.t_start).val(time.t_start); 
+			            $time.append($option);
+			          
+			        }); // each문 닫기
+
+				},	
+				error:function(data){
+					alert("실패");
+					// 페이지 이동 후 실패했을 때 동작
+				}
+			}); // 시간 선택 ajax
+        }
+ 
+    } 
+/*     time = $time.val();
+    if(time!=null){
+    	alert(time+"dd");
+    getPNum
+    }
+    function getPNum(){
+    	 // 인원 선택 
+    	 alert("getPNum");
+    	 
+    } */
+
+    
+    
+}); // function() 끝
+function timeSelected(){
+	   // if($("#time").val()!=null){
+	    	time = $("#time").val();
+	    	alert(time+"dd");
+	    	
+	    	
+	       	 // 최대 인원 가져오기ajax
+	       	 $.ajax({
+					url:"/th/getPNum",
+					type:"post",
+				 	data: JSON.stringify({t_date:date, c_no:c_no, t_start:time}),
+				 	contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					success:function(data){
+						alert("인원 가져오기 성공");
+						console.log(data.t_rem_p);
+						pNum=data.t_rem_p;
+						console.log(pNum);
+					 	$("#pNum").show();
+					 	$("#pNum").attr('max', pNum);
+					 	$('#pNum').attr('placeholder', '예약 가능한 최대 인원은 '+pNum+'명 입니다');
+					 	
+
+
+					},	
+					error:function(data){
+						alert("실패");
+						// 페이지 이동 후 실패했을 때 동작
+					}
+				}); // 최대 인원 가져오기 ajax
+
+	    };
+
+	function changePNum(){
+	 	if($("#pNum").val()>pNum){
+		 	alert($("#pNum").val());
+		 	alert(pNum+"이하로 입력하세요");
+	
+		 	}
+	}
+	
 	$(document).ready(function(){
-      fnDatepicker("#datepicker");
-      $("#datepicker").val(getToday('yyyy-mm-dd'));
+	  $('#pNum, #point, #subs').on('input', function(){
+		  var point = $('#point').val() ? $('#point').val() : 0;
+		  var subs = $('#subs').prop('checked') ? 0.5 : 1;
+		  var bPrice = ${classVO.c_price};
+		  var price = (bPrice*subs)+(bPrice*($("#pNum").val()-1))- point;
+	  
+	   
+        var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
+        $("#priceDisplay").text(formattedPrice + "원"); // 가격 출력
+	   
+	  })
+	});
+	    
+	$(document).ready(function(){
+      fnDatepicker("#thdatepicker");
+      $("#thdatepicker").val(getToday('yyyy-mm-dd'));
     });
 
-/*     function fnDatepicker(selector){
-	  $(selector).datepicker({
-        dateFormat: 'yy-mm-dd',
-        prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년'
-      });
-      $(selector).mask('0000-00-00');
-      $(selector).attr("maxlength", "10");
-    } */
 
     // 현재 날짜
     function getToday(type){
@@ -73,7 +223,7 @@ $( function() {
       return today;
     }
     
-	 // 특정일 선택막기
+    // 특정일 선택막기
     function disableAllTheseDays(date) {
         var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
         for (i = 0; i < disabledDays.length; i++) {
@@ -83,9 +233,35 @@ $( function() {
         }
         return [true];
     }
+	 
+	 // 특정일 선택막기
+    function ableAllTheseDays(date) {
+        var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+        for (i = 0; i < ableDays.length; i++) {
+            if($.inArray(y + '-' +(m+1) + '-' + d,ableDays) != -1) {
+                return [true];
+            }
+        }
+        return [false];
+    }
+	 
+var vaildDates = '${dateList }';
+var vaildDatesArr = vaildDates.split('t_date=');
+for(var i=1; i<vaildDatesArr.length; i++){
+	ableDays.push(vaildDatesArr[i].split(',')[0].replaceAll('-0','-'));
+}
+
+
+for(var i=0; i<ableDays.length; i++){
+	console.log(ableDays[i]);
+}
 
 </script>
 <body>
+<%-- <h1>${id }</h1> --%>
+<%-- ${memberVO } --%>
+<%-- ${memberVO.m_point } --%>
+
 
         <!-- property area -->
         <div class="content-area single-property" style="background-color: #FCFCFC;">&nbsp;
@@ -271,325 +447,627 @@ $( function() {
                         </div>
                     </div>
 
-
+					<!-- ㅋㅋ -->
                     <div class="col-md-4 p0">
                         <aside class="sidebar sidebar-property blog-asside-right">
-                       
-                     <div id="datepicker"></div>
-                 	
-<!--                             <div class="dealer-widget">
-                                <div class="dealer-content">
-                                    <div class="inner-wrapper">
+                     
+<!--                      <div id="thdatepicker"></div> -->
+<!--                      시간 선택 -->
+<!--                      <select id="time" class="selectpicker show-tick form-control" onchange="timeSelected()"></select> -->
+                     
+<!--                      <div id="timeBtn"></div> -->
+<!--                      인원 선택 -->
+<!--                      <input type="number" id="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum"> -->
+<%-- 					<c:if test="${id!=null }"> --%>
+<%-- 					보유 포인트 ${memberVO.m_point } p --%>
+<%-- 					 <input id="point" type="number" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0"> --%>
+<%-- 					<c:if test="${subscriptionVO!=null }"> --%>
+<%-- 					<input type="checkbox" id="subs">구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt }) --%>
+<%-- 					</c:if> --%>
+<%-- 					</c:if> --%>
+					
+<!-- 					<div id="price" class="single-property-header"> -->
+<!-- 						<span id="priceDisplay" class="property-price pull-right"> -->
+<%-- 						<fmt:formatNumber value="${classVO.c_price }"/>원 --%>
+<!-- 						</span> -->
+<!-- 					</div> -->
+					
+<!-- 					<button type="submit" class="navbar-btn nav-button wow bounceInRight" >클래스 예약하기</button> -->
+<!-- 					<fieldset> -->
+<!-- 						<div class="row"> -->
+<!-- 							<div class="col-xs-12"> -->
+<!-- 					<button type="submit" class="button btn largesearch-btn" >클래스 예약하기</button> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</fieldset>							 -->
+											
+											
+<!-- 							    <div class="dealer-widget"> -->
+<!--                                 <div class="dealer-content"> -->
+<!--                                 <div class="inner-wrapper"> -->
 
-                                        <div class="clear">
-                                            <div class="col-xs-4 col-sm-4 dealer-face">
-                                                <a href="">
-                                                    <img src="assets/img/client-face1.png" class="img-circle">
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-8 col-sm-8 ">
-                                                <h3 class="dealer-name">
-                                                    <a href="">Nathan James</a>
-                                                    <span>Real Estate Agent</span>        
-                                                </h3>
-                                                <div class="dealer-social-media">
-                                                    <a class="twitter" target="_blank" href="">
-                                                        <i class="fa fa-twitter"></i>
-                                                    </a>
-                                                    <a class="facebook" target="_blank" href="">
-                                                        <i class="fa fa-facebook"></i>
-                                                    </a>
-                                                    <a class="gplus" target="_blank" href="">
-                                                        <i class="fa fa-google-plus"></i>
-                                                    </a>
-                                                    <a class="linkedin" target="_blank" href="">
-                                                        <i class="fa fa-linkedin"></i>
-                                                    </a> 
-                                                    <a class="instagram" target="_blank" href="">
-                                                        <i class="fa fa-instagram"></i>
-                                                    </a>       
-                                                </div>
+<!--                                         <div class="clear"> -->
+<!--                                             <div class="col-xs-4 col-sm-4 dealer-face"> -->
+<!--                                                 <a href=""> -->
+<!--                                                     <img src="assets/img/client-face1.png" class="img-circle"> -->
+<!--                                                 </a> -->
+<!--                                             </div> -->
+<!--                                             <div class="col-xs-8 col-sm-8 "> -->
+<!--                                                 <h3 class="dealer-name"> -->
+<!--                                                     <a href="">Nathan James</a> -->
+<!--                                                     <span>Real Estate Agent</span>         -->
+<!--                                                 </h3> -->
+<!--                                                 <div class="dealer-social-media"> -->
+<!--                                                     <a class="twitter" target="_blank" href=""> -->
+<!--                                                         <i class="fa fa-twitter"></i> -->
+<!--                                                     </a> -->
+<!--                                                     <a class="facebook" target="_blank" href=""> -->
+<!--                                                         <i class="fa fa-facebook"></i> -->
+<!--                                                     </a> -->
+<!--                                                     <a class="gplus" target="_blank" href=""> -->
+<!--                                                         <i class="fa fa-google-plus"></i> -->
+<!--                                                     </a> -->
+<!--                                                     <a class="linkedin" target="_blank" href=""> -->
+<!--                                                         <i class="fa fa-linkedin"></i> -->
+<!--                                                     </a>  -->
+<!--                                                     <a class="instagram" target="_blank" href=""> -->
+<!--                                                         <i class="fa fa-instagram"></i> -->
+<!--                                                     </a>        -->
+<!--                                                 </div> -->
 
-                                            </div>
-                                        </div>
+<!--                                             </div> -->
+<!--                                         </div> -->
 
-                                        <div class="clear">
-                                            <ul class="dealer-contacts">                                       
-                                                <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>
-                                                <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>
-                                                <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>
-                                            </ul>
-                                            <p>Duis mollis  blandit tempus porttitor curabiturDuis mollis  blandit tempus porttitor curabitur , est non…</p>
-                                        </div>
+<!--                                         <div class="clear"> -->
+<!--                                             <ul class="dealer-contacts">                                        -->
+<!--                                                 <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li> -->
+<!--                                                 <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li> -->
+<!--                                                 <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li> -->
+<!--                                             </ul> -->
+<!--                                             <p>Duis mollis  blandit tempus porttitor curabiturDuis mollis  blandit tempus porttitor curabitur , est non…</p> -->
+<!--                                         </div> -->
 
-                                    </div>
-                                </div>
-                            </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
 
-                            <div class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Similar Properties</h3>
-                                </div>
-                                <div class="panel-body recent-property-widget">
-                                        <ul>
-                                        <li>
-                                            <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                                <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
-                                                <span class="property-seeker">
-                                                    <b class="b-1">A</b>
-                                                    <b class="b-2">S</b>
-                                                </span>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                                <h6> <a href="single.html">Super nice villa </a></h6>
-                                                <span class="property-price">3000000$</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col-md-3 col-sm-3  col-xs-3 blg-thumb p0">
-                                                <a href="single.html"><img src="assets/img/demo/small-property-1.jpg"></a>
-                                                <span class="property-seeker">
-                                                    <b class="b-1">A</b>
-                                                    <b class="b-2">S</b>
-                                                </span>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                                <h6> <a href="single.html">Super nice villa </a></h6>
-                                                <span class="property-price">3000000$</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                                <a href="single.html"><img src="assets/img/demo/small-property-3.jpg"></a>
-                                                <span class="property-seeker">
-                                                    <b class="b-1">A</b>
-                                                    <b class="b-2">S</b>
-                                                </span>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                                <h6> <a href="single.html">Super nice villa </a></h6>
-                                                <span class="property-price">3000000$</span>
-                                            </div>
-                                        </li>
+<!-- 							<div -->
+<!-- 								class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated"> -->
+<!-- 								<div class="panel-heading"> -->
+<!-- 									<h3 class="panel-title">Similar Properties</h3> -->
+<!-- 								</div> -->
+<!-- 								<div class="panel-body recent-property-widget"> -->
+<!-- 									<ul> -->
+<!-- 										<li> -->
+<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
+<!-- 												<a href="single.html"><img -->
+<!-- 													src="assets/img/demo/small-property-2.jpg"></a> <span -->
+<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
+<!-- 													class="b-2">S</b> -->
+<!-- 												</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
+<!-- 												<h6> -->
+<!-- 													<a href="single.html">Super nice villa </a> -->
+<!-- 												</h6> -->
+<!-- 												<span class="property-price">3000000$</span> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<div class="col-md-3 col-sm-3  col-xs-3 blg-thumb p0"> -->
+<!-- 												<a href="single.html"><img -->
+<!-- 													src="assets/img/demo/small-property-1.jpg"></a> <span -->
+<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
+<!-- 													class="b-2">S</b> -->
+<!-- 												</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
+<!-- 												<h6> -->
+<!-- 													<a href="single.html">Super nice villa </a> -->
+<!-- 												</h6> -->
+<!-- 												<span class="property-price">3000000$</span> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
+<!-- 												<a href="single.html"><img -->
+<!-- 													src="assets/img/demo/small-property-3.jpg"></a> <span -->
+<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
+<!-- 													class="b-2">S</b> -->
+<!-- 												</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
+<!-- 												<h6> -->
+<!-- 													<a href="single.html">Super nice villa </a> -->
+<!-- 												</h6> -->
+<!-- 												<span class="property-price">3000000$</span> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
 
-                                        <li>
-                                            <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                                <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
-                                                <span class="property-seeker">
-                                                    <b class="b-1">A</b>
-                                                    <b class="b-2">S</b>
-                                                </span>
-                                            </div>
-                                            <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                                <h6> <a href="single.html">Super nice villa </a></h6>
-                                                <span class="property-price">3000000$</span>
-                                            </div>
-                                        </li>
+<!-- 										<li> -->
+<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
+<!-- 												<a href="single.html"><img -->
+<!-- 													src="assets/img/demo/small-property-2.jpg"></a> <span -->
+<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
+<!-- 													class="b-2">S</b> -->
+<!-- 												</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
+<!-- 												<h6> -->
+<!-- 													<a href="single.html">Super nice villa </a> -->
+<!-- 												</h6> -->
+<!-- 												<span class="property-price">3000000$</span> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
 
-                                    </ul>
-                                </div>
-                            </div>                          
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 
-                            <div class="panel panel-default sidebar-menu wow fadeInRight animated">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Ads her  </h3>
-                                </div>
-                                <div class="panel-body recent-property-widget">
-                                    <img src="assets/img/ads.jpg">
-                                </div>
-                            </div>
+							<div
+								class="panel panel-default sidebar-menu wow fadeInRight animated">
+								
+								<!-- 요기로 옮기자 -->
+								
+								                    <div id="thdatepicker"></div>
+                     시간 선택
+                     <select id="time" class="selectpicker show-tick form-control" onchange="timeSelected()"></select>
+                     
+                     <!-- <div id="timeBtn"></div> -->
+                     인원 선택
+                     <input type="number" id="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum">
+					<c:if test="${id!=null }">
+					보유 포인트 ${memberVO.m_point } p
+					 <input id="point" type="number" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0">
+					<c:if test="${subscriptionVO!=null }">
+					<input type="checkbox" id="subs">구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt })
+					</c:if>
+					</c:if>
+					
+					<div id="price" class="single-property-header">
+						<span id="priceDisplay" class="property-price pull-right">
+						<fmt:formatNumber value="${classVO.c_price }"/>원
+						</span>
+					</div>
+					
+					<button type="submit" class="navbar-btn nav-button wow bounceInRight" id="reserve">클래스 예약하기</button>
+					<fieldset>
+						<div class="row">
+							<div class="col-xs-12">
+					<button type="submit" class="button btn largesearch-btn" >클래스 예약하기</button>
+							</div>
+						</div>
+					</fieldset>			
+								
+								
+								
+								
+								<div class="panel-heading">
+									<h3 class="panel-title">Ads her</h3>
+								</div>
+								<div class="panel-body recent-property-widget">
+									<img src="assets/img/ads.jpg">
+								</div>
+							</div>
 
-                            <div class="panel panel-default sidebar-menu wow fadeInRight animated" >
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Smart search</h3>
-                                </div>
-                                <div class="panel-body search-widget">
-                                    <form action="" class=" form-inline"> 
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <input type="text" class="form-control" placeholder="Key word">
-                                                </div>
-                                            </div>
-                                        </fieldset>
+							<div
+								class="panel panel-default sidebar-menu wow fadeInRight animated">
+								<div class="panel-heading">
+									<h3 class="panel-title">Smart search</h3>
+								</div>
+								<div class="panel-body search-widget">
+									<form action="" class=" form-inline">
+										<fieldset>
+											<div class="row">
+												<div class="col-xs-12">
+													<input type="text" class="form-control"
+														placeholder="Key word">
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-xs-6">
+										<fieldset>
+											<div class="row">
+												<div class="col-xs-6">
 
-                                                    <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Select Your City">
+													<select id="lunchBegins" class="selectpicker"
+														data-live-search="true" data-live-search-style="begins"
+														title="Select Your City">
 
-                                                        <option>New york, CA</option>
-                                                        <option>Paris</option>
-                                                        <option>Casablanca</option>
-                                                        <option>Tokyo</option>
-                                                        <option>Marraekch</option>
-                                                        <option>kyoto , shibua</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-6">
+														<option>New york, CA</option>
+														<option>Paris</option>
+														<option>Casablanca</option>
+														<option>Tokyo</option>
+														<option>Marraekch</option>
+														<option>kyoto , shibua</option>
+													</select>
+												</div>
+												<div class="col-xs-6">
 
-                                                    <select id="basic" class="selectpicker show-tick form-control">
-                                                        <option> -Status- </option>
-                                                        <option>Rent </option>
-                                                        <option>Boy</option>
-                                                        <option>used</option>  
+													<select id="basic"
+														class="selectpicker show-tick form-control">
+														<option>-Status-</option>
+														<option>Rent</option>
+														<option>Boy</option>
+														<option>used</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+													</select>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <label for="price-range">Price range ($):</label>
-                                                    <input type="text" class="span2" value="" data-slider-min="0" 
-                                                           data-slider-max="600" data-slider-step="5" 
-                                                           data-slider-value="[0,450]" id="price-range" ><br />
-                                                    <b class="pull-left color">2000$</b> 
-                                                    <b class="pull-right color">100000$</b>                                                
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label for="property-geo">Property geo (m2) :</label>
-                                                    <input type="text" class="span2" value="" data-slider-min="0" 
-                                                           data-slider-max="600" data-slider-step="5" 
-                                                           data-slider-value="[50,450]" id="property-geo" ><br />
-                                                    <b class="pull-left color">40m</b> 
-                                                    <b class="pull-right color">12000m</b>                                                
-                                                </div>                                            
-                                            </div>
-                                        </fieldset>                                
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<label for="price-range">Price range ($):</label> <input
+														type="text" class="span2" value="" data-slider-min="0"
+														data-slider-max="600" data-slider-step="5"
+														data-slider-value="[0,450]" id="price-range"><br />
+													<b class="pull-left color">2000$</b> <b
+														class="pull-right color">100000$</b>
+												</div>
+												<div class="col-xs-6">
+													<label for="property-geo">Property geo (m2) :</label> <input
+														type="text" class="span2" value="" data-slider-min="0"
+														data-slider-max="600" data-slider-step="5"
+														data-slider-value="[50,450]" id="property-geo"><br />
+													<b class="pull-left color">40m</b> <b
+														class="pull-right color">12000m</b>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <label for="price-range">Min baths :</label>
-                                                    <input type="text" class="span2" value="" data-slider-min="0" 
-                                                           data-slider-max="600" data-slider-step="5" 
-                                                           data-slider-value="[250,450]" id="min-baths" ><br />
-                                                    <b class="pull-left color">1</b> 
-                                                    <b class="pull-right color">120</b>                                                
-                                                </div>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<label for="price-range">Min baths :</label> <input
+														type="text" class="span2" value="" data-slider-min="0"
+														data-slider-max="600" data-slider-step="5"
+														data-slider-value="[250,450]" id="min-baths"><br />
+													<b class="pull-left color">1</b> <b
+														class="pull-right color">120</b>
+												</div>
 
-                                                <div class="col-xs-6">
-                                                    <label for="property-geo">Min bed :</label>
-                                                    <input type="text" class="span2" value="" data-slider-min="0" 
-                                                           data-slider-max="600" data-slider-step="5" 
-                                                           data-slider-value="[250,450]" id="min-bed" ><br />
-                                                    <b class="pull-left color">1</b> 
-                                                    <b class="pull-right color">120</b>
+												<div class="col-xs-6">
+													<label for="property-geo">Min bed :</label> <input
+														type="text" class="span2" value="" data-slider-min="0"
+														data-slider-max="600" data-slider-step="5"
+														data-slider-value="[250,450]" id="min-bed"><br />
+													<b class="pull-left color">1</b> <b
+														class="pull-right color">120</b>
 
-                                                </div>
-                                            </div>
-                                        </fieldset>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <div class="checkbox">
-                                                        <label> <input type="checkbox" checked> Fire Place</label>
-                                                    </div> 
-                                                </div>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox" checked>
+															Fire Place
+														</label>
+													</div>
+												</div>
 
-                                                <div class="col-xs-6">
-                                                    <div class="checkbox">
-                                                        <label> <input type="checkbox"> Dual Sinks</label>
-                                                    </div>
-                                                </div>                                            
-                                            </div>
-                                        </fieldset>
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox"> Dual Sinks
+														</label>
+													</div>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label> <input type="checkbox" checked> Swimming Pool</label>
-                                                    </div>
-                                                </div>  
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label> <input type="checkbox" checked> 2 Stories </label>
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                        </fieldset>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox" checked>
+															Swimming Pool
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox" checked> 2
+															Stories
+														</label>
+													</div>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label><input type="checkbox"> Laundry Room </label>
-                                                    </div>
-                                                </div>  
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label> <input type="checkbox"> Emergency Exit</label>
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                        </fieldset>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label><input type="checkbox"> Laundry
+															Room </label>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox"> Emergency
+															Exit
+														</label>
+													</div>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label>  <input type="checkbox" checked> Jog Path </label>
-                                                    </div>
-                                                </div>  
-                                                <div class="col-xs-6"> 
-                                                    <div class="checkbox">
-                                                        <label>  <input type="checkbox"> 26' Ceilings </label>
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                        </fieldset>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox" checked>
+															Jog Path
+														</label>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="checkbox">
+														<label> <input type="checkbox"> 26'
+															Ceilings
+														</label>
+													</div>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset class="padding-5">
-                                            <div class="row">
-                                                <div class="col-xs-12"> 
-                                                    <div class="checkbox">
-                                                        <label>  <input type="checkbox"> Hurricane Shutters </label>
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                        </fieldset>
+										<fieldset class="padding-5">
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="checkbox">
+														<label> <input type="checkbox"> Hurricane
+															Shutters
+														</label>
+													</div>
+												</div>
+											</div>
+										</fieldset>
 
-                                        <fieldset >
-                                            <div class="row">
-                                                <div class="col-xs-12">  
-                                                    <input class="button btn largesearch-btn" value="Search" type="submit">
-                                                </div>  
-                                            </div>
-                                        </fieldset>                                     
-                                    </form>
-                                </div>
-                            </div>
-
-                        </aside>
+										<fieldset>
+											<div class="row">
+												<div class="col-xs-12">
+													<input class="button btn largesearch-btn" value="Search"
+														type="submit">
+												</div>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+					</aside>
                     </div>
                 </div>
 
             </div>
         </div>
+<!--        Footer area -->
+<!--         <div class="footer-area"> -->
+
+<!--             <div class=" footer"> -->
+<!--                 <div class="container"> -->
+<!--                     <div class="row"> -->
+
+<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
+<!--                             <div class="single-footer"> -->
+<!--                                 <h4>About us </h4> -->
+<!--                                 <div class="footer-title-line"></div> -->
+
+<!--                                 <img src="assets/img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s"> -->
+<!--                                 <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p> -->
+<!--                                 <ul class="footer-adress"> -->
+<!--                                     <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li> -->
+<!--                                     <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li> -->
+<!--                                     <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li> -->
+<!--                                 </ul> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
+<!--                             <div class="single-footer"> -->
+<!--                                 <h4>Quick links </h4> -->
+<!--                                 <div class="footer-title-line"></div> -->
+<!--                                 <ul class="footer-menu"> -->
+<!--                                     <li><a href="properties.html">Properties</a>  </li>  -->
+<!--                                     <li><a href="#">Services</a>  </li>  -->
+<!--                                     <li><a href="submit-property.html">Submit property </a></li>  -->
+<!--                                     <li><a href="contact.html">Contact us</a></li>  -->
+<!--                                     <li><a href="faq.html">fqa</a>  </li>  -->
+<!--                                     <li><a href="faq.html">Terms </a>  </li>  -->
+<!--                                 </ul> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
+<!--                             <div class="single-footer"> -->
+<!--                                 <h4>Last News</h4> -->
+<!--                                 <div class="footer-title-line"></div> -->
+<!--                                 <ul class="footer-blog"> -->
+<!--                                     <li> -->
+<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
+<!--                                             <a href="single.html"> -->
+<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
+<!--                                             </a> -->
+<!--                                             <span class="blg-date">12-12-2016</span> -->
+
+<!--                                         </div> -->
+<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
+<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
+<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
+<!--                                         </div> -->
+<!--                                     </li>  -->
+
+<!--                                     <li> -->
+<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
+<!--                                             <a href="single.html"> -->
+<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
+<!--                                             </a> -->
+<!--                                             <span class="blg-date">12-12-2016</span> -->
+
+<!--                                         </div> -->
+<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
+<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
+<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
+<!--                                         </div> -->
+<!--                                     </li>  -->
+
+<!--                                     <li> -->
+<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
+<!--                                             <a href="single.html"> -->
+<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
+<!--                                             </a> -->
+<!--                                             <span class="blg-date">12-12-2016</span> -->
+
+<!--                                         </div> -->
+<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
+<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
+<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
+<!--                                         </div> -->
+<!--                                     </li>  -->
 
 
-        <script>
-            $(document).ready(function () {
+<!--                                 </ul> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
+<!--                             <div class="single-footer news-letter"> -->
+<!--                                 <h4>Stay in touch</h4> -->
+<!--                                 <div class="footer-title-line"></div> -->
+<!--                                 <p>Lorem ipsum dolor sit amet, nulla  suscipit similique quisquam molestias. Vel unde, blanditiis.</p> -->
 
-                $('#image-gallery').lightSlider({
-                    gallery: true,
-                    item: 1,
-                    thumbItem: 9,
-                    slideMargin: 0,
-                    speed: 500,
-                    auto: true,
-                    loop: true,
-                    onSliderLoad: function () {
-                        $('#image-gallery').removeClass('cS-hidden');
-                    }
-                });
-            });
-        </script>
+<!--                                 <form> -->
+<!--                                     <div class="input-group"> -->
+<!--                                         <input class="form-control" type="text" placeholder="E-mail ... "> -->
+<!--                                         <span class="input-group-btn"> -->
+<!--                                             <button class="btn btn-primary subscribe" type="button"><i class="pe-7s-paper-plane pe-2x"></i></button> -->
+<!--                                         </span> -->
+<!--                                     </div> -->
+<!--                                     /input-group -->
+<!--                                 </form>  -->
+
+<!--                                 <div class="social pull-right">  -->
+<!--                                     <ul> -->
+<!--                                         <li><a class="wow fadeInUp animated" href="https://twitter.com/kimarotec"><i class="fa fa-twitter"></i></a></li> -->
+<!--                                         <li><a class="wow fadeInUp animated" href="https://www.facebook.com/kimarotec" data-wow-delay="0.2s"><i class="fa fa-facebook"></i></a></li> -->
+<!--                                         <li><a class="wow fadeInUp animated" href="https://plus.google.com/kimarotec" data-wow-delay="0.3s"><i class="fa fa-google-plus"></i></a></li> -->
+<!--                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.4s"><i class="fa fa-instagram"></i></a></li> -->
+<!--                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.6s"><i class="fa fa-dribbble"></i></a></li> -->
+<!--                                     </ul>  -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </div> -->
+
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+
+<!--             <div class="footer-copy text-center"> -->
+<!--                 <div class="container"> -->
+<!--                     <div class="row"> -->
+<!--                         <div class="pull-left"> -->
+<!--                             <span> (C) <a href="http://www.KimaroTec.com">KimaroTheme</a> , All rights reserved 2016  </span>  -->
+<!--                         </div>  -->
+<!--                         <div class="bottom-menu pull-right">  -->
+<!--                             <ul>  -->
+<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.2s">Home</a></li> -->
+<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.3s">Property</a></li> -->
+<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.4s">Faq</a></li> -->
+<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s">Contact</a></li> -->
+<!--                             </ul>  -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+
+<!--         </div> -->
+
+<!--         <script src="/resources/assets/js/modernizr-2.6.2.min.js"></script> -->
+<!--         <script src="/resources/assets/js/jquery-1.10.2.min.js"></script> -->
+<!--         <script src="/resources/bootstrap/js/bootstrap.min.js"></script> -->
+<!--         <script src="/resources/assets/js/bootstrap-select.min.js"></script> -->
+<!--         <script src="/resources/assets/js/bootstrap-hover-dropdown.js"></script> -->
+<!--         <script src="/resources/assets/js/easypiechart.min.js"></script> -->
+<!--         <script src="/resources/assets/js/jquery.easypiechart.min.js"></script> -->
+<!--         <script src="/resources/assets/js/owl.carousel.min.js"></script> -->
+<!--         <script src="/resources/assets/js/wow.js"></script> -->
+<!--         <script src="/resources/assets/js/icheck.min.js"></script> -->
+<!--         <script src="/resources/assets/js/price-range.js"></script> -->
+<!--         <script type="text/javascript" src="/resources/assets/js/lightslider.min.js"></script> -->
+<!--         <script src="/resources/assets/js/main.js"></script> -->
+
+<!--         <script> -->
+<!-- //                             $(document).ready(function () { -->
+
+<!-- //                                 $('#image-gallery').lightSlider({ -->
+<!-- //                                     gallery: true, -->
+<!-- //                                     item: 1, -->
+<!-- //                                     thumbItem: 9, -->
+<!-- //                                     slideMargin: 0, -->
+<!-- //                                     speed: 500, -->
+<!-- //                                     auto: true, -->
+<!-- //                                     loop: true, -->
+<!-- //                                     onSliderLoad: function () { -->
+<!-- //                                         $('#image-gallery').removeClass('cS-hidden'); -->
+<!-- //                                     } -->
+<!-- //                                 }); -->
+<!-- //                             }); -->
+<!--         </script> -->
+
+
+
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	// 글 번호를 저장한 폼태그
+	var formObj = $("form[role='form']"); 
+		  // 결제하기
+		  $("#reserve").click(function(){
+			 if(${id == null}){
+			  location.href='/db/login';
+			  return;
+			 }
+			 
+				 alert('결제창띄우기');
+			        var IMP = window.IMP; 
+			        IMP.init("imp75550270"); 
+				
+					  
+							alert('@');
+						    IMP.request_pay({
+						      pg: "html5_inicis.INIpayTest",
+						      pay_method: "card",
+						      merchant_uid: "ORD20180131-0000222",   // 주문번호
+						      name: "주문명:결제테스트",
+						      amount: 100,                         // 숫자 타입
+						      buyer_email: ${memberVO.m_email},
+						      buyer_name: ${memberVO.m_name},
+						      buyer_tel: ${memberVO.m_phone},
+						      buyer_addr: "서울특별시 강남구 신사동",
+						      buyer_postcode: "01181"
+						    }, function (rsp) { // callback
+						      if (rsp.success) {
+						        // 결제 성공 시 로직
+						        
+					                console.log(rsp);
+					                formObj.submit();
+						        
+						      } else {
+						        // 결제 실패 시 로직
+						      }
+						    });
+						  
+		
+					  
+// 		  });
+
+		  // 수정하기
+// 	  $(".btn-success").click(function(){
+// 		 formObj.submit();
+// 	  });	
+		  
+		  
+//  });
+</script>
 <%@ include file="../include/footer.jsp" %>

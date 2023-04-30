@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,16 @@ import com.wolclass.persistance.ClassDAO;
 
 @Service
 public class ClassServiceImpl implements ClassService {
-
+	private static final Logger logger = LoggerFactory.getLogger(ClassServiceImpl.class);
+	
 	@Autowired
 	private ClassDAO dao;
+	
+	@Override
+	public ClassVO getClassDetail(Integer c_no) throws Exception {
+		logger.info("service-dao호출");
+		return dao.selectClass(c_no);
+	}
 	
 	@Override
 	public List<ClassVO> getNearbyClassList(Object lat, Object lng) throws Exception {

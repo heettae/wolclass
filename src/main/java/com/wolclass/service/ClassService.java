@@ -12,4 +12,7 @@ public interface ClassService {
 
 	// 주변 검색 리스트 hj
 	public List<ClassVO> getNearbyClassList(Object lat, Object lng) throws Exception;
+	
+	// 상세페이지 조회 TH
+	public ClassVO getClassDetail(Integer c_no) throws Exception;
 }

@@ -5,6 +5,11 @@
 
 <mapper namespace="com.wolclass.mappers.SubscriptionMapper">
 	
+	<!-- 구독정보 조회 TH -->
+	<select id="getSubsInfo" resultType="SubscriptionVO">
+	select * from wc_subscription where m_id=#{m_id} and s_end>=now()
+	</select>
+	
 	<select id="cnt" resultType="int">
 	<![CDATA[  
 	

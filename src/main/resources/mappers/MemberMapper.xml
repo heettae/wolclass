@@ -5,6 +5,14 @@
 
 <mapper namespace="com.wolclass.mappers.MemberMapper">
 	
+	<!-- 회원 정보 -->	
+	<select id="getMemberInfo" resultType="MemberVO">
+		select *
+		from wc_member
+		where m_id = #{m_id}
+	</select>
+	<!-- 회원 정보 -->	
+	
 	<select id="cnt" resultType="int">
 	<![CDATA[  
 	
