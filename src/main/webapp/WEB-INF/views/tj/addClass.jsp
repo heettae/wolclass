@@ -13,10 +13,10 @@
 <form role="form" id="offline">
 <div class="box-body">
 <div class="form-group">
-<label for="exampleInputEmail1">오프라인</label>
-<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="off">
-<label for="exampleInputEmail1">온라인</label>
-<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="on">
+<label for="offline">오프라인</label>
+<input type="radio" class="form-control" id="off" name="way" value="off">
+<label for="online">온라인</label>
+<input type="radio" class="form-control" id="on" name="way" value="on">
 </div>
 <div class="form-group">
 <label for="exampleInputPassword1">클래스명</label><span style="color: red">(필수)</span>
@@ -58,9 +58,11 @@
 <input type="radio" id="c_level" name="c_level" value="1">하
 <div id="c_level_warning"></div>
 </div>
+
 <div class="form-group">
-<label for="exampleInputPassword1">소요시간</label>
+<label for="exampleInputPassword1">소요시간</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
+<div id="c_time_warning"></div>
 </div>
 
 					<div class="form-group">
@@ -93,12 +95,12 @@
 
 <div class="form-group">
 <label for="exampleInputPassword1">클래스 참여가능 인원</label><span style="color: red">(필수)</span>
-<input type="number" class="form-control" id="exampleInputPassword1" min="1" max="30" name="c_maxperson">
+<input type="number" class="form-control" id="exampleInputPassword1" min="1" max="50" name="c_maxperson">
 <div id="c_maxperson_warning"></div>
 </div>
 
 <div class="box-footer">
-<button type="submit" class="btn btn-primary">등록하기</button>
+<button type="submit" class="btn btn-primary" id="addClassBtn">등록하기</button>
 </div>
 </form>
 <!-- 오프라인 폼 -->
@@ -107,10 +109,10 @@
 <form role="form" style="display: none;" id="online">
 <div class="box-body">
 <div class="form-group">
-<label for="exampleInputEmail1">오프라인</label>
-<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="off">
-<label for="exampleInputEmail1">온라인</label>
-<input type="radio" class="form-control" id="exampleInputEmail1" name="way" value="on">
+<label for="offline">오프라인</label>
+<input type="radio" class="form-control" id="off" name="way" value="off">
+<label for="online">온라인</label>
+<input type="radio" class="form-control" id="on" name="way" value="on">
 </div>
 <div class="form-group">
 <label for="exampleInputPassword1">클래스명</label><span style="color: red">(필수)</span>
@@ -167,7 +169,7 @@ placeholder="클래스명을 입력하세요." name="c_name">
 </div>
 
 <div class="box-footer">
-<button type="submit" class="btn btn-primary">등록하기</button>
+<button type="submit" class="btn btn-primary" id="addClassBtn">등록하기</button>
 </div>
 </form>
 <!-- 온라인 폼 -->
@@ -235,42 +237,40 @@ function DaumPostcode() {
 // 	  $('input[name=way]').on('click', function() {
 // 	    alert($(this).val());
 // 	  });
-var a = null;
 var formObj = $('form[role="form"]');
-// alert('d222222');
 		$('input[name=way]').click(function(){
+			alert('ddddddddddd');
 			a = $(this).val();
 			if(a == 'on'){
+				console.log("@@@@@@@@@@@"+a);
 				$('#online').show();
 				$('#offline').hide();
 			} 
 			if(a == 'off'){
+				console.log("@@@@@@@@@@@"+a);
 				$('#online').hide();
 				$('#offline').show();
 			}
 			
 		});
 		
-		$('.btn-primary').click(function(){
-			formObj.attr("action","/tj/addClass");
-			formObj.attr("method","post");
-		});
+		
 
-
+// 클래스 등록 유효성 체크
+  // 클래스명 체크
+  $('input[name=c_name]').on('input', function(event) {
+	  var c_name = $('input[name=c_name]').val();
+	  if (c_name.trim() === '') {
+	    $('#c_name_warning').text('클래스명을 입력하세요.').css('color', 'red');
+	    $('input[name=c_name]').val('');
+	    $('input[name=c_name]').focus();
+	    event.preventDefault(); // 폼 전송 막기
+	  } else {
+	    $('#c_name_warning').text('').css('color', 'black');
+	  }
 	});
 
 
-// 클래스 등록 유효성 체크
-$(document).ready(function() {
-  // 클래스명 체크
-  $('#exampleInputPassword1').on('input', function() {
-    var c_name = $('#exampleInputPassword1').val();
-    if (c_name.trim() === '') {
-      $('#c_name_warning').text('클래스명을 입력하세요.').css('color', 'red');
-    } else {
-      $('#c_name_warning').text('').css('color', 'black');
-    }
-  });
   // 클래스명 체크
 	
   // 카테고리 체크
@@ -295,9 +295,48 @@ $(document).ready(function() {
   });
   // 상세내용 체크 
   
+  // 소요시간 체크
+  $('input[name=c_time]').on('input', function(){
+	 var c_time = $(this).val();
+	 if(c_time.trim() === ''){
+		 $('#c_time_warning').text('소요시간을 입력하세요.').css('color', 'red');
+	 } else {
+		 $('#c_time_warning').text('').css('color','black');
+	 }
+  });
+  // 소요시간 체크
   
-});
+  // 가격 체크
+  $('input[name=c_price]').on('input', function(){
+	  var c_price = $(this).val();
+	 if(c_price.trim() === ''){
+		 $('#c_price_warning').text('가격을 입력하세요.').css('color', 'red');
+	 } else{
+		 $('#c_price_warning').text('').css('color', 'black');
+	 }
+  });
+  // 가격 체크
+  
+  $('input[name=c_maxperson]').on('input', function(){
+	  var c_maxperson = $(this).val();
+	 if(c_maxperson.trim() === ''){
+		 $('#c_maxperson_warning').text('최대 인원을 선택하세요.').css('color', 'red');
+	 } else{
+		 $('#c_maxperson_warning').text('').css('color', 'black');
+	 }
+  });
+  // 가격 체크
 // 클래스 유효성 체크
+
+// 클래스 등록 폼 전송
+  $('#addClassBtn').click(function(){
+		formObj.attr("action","/tj/addClass");
+		formObj.attr("method","post");
+	});
+// 클래스 등록 폼 전송
+});
+
+
 
 	
 </script>

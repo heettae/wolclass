@@ -11,6 +11,6 @@ public class TimetableVO {
 	private Time t_start;
 	private Time t_end;
 	private Date t_date;
-	private int t_rem_p;
+	private Integer t_rem_p;
 	private Integer c_no;
 }

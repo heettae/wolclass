@@ -1,13 +1,17 @@
 package com.wolclass.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 
 public interface TJDAO {
-	// 클래스 등록(보류) tj
-	public void addClass(ClassVO vo) throws Exception;
+	// 클래스 등록 tj
+	public int addClass(ClassVO vo) throws Exception;
+	
+	// 클래스 시간 등록
+	public void addTime(Map<String, Object> map) throws Exception;
 	
 	// 회원 조회
 	public MemberVO getMemberInfo(String m_id) throws Exception;

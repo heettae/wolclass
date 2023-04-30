@@ -2,15 +2,17 @@ package com.wolclass.service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
-import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 
 public interface TJService {
-	public void addClass(ClassVO vo) throws Exception;
+	// 클래스 등록
+	public int addClass(ClassVO vo) throws Exception;
 	
-//	public List<ClassVO> getRecommendations(String m_id);
+	// 클래스 시간 등록
+	public void addTime(Map<String, Object> map) throws Exception;
 	
 	// 회원 정보 조회
 	public MemberVO getMemberInfo(String m_id) throws Exception;

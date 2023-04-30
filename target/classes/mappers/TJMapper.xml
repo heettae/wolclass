@@ -4,16 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wolclass.mappers.TJMapper">
-<!-- 클래스 등록 -->
+	<!-- 클래스 등록 -->
 	<insert id="addClass">
-		insert into wc_class *
-		values(c_name=#{c_name}, m_id=#{m_id}, c_maxperson=#{c_maxperson}, c_addr=#{c_addr1},
-		 c_addr2=#{c_addr2}, c_addrdetails=#{c_addrdetails}, c_lati=#{c_lati}, c_longi=#{c_longi}, 
-		 c_level=#{c_level}, c_time=#{c_time}, c_category=#{c_category}, c_content=#{c_content}, 
-		 c_img=#{c_img}, c_price=#{c_price}, c_confirm=#{c_confirm})
+		insert into wc_class (c_name, m_id, c_maxperson, c_addr1, c_addr2, c_addrdetails, c_lati, 
+		c_longi, c_level, c_time, c_category, c_content, c_img, c_price, c_confirm, c_regdate)
+		values(#{c_name}, #{m_id}, #{c_maxperson}, #{c_addr1}, #{c_addr2}, #{c_addrdetails}, #{c_lati}, #{c_longi}, 
+		#{c_level}, #{c_time}, #{c_category}, #{c_content}, #{c_img}, #{c_price}, default, default)                         
 	</insert>	
-<!-- 클래스 등록 -->
+	<!-- 클래스 등록 -->
 	
+	<!-- 클래스 시간, 날짜 등록 -->
+	<insert id="addTime">
+		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no)
+		values (#{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
+	</insert>
+	<!-- 클래스 시간, 날짜 등록 -->
+
 	<!-- 해당 키워드 리스트 출력 -->
 	<select id="findByKeyword" resultType="ClassVO">
 		select *
@@ -51,8 +57,13 @@
 	and m_id=#{m_id};
 	</select>
 	<!-- 반려견 생일 7일전 -->	
-	
-	
-	
+
+	<!-- 클래스 워크스페이스 리스트 -->
+	<select id="registerClassList" resultType="ClassVO">
+		select *
+		from wc_class
+		where m_id=#{m_id}
+	</select>
+	<!-- 클래스 워크스페이스 리스트 -->
 	
 </mapper>	
