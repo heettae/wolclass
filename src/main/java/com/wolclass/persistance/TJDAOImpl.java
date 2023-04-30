@@ -1,6 +1,7 @@
 package com.wolclass.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -21,11 +22,18 @@ public class TJDAOImpl implements TJDAO {
 
 	// 클래스 등록
 	@Override
-	public void addClass(ClassVO vo) throws Exception {
-		sqlSession.insert(NAMESPACE+".addClass", vo);
+	public int addClass(ClassVO vo) throws Exception {
+		return sqlSession.insert(NAMESPACE+".addClass", vo);
 	}
 	// 클래스 등록
 
+	// 클래스 시간 등록
+	@Override
+	public void addTime(Map<String, Object> map) throws Exception {
+		sqlSession.insert(NAMESPACE+".addTime", map);
+	}
+	// 클래스 시간 등록
+	
 	// 회원정보 조회
 	@Override
 	public MemberVO getMemberInfo(String m_id) {
@@ -34,8 +42,10 @@ public class TJDAOImpl implements TJDAO {
 		return vo;
 	}
 	// 회원정보 조회
-	
-	
+
+
+
+
 	// 키워드별 추천 - tj
 	@Override
 	public List<ClassVO> findByKeyword(String keyword) {

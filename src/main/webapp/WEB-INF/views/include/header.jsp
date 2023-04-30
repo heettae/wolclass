@@ -33,7 +33,7 @@
 <!-- 		<link rel="stylesheet" href="/resources/admidist/css/skins/skin-blue.min.css"> -->
 <!-- 		<link rel="stylesheet" href="/resources/admidist/css/AdminLTE.min.css"> -->
 <!-- 		<link rel="stylesheet" href="/resources/admiplugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> -->
-		<!-- Google Font -->
+ 		<!-- Google Font --> 
 <!-- 		<link rel="stylesheet" -->
 <!--         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 		<!-- adminlte -->
@@ -62,7 +62,10 @@
 		integrity="sha512-......" 
 		crossorigin="anonymous" />
         <!-- Font Awesome CSS -->
+        
+        <!-- jQuery cdn -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <!-- jQuery cdn -->
 
       
 
@@ -137,6 +140,7 @@
 
     </head>
 <body>
+<input type="hidden" value="${sessionScope.id }" id="id">
 <nav class="navbar navbar-default " style="top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
                 <div class="navbar-header" style="margin-left: 100px;">
 <!--                         <span class="">WolClass</span> -->
@@ -407,7 +411,7 @@
 					<input type="password" class="form-control" name="m_pw">
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-default">로그인</button>
+					<button class="btn btn-default" id="loginBtn">로그인</button>
 				</div>
 			</form>
 			<div class="text-center">
@@ -433,30 +437,29 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var id = '${sessionScope.id}';
+		
 		$('#join').click(function(){
-			alert('회원가입');
 			location.href="/db/join";
 			return false;
 		})
 		
 		$('#logout').click(function(){
-			alert('ddddddddddd');
 			location.href="/db/logout";
 			return false;
 		});
 		
-		$('#addClass').click(function(){
-			
-			if(id == null){
-				$('#loginModal').modal('show');
-				alert('로그인 창');
-			}else{
-				location.href="/tj/addClass";
-				alert('클래스 등록');
-			}
-			return false;
-		});
+		$('#addClass').on('click', function() {
+		    var id = $('#id').val();
+		    console.log(id);
+		    if (!id) {
+		    	alert('로그인이 필요합니다.');
+		      $('#loginModal').modal('show');
+		    } else{
+		    	alert('클래스 등록');
+		    	location.href='/tj/addClass';
+		    }
+		    return false;
+		  });
 		
 	});
 	
@@ -469,7 +472,7 @@
 	  });
 	// 모달창 id,pw 이벤트 전파 막기
 	// 로그인 submit - 다빈
-	$("#LoginBtn").click(function(){
+	$("#loginBtn").click(function(){
 		  $("#login_form").attr("action","/db/login");
 		  $("#login_form").submit();
 	});
