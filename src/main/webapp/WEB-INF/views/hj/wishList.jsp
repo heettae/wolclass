@@ -3,35 +3,6 @@
     
 <%@ include file="../include/header.jsp" %>
 
-<!-- 작업 완료 시 헤더로 옮길 예정 -->
-<style>
-/* 위시리스트 */
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 24px;
-  color: #ccc;
-  transition: all 0.3s ease;
-}
-
-.wishlist-btn.active i:first-child {
-  display: none;
-}
-
-.wishlist-btn.active i:last-child {
-  display: inline;
-  color: #f44336;
-}
-/* 위시리스트 */
-</style>
-<!-- 작업 완료 시 헤더로 옮길 예정 -->
-
-
 <!-- 클래스 리스트 HJ -->
 <div class="col-md-12 padding-top-40 properties-page">
 

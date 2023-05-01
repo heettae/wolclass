@@ -3,34 +3,6 @@
     
 <%@ include file="../include/header.jsp" %>
 
-<!-- 작업 완료 시 헤더로 옮길 예정 -->
-<style>
-/* 위시리스트 */
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 24px;
-  color: #ccc;
-  transition: all 0.3s ease;
-}
-
-.wishlist-btn.active i:first-child {
-  display: none;
-}
-
-.wishlist-btn.active i:last-child {
-  display: inline;
-  color: #f44336;
-}
-/* 위시리스트 */
-</style>
-<!-- 작업 완료 시 헤더로 옮길 예정 -->
-
 <!-- 지도 팝업창 관련 -->
 <input type="hidden" id="srchdata" value='${jsonStr}'>
 <script type="text/javascript">

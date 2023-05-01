@@ -93,9 +93,9 @@ public class ClassController {
 	
 	//주변검색 팝업 HJ
 	@RequestMapping(value = "/popupLocation")
-	public void popupLocationAll(HttpServletRequest request, Model model) throws Exception {
+	public void popupLocationAll(HttpSession session, Model model) throws Exception {
 		logger.info(" popupLocation() 호출 ");
-		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(cservice.getNearbyClassList(request.getSession().getAttribute("userLat"), request.getSession().getAttribute("userLng"))));
+		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(cservice.getNearbyClassList(session.getAttribute("userLat"), session.getAttribute("userLng"))));
 	}
 	//주변검색 팝업 HJ
 	
