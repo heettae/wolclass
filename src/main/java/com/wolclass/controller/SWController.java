@@ -34,7 +34,6 @@ public class SWController {
 	public void registGET() throws Exception {
 		logger.info(" registGET() - 글정보 입력! ");
 		logger.info(" 연결된 view페이지 이동 ");
-		// /boards/regist.jsp
 	}
 
 	// 글쓰기 정보 처리
@@ -52,17 +51,33 @@ public class SWController {
 	
 	  // http://localhost:8080/sw/community 
 	  // 글 전체 조회	  
-	  @RequestMapping(value = "/community", method = RequestMethod.GET ) 
+	  @RequestMapping(value = "/community", method = RequestMethod.GET) 
 	  public void listAllGET(@RequestParam Map<String,Object> map, Model model) throws	Exception { 
 		  logger.info(" listAllGet() 글전체 조회"); 
 	  
 		  List<BoardVO> boardList = service.selectPageNumBoTotal(map); 
 		  logger.info(" boardList {}",boardList.size()); 
+		  logger.info(" boardList {}",boardList); 
+		  
 		  
 		  model.addAttribute("map", map);
 		  model.addAttribute("boardList", boardList);
 	  }
+	  
+	  	/*						 관리자페이지				   		*/
 	   
+	// http://localhost:8080/sw/admin
+	  // 관리자페이지
+	  @RequestMapping(value = "/admin", method = RequestMethod.GET)
+	  public void adminHomeGET() throws Exception {
+		  
+	  }
+	  // http://localhost:8080/sw/mypage
+	  // 마이페이지
+	  @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	  public void mypageHomeGET() throws Exception {
+		  
+	  }
 	  
 	
 	  

@@ -25,6 +25,7 @@
 	from wc_board 
 	where b_category like concat('%',#{b_category},'%')
 	and b_title like concat('%',#{search},'%')
+	order by b_no desc;
 	]]>
  	</select>
  	
