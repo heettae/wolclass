@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 
@@ -13,6 +15,12 @@ public interface TJService {
 	
 	// 클래스 시간 등록
 	public void addTime(Map<String, Object> map) throws Exception;
+	
+	// 등록 완료 클래스 리스트
+	public List<ClassVO> registerClassList(String m_id) throws Exception;
+	
+	// 파일 처리
+	public List<String> fileProcess(MultipartHttpServletRequest multiRequest) throws Exception;
 	
 	// 회원 정보 조회
 	public MemberVO getMemberInfo(String m_id) throws Exception;

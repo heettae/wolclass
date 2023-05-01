@@ -1,10 +1,12 @@
 package com.wolclass.controller;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,11 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.domain.TimetableVO;
 import com.wolclass.service.TJService;
+import com.wolclass.service.WishService;
 
 @Controller
 @RequestMapping("/tj/*")
@@ -31,6 +34,9 @@ public class TJController {
 	@Autowired
 	private TJService tjService;
 
+	@Autowired
+	private WishService wservice;
+	
 	// main 페이지 - tj
 	// http://localhost:8080/tj/main
 	@RequestMapping(value = "/main")
@@ -78,48 +84,63 @@ public class TJController {
 		    	logger.info("반려견 나이 : "+age);
 		    }
 		}
-
 		model.addAttribute("categoryList", classMap);
+		model.addAttribute("wishList",wservice.getCnoList((String)session.getAttribute("id")));
 		logger.info("classMap@@@@@@@@@@@@@@@@@ : "+classMap.size());
 	}
 	// main 페이지 - tj
 
 
+	
+	// 클래스 워크스페이스
+	@RequestMapping(value = "/classWorkSpace", method = RequestMethod.GET)
+	public void classWorkSpace(Model model, HttpSession session) throws Exception{
+		logger.info(" classWorkSpaceGET() 호출 ");
+		
+		String id = (String) session.getAttribute("id");
+		model.addAttribute("registerList", tjService.registerClassList(id));
+	}
+	// 클래스 워크스페이스
+	
 	// 클래스 등록 view 페이지 호출
 	@RequestMapping(value = "/addClass", method = RequestMethod.GET)
 	public void addClassGET() {
 		logger.info(" addClassGET() 호출 ");
 	}
 	// 클래스 등록 view 페이지 호출
-
+	
 	// 클래스 동록 - 처리
 	@RequestMapping(value = "/addClass", method = RequestMethod.POST)
-	public String addClassPOST(HttpSession session, @ModelAttribute("vo") ClassVO vo) throws Exception {
+	public String addClassPOST(HttpSession session, @ModelAttribute("vo") ClassVO vo,
+			MultipartHttpServletRequest multiRequest) throws Exception {
 		logger.info(" addClassPOST() 호출 ");
-		String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("id"); 
 		vo.setM_id(id);
 		
+		
+		tjService.fileProcess(multiRequest);
 		tjService.addClass(vo);
 		
 		logger.info("클래스 등록 완료@@@@@@@@@@@@");
-		return "redirect:/tj/main";
+		return "redirect:/tj/classWorkSpace";
 	}
 	// 클래스 동록 - 처리
 	
-	// 클래스 워크스페이스
-	@RequestMapping(value = "/registerClass", method = RequestMethod.GET)
-	public void classWorkspace() {
+	
+	
+	// 시간 등록
+	@RequestMapping(value = "/addTime", method = RequestMethod.POST)
+	public String addTimePOST(@RequestParam Map<String, Object> map) throws Exception{
+		logger.info(" addTimePOST() 호출 ");
+
+		tjService.addTime(map);
+		logger.info("Map@@@@@@@@@@@@"+map);
 		
+		return "redirect:/tj/classWorkSpace";
 	}
-	// 클래스 워크스페이스
+	// 시간 등록
 	
 	
 	
-	// 클래스 시간 등록 - 클래스 워크스페이스 페이지 만든 후 구현
-	@RequestMapping(value = "/addTime", method = RequestMethod.GET)
-	public void addTimeGET() throws Exception{
-		logger.info(" addTimeGET() 호출 ");
-	}
-	// 클래스 시간 등록
 	
 }

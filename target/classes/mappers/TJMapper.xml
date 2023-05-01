@@ -15,10 +15,19 @@
 	
 	<!-- 클래스 시간, 날짜 등록 -->
 	<insert id="addTime">
-		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no)
-		values (#{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
+		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no) 
+		values( #{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
 	</insert>
 	<!-- 클래스 시간, 날짜 등록 -->
+	
+	
+	<!-- 등록 완료 클래스 리스트 -->
+	<select id="registerClassList" resultType="ClassVO">
+		select *
+		from wc_class
+		where m_id=#{m_id}
+	</select>
+	<!-- 등록 완료 클래스 리스트 -->
 
 	<!-- 해당 키워드 리스트 출력 -->
 	<select id="findByKeyword" resultType="ClassVO">
@@ -58,12 +67,6 @@
 	</select>
 	<!-- 반려견 생일 7일전 -->	
 
-	<!-- 클래스 워크스페이스 리스트 -->
-	<select id="registerClassList" resultType="ClassVO">
-		select *
-		from wc_class
-		where m_id=#{m_id}
-	</select>
-	<!-- 클래스 워크스페이스 리스트 -->
+	
 	
 </mapper>	

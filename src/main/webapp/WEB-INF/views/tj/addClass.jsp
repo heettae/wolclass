@@ -10,22 +10,22 @@
 </div>
 
 <!-- 오프라인 폼 -->
-<form role="form" id="offline">
+<form role="form" id="offlineForm" enctype="multipart/form-data">
 <div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="off" name="way" value="off">
+<input type="radio" class="form-control" id="offline" name="way" value="off">
 <label for="online">온라인</label>
-<input type="radio" class="form-control" id="on" name="way" value="on">
+<input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
 <div class="form-group">
-<label for="exampleInputPassword1">클래스명</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="클래스명을 입력하세요." name="c_name">
+<label for="className">클래스명</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name">
 <div id="c_name_warning"></div>
 </div>
 <div class="form-group">
-<label for="exampleInputPassword1">카테고리</label><span style="color: red">(필수)</span>
-<select class="form-control" id="exampleInputPassword1" name="c_category">
+<label for="category">카테고리</label><span style="color: red">(필수)</span>
+<select class="form-control" id=""category"" name="c_category">
 	<option>카테고리를 선택하세요.</option>
 	<option>펫 푸드</option>
 	<option>펫 훈련</option>
@@ -37,18 +37,19 @@
 </div>
 
 <div class="form-group">
-<label for="exampleInputFile">대표 이미지</label><span style="color: red">(필수)</span>
-<input type="file" id="exampleInputFile" name="c_img">
-<div id="warning"></div>
+<label for="img1">대표 이미지</label><span style="color: red">(필수)</span>
+<input type="file" id="img1" name="c_img">
+<div id="img1_warning"></div>
 </div>
-<div class="form-group">
-<label for="exampleInputFile">클래스 이미지</label>
-<input type="file" id="exampleInputFile" name="c_img">
+
+<div class="form-group" id="imgForm">
+<label for="img2">기타 이미지</label>
+<input type="button" id="img2" value="이미지 추가" name="c_img" onclick="addFile();">
 </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">상세내용</label><span style="color: red">(필수)</span>
-<textarea class="form-control" id="exampleInputPassword1" name="c_content" placeholder="내용을 입력해주세요."></textarea>
+<label for="content">상세내용</label><span style="color: red">(필수)</span>
+<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요."></textarea>
 <div id="c_content_warning"></div>
 </div>
 <div class="checkbox">
@@ -60,8 +61,8 @@
 </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">소요시간</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
+<label for="time">소요시간</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time">
 <div id="c_time_warning"></div>
 </div>
 
@@ -82,20 +83,15 @@
                   </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">강사소개</label>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
-</div>
-
-<div class="form-group">
-<label for="exampleInputPassword1">금액</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="금액을 입력하세요." name="c_price">
+<label for="price">금액</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price">
 <div id="c_price_warning"></div>
 </div>
 </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">클래스 참여가능 인원</label><span style="color: red">(필수)</span>
-<input type="number" class="form-control" id="exampleInputPassword1" min="1" max="50" name="c_maxperson">
+<label for="maxperson">클래스 참여가능 인원</label><span style="color: red">(필수)</span>
+<input type="number" class="form-control" id="maxperson" min="1" max="50" name="c_maxperson">
 <div id="c_maxperson_warning"></div>
 </div>
 
@@ -106,22 +102,22 @@
 <!-- 오프라인 폼 -->
 
 <!-- 온라인 폼 -->
-<form role="form" style="display: none;" id="online">
+<form role="form" style="display: none;" id="onlineForm" enctype="multipart/form-data">
 <div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="off" name="way" value="off">
+<input type="radio" class="form-control" id="offline" name="way" value="off">
 <label for="online">온라인</label>
-<input type="radio" class="form-control" id="on" name="way" value="on">
+<input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
 <div class="form-group">
-<label for="exampleInputPassword1">클래스명</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="exampleInputPassword1" 
+<label for="className">클래스명</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="className" 
 placeholder="클래스명을 입력하세요." name="c_name">
 </div>
 <div class="form-group">
-<label for="exampleInputPassword1">카테고리</label><span style="color: red">(필수)</span>
-<select class="form-control" id="exampleInputPassword1" name="c_category">
+<label for="category">카테고리</label><span style="color: red">(필수)</span>
+<select class="form-control" id="category" name="c_category">
 	<option>카테고리를 선택하세요.</option>
 	<option>펫 푸드</option>
 	<option>펫 훈련</option>
@@ -132,17 +128,17 @@ placeholder="클래스명을 입력하세요." name="c_name">
 </div>
 
 <div class="form-group">
-<label for="exampleInputFile">대표 이미지</label>
-<input type="file" id="exampleInputFile" name="c_img">
+<label for="img1">대표 이미지</label>
+<input type="file" id="img1" name="c_img">
 </div>
 <div class="form-group">
-<label for="exampleInputFile">클래스 이미지</label>
-<input type="file" id="exampleInputFile" name="c_img">
+<label for="img2">클래스 이미지</label>
+<input type="file" id="img2" name="c_img">
 </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">상세내용</label><span style="color: red">(필수)</span>
-<textarea class="form-control" id="exampleInputPassword1" name="c_content" placeholder="내용을 입력해주세요."></textarea>
+<label for="content">상세내용</label><span style="color: red">(필수)</span>
+<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요."></textarea>
 </div>
 <div class="checkbox">
 <label>
@@ -152,19 +148,13 @@ placeholder="클래스명을 입력하세요." name="c_name">
 </label>
 </div>
 <div class="form-group">
-<label for="exampleInputPassword1">소요시간</label>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
-</div>
-
-
-<div class="form-group">
-<label for="exampleInputPassword1">강사소개</label>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="시간을 입력하세요." name="c_time">
+<label for="time">소요시간</label>
+<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time">
 </div>
 
 <div class="form-group">
-<label for="exampleInputPassword1">금액</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="exampleInputPassword1" placeholder="금액을 입력하세요." name="c_price">
+<label for="price">금액</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price">
 </div>
 </div>
 
@@ -181,24 +171,20 @@ placeholder="클래스명을 입력하세요." name="c_name">
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
 function DaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var addr = ''; // 주소 변수
             var extraAddr = ''; // 참고항목 변수
-
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                 addr = data.roadAddress;
             } else { // 사용자가 지번 주소를 선택했을 경우(J)
                 addr = data.jibunAddress;
             }
-
             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
             if(data.userSelectedType === 'R'){
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -220,7 +206,6 @@ function DaumPostcode() {
             } else {
                 document.getElementById("sample6_extraAddress").value = '';
             }
-
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcode').value = data.zonecode;
             //변경불가능하게 만들기
@@ -230,32 +215,33 @@ function DaumPostcode() {
         }
     }).open();
 }
+
+// 파일 추가
+var cnt = 1;
+function addFile(){
+	$("#imgForm").append("<input type='file' name='file"+cnt+"'/><br>");
+	cnt++;
+}
+// 파일 추가
 </script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-// 	  $('input[name=way]').on('click', function() {
-// 	    alert($(this).val());
-// 	  });
+	  $('#offline').prop('checked', true);
+	  $('input[name=way]').on('click', function() {
+		if($(this).val() == "on"){
+			$('#offlineForm').css('display', 'none');
+			$('#onlineForm').css('display', 'block');
+		} else{
+			$('#onlineForm').css('display', 'none');
+			$('#offlineForm').css('display', 'block');
+		}
+		
+	  });
+	  
 var formObj = $('form[role="form"]');
-		$('input[name=way]').click(function(){
-			alert('ddddddddddd');
-			a = $(this).val();
-			if(a == 'on'){
-				console.log("@@@@@@@@@@@"+a);
-				$('#online').show();
-				$('#offline').hide();
-			} 
-			if(a == 'off'){
-				console.log("@@@@@@@@@@@"+a);
-				$('#online').hide();
-				$('#offline').show();
-			}
-			
-		});
 		
 		
-
 // 클래스 등록 유효성 체크
   // 클래스명 체크
   $('input[name=c_name]').on('input', function(event) {
@@ -269,8 +255,6 @@ var formObj = $('form[role="form"]');
 	    $('#c_name_warning').text('').css('color', 'black');
 	  }
 	});
-
-
   // 클래스명 체크
 	
   // 카테고리 체크
@@ -335,9 +319,6 @@ var formObj = $('form[role="form"]');
 	});
 // 클래스 등록 폼 전송
 });
-
-
-
 	
 </script>
 

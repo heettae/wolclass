@@ -34,6 +34,14 @@ public class TJDAOImpl implements TJDAO {
 	}
 	// 클래스 시간 등록
 	
+	// 등록 완료 클래스 리스트
+	@Override
+	public List<ClassVO> registerClassList(String m_id) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".registerClassList", m_id);
+	}
+	// 등록 완료 클래스 리스트
+	
 	// 회원정보 조회
 	@Override
 	public MemberVO getMemberInfo(String m_id) {
@@ -44,8 +52,6 @@ public class TJDAOImpl implements TJDAO {
 	// 회원정보 조회
 
 
-
-
 	// 키워드별 추천 - tj
 	@Override
 	public List<ClassVO> findByKeyword(String keyword) {
@@ -53,6 +59,7 @@ public class TJDAOImpl implements TJDAO {
 		return sqlSession.selectList(NAMESPACE+".findByKeyword", keyword);
 	}
 	// 키워드별 추천 - tj
+
 
 	// 카테고리별 리스트
 	@Override
