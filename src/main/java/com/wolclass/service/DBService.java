@@ -1,5 +1,6 @@
 package com.wolclass.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +32,10 @@ public interface DBService {
 
 	// 임시비밀번호 설정 - 다빈
 	public void updateTempPw(MemberVO vo);
+	
+	// 카카오로그인 토큰 - 다빈
+	public String getAccessToken(String authorize_code);
+	public HashMap<String, Object> getUserInfo(String access_Token);
 	
 	
 }
