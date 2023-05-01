@@ -31,7 +31,7 @@
 </style>
 <!-- 작업 완료 시 헤더로 옮길 예정 -->
 
-<!-- 팝업창 제어 -->
+<!-- 지도 팝업창 관련 -->
 <input type="hidden" id="srchdata" value='${jsonStr}'>
 <script type="text/javascript">
 function openMap(){
@@ -51,8 +51,9 @@ function openLocation(){
 	});
 }
 </script>
-<!-- 팝업창 제어 -->
-<!-- 클래스 리스트 hj -->
+<!-- 지도 팝업창 관련 -->
+
+<!-- 클래스 리스트 HJ -->
 <div class="col-md-12 padding-top-40 properties-page">
 	<!-- 버튼 컨테이너 -->
 	<div class="col-md-12 "> 
@@ -66,6 +67,8 @@ function openLocation(){
 			</c:forEach>
 			</c:if>
 		</div>
+		<!-- 인기검색어 출력  -->
+		<!-- 정렬 조건 설정  -->
 		<div class="col-xs-10 page-subheader sorting pl0">
 		<hr>
 			<select id="orderSelector">
@@ -76,17 +79,13 @@ function openLocation(){
 				<option value="4" ${map.order == 4 ? 'selected' : ''}>높은 가격순</option>
 			</select>
 		</div>
-		<!-- 인기검색어 출력  -->
+		<!-- 정렬 조건 설정  -->
 		<!-- 지도 열기 버튼  -->
         <div class="col-xs-2 layout-switcher">
             <button class="btn border-btn more-black" onclick="openLocation()"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
             <button class="btn border-btn more-black" onclick="openMap()"><i class="fa fa-map-marker"></i> 지도 열기</button>
         </div>
 		<!-- 지도 열기 버튼  -->
-		<!-- 정렬 조건 설정  -->
-
-		<!-- 정렬 조건 설정  -->
-        
 	</div>
 	<!-- 버튼 컨테이너 -->
 	<!-- 리스트 컨테이너 -->
@@ -202,38 +201,6 @@ function openLocation(){
 	</div>
 	<!-- 리스트 컨테이너 -->
 </div>
-<!-- 클래스 리스트 hj-->
-
-<!-- 작업 완료되면 푸터로 옮길 예정 -->
-<script type="text/javascript">
-//위시 리스트 
-let url;
-let cno;
-const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-wishlistBtns.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-	cno = $(this).val();
-	if (btn.classList.contains('active')) url = '/wish/del';
-	else url = '/wish/add';
-    wishChange(btn);
-  });
-});
-function wishChange(btn){
-$.ajax({
-	  url: url,
-	  type: 'POST',
-	  data: {c_no:cno},
-	  success: function(data) {
-	    console.log(data); // 응답 데이터 출력
-	    btn.classList.toggle('active');
-	  },
-	  error: function() {
-	    console.error('요청 실패');
-	  }
-	});
-}
-// 위시 리스트 
-</script>
-<!-- 작업 완료되면 푸터로 옮길 예정 -->
+<!-- 클래스 리스트 HJ-->
 
 <%@ include file="../include/footer.jsp" %>

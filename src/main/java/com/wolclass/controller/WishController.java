@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.wolclass.domain.WishVO;
 import com.wolclass.service.WishService;
@@ -40,4 +41,14 @@ public class WishController {
 		service.delete(vo);
 	}
 	// 위시리스트 삭제 HJ
+	
+	// 위시리스트 출력 HJ
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView listGET(HttpSession session) {
+		logger.info(" listGET() 호출 ");
+		ModelAndView mav = new ModelAndView("/hj/wishList");
+		mav.addObject(service.getClassList((String)session.getAttribute("id")));
+		return mav;
+	}
+	// 위시리스트 출력 HJ
 }

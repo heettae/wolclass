@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.WishVO;
 
 @Repository
@@ -20,6 +21,11 @@ public class WishDAOImpl implements WishDAO{
 	}
 
 	@Override
+	public List<ClassVO> getClassList(String m_id) {
+		return session.selectList(NAMESPACE+".getClassList", m_id);
+	}
+	
+	@Override
 	public void add(WishVO vo) {
 		session.insert(NAMESPACE+".add", vo);
 	}
@@ -28,5 +34,5 @@ public class WishDAOImpl implements WishDAO{
 	public void delete(WishVO vo) {
 		session.delete(NAMESPACE+".del", vo);
 	}
-	
+
 }

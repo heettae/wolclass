@@ -14,6 +14,19 @@
 	]]> 
 	</select>
 	
+	<!-- 위시 리스트에 등록된 클래스 정보 가져오기 HJ -->
+	<select id="getClassList" resultType="ClassVO">
+	<![CDATA[  
+	select c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+	from wc_class c left join (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+	on c.c_no = r.c_no
+	join wc_wish w
+	on w.c_no = c.c_no
+	where c_confirm = 'Y'
+	and w.m_id = #{m_id};
+	]]> 
+	</select>
+	
 	<!-- 위시 리스트 추가 HJ -->
 	<insert id="add">
 	insert into wc_wish

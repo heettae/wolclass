@@ -49,6 +49,35 @@
 </div>
 <!-- Footer area-->
 
+<!-- 위시 리스트 버튼 동작 및 서버요청 -->
+<script type="text/javascript">
+let url;
+let cno;
+const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+wishlistBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+	cno = $(this).val();
+	if (btn.classList.contains('active')) url = '/wish/del';
+	else url = '/wish/add';
+    wishChange(btn);
+  });
+});
+function wishChange(btn){
+$.ajax({
+	  url: url,
+	  type: 'POST',
+	  data: {c_no:cno},
+	  success: function(data) {
+	    btn.classList.toggle('active');
+	  },
+	  error: function() {
+	    console.error('요청 실패');
+	  }
+	});
+}
+</script>
+<!-- 위시 리스트 버튼 동작 및 서버요청 -->
+
 <!-- 사용자 위치정보 받아오기 -->
 <script type="text/javascript">
 let lat = '${sessionScope.userLat}';

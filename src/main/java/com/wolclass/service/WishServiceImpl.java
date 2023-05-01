@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.WishVO;
 import com.wolclass.persistance.WishDAO;
 
@@ -17,6 +18,11 @@ public class WishServiceImpl implements WishService {
 	@Override
 	public List<Integer> getCnoList(String m_id) {
 		return dao.getCnoList(m_id);
+	}
+
+	@Override
+	public List<ClassVO> getClassList(String m_id) {
+		return dao.getClassList(m_id);
 	}
 
 	@Override
