@@ -13,4 +13,5 @@ public class BoardVO {
 	private String b_reciver;
 	private Timestamp b_regdate;
 	private Integer b_viewcnt;
+	private String b_category;
 }

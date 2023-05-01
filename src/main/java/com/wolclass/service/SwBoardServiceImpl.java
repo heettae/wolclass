@@ -56,31 +56,37 @@ public class SwBoardServiceImpl implements SwBoardService {
 		
 		// 리스트 총 개수
 		int count = bdao.selectPNBT(map);
-		int pageSize = 10;
-		int pageBlock = 10;
+		int pageSize = 2;
+		int pageBlock = 2;
 		int currentPage = Integer.parseInt((String)map.get("pageNum"));
-		int startRow = (currentPage - 1) * pageSize + 1;
 		logger.info("cnt {}",count);
+		logger.info("currentPage {}",currentPage);
 		List<BoardVO> list = new ArrayList<>();
-		map.put("startRow", startRow-1);
 		map.put("pageSize", pageSize);
-		if(count > 0)  list = bdao.getBoardListAll(map);
-		int pageCount = (count/pageSize) + (count%pageSize==0? 0:1);
+		if(count > 0) 	list = bdao.getBoardListAll(map);
+		int pageCount = (count/pageSize) + (count % pageSize==0 ? 0:1);
 		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
 		int endPage = startPage + pageBlock - 1;
+		logger.info("pageNum"+map.get("pageNum"));
+		logger.info("endPage{}",endPage);
+		logger.info("startPage{}",startPage);
+		logger.info("pageCount{}",pageCount);
 		if(endPage > pageCount) endPage = pageCount;
 		// 페이징 계산
+		logger.info("endPage{}",endPage);
 		
 		// 페이징 처리에 필요한 데이터 셋팅
-		map.put("count", count);
-		map.put("pageCount", pageCount);
-		map.put("pageBlock", pageBlock);
-		map.put("pageSize", pageSize);
-		map.put("startPage", startPage);
-		map.put("endPage", endPage);
+		map.put("count", count);             // 전체리스트 개수
+		map.put("pageCount", pageCount);	 // 전체페이지 개수
+		map.put("pageBlock", pageBlock);	 // 보여지는 페이지 최대개수
+		map.put("pageSize", pageSize);		 // 페이지하나에 들어가는 리스트 개수
+		map.put("startPage", startPage);	 // 시작페이지
+		map.put("endPage", endPage);		 // 끝페이지
 		// 페이징 처리에 필요한 데이터 셋팅
 		return list;
 	}
+	
+	
 	
 	// 조회수 1씩 증가
 	@Override
