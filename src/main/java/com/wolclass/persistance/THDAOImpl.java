@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.PayDTO;
@@ -27,6 +28,8 @@ public class THDAOImpl implements THDAO{
 	private static final String NAMESPACE = "com.wolclass.mappers.THMapper";
 
 	private static final Logger logger = LoggerFactory.getLogger(THDAOImpl.class);
+	
+	
 	
 	@Override
 	public String getDBTime() {
@@ -75,6 +78,7 @@ public class THDAOImpl implements THDAO{
 	public TimetableVO getRemainNum(TimetableVO vo) throws Exception {
 		logger.info("dao 도착");
 		TimetableVO resultVO = sqlSession.selectOne(NAMESPACE+".getRemainNum",vo);
+		
 		logger.info("dao-resultVO: "+resultVO);
 		System.out.println(resultVO);
 		return resultVO;
@@ -100,14 +104,27 @@ public class THDAOImpl implements THDAO{
 	}
 
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public RsrvPayVO insertPay(PayDTO pdto) throws Exception {
+	public Integer payment(PayDTO pdto) throws Exception {
 		logger.info("dao.insertPay() 실행");
-		RsrvPayVO resultVO = sqlSession.selectOne(NAMESPACE+".insertPay");
+		logger.info(pdto+"");
+		Integer cnt = 0;
 		
-		logger.info("dao.insertPay()-resultVO"+resultVO);
-		return resultVO;
+		cnt += sqlSession.insert(NAMESPACE+".insertPay",pdto);
+		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", pdto);
+		 
+
+		if(pdto.getPoint()!=0) {
+			cnt += sqlSession.update(NAMESPACE+".updatePoint", pdto);
+		}
+		if(pdto.isSubs()) {
+			cnt += sqlSession.update(NAMESPACE+".updateS_cnt", pdto);
+		}
+		logger.info("cnt(실행된 sql 개수) : "+cnt);
+		
+		
+		return cnt;
 	}
 	
 	
