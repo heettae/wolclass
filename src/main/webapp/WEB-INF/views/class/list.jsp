@@ -3,6 +3,34 @@
     
 <%@ include file="../include/header.jsp" %>
 
+<!-- 작업 완료 시 헤더로 옮길 예정 -->
+<style>
+/* 위시리스트 */
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 24px;
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn.active i:first-child {
+  display: none;
+}
+
+.wishlist-btn.active i:last-child {
+  display: inline;
+  color: #f44336;
+}
+/* 위시리스트 */
+</style>
+<!-- 작업 완료 시 헤더로 옮길 예정 -->
+
 <!-- 팝업창 제어 -->
 <input type="hidden" id="srchdata" value='${jsonStr}'>
 <script type="text/javascript">
@@ -13,6 +41,10 @@ function openMap(){
 	});
 }
 function openLocation(){
+	if('${sessionScope.userLat}' == '') {
+		alert('위치 정보를 사용할 수 없습니다');
+		return;
+	}
 	let popup = window.open('./popupLocation','주변 검색','width=500,height=800,top=50%,left=50%,location=no');
 	window.addEventListener("beforeunload", function() {
 		popup.close();
@@ -86,6 +118,13 @@ function openLocation(){
 					     </c:if>
 					    <span class="proerty-price pull-left"><fmt:formatNumber value="${vo.c_price}" type="currency" currencyCode="KRW" /></span>
 					    <span class="pull-right"> 평점 : ${vo.score } </span>
+   					    <!-- 위시리스트 버튼 -->
+   					    <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(vo.c_no) ? 'active' : ''}" value="${vo.c_no }">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        </c:if>
+				        <!-- 위시리스트 버튼 -->
 					</div>
 			    </div>
 			</div> 
@@ -164,5 +203,37 @@ function openLocation(){
 	<!-- 리스트 컨테이너 -->
 </div>
 <!-- 클래스 리스트 hj-->
+
+<!-- 작업 완료되면 푸터로 옮길 예정 -->
+<script type="text/javascript">
+//위시 리스트 
+let url;
+let cno;
+const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+wishlistBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+	cno = $(this).val();
+	if (btn.classList.contains('active')) url = '/wish/del';
+	else url = '/wish/add';
+    wishChange(btn);
+  });
+});
+function wishChange(btn){
+$.ajax({
+	  url: url,
+	  type: 'POST',
+	  data: {c_no:cno},
+	  success: function(data) {
+	    console.log(data); // 응답 데이터 출력
+	    btn.classList.toggle('active');
+	  },
+	  error: function() {
+	    console.error('요청 실패');
+	  }
+	});
+}
+// 위시 리스트 
+</script>
+<!-- 작업 완료되면 푸터로 옮길 예정 -->
 
 <%@ include file="../include/footer.jsp" %>

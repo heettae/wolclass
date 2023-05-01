@@ -5,22 +5,30 @@
 
 <mapper namespace="com.wolclass.mappers.WishMapper">
 	
-	<select id="cnt" resultType="int">
+	<!-- 위시 리스트에 등록된 클래스 번호 가져오기 HJ -->
+	<select id="getCnoList" resultType="int">
 	<![CDATA[  
-	
+	select c_no
+	from wc_wish
+	where m_id = #{m_id};
 	]]> 
 	</select>
 	
-	<insert id="insert">
-	
+	<!-- 위시 리스트 추가 HJ -->
+	<insert id="add">
+	insert into wc_wish
+	values(#{c_no},#{m_id})
 	</insert>
 	
+	<!-- 위시 리스트 삭제 HJ -->
+	<delete id="del">
+	delete from wc_wish
+	where c_no = #{c_no}
+	and m_id = #{m_id}
+	</delete>
+
 	<update id="updateMember">
 	
 	</update>
-	
-	<delete id="deleteMember">
-	
-	</delete>
-	
+
 </mapper>	

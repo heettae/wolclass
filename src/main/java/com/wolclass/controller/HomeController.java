@@ -40,14 +40,15 @@ public class HomeController {
 		return "/main/main";
 	}
 	
-	// 사용자 위치정보 세션에 저장 hj
+	// 사용자 위치정보 세션에 저장 HJ
 	@RequestMapping(value = "/location", method = RequestMethod.POST)
 	@ResponseBody
-	public void setLocation(HttpServletRequest req, @RequestParam("userLat") String lat, @RequestParam("userLng") String lng) {
-		HttpSession session = req.getSession();
+	public void setLocation(HttpSession session, @RequestParam("userLat") String lat, @RequestParam("userLng") String lng) {
+		logger.info(" setLocation() 호출 ");
+		logger.info("접속 위치정보  위도 {} , 경도{}", lat, lng);
 		session.setAttribute("userLat", lat);
 		session.setAttribute("userLng", lng);
 	}
-	// 사용자 위치정보 세션에 저장 hj
+	// 사용자 위치정보 세션에 저장 HJ
 	
 }

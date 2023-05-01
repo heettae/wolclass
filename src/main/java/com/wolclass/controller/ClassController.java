@@ -25,6 +25,7 @@ import com.wolclass.service.MemberService;
 import com.wolclass.service.SearchDataService;
 import com.wolclass.service.SubscriptionService;
 import com.wolclass.service.TimetableService;
+import com.wolclass.service.WishService;
 
 @Controller
 @RequestMapping("/class/*")
@@ -41,25 +42,35 @@ public class ClassController {
 	private SubscriptionService sservice;
 	@Autowired
 	private TimetableService tservice;
+	@Autowired
+	private WishService wservice;
 	
 	//클래스리스트 검색결과 출력 HJ
 	//http://localhost:8080/class/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void listPOST(@RequestParam Map<String,Object> map, Model model, HttpServletRequest request) throws Exception {
-		logger.info(" ClassController-listPOST() 호출 ");
-		
-		// 인기검색어 리스트
-		model.addAttribute("psList", sdservice.getPSList());
+	public void listGET(@RequestParam Map<String,Object> map, Model model, HttpSession session) throws Exception {
+		logger.info(" listGET() 호출 ");
 		
 		// 사용자 위치정보 예외처리
-		String userLat = (String)request.getSession().getAttribute("userLat");
+		String userLat = (String)session.getAttribute("userLat");
 		if(userLat != null) {
 			map.put("userLat", userLat);
-			map.put("userLng", (String)request.getSession().getAttribute("userLng"));
+			map.put("userLng", (String)session.getAttribute("userLng"));
 		}else {
 			map.put("userLat", "0");
 			map.put("userLng", "0");
 		}
+		
+		// 위시리스트
+		model.addAttribute("wishList",wservice.getCnoList((String)session.getAttribute("id")));
+		
+		// 검색결과 및 페이징데이터 반환
+		List list = cservice.getClassList(map);
+		model.addAttribute(list);
+		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(list));
+		model.addAttribute("map", map);
+		// 인기검색어 리스트
+		model.addAttribute("psList", sdservice.getPSList());
 		
 		// 검색데이터 분석 및 저장
 		new Thread(() -> {
@@ -70,26 +81,20 @@ public class ClassController {
 					e.printStackTrace();
 				}
 		}).start();
-		
-		// 검색결과 및 페이징데이터 반환
-		List list = cservice.getClassList(map);
-		model.addAttribute(list);
-		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(list));
-		model.addAttribute("map", map);
 	}
 	//클래스리스트 검색결과 출력 HJ
 	
 	//지도 팝업 HJ
 	@RequestMapping(value = "/popupMap")
 	public void popupMapAll() throws Exception {
-		logger.info(" ClassController-popupMapAll() 호출 ");
+		logger.info(" popupMapAll() 호출 ");
 	}
 	//지도 팝업 HJ
 	
 	//주변검색 팝업 HJ
 	@RequestMapping(value = "/popupLocation")
 	public void popupLocationAll(HttpServletRequest request, Model model) throws Exception {
-		logger.info(" ClassController-popupLocation() 호출 ");
+		logger.info(" popupLocation() 호출 ");
 		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(cservice.getNearbyClassList(request.getSession().getAttribute("userLat"), request.getSession().getAttribute("userLng"))));
 	}
 	//주변검색 팝업 HJ
