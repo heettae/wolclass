@@ -135,6 +135,29 @@
   display: none;
 }
 
+/* 위시리스트 */
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 24px;
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn.active i:first-child {
+  display: none;
+}
+
+.wishlist-btn.active i:last-child {
+  display: inline;
+  color: #f44336;
+}
+/* 위시리스트 */
 </style>
 <!-- 알림 버튼 css -->
 
@@ -456,7 +479,7 @@
 		      $('#loginModal').modal('show');
 		    } else{
 		    	alert('클래스 등록');
-		    	location.href='/tj/addClass';
+		    	location.href='/tj/classWorkSpace';
 		    }
 		    return false;
 		  });
