@@ -70,19 +70,19 @@ public class THServiceImpl implements THService {
 	}
 
 	@Override
-	public RsrvPayVO payment(PayDTO pdto) throws Exception {
+	public Integer payment(PayDTO pdto) throws Exception {
 		logger.info("service도착");
 		
 		double subs = (double) (pdto.isSubs() ? 0.5 : 1);
 		int totalPrice = (int) ((pdto.getC_price()*subs))+(pdto.getC_price()*(pdto.getPNum()-1))-pdto.getPoint();
+		pdto.setP_rsrvdate(pdto.getSelectedDate()+" "+pdto.getT_start());
 		logger.info("totalPrice"+totalPrice);
 		if(totalPrice!=pdto.getPrice()) {
 			return null;
 		}
 		
-		RsrvPayVO resultVO = dao.insertPay(pdto);
-		logger.info("service.payment-resultVO"+resultVO);
-		return resultVO;
+		Integer cnt = dao.payment(pdto);
+		return cnt;
 	}
 	
 	

@@ -32,5 +32,5 @@ public interface THService {
 	public int makeP_no() throws Exception;
 	
 	// 가격 계산 + 결제내역 insert TH
-	public RsrvPayVO payment(PayDTO pdto) throws Exception;
+	public Integer payment(PayDTO pdto) throws Exception;
 }

@@ -34,5 +34,5 @@ public interface THDAO {
 	public int makeP_no() throws Exception;
 	
 	// 결제정보 디비에 등록
-	public RsrvPayVO insertPay(PayDTO pdto) throws Exception;
+	public Integer payment(PayDTO pdto) throws Exception;
 }

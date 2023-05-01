@@ -57,12 +57,15 @@ public class THController {
 		String id = (String) session.getAttribute("id");
 		logger.info("session.id : "+id);
 		if (id != null) {
-		MemberVO mvo = tjService.getMemberInfo(id);
-		SubscriptionVO svo = service.getSubsInfo(id);
-		logger.info("getInfo"+mvo);
-		logger.info("svo:"+svo);
-		model.addAttribute(mvo);
-		model.addAttribute(svo);
+			MemberVO mvo = tjService.getMemberInfo(id);
+			SubscriptionVO svo = service.getSubsInfo(id);
+			logger.info("getInfo"+mvo);
+			logger.info("svo:"+svo);
+			model.addAttribute(mvo);
+			if(svo==null) {
+				svo = new SubscriptionVO();
+			}
+			model.addAttribute(svo);
 		}
 		ClassVO cvo = service.getClassDetail(c_no);
 		List<TimetableVO> tvo = service.getTimetable(c_no);
@@ -133,26 +136,19 @@ public class THController {
 
 		logger.info("pdto : "+pdto);
 		service.payment(pdto);
-		logger.info(service.payment(pdto)+"@@");
 		return "redirect:/th/payList";
 		
 	}
 	 //결제 처리하기 TH
 	
 	
-	// 테스트
-//	@RequestMapping(value = "/detail", method = RequestMethod.POST)
-//	public String paymentPOST(@RequestParam("datepicker") String datepicker,
-//	                                    @RequestParam("t_start") String t_start,
-//	                                    @RequestParam("pNum") int pNum,
-//	                                    @RequestParam("point") int point,
-//	                                    @RequestParam("subs") boolean subs) {
-//		logger.info("paymentPOST() 실행 ");
-//		logger.info("dd"+datepicker+t_start+pNum+point+subs);
-//	    return "redirect:/th/payList"; // 결과를 보여줄 뷰 이름을 반환합니다.
-//	
-//	}
-	
+	@RequestMapping(value = "/payList", method = RequestMethod.GET)
+	public void payListGET() throws Exception{
+		logger.info("payList() 실행 ");
+
+
+		
+	}
 	
 	// http://localhost:8080/th/calender
 	@RequestMapping(value = "/calender")
