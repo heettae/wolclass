@@ -217,6 +217,13 @@
 			<version>3.3.4</version>
 		</dependency>
 
+		<!-- api key 보안을 위한 도구 -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.9.3</version>
+		</dependency>
+
 		<!-- 외부 라이브러리 추가 -->
 		
 	</dependencies>

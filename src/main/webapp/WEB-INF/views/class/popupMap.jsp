@@ -1,3 +1,4 @@
+<%@page import="com.wolclass.utils.KakaoMapAPI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -66,7 +67,11 @@ body{
 <body>
 <!-- 카카오맵 api -->
 <div id="kakaoMapApi"></div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript">
+        var kakaoMapScript = <%=KakaoMapAPI.getKakaoMapScript() %>
+        document.write(kakaoMapScript);
+    </script>
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services,clusterer,drawing"></script> -->
 <script>
 //지도에 표시할 클래스 데이터
 let classList = JSON.parse(window.opener.document.getElementById("srchdata").value);

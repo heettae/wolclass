@@ -8,7 +8,7 @@ import java.util.Scanner;
 // 날씨정보 가져오는 API임 HJ
 public class OpenweatherAPI {
 	// API 키
-	private static String api_key = "82e953adfeafadc9e3212e9aad777930";
+	private static String key = "82e953adfeafadc9e3212e9aad777930";
 	
 	/**
 	 * 위도(lat) 경도(lon) 데이터 받아서 날씨정보를 리턴합니다.
@@ -27,7 +27,7 @@ public class OpenweatherAPI {
 		url.append("&lon=");
 		url.append(lon);
 		url.append("&appid=");
-		url.append(api_key);
+		url.append(key);
 
 		String result = "";
         try {
