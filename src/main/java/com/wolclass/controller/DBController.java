@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -152,13 +151,13 @@ public class DBController {
 			// 아이디정보를 세션에 저장
 			session.setAttribute("id", loginResultVO.getM_id());
 			// main 페이지 이동
-			return "redirect:/db/main";
+			return "redirect:/tj/main";
 		}else {
 			// 로그인 실패
 			logger.info("로그인 실패!");
 			rttr.addFlashAttribute("result",0);
 			// 로그인 페이지 이동
-			return "redirect:/db/main";
+			return "redirect:/db/login";
 		}
 	}
 	
@@ -168,7 +167,7 @@ public class DBController {
 		logger.info("logoutGET() 호출!");
 		session.invalidate();
 		
-		return "redirect:/db/main";
+		return "redirect:/tj/main";
 	}
 	
 	// http://localhost:8080/db/findId
@@ -241,6 +240,20 @@ public class DBController {
 			return 1;
 		}
 		return 0;
+	}
+	
+	// 카카오 로그인 - 다빈
+//	@GetMapping("/kakao")
+	@RequestMapping(value = "/kakao",method = {RequestMethod.GET,RequestMethod.POST})
+	public String kakaoLogin(@RequestParam(value = "code") String code) throws Exception {
+		logger.info("kakaoLogin()호출");
+		logger.info("#####"+code);
+		String access_Token = service.getAccessToken(code);
+		HashMap<String, Object> userInfo = service.getUserInfo(access_Token);
+		logger.info("##access_Token#### : "+access_Token);
+		logger.info("##userInfo### : "+userInfo.get("email"));
+		logger.info("##userInfo### : "+userInfo.get("nickname"));
+		return "/db/main";
 	}
 	
 	
