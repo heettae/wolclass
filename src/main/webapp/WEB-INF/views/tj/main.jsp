@@ -3,30 +3,6 @@
 
 <%@ include file="../include/header.jsp"%>
 <style>
-/* 위시리스트 */
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 24px;
-  color: #ccc;
-  transition: all 0.3s ease;
-}
-
-.wishlist-btn.active i:first-child {
-  display: none;
-}
-
-.wishlist-btn.active i:last-child {
-  display: inline;
-  color: #f44336;
-}
-/* 위시리스트 */
-
 
 /* 도트 모양 스타일 */
 /* 도트 위치 조정 */
@@ -168,9 +144,11 @@
 					    </span>
 					    <span class="pull-right"> 평점 :  </span>
 					    <!-- 위시리스트 버튼 -->
-				        <button class="wishlist-btn">
+				        <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
 				          <i class="fas fa-heart"></i>
 				        </button>
+				        </c:if>
 				        <!-- 위시리스트 버튼 -->
 						</div>
 						</div>
@@ -181,6 +159,7 @@
 		</div>
 			</c:if>
 		<!-- 추천리스트 -->
+		
 		<!-- 일반 리스트 -->
 		<div class="row">
 		  <div class="proerty-th">
@@ -203,9 +182,11 @@
 		                </span>
 		                <span class="pull-right"> 평점 : </span>
 		                <!-- 위시리스트 버튼 -->
-		                <button class="wishlist-btn">
-		                  <i class="fas fa-heart"></i>
-		                </button>
+		                <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(classVO.c_no) ? 'active' : ''}" value="${classVO.c_no }">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        </c:if>
 		                <!-- 위시리스트 버튼 -->
 		              </div>
 		            </div>
@@ -218,15 +199,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-
-// 위시 리스트 
-const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-wishlistBtns.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    btn.classList.toggle('active');
-  });
-});
-// 위시 리스트 
 
 // 상단 베너
 $(document).ready(function() {
