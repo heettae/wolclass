@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolclass.domain.MemberVO;
+import com.wolclass.persistance.DBDAOImpl;
 import com.wolclass.service.DBService;
 
 @Controller
@@ -121,7 +123,7 @@ public class DBController {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
-			helper.setFrom(setFrom);
+			helper.setFrom(setFrom,"월클래스");
 			helper.setTo(toMail);
 			helper.setSubject(title);
 			helper.setText(content,true);
@@ -226,7 +228,7 @@ public class DBController {
 				try {
 					MimeMessage message = mailSender.createMimeMessage();
 					MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
-					helper.setFrom(setFrom);
+					helper.setFrom(setFrom,"월클래스");
 					helper.setTo(toMail);
 					helper.setSubject(title);
 					helper.setText(content,true);
@@ -241,20 +243,51 @@ public class DBController {
 		}
 		return 0;
 	}
-	
+
 	// 카카오 로그인 - 다빈
-//	@GetMapping("/kakao")
-	@RequestMapping(value = "/kakao",method = {RequestMethod.GET,RequestMethod.POST})
-	public String kakaoLogin(@RequestParam(value = "code") String code) throws Exception {
-		logger.info("kakaoLogin()호출");
-		logger.info("#####"+code);
-		String access_Token = service.getAccessToken(code);
-		HashMap<String, Object> userInfo = service.getUserInfo(access_Token);
-		logger.info("##access_Token#### : "+access_Token);
-		logger.info("##userInfo### : "+userInfo.get("email"));
-		logger.info("##userInfo### : "+userInfo.get("nickname"));
-		return "/db/main";
+	@GetMapping("/kakao")
+	public String kakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
+		logger.info("code : "+code);
+		// 비밀번호 random
+		Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < 8; i++) {
+		    int type = random.nextInt(3); // 0: 숫자, 1: 대문자, 2: 소문자
+		    switch (type) {
+		        case 0:
+		            sb.append(random.nextInt(10));
+		            break;
+		        case 1:
+		            sb.append((char) (random.nextInt(26) + 'A'));
+		            break;
+		        case 2:
+		            sb.append((char) (random.nextInt(26) + 'a'));
+		            break;
+		    }
+		}
+		String access_token = service.getToken(code);
+		Map<String, Object> userInfo = service.getUserInfo(access_token);
+		String email = (String) userInfo.get("email");
+		if(email != null) email = email.replaceAll("\"", "");
+		String name = ((String) userInfo.get("nickname")).replaceAll("\"", "");
+		String id = (String) userInfo.get("id");
+		String password = sb.toString();
+		MemberVO vo = new MemberVO();
+		vo.setM_id(id);
+		vo.setM_pw(password);
+		vo.setM_email(email);
+		vo.setM_name(name);
+		
+		//if id db에 있을때
+		if(service.kfindId(vo)!= null) session.setAttribute("id", id);
+		else {
+			service.kakaoInsert(vo);
+			session.setAttribute("id", id);
+		}
+		return "redirect:/db/main";
 	}
+
 	
 	
 

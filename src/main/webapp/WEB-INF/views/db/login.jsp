@@ -53,6 +53,7 @@
 			<p>
 				<a href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/db/kakao&response_type=code">
 				<img src="../resources/img/kakao_login_btn.png"/></a>
+<!-- 				<a onclick="loginKakao()"><img src="../resources/img/kakao_login_btn.png"/></a> -->
 				<a class="login-social" href="#"><i class="fa fa-google-plus"></i>&nbsp;Gmail</a>
 				<a class="login-social" href="#"><i class="fa fa-twitter"></i>&nbsp;Twitter</a>
 			</p>
@@ -65,7 +66,7 @@
 <!--     </div> -->
 <!--   </div> -->
 <!-- </div> -->
-
+<!-- <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script> -->
 <script type="text/javascript">
 	$("#loginBtn").click(function(){
 		  $("#login_form").submit();
@@ -76,5 +77,19 @@
        		alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.");
        <% } %>
     });
+	
+	// 초기화 시키기
+// 	$(document).ready(function(){
+// 		Kakao.init('8d69e5bb9b3085415d58016c4cee636e');
+// 		Kakao.isInitialized();
+// 	});
+	
+// 	function loginKakao(){
+// 		Kakao.Auth.authorize({
+// 			redirectUri:'http://localhost:8080/db/kakao'
+// 		});
+// 	}
+	
+	
 </script>
 <%@ include file="../include/footer.jsp"%>

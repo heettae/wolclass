@@ -46,5 +46,16 @@
  		update wc_member set m_pw = #{m_pw} where m_id=#{m_id}
  	</update>
  	
+ 	<!-- 카카오 - 다빈-->
+ 	<insert id="kakaoInsert" parameterType="map">
+ 		insert into wc_member(m_id,m_pw,m_email,m_name) 
+ 		values (#{m_id},#{m_pw},#{m_email},#{m_name})
+ 	</insert>
+ 	
+ 	<!-- 카카오  - 다빈 -->
+ 	<select id="kfindId" resultType="MemberVO">
+ 		select * from wc_member where m_id = #{m_id} 
+ 	</select>
+ 	
  
  </mapper>
