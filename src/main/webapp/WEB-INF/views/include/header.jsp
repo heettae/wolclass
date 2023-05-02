@@ -86,8 +86,8 @@
 <!-- slick 라이브러리 추가 - ㅌㅈ -->
 
 
-<!-- 알림 버튼 css -->
 <style type="text/css">
+/* 알림 버튼 */
 .button {
   display: flex;
   justify-content: center;
@@ -134,6 +134,7 @@
   border: 1px solid #ccc;
   display: none;
 }
+/* 알림 버튼 */
 
 /* 위시리스트 */
 .wishlist-btn {
@@ -159,7 +160,6 @@
 }
 /* 위시리스트 */
 </style>
-<!-- 알림 버튼 css -->
 
     </head>
 <body>
@@ -172,7 +172,7 @@
 <!--                         <span class="icon-bar"></span> -->
 <!--                         <span class="icon-bar"></span> -->
 <!--                     </button> -->
-                    <a class="navbar-brand" href="/tj/main"><img src="/resources/img/logo.PNG" alt="wolClass" style="height: 90px;"></a>
+                    <a class="navbar-brand" href="/tj/main"><img src="/resources/img/logo.png" alt="wolClass" style="height: 90px;"></a>
                 </div>
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -212,11 +212,10 @@
 								            <i class="fa fa-bell"></i>
 								            <span class="notification-count">10</span>
 								        </button>
-								     <div id="notification-popup" class="notification-popup"></div>
-								 </div>
-								<!-- 알림 버튼 -->
-								
-								<!-- 마이페이지 -->
+								        <div id="notification-popup" class="notification-popup"></div>
+								    </div>
+								    <!-- 알림 버튼 -->
+								    <!-- 마이페이지 -->
 								    <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s" style="margin-left: auto; margin-right: 30px;">
 								        <i class="fas fa-user-circle"></i>마이페이지
 								    </button>
@@ -506,27 +505,20 @@
     });
 	
 	
-	// 알림창 js 코드 - 태준
-	const notificationButton = document.getElementById('notification-button');
-	const notificationPopup = document.getElementById('notification-popup');
-
-	notificationButton.addEventListener('click', function() {
-	// toggle notification popup
-	notificationPopup.style.display = notificationPopup.style.display === 'block' ? 'none' : 'block';
-
-	// close notification popup when clicked outside of it
-	window.addEventListener('click', function(e) {
-    if (!notificationPopup.contains(e.target) && !notificationButton.contains(e.target)) {
-      notificationPopup.style.display = 'none';
-      }
-    });
-
-   // prevent notification popup from closing when clicked inside of it
-   notificationPopup.addEventListener('click', function(e) {
-  	 e.stopPropagation();
-	   });
-	});
-	// 알림창 js 코드 - 태준
+	 const notificationButton = document.querySelector("#notification-button");
+	    const notificationPopup = document.querySelector("#notification-popup");
+	    let isOpen = false;
+	    notificationButton.addEventListener("click", (event) => {
+	        event.preventDefault(); // 이벤트의 기본 동작을 막음
+	        if (!isOpen) {
+	            notificationPopup.innerHTML = "알림 목록을 출력합니다."; // 출력할 내용 입력
+	            notificationPopup.style.display = "block";
+	            isOpen = true;
+	        } else {
+	            notificationPopup.style.display = "none";
+	            isOpen = false;
+	        }
+	    });
 
 	
 	
