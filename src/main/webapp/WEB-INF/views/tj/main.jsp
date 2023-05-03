@@ -114,6 +114,8 @@
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
 	<div class="container">
+		
+		<c:if test="${WDATA.contains('Rain') }">비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴</c:if>
 		<!-- 추천리스트 -->
 		<c:if test="${not empty recClass }">
 		<div class="row">

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.WishVO;
 
 @Repository
 public class TJDAOImpl implements TJDAO {
@@ -75,6 +76,14 @@ public class TJDAOImpl implements TJDAO {
 		return sqlSession.selectOne(NAMESPACE+".oneWeekBeforeBirth", m_id);
 	}
 	// 반려견 생일 1주일 전
+
+	// 위시리스트 c_no, m_id 가져오기
+	@Override
+	public List<WishVO> getWishInfo(WishVO vo) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".getWishInfo", vo);
+	}
+	// 위시리스트 c_no, m_id 가져오기
 
 
 	

@@ -1,8 +1,6 @@
 package com.wolclass.controller;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,13 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.service.TJService;
 import com.wolclass.service.WishService;
+import com.wolclass.utils.OpenweatherAPI;
 
 @Controller
 @RequestMapping("/tj/*")
@@ -83,6 +81,7 @@ public class TJController {
 				logger.info("반려견 나이 : " + age);
 			}
 		}
+		model.addAttribute("WDATA", OpenweatherAPI.getCurrentWeather((String)session.getAttribute("userLat"), (String)session.getAttribute("userLng")));
 		model.addAttribute("categoryList", classMap);
 		model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
 		logger.info("classMap@@@@@@@@@@@@@@@@@ : " + classMap.size());
@@ -136,5 +135,12 @@ public class TJController {
 		return "redirect:/tj/classWorkSpace";
 	}
 	// 시간 등록
+	
+	// 알림
+	public String alert() throws Exception{
+		
+		return "";
+	}
+	// 알림
 
 }

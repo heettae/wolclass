@@ -60,13 +60,25 @@
 
 	<!-- 반려견 생일 7일전 -->	
 	<select id="oneWeekBeforeBirth" resultType="int">
-	SELECT count(m_id) 
+	SELECT count(m_dogbirth) 
 	FROM wc_member 
-	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 7 DAY), '%m-%d') AND DATE_FORMAT(NOW(), '%m-%d') 
-	and m_id=#{m_id};
+	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 7 DAY), '%m-%d') 
+	AND m_id=#{m_id};
 	</select>
 	<!-- 반려견 생일 7일전 -->	
 
+	<!-- 위시리스트 c_no, m_id 가져오기 -->
+	<select id="getWishInfo" resultType="WishVO">
+		SELECT *
+		FROM WC_WISH
+		WHERE C_NO=#{C_NO} AND M_ID=#{M_ID}
+	</select>
+	<!-- 위시리스트 c_no, m_id 가져오기 -->
 	
+	<!-- 위시에 담긴 클래스 시간 등록시 알림 등록 -->
+	<insert id="insertAlert">
+	
+	</insert>
+	<!-- 위시에 담긴 클래스 시간 등록시 알림 등록 -->
 	
 </mapper>	
