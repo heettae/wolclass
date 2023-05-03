@@ -2,40 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp" %>
-<!-- <head> -->
-<!--         <meta charset="utf-8"> -->
-<!--         <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-<!--         <title>GARO ESTATE | Property  page</title> -->
-<!--         <meta name="description" content="GARO is a real-estate template"> -->
-<!--         <meta name="author" content="Kimarotec"> -->
-<!--         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template"> -->
-<!--         <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-<!--         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800" rel="stylesheet" type="text/css"> -->
-
-<!--         Place favicon.ico and apple-touch-icon.png in the root directory -->
-<!--         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
-<!--         <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
-
-<!--         <link rel="stylesheet" href="/resources/assets/css/normalize.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/font-awesome.min.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/fontello.css"> -->
-<!--         <link href="/resources/assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet"> -->
-<!--         <link href="/resources/assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet"> -->
-<!--         <link href="/resources/assets/css/animate.css" rel="stylesheet" media="screen"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/bootstrap-select.min.css">  -->
-<!--         <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/icheck.min_all.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/price-range.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">   -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/owl.theme.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/owl.transitions.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/lightslider.min.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/style.css"> -->
-<!--         <link rel="stylesheet" href="/resources/assets/css/responsive.css"> -->
-<!--     </head> -->
-
-<%@ include file="detailSide.jsp" %>
 <meta charset="UTF-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
@@ -45,7 +12,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <title>Insert title here</title>
-<script>
+<script type="text/javascript">
 //특정날짜들 배열
 //var disabledDays = ["2023-4-23","2023-4-24","2023-5-1"];
 var ableDays = new Array();
@@ -54,7 +21,7 @@ var date = null;
 var time = null;
 var t_start = new Array();
 var pNum = null;
-
+var price;
 $(document).ready(function() {
 	console.log(date)
 	$("#time").hide();
@@ -78,9 +45,12 @@ $(document).ready(function() {
     
 
     function getTime() { 
+           
+   	  $('#selectedDate').val(date);
    	 date = $.datepicker.formatDate("yy-mm-dd",$("#thdatepicker").datepicker("getDate")); 
-                                 
    	 date = $("#thdatepicker").val();
+   	 
+   	 
         alert(date);
         if(date!=null){
        	 console.log(date+"null아님~!1111");
@@ -142,6 +112,7 @@ $(document).ready(function() {
 function timeSelected(){
 	   // if($("#time").val()!=null){
 	    	time = $("#time").val();
+	    	
 	    	alert(time+"dd");
 	    	
 	    	
@@ -156,6 +127,8 @@ function timeSelected(){
 						alert("인원 가져오기 성공");
 						console.log(data.t_rem_p);
 						pNum=data.t_rem_p;
+						let t_no = data.t_no;
+						$("#t_no").val(t_no);
 						console.log(pNum);
 					 	$("#pNum").show();
 					 	$("#pNum").attr('max', pNum);
@@ -182,10 +155,14 @@ function timeSelected(){
 	
 	$(document).ready(function(){
 	  $('#pNum, #point, #subs').on('input', function(){
+		  
+		  if(!($('#point').val()>=0)){
+			  $('#point').val(0);
+		  }
 		  var point = $('#point').val() ? $('#point').val() : 0;
 		  var subs = $('#subs').prop('checked') ? 0.5 : 1;
 		  var bPrice = ${classVO.c_price};
-		  var price = (bPrice*subs)+(bPrice*($("#pNum").val()-1))- point;
+		  price = (bPrice*subs)+(bPrice*($("#pNum").val()-1)) - point;
 	  
 	   
         var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
@@ -609,18 +586,29 @@ for(var i=0; i<ableDays.length; i++){
 								
 								<!-- 요기로 옮기자 -->
 								
-								                    <div id="thdatepicker"></div>
+					<form role="form" method="post"> 
+					<input type="hidden" id="p_no" name="p_no">
+					<input type="hidden" id="t_no" name="t_no">
+					<input type="hidden" id="m_id" name="m_id" value="${id }">
+					<input type="hidden" id="selectedDate" name="selectedDate">
+					<input type="hidden" id="c_no" name="c_no" value="${classVO.c_no }">
+					<input type="hidden" id="c_price" name="c_price" value="${classVO.c_price }"> <!-- 클래스 가격 -->
+					<input type="hidden" id="price" name="price"> <!-- 계산된 가격 -->
+					<input type="hidden" id="p_key" name="p_key" value="card"> <!-- 임의 값 -->
+					
+					
+					<div id="thdatepicker"></div>
                      시간 선택
-                     <select id="time" class="selectpicker show-tick form-control" onchange="timeSelected()"></select>
+                     <select id="time" name="t_start" class="selectpicker show-tick form-control" onchange="timeSelected()"></select>
                      
                      <!-- <div id="timeBtn"></div> -->
                      인원 선택
-                     <input type="number" id="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum">
+                     <input type="number" id="pNum" name="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum">
 					<c:if test="${id!=null }">
 					보유 포인트 ${memberVO.m_point } p
-					 <input id="point" type="number" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0">
-					<c:if test="${subscriptionVO!=null }">
-					<input type="checkbox" id="subs">구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt })
+					 <input id="point" type="number" name="point" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0">
+					<c:if test="${subscriptionVO.s_no != null && subscriptionVO.s_cnt>0 }">
+					<input type="checkbox" id="subs" name="subs" >구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt })
 					</c:if>
 					</c:if>
 					
@@ -629,7 +617,7 @@ for(var i=0; i<ableDays.length; i++){
 						<fmt:formatNumber value="${classVO.c_price }"/>원
 						</span>
 					</div>
-					
+					</form>
 					<button type="submit" class="navbar-btn nav-button wow bounceInRight" id="reserve">클래스 예약하기</button>
 					<fieldset>
 						<div class="row">
@@ -1021,10 +1009,10 @@ for(var i=0; i<ableDays.length; i++){
 <script type="text/javascript">
 $(document).ready(function(){
 	// 글 번호를 저장한 폼태그
-	var formObj = $("form[role='form']"); 
+ 	var formObj = $("form[role='form']"); 
 		  // 결제하기
 		  $("#reserve").click(function(){
-			 if(${id == null}){
+			 if( ${id == null}){
 			  location.href='/db/login';
 			  return;
 			 }
@@ -1032,35 +1020,65 @@ $(document).ready(function(){
 				 alert('결제창띄우기');
 			        var IMP = window.IMP; 
 			        IMP.init("imp75550270"); 
-				
-					  
-							alert('@');
-						    IMP.request_pay({
-						      pg: "html5_inicis.INIpayTest",
-						      pay_method: "card",
-						      merchant_uid: "ORD20180131-0000222",   // 주문번호
-						      name: "주문명:결제테스트",
-						      amount: 100,                         // 숫자 타입
-						      buyer_email: ${memberVO.m_email},
-						      buyer_name: ${memberVO.m_name},
-						      buyer_tel: ${memberVO.m_phone},
-						      buyer_addr: "서울특별시 강남구 신사동",
-						      buyer_postcode: "01181"
-						    }, function (rsp) { // callback
-						      if (rsp.success) {
-						        // 결제 성공 시 로직
-						        
-					                console.log(rsp);
-					                formObj.submit();
-						        
-						      } else {
-						        // 결제 실패 시 로직
-						      }
-						    });
+			       	
+			        
+			        $.ajax({
+							url:"/th/getP_no",
+							type:"post",
+						 	//contentType: "application/json; charset=utf-8",
+							dataType:"json",
+							success:function(data){
+								alert("p_no");
+								console.log(data);
+								let p_no = p_no
+								$('#p_no').val(p_no);
+							
+							},	
+							error:function(data){
+								alert("실패");
+								// 페이지 이동 후 실패했을 때 동작
+							}
+						}); // p_no ajax
+
+			       
+						//$("#d_file").append("<input type='hidden' name='file"+cnt+"'><br>");
+						
+								date = $("#thdatepicker").val();
+								$('#selectedDate').val(date);
+								$('#price').val(price);
+								
+							
+								
+								
+				    	  formObj.submit();
+						
+				    IMP.request_pay({
+				      pg: "html5_inicis.INIpayTest",
+				      pay_method: "card",
+				      merchant_uid: "${p_no}",   // 주문번호
+				      name: "${classVO.c_name}",
+				      amount: 100,                         // 숫자 타입
+				      buyer_email: "${memberVO.m_email}",
+				      buyer_name: "${memberVO.m_name}",
+				      buyer_tel: "${memberVO.m_phone}",
+/* 				      buyer_addr: "서울특별시 강남구 신사동",
+				      buyer_postcode: "01181" */
+				    }, function (rsp) { // callback
+				      if (rsp.success) {
+				        // 결제 성공 시 로직
+				        
+				        
+				        
+				      } else {
+				        // 결제 실패 시 로직
+				      }
+				    });
+						
+					alert('@');
 						  
 		
 					  
-// 		  });
+		  });
 
 		  // 수정하기
 // 	  $(".btn-success").click(function(){
@@ -1068,6 +1086,6 @@ $(document).ready(function(){
 // 	  });	
 		  
 		  
-//  });
+ });
 </script>
 <%@ include file="../include/footer.jsp" %>

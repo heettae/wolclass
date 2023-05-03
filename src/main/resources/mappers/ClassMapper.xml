@@ -5,6 +5,69 @@
 
 <mapper namespace="com.wolclass.mappers.ClassMapper">
 	
+	<!-- 클래스 등록 -->
+	<insert id="addClass">
+		insert into wc_class (c_name, m_id, c_maxperson, c_addr1, c_addr2, c_addrdetails, c_lati, 
+		c_longi, c_level, c_time, c_category, c_content, c_img, c_price, c_confirm, c_regdate)
+		values(#{c_name}, #{m_id}, #{c_maxperson}, #{c_addr1}, #{c_addr2}, #{c_addrdetails}, #{c_lati}, #{c_longi}, 
+		#{c_level}, #{c_time}, #{c_category}, #{c_content}, #{c_img}, #{c_price}, default, default)                         
+	</insert>	
+	<!-- 클래스 등록 -->
+	
+	<!-- 클래스 시간, 날짜 등록 -->
+	<insert id="addTime">
+		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no) 
+		values( #{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
+	</insert>
+	<!-- 클래스 시간, 날짜 등록 -->
+	
+	
+	<!-- 등록 완료 클래스 리스트 -->
+	<select id="registerClassList" resultType="ClassVO">
+		select *
+		from wc_class
+		where m_id=#{m_id}
+	</select>
+	<!-- 등록 완료 클래스 리스트 -->
+
+	<!-- 해당 키워드 리스트 출력 -->
+	<select id="findByKeyword" resultType="ClassVO">
+		select *
+		from wc_class
+		WHERE c_name REGEXP #{keyword}
+	</select>
+	<!-- 해당 키워드 리스트 출력 -->
+	
+	<!-- 회원 정보 -->	
+	<select id="getMemberInfo" resultType="MemberVO">
+		select *
+		from wc_member
+		where m_id = #{m_id}
+	</select>
+	<!-- 회원 정보 -->	
+	
+	<!-- 카테고리별 리스트 출력 -->	
+	<select id="getCategoryClassList" resultType="ClassVO">
+		SELECT *
+		FROM wc_class
+		WHERE c_category IN (
+		    SELECT DISTINCT c_category
+		    FROM wc_class
+		)
+		ORDER BY c_category
+		
+	</select>
+	<!-- 카테고리별 리스트 출력 -->	
+
+	<!-- 반려견 생일 7일전 -->	
+	<select id="oneWeekBeforeBirth" resultType="int">
+	SELECT count(m_id) 
+	FROM wc_member 
+	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 7 DAY), '%m-%d') AND DATE_FORMAT(NOW(), '%m-%d') 
+	and m_id=#{m_id};
+	</select>
+	<!-- 반려견 생일 7일전 -->
+	
 	<!-- 클래스 조회 TH -->
 	<select id="selectClass" resultType="ClassVO">
 	select * from wc_class where c_no=#{c_no}

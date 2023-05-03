@@ -7,6 +7,14 @@ import com.wolclass.domain.ClassVO;
 
 public interface ClassDAO {
 	String NAMESPACE = "com.wolclass.mappers.ClassMapper";
+	// 클래스 등록 TJ
+	public void addClass(ClassVO vo) throws Exception;
+	
+	// 클래스 시간 등록 TJ
+	public void addTime(Map<String, Object> map) throws Exception;
+	
+	// 등록 완료 클래스 리스트 TJ
+	public List<ClassVO> registerClassList(String m_id) throws Exception;
 	
 	// 상세페이지 조회 TH
 	public ClassVO selectClass(Integer c_no) throws Exception;

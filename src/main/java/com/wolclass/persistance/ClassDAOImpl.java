@@ -17,7 +17,23 @@ public class ClassDAOImpl implements ClassDAO{
 	
 	@Autowired
 	private SqlSession session;
+	
+	@Override
+	public void addClass(ClassVO vo) throws Exception {
+		session.insert(NAMESPACE+".addClass", vo);
+	}
 
+	@Override
+	public void addTime(Map<String, Object> map) throws Exception {
+		session.insert(NAMESPACE+".addTime", map);
+	}
+	
+	@Override
+	public List<ClassVO> registerClassList(String m_id) throws Exception {
+		
+		return session.selectList(NAMESPACE+".registerClassList", m_id);
+	}
+	
 	@Override
 	public ClassVO selectClass(Integer c_no) throws Exception {
 		logger.info("dao-sql호출");

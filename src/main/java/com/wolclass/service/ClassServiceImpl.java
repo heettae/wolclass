@@ -21,6 +21,20 @@ public class ClassServiceImpl implements ClassService {
 	private ClassDAO dao;
 	
 	@Override
+	public void addClass(ClassVO vo) throws Exception {
+		vo.setC_addrdetails(vo.getC_addr2()+" "+vo.getC_addrdetails());
+		String addr2tmp = vo.getC_addr1();
+		vo.setC_addr1(addr2tmp.split(" ")[0]);
+		vo.setC_addr2(addr2tmp.substring(vo.getC_addr1().length()+1));
+		dao.addClass(vo);
+	}
+	
+	@Override
+	public List<ClassVO> registerClassList(String m_id) throws Exception {
+		return dao.registerClassList(m_id);
+	}
+	
+	@Override
 	public ClassVO getClassDetail(Integer c_no) throws Exception {
 		logger.info("service-dao호출");
 		return dao.selectClass(c_no);
@@ -34,7 +48,6 @@ public class ClassServiceImpl implements ClassService {
 		return dao.getNearbyClassList(map);
 	}
 
-	// 클래스 리스트 조회 hj
 	@Override
 	public List<ClassVO> getClassList(Map<String, Object> map) throws Exception {
 		// 데이터 전처리
@@ -82,6 +95,5 @@ public class ClassServiceImpl implements ClassService {
 		
 		return list;
 	}
-	// 클래스 리스트 조회 hj
 
 }

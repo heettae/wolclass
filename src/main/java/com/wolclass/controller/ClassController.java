@@ -3,7 +3,6 @@ package com.wolclass.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wolclass.domain.ClassVO;
@@ -21,6 +22,7 @@ import com.wolclass.domain.MemberVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 import com.wolclass.service.ClassService;
+import com.wolclass.service.FileService;
 import com.wolclass.service.MemberService;
 import com.wolclass.service.SearchDataService;
 import com.wolclass.service.SubscriptionService;
@@ -44,6 +46,8 @@ public class ClassController {
 	private TimetableService tservice;
 	@Autowired
 	private WishService wservice;
+	@Autowired
+	private FileService fservice;
 	
 	//클래스리스트 검색결과 출력 HJ
 	//http://localhost:8080/class/list
@@ -113,6 +117,9 @@ public class ClassController {
 			logger.info("getInfo"+mvo);
 			logger.info("svo:"+svo);
 			model.addAttribute(mvo);
+			if(svo==null) {
+				svo = new SubscriptionVO();
+			}
 			model.addAttribute(svo);
 		}
 		ClassVO cvo = cservice.getClassDetail(c_no);
@@ -123,5 +130,31 @@ public class ClassController {
 		model.addAttribute("dateList", tvo);
 	}
 	// 클래스 상세정보 TH
+	
+	// 클래스 등록 view 페이지 호출
+	@RequestMapping(value = "/addClass", method = RequestMethod.GET)
+	public void addGET() {
+		logger.info(" addClassGET() 호출 ");
+	}
+	// 클래스 등록 view 페이지 호출
+
+	// 클래스 등록 - 처리
+	@RequestMapping(value = "/addClass", method = RequestMethod.POST)
+	public String addPOST(HttpSession session, @ModelAttribute("vo") ClassVO vo,
+			MultipartHttpServletRequest multiRequest) throws Exception {
+		logger.info(" addClassPOST() 호출 ");
+		String id = (String) session.getAttribute("id");
+		// 한글처리
+		multiRequest.setCharacterEncoding("UTF-8");
+		String c_img = fservice.fileProcess(multiRequest);
+		
+		vo.setM_id(id);
+		vo.setC_img(c_img);
+		cservice.addClass(vo);
+
+		logger.info("클래스 등록 완료@@@@@@@@@@@@");
+		return "redirect:/member/classWorkSpace";
+	}
+	// 클래스 등록 - 처리
 	
 }

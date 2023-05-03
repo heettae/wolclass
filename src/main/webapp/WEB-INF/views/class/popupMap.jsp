@@ -1,4 +1,3 @@
-<%@page import="com.wolclass.utils.KakaoMapAPI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,11 +25,25 @@ body{
     background-color: #fff;
     position: absolute;
     border: 2px solid #333;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     padding: 3px 5px 0;
-    left: 65px;
-    top: 14px;
+    left: 24px;
+    top: 0px;
+    border-radius: 5px;
+    white-space: nowrap;
+    display: none;
+}
+
+.tooltip2 {
+    background-color: #fff;
+    position: fixed;
+    border: 2px solid #333;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 3px 5px 0;
+    left: 70px;
+    top: 100px;
     border-radius: 5px;
     white-space: nowrap;
     display: none;
@@ -67,11 +80,7 @@ body{
 <body>
 <!-- 카카오맵 api -->
 <div id="kakaoMapApi"></div>
-    <script type="text/javascript">
-        var kakaoMapScript = <%=KakaoMapAPI.getKakaoMapScript() %>
-        document.write(kakaoMapScript);
-    </script>
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services,clusterer,drawing"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=clusterer"></script>
 <script>
 //지도에 표시할 클래스 데이터
 let classList = JSON.parse(window.opener.document.getElementById("srchdata").value);
@@ -153,7 +162,7 @@ TooltipMarker.prototype.getPosition = function() {
  * 지도 영역 외부에 존재하는 마커를 추적하는 기능을 가진 객체입니다.
  * 클리핑 알고리즘을 사용하여 tracker의 좌표를 구하고 있습니다.
  */
-function MarkerTracker(map, target) {
+function MarkerTracker(map, target, tooltipText) {
     // 클리핑을 위한 outcode
     var OUTCODE = {
         INSIDE: 0, // 0b0000
@@ -195,6 +204,20 @@ function MarkerTracker(map, target) {
     tracker.onclick = function() {
         map.setCenter(target.getPosition());
         setVisible(false);
+    };
+    
+    var tooltip = document.createElement('div');
+    tooltip.className = 'tooltip2',
+
+    tooltip.appendChild(document.createTextNode(tooltipText));
+    tracker.appendChild(tooltip);
+    
+//  툴팁 엘리먼트에 마우스 인터렉션에 따라 보임/숨김 기능을 하도록 이벤트를 등록합니다.
+    tracker.onmouseover = function() {
+        tooltip.style.display = 'block';
+    };
+    tracker.onmouseout = function() {
+        tooltip.style.display = 'none';
     };
 
     // target의 위치를 추적하는 함수
@@ -429,7 +452,7 @@ if (navigator.geolocation) {
 }
 // 내 위치 찾기
 
-// 비동기 처리하는 무근본 스크립트 언어 덕분에 2시간 날리고 강제 타임아웃 적용함
+// 비동기 처리로 인한 문제점 해결을 위해 타임아웃 적용함
 setTimeout(function() {
 	// 클래스 리스트 + 내 위치
 	for (let i=0; i<classList.length; i++) {
@@ -440,7 +463,7 @@ setTimeout(function() {
 		markers[i].setMap(map);
 	    
 	 	// MarkerTracker를 생성합니다.
-	    MarkerTrackers.push(new MarkerTracker(map, markers[i]));
+		MarkerTrackers.push(new MarkerTracker(map, markers[i], classList[i].c_name));
 	}
 	// 클래스 리스트 + 내 위치
 	
@@ -453,8 +476,7 @@ setTimeout(function() {
 	// 내 위치를 센터로
 	map.setCenter(markers[markers.length-1].position);
 }, 150);
-// 비동기 처리하는 무근본 스크립트 언어 덕분에 2시간 날리고 강제 타임아웃 적용함
-	
+//비동기 처리로 인한 문제점 해결을 위해 타임아웃 적용함
 </script>
 <!-- 카카오맵 api -->
 </body>
