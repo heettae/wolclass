@@ -114,14 +114,6 @@
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
 	<div class="container">
-		<div class="row">
-			<div
-				class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-				<!-- /.feature title -->
-				<h2>인기/추천 검색어</h2>
-				<p>내 주변 검색 & 지도</p>
-			</div>
-		</div>
 		<!-- 추천리스트 -->
 		<c:if test="${not empty recClass }">
 		<div class="row">
@@ -134,7 +126,7 @@
 					<div class="col-sm-6 col-md-3 p0">
 						<div class="box-two proerty-item">
 							<div class="item-thumb">
-								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/no_img.PNG"></a>
+								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
 							</div>
 							<div class="item-entry overflow">
 					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${rvo.c_name }</a></h4>
@@ -172,7 +164,7 @@
 		          <div class="col-sm-6 col-md-3 p0">
 		            <div class="box-two proerty-item">
 		              <div class="item-thumb">
-		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/no_img.PNG"></a>
+		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/${classVO.c_img.split(',')[0] }"></a>
 		              </div>
 		              <div class="item-entry overflow">
 		                <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>

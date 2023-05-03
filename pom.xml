@@ -196,32 +196,27 @@
             <version>${org.springframework-version}</version>
         </dependency>
 		<!-- 다빈 메일관련  -->
+		
 		<!-- 파일업로드/다운로드 -->
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
 		    <groupId>commons-fileupload</groupId>
 		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.4</version>
+		    <version>1.2.1</version>
 		</dependency>
-		 
-		<!-- 파일관련 / 썸네일라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
-		    <groupId>org.imgscalr</groupId>
-		    <artifactId>imgscalr-lib</artifactId>
-		    <version>4.2</version>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version>
 		</dependency>
+		<!-- 파일업로드/다운로드 -->
 		
 		<!-- 형태소 분석기 -->
 		<dependency>
 			<groupId>com.github.shin285</groupId>
 			<artifactId>KOMORAN</artifactId>
 			<version>3.3.4</version>
-		</dependency>
-
-		<!-- api key 보안을 위한 도구 -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>4.9.3</version>
 		</dependency>
 
 		<!-- gson - 다빈 -->

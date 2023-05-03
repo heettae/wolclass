@@ -11,13 +11,39 @@
   border-right: 1px solid #ccc; /* 세로선 추가 */
   position: relative;
   z-index: 1;
-  height: 750px;
+  height: auto;
+  min-height: 750px;
 }
 
 
 #content {
   flex-basis: 80%;
   margin-left: 20px;
+}
+
+/* 리스트 스타일링 */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #ddd;
 }
 
 /* 시간 등록 버튼 */
@@ -120,11 +146,11 @@
 
 <div id="wrapper">
   <div id="sidebar">
-    <h3>클래스 워크스페이스</h3>
-    <ul>
-      <li><a href="/tj/addClass">클래스 등록</a></li>
-      <li><a href="#">등록 완료 클래스</a></li>
-    </ul>
+    <h3 style="text-align: center;">클래스 워크스페이스</h3>
+    <ul style="display: flex; flex-direction: column;">
+	  <li style="margin-bottom: 10px;"><a href="/tj/addClass" style="font-size: 18px;">클래스 등록</a></li>
+	  <li style="margin-bottom: 10px;"><a href="#" style="font-size: 18px;">등록 완료 클래스</a></li>
+	</ul>
   </div>
   <div id="content">
   
@@ -138,7 +164,7 @@
 		          <div class="col-sm-6 col-md-3 p0">
 		            <div class="box-two proerty-item">
 		              <div class="item-thumb">
-		                <a href="#"><img src="/resources/img/no_img.PNG"></a>
+		                <a href="#"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
 		              </div>
 		              <div class="item-entry overflow">
 		                <h4><a href="/class/detail?c_no=${vo.c_no}">${vo.c_name}</a></h4>
@@ -184,12 +210,14 @@
 		    </c:if>
 		    
 		    <!-- 등록하기 박스 -->
-		    <c:if test="${empty registerList }">
+<%-- 		    <c:if test="${empty registerList }"> --%>
+			<div class="col-sm-6 col-md-3 p0">
 				<div class="register-box">
 				  <div class="register-icon">+</div>
 				  <div class="register-text"><h3> 클래스 등록하기 </h3></div>
 				</div>
-		    </c:if>
+			</div>
+<%-- 		    </c:if> --%>
 		    <!-- 등록하기 박스 -->
 		    
 		    

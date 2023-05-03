@@ -4,13 +4,13 @@
 
 
 
-		<div class="box box-primary">
+		<div class="box box-primary" style="width: max-content; margin: auto;">
 <div class="box-header with-border">
 <h3 class="box-title">클래스 등록</h3>
 </div>
 
 <!-- 오프라인 폼 -->
-<form role="form" id="offlineForm" enctype="multipart/form-data">
+<form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
 <div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
@@ -20,12 +20,12 @@
 </div>
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name">
+<input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
 <div id="c_name_warning"></div>
 </div>
 <div class="form-group">
 <label for="category">카테고리</label><span style="color: red">(필수)</span>
-<select class="form-control" id=""category"" name="c_category">
+<select class="form-control" id="category" name="c_category" required>
 	<option>카테고리를 선택하세요.</option>
 	<option>펫 푸드</option>
 	<option>펫 훈련</option>
@@ -38,22 +38,22 @@
 
 <div class="form-group">
 <label for="img1">대표 이미지</label><span style="color: red">(필수)</span>
-<input type="file" id="img1" name="c_img">
+<input type="file" id="img1" name="c_img1" required>
 <div id="img1_warning"></div>
 </div>
 
 <div class="form-group" id="imgForm">
 <label for="img2">기타 이미지</label>
-<input type="button" id="img2" value="이미지 추가" name="c_img" onclick="addFile();">
+<input type="button" id="img2" value="이미지 추가" onclick="addFile();">
 </div>
 
 <div class="form-group">
 <label for="content">상세내용</label><span style="color: red">(필수)</span>
-<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요."></textarea>
+<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요." required></textarea>
 <div id="c_content_warning"></div>
 </div>
-<div class="checkbox">
-<label for="c_level">난이도</label>
+<div class="form-group">
+<label for="c_level">난이도</label><span style="color: red">(필수)</span>
 <input type="radio" id="c_level" name="c_level" value="3">상
 <input type="radio" id="c_level" name="c_level" value="2">중
 <input type="radio" id="c_level" name="c_level" value="1">하
@@ -62,47 +62,47 @@
 
 <div class="form-group">
 <label for="time">소요시간</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time">
+<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time" required>
 <div id="c_time_warning"></div>
 </div>
 
-					<div class="form-group">
-                     <label for="addr_num">주소</label>
-                     <div class="group">
-                     <input type="text" id="postcode" name="postcode" placeholder="우편번호" />
-                     <input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
-                     </div>
-                 <!--     <label for="addr">주소</label> -->
-                     <input type="text" id="address" name="c_addr1" placeholder="주소"/><br>
-                    <!--  <label for="addr_detail">상세주소</label> -->
-                    <div class="group">
-                     <input type="text" id="detailAddress" name="c_addr2" placeholder="상세주소" />
-                     <input type="text" id="sample6_extraAddress" name="c_addrdetails" placeholder="참고항목">
-                     <span class="error"></span>
-                    </div>
-                  </div>
+<div class="form-group">
+<label for="addr_num">주소</label>
+<div class="group">
+<input type="text" id="postcode" name="postcode" placeholder="우편번호" />
+<input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
+</div>
+<!--     <label for="addr">주소</label> -->
+<input type="text" id="address" name="c_addr1" placeholder="주소"/><br>
+<!--  <label for="addr_detail">상세주소</label> -->
+  <div class="group">
+   <input type="text" id="detailAddress" name="c_addr2" placeholder="상세주소" />
+   <input type="text" id="sample6_extraAddress" name="c_addrdetails" placeholder="참고항목">
+   <span class="error"></span>
+  </div>
+</div>
 
 <div class="form-group">
 <label for="price">금액</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price">
+<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price" required>
 <div id="c_price_warning"></div>
 </div>
 </div>
 
 <div class="form-group">
 <label for="maxperson">클래스 참여가능 인원</label><span style="color: red">(필수)</span>
-<input type="number" class="form-control" id="maxperson" min="1" max="50" name="c_maxperson">
+<input type="number" class="form-control" id="maxperson" min="1" name="c_maxperson" required>
 <div id="c_maxperson_warning"></div>
 </div>
 
 <div class="box-footer">
-<button type="submit" class="btn btn-primary" id="addClassBtn">등록하기</button>
+<button type="submit" class="btn btn-primary" id="addClassBtn" style="width: 100%">등록하기</button>
 </div>
 </form>
 <!-- 오프라인 폼 -->
 
 <!-- 온라인 폼 -->
-<form role="form" style="display: none;" id="onlineForm" enctype="multipart/form-data">
+<form role="form" style="display: none;" id="onlineForm" enctype="multipart/form-data" method="post">
 <div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
@@ -112,12 +112,12 @@
 </div>
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="className" 
-placeholder="클래스명을 입력하세요." name="c_name">
+<input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
+<div id="c_name_warning"></div>
 </div>
 <div class="form-group">
 <label for="category">카테고리</label><span style="color: red">(필수)</span>
-<select class="form-control" id="category" name="c_category">
+<select class="form-control" id="category" name="c_category" required>
 	<option>카테고리를 선택하세요.</option>
 	<option>펫 푸드</option>
 	<option>펫 훈련</option>
@@ -125,11 +125,13 @@ placeholder="클래스명을 입력하세요." name="c_name">
 	<option>펫 액세서리</option>
 	<option>펫 미용</option>
 </select>
+<div id="c_category_warning"></div>
 </div>
 
 <div class="form-group">
-<label for="img1">대표 이미지</label>
-<input type="file" id="img1" name="c_img">
+<label for="img1">대표 이미지</label><span style="color: red">(필수)</span>
+<input type="file" id="img1" name="c_img" required>
+<div id="c_img1_warning"></div>
 </div>
 <div class="form-group">
 <label for="img2">클래스 이미지</label>
@@ -138,28 +140,32 @@ placeholder="클래스명을 입력하세요." name="c_name">
 
 <div class="form-group">
 <label for="content">상세내용</label><span style="color: red">(필수)</span>
-<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요."></textarea>
-</div>
-<div class="checkbox">
-<label>
-<input type="radio" name="c_level" value="3">상
-<input type="radio" name="c_level" value="2">중
-<input type="radio" name="c_level" value="1">하
-</label>
+<textarea class="form-control" id="content" name="c_content" placeholder="내용을 입력해주세요." required></textarea>
+<div id="c_content_warning"></div>
 </div>
 <div class="form-group">
-<label for="time">소요시간</label>
-<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time">
+<label for="c_level">난이도</label><span style="color: red">(필수)</span>
+<input type="radio" id="c_level" name="c_level" value="3">상
+<input type="radio" id="c_level" name="c_level" value="2">중
+<input type="radio" id="c_level" name="c_level" value="1">하
+<div id="c_level_warning"></div>
+</div>
+<div class="form-group">
+<label for="time">소요시간</label><span style="color: red">(필수)</span>
+<input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time" required>
+<div id="c_time_warning"></div>
 </div>
 
 <div class="form-group">
 <label for="price">금액</label><span style="color: red">(필수)</span>
-<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price">
+<input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price" required>
+<div id="c_price_warning"></div>
 </div>
+
 </div>
 
 <div class="box-footer">
-<button type="submit" class="btn btn-primary" id="addClassBtn">등록하기</button>
+<button type="submit" class="btn btn-primary" id="addClassBtn" style="width: 100%">등록하기</button>
 </div>
 </form>
 <!-- 온라인 폼 -->
@@ -171,6 +177,7 @@ placeholder="클래스명을 입력하세요." name="c_name">
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+// 주소 api
 function DaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -215,11 +222,12 @@ function DaumPostcode() {
         }
     }).open();
 }
+//주소 api
 
 // 파일 추가
-var cnt = 1;
+var cnt = 2;
 function addFile(){
-	$("#imgForm").append("<input type='file' name='file"+cnt+"'/><br>");
+	$("#imgForm").append("<input type='file' name='c_img"+cnt+"'/><br>");
 	cnt++;
 }
 // 파일 추가
