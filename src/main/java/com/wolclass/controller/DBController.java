@@ -248,42 +248,21 @@ public class DBController {
 	@GetMapping("/kakao")
 	public String kakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
 		logger.info("code : "+code);
-		// 비밀번호 random
-		Random random = new Random();
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < 8; i++) {
-		    int type = random.nextInt(3); // 0: 숫자, 1: 대문자, 2: 소문자
-		    switch (type) {
-		        case 0:
-		            sb.append(random.nextInt(10));
-		            break;
-		        case 1:
-		            sb.append((char) (random.nextInt(26) + 'A'));
-		            break;
-		        case 2:
-		            sb.append((char) (random.nextInt(26) + 'a'));
-		            break;
-		    }
-		}
+		
 		String access_token = service.getToken(code);
-		Map<String, Object> userInfo = service.getUserInfo(access_token);
-		String email = (String) userInfo.get("email");
-		if(email != null) email = email.replaceAll("\"", "");
-		String name = ((String) userInfo.get("nickname")).replaceAll("\"", "");
-		String id = (String) userInfo.get("id");
-		String password = sb.toString();
+		Map<String, String> userInfo = service.getUserInfo(access_token);
+		
 		MemberVO vo = new MemberVO();
-		vo.setM_id(id);
-		vo.setM_pw(password);
-		vo.setM_email(email);
-		vo.setM_name(name);
+		vo.setM_id(userInfo.get("id"));
+		vo.setM_pw(userInfo.get("password"));
+		vo.setM_email(userInfo.get("email"));
+		vo.setM_name(userInfo.get("name"));
 		
 		//if id db에 있을때
-		if(service.kfindId(vo)!= null) session.setAttribute("id", id);
+		if(service.kfindId(vo)!= null) session.setAttribute("id", vo.getM_id());
 		else {
 			service.kakaoInsert(vo);
-			session.setAttribute("id", id);
+			session.setAttribute("id", vo.getM_id());
 		}
 		return "redirect:/db/main";
 	}

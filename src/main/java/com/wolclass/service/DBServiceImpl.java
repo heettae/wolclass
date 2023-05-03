@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,9 +126,9 @@ public class DBServiceImpl implements DBService{
 	
 	// 카카오 - 다빈
 	@Override
-	public Map<String, Object> getUserInfo(String access_token) throws Exception {
+	public Map<String, String> getUserInfo(String access_token) throws Exception {
 		String host = "https://kapi.kakao.com/v2/user/me";
-		Map<String, Object> result = new HashMap<>();
+		Map<String, String> result = new HashMap<>();
 		try {
 			URL url = new URL(host);
 			
@@ -150,41 +151,29 @@ public class DBServiceImpl implements DBService{
 			JsonObject obj = (JsonObject) parser.parse(res);
 			JsonObject kakao_account = (JsonObject) obj.get("kakao_account");
 			JsonObject properties = (JsonObject) obj.get("properties");
-			
-			String id = obj.get("id").toString();
-			String nickname = properties.get("nickname").toString();
+			result.put("id", obj.get("id").toString());
+			result.put("name", properties.get("nickname").toString().replaceAll("\"", ""));
             Object email = kakao_account.get("email");
-            if(email != null) result.put("email", email.toString());
+            if(email != null) result.put("email", email.toString().replaceAll("\"", ""));
             
-			result.put("id", id);
-			result.put("nickname", nickname);
-			
-			
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	// 카카오 - 다빈
-	@Override
-	public String getAgreementInfo(String access_token) throws Exception {
-		String result = "";
-		String host = "https://kapi.kakao.com/v2/user/scopes";
-		try {
-			URL url = new URL(host);
-			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-			urlConnection.setRequestMethod("GET");
-			urlConnection.setRequestProperty("Authorization", "Bearer " +access_token);
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-			String line = "";
-			while((line=br.readLine()) != null) {
-				result += line;
-			}
-			int responseCode = urlConnection.getResponseCode();
-			logger.info("responseCode : "+responseCode);
+            // 비밀번호 random
+            Random random = new Random();
+    		StringBuilder sb = new StringBuilder();
+    		for (int i = 0; i < 8; i++) {
+    		    int type = random.nextInt(3);
+    		    switch (type) {
+    		        case 0:
+    		            sb.append(random.nextInt(10));
+    		            break;
+    		        case 1:
+    		            sb.append((char) (random.nextInt(26) + 'A'));
+    		            break;
+    		        case 2:
+    		            sb.append((char) (random.nextInt(26) + 'a'));
+    		            break;
+    		    }
+    		}
+    		result.put("password", sb.toString());
 			
 			br.close();
 		} catch (Exception e) {

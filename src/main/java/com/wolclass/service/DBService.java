@@ -36,8 +36,7 @@ public interface DBService {
 	
 	// 카카오로그인 토큰 - 다빈
 	public String getToken(String code) throws Exception;
-	public Map<String, Object> getUserInfo(String access_token) throws Exception;
-	public String getAgreementInfo(String access_token) throws Exception;
+	public Map<String, String> getUserInfo(String access_token) throws Exception;
 	
 	// 카카오 insert
 	public void kakaoInsert(MemberVO vo) throws Exception;
