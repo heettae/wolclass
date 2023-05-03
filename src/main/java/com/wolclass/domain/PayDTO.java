@@ -19,5 +19,11 @@ public class PayDTO {
     private String p_key;
     
     private String p_rsrvdate;
+    
+    private int merchant_uid;
+    private int cancel_request_amount;
+
+    
+    
 
 }
