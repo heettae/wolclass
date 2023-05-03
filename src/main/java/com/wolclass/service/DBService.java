@@ -1,5 +1,6 @@
 package com.wolclass.service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,10 @@ public interface DBService {
 	public void updateTempPw(MemberVO vo);
 	
 	// 카카오로그인 토큰 - 다빈
-	public String getAccessToken(String authorize_code);
-	public HashMap<String, Object> getUserInfo(String access_Token);
+	public String getToken(String code) throws Exception;
+	public Map<String, String> getUserInfo(String access_token) throws Exception;
 	
-	
+	// 카카오 insert
+	public void kakaoInsert(MemberVO vo) throws Exception;
+	public MemberVO kfindId(MemberVO vo) throws Exception;
 }

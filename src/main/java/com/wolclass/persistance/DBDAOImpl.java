@@ -62,5 +62,21 @@ public class DBDAOImpl implements DBDAO{
 		sqlSession.update(NAMESPACE+".updatePw", vo);
 	}
 	
+	// 카카오 - 다빈
+	@Override
+	public void kakaoInsert(MemberVO vo) throws Exception{
+		sqlSession.insert(NAMESPACE+".kakaoInsert",vo);
+	}
+	
+	// 카카오 - 다빈
+	@Override
+	public MemberVO kfindId(MemberVO vo) throws Exception {
+		MemberVO kfindIdVO = sqlSession.selectOne(NAMESPACE+".kfindId", vo);
+		return kfindIdVO;
+	}
+
+
+
+	
 	
 }

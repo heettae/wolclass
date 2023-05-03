@@ -30,5 +30,9 @@ public interface DBDAO {
 	// 임시비밀번호 설정 - 다빈
 	public void updateTempPw(MemberVO vo);
 	
+	// 카카오 로그인 
+	public void kakaoInsert(MemberVO vo) throws Exception;
 	
+	// 카카오아이디  - 다빈
+	public MemberVO kfindId(MemberVO vo) throws Exception;
 }
