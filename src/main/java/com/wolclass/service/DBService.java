@@ -38,7 +38,13 @@ public interface DBService {
 	public String getToken(String code) throws Exception;
 	public Map<String, String> getUserInfo(String access_token) throws Exception;
 	
-	// 카카오 insert
+	// 카카오 로그인, 회원가입 - 다빈
 	public void kakaoInsert(MemberVO vo) throws Exception;
 	public MemberVO kfindId(MemberVO vo) throws Exception;
+	
+	// 구글 로그인, 회원가입 - 다빈
+//	public void googleInsert(MemberVO vo) throws Exception;
+//	public MemberVO googleLogin(MemberVO vo) throws Exception;
+//	
+	
 }

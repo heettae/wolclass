@@ -266,9 +266,51 @@ public class DBController {
 		}
 		return "redirect:/db/main";
 	}
+	
+	// 구글 로그인 - 다빈
+//	@PostMapping("/google")
+//	@ResponseBody
+//	public String googleLogin(MemberVO vo, HttpSession session
+//			 ,RedirectAttributes rttr, MemberVO mvo) throws Exception{
+//		MemberVO returnVO = service.googleLogin(vo);
+//		String mvo_ajaxid = mvo.getM_id();
+//		logger.info(" C : 구글아이디 포스트 db에서 가져온 vo"+ vo);
+//		logger.info(" C : 구글아읻 포스트 ajax에서 가져온 id"+ mvo_ajaxid);
+//		
+//		if(returnVO == null) { // 아이디가 DB에 존재하지 않는경우
+//			// 구글 회원가입
+//			service.googleInsert(vo);
+//			
+//			// 구글 로그인
+//			returnVO = service.googleLogin(vo);
+//			session.setAttribute("id", returnVO.getM_id());
+//			rttr.addFlashAttribute("mvo", returnVO);
+//		}
+//		
+//		if(mvo_ajaxid.equals(returnVO.getM_id())) { // 아이디가 DB에 존재하는 경우
+//			// 구글 로그인
+//			service.googleLogin(vo);
+//			session.setAttribute("id", returnVO.getM_id());
+//			rttr.addFlashAttribute("mvo",returnVO);
+//		}else { // 아이디가 DB에 존재하지 않는경우
+//			// 회원가입
+//			service.googleInsert(vo);
+//			
+//			// 로그인
+//			returnVO = service.googleLogin(vo);
+//			session.setAttribute("id", returnVO.getM_id());
+//			rttr.addFlashAttribute("mvo",returnVO);
+//		}
+//		return "redirect:/db/main";
+//	}
 
 	
-	
+	@PostMapping("/google")
+	@ResponseBody
+	public String googleLogin(MemberVO vo, HttpSession session
+			 ,RedirectAttributes rttr, MemberVO mvo) throws Exception{
+		return "";
+	}
 
 	
 	
