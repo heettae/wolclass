@@ -194,5 +194,17 @@ public class DBServiceImpl implements DBService{
 		return kfindIdVO;
 	}
 	
+//	// 구글 회원가입
+//	@Override
+//	public void googleInsert(MemberVO vo) throws Exception {
+//		dbdao.kakaoInsert(vo);
+//	}
+//	// 구글 로그인
+//	@Override
+//	public MemberVO googleLogin(MemberVO vo) throws Exception {
+//		MemberVO returnVO = dbdao.kfindId(vo);;
+//		return returnVO;
+//	}
+	
 	
 }
