@@ -624,6 +624,10 @@ for(var i=0; i<ableDays.length; i++){
 							<div class="col-xs-12">
 					<button type="submit" class="button btn largesearch-btn" >클래스 예약하기</button>
 							</div>
+							<!-- 환불하기(Test) -->
+							<div class="col-xs-12">
+					<button onclick="cancelPay()">환불하기</button>
+							</div>
 						</div>
 					</fieldset>			
 								
@@ -1048,9 +1052,10 @@ $(document).ready(function(){
 								$('#price').val(price);
 								
 							
+
 								
 								
-				    	  formObj.submit();
+
 						
 				    IMP.request_pay({
 				      pg: "html5_inicis.INIpayTest",
@@ -1064,14 +1069,28 @@ $(document).ready(function(){
 /* 				      buyer_addr: "서울특별시 강남구 신사동",
 				      buyer_postcode: "01181" */
 				    }, function (rsp) { // callback
-				      if (rsp.success) {
-				        // 결제 성공 시 로직
+				        if (rsp.success) {   
+				        	
+// 				            // axios로 HTTP 요청
+// 				            axios({
+// 				              url: "/th/payments",
+// 				              method: "POST",
+// 				              headers: { "Content-Type": "application/json" },
+// 				              data: {
+// 				                imp_uid: rsp.imp_uid,
+// 				                merchant_uid: rsp.merchant_uid
+// 				              }
+// 				            }).then((data) => {
+// 				              // 서버 결제 API 성공시 로직
+// 				            })
+				          } else {
+				            //alert('결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}');
+				          }
+
 				        
-				        
-				        
-				      } else {
-				        // 결제 실패 시 로직
-				      }
+ 				          	  formObj.submit();
+				    	
+		
 				    });
 						
 					alert('@');
@@ -1087,5 +1106,9 @@ $(document).ready(function(){
 		  
 		  
  });
+ 
+ 
+ 
+
 </script>
 <%@ include file="../include/footer.jsp" %>

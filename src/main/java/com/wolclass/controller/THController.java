@@ -1,28 +1,25 @@
 package com.wolclass.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.domain.PayDTO;
+import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
 import com.wolclass.service.THService;
@@ -73,8 +70,6 @@ public class THController {
 		logger.info("tvo.size  : "+tvo.size());
 		model.addAttribute(cvo);
 		model.addAttribute("dateList", tvo);
-		
-		
 		
 	}
 	// 클래스 상세정보 TH
@@ -136,24 +131,56 @@ public class THController {
 
 		logger.info("pdto : "+pdto);
 		service.payment(pdto);
-		return "redirect:/th/payList";
+		return "redirect:/th/payments";
 		
 	}
 	 //결제 처리하기 TH
 	
 	
-	@RequestMapping(value = "/payList", method = RequestMethod.GET)
-	public void payListGET() throws Exception{
-		logger.info("payList() 실행 ");
+	 //결제 처리하기 TH
+//	@RequestMapping(value = "/payments", method = RequestMethod.POST)
+//	public String payments(HttpSession session) throws Exception{
+//		logger.info("payment() 실행 ");
+//		String id = (String) session.getAttribute("id");
+//
+////		logger.info("pdto : "+pdto);
+////		service.payment(pdto);
+//		return "redirect:/th/payments";
+//		
+//	}
 
-
+	 //결제 처리하기 TH
+	
+	
+	@RequestMapping(value = "/payments", method = RequestMethod.GET)
+	public void paymentsGET() throws Exception{
+		logger.info("payments() 실행 ");
 		
+		RsrvPayVO vo = new RsrvPayVO();
+		vo.setP_no(1);
+
 	}
 	
-	// http://localhost:8080/th/calender
-	@RequestMapping(value = "/calender")
-	public void calenderGET() {
-		logger.info(" calenderGET() 호출 ");
+//	// 환불하기 TH
+//	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String cancelPOST(@RequestBody String merchant_uid) throws Exception{
+//
+//		logger.info(" cancelPOST() 호출 ");
+//
+//
+//		logger.info("m : "+merchant_uid);
+//	
+//		return merchant_uid;
+//	}
+//	// 환불하기 TH
+	
+	
+	
+	// http://localhost:8080/th/cancelTest
+	@RequestMapping(value = "/cancelTest")
+	public void cancelTestGET() {
+		logger.info(" cancelTestGET() 호출 ");
 	}
 	
 	
