@@ -153,38 +153,55 @@ li a:hover {
 	</ul>
   </div>
   <div id="content">
-  
-  
-  
-  
   <div class="row">
 		  <div class="proerty-th">
 		  <c:if test="${not empty registerList }">
-		    <c:forEach items="${registerList}" var="vo">
-		          <div class="col-sm-6 col-md-3 p0">
-		            <div class="box-two proerty-item">
-		              <div class="item-thumb">
-		                <a href="#"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
-		              </div>
-		              <div class="item-entry overflow">
-		                <h4><a href="/class/detail?c_no=${vo.c_no}">${vo.c_name}</a></h4>
-		                <span class="pull-left"><b>${vo.c_addr1}</b> </span><br>
-		                <span class="proerty-price pull-left">
-		                  <fmt:formatNumber value="${vo.c_price}"/> 원
-		                </span>
-		                
-		                <span class="pull-right">
-						  <button class="time-register-btn" onclick="openModal()">시간 등록</button>
-						</span>
-						
-						<!-- 모달 창 -->
+  <c:forEach items="${registerList}" var="vo">
+    <div class="col-sm-6 col-md-3 p0">
+      <div class="box-two proerty-item">
+        <div class="item-thumb">
+          <a href="#"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
+        </div>
+        <div class="item-entry overflow">
+          <h4><a href="/class/detail?c_no=${vo.c_no}">${vo.c_name}</a></h4>
+          <span class="pull-left"><b>${vo.c_addr1}</b> </span><br>
+          <span class="proerty-price pull-left">
+            <fmt:formatNumber value="${vo.c_price}"/> 원
+          </span> 
+          <span class="pull-right">
+            <button class="time-register-btn" data-c-no="${vo.c_no}" data-c-maxperson="${vo.c_maxperson}">시간 등록</button>
+          </span>  
+        </div>
+        <input type="hidden" name="c_no" value="${vo.c_no }">
+        <input type="hidden" name="c_maxperson" value="${vo.c_maxperson}">
+      </div>
+    </div>
+  </c:forEach>
+</c:if>
+
+		    
+		    <!-- 등록하기 박스 -->
+<%-- 		    <c:if test="${empty registerList }"> --%>
+			<div class="col-sm-6 col-md-3 p0">
+				<div class="register-box">
+				  <div class="register-icon">+</div>
+				  <div class="register-text"><h3> 클래스 등록하기 </h3></div>
+				</div>
+			</div>
+<%-- 		    </c:if> --%>
+		    <!-- 등록하기 박스 -->
+		    
+		    
+		  </div>
+		</div>
+		<!-- 모달 창 -->
 						<div id="modal" class="modal">
 						  <div class="modal-content">
 						    <span class="close" onclick="closeModal()">&times;</span>
 						    <h2>시간 등록</h2>
 						    <form id="timeForm" method="post">
-						    <input type="hidden" name="c_no" value="${vo.c_no }">
-						    <input type="hidden" name="t_rem_p" value="${vo.c_maxperson }">
+						    <input type="hidden" name="c_no">
+						    <input type="hidden" name="t_rem_p">
 						      <div class="form-group">
 						        <label for="date">날짜</label>
 						        <input type="date" id="date" name="t_date">
@@ -201,32 +218,24 @@ li a:hover {
 						    </form>
 						  </div>
 						</div>
-
-
-		              </div>
-		            </div>
-		          </div>
-		    </c:forEach>
-		    </c:if>
-		    
-		    <!-- 등록하기 박스 -->
-<%-- 		    <c:if test="${empty registerList }"> --%>
-			<div class="col-sm-6 col-md-3 p0">
-				<div class="register-box">
-				  <div class="register-icon">+</div>
-				  <div class="register-text"><h3> 클래스 등록하기 </h3></div>
-				</div>
-			</div>
-<%-- 		    </c:if> --%>
-		    <!-- 등록하기 박스 -->
-		    
-		    
-		  </div>
-		</div>
   </div>
   
 </div>
 <script type="text/javascript">
+
+$(document).ready(function() {
+	  $(".time-register-btn").click(function() {
+	    var cNo = $(this).data('c-no');
+	    var cMaxperson = $(this).data('c-maxperson');
+	    console.log(cNo);
+	    console.log(cMaxperson);
+	    $("#timeForm input[name='c_no']").val(cNo);
+	    $("#timeForm input[name='t_rem_p']").val(cMaxperson);
+	    openModal();
+	  });
+	});
+
+	
 function openModal() {
   document.getElementById("modal").style.display = "block";
 }
@@ -236,6 +245,9 @@ function closeModal() {
 }
 
 $(document).ready(function(){
+	
+	
+	
 	$('#addTime').click(function(){
 		$('#timeForm').attr('action', '/tj/addTime');
 		$('#timeForm').submit();

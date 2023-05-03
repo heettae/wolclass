@@ -41,10 +41,14 @@ public class TJServiceImpl implements TJService {
 	// 클래스 시간 등록
 	@Override
 	public void addTime(Map<String, Object> map) throws Exception {
+		String c_no = (String) map.get("c_no");
+		String t_rem_p = (String) map.get("t_rem_p");
 		String t_start = (String) map.get("t_start");
 		String t_end = (String) map.get("t_end");
 		String t_date = (String) map.get("t_date");
-
+		
+		map.put("c_no", Integer.parseInt(c_no));
+		map.put("t_rem_p", Integer.parseInt(t_rem_p));
 		map.put("t_start", TypeParser.stringToTime(t_start));
 		map.put("t_end", TypeParser.stringToTime(t_end));
 		map.put("t_date", TypeParser.stringToDate(t_date));
