@@ -159,6 +159,56 @@
   color: #f44336;
 }
 /* 위시리스트 */
+
+/* 더보기 */
+/* 팝업 스타일 */
+.more-popup {
+  position: absolute;
+  top: 80px;
+  left: 90%;
+  z-index: 1;
+  width: 240px;
+  padding: 12px;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  border-top: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+
+/* 활성화된 팝업 스타일 */
+.more-popup.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 팝업 내부 리스트 스타일 */
+.more-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.more-popup ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.more-popup ul li a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.more-popup ul li a:hover {
+  background-color: #f2f2f2;
+}
+/* 더보기 */
 </style>
 
     </head>
@@ -200,7 +250,8 @@
 								</c:choose>
                        			  
 								<c:if test="${empty sessionScope.id }">
-                       			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#loginModal" >로그인</button>
+                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class" data-toggle="modal" data-target="#loginModal" 
+                       			  style="margin-right: 30px;">로그인</button>
                       			  <button class="navbar-btn nav-button wow fadeInRight" id="join" data-wow-delay="0.5s">회원가입</button>
 								</c:if>
 								
@@ -208,11 +259,10 @@
 								<!-- 알림 버튼 -->
                       			 <div style="display: flex;">
 								    <div class="notification-container">
-								        <button id="notification-button">
+								        <button id="notification-button" style="padding-right: 30px; font-size: 25px;">
 								            <i class="fa fa-bell"></i>
-								            <span class="notification-count">10</span>
+								            <span style="right: 14px;" class="notification-count">10</span>
 								        </button>
-								        <div id="notification-popup" class="notification-popup"></div>
 								    </div>
 								    <!-- 알림 버튼 -->
 								    <!-- 마이페이지 -->
@@ -224,8 +274,17 @@
 
                       			  <button class="navbar-btn nav-button wow fadeInRight" id="logout" data-wow-delay="0.5s">로그아웃</button>
 								</c:if>
+								
+									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">더보기</button>
                   			    </div>
-                  			    
+                  			     <div id="notification-popup" class="notification-popup"></div>
+                  			     
+                  			     <div id="more-popup" class="more-popup">
+                  			     <ul>
+                  			       <li><a href="/sw/community"> 커뮤니티</a></li>
+                  			       <li><a href="#"> 공지사항</a></li>
+                  			     </ul>
+                  			     </div>
                                 <div style="display: none;" class="search-toggle">
 
                                     <div class="search-row">   
@@ -519,8 +578,26 @@
 	            isOpen = false;
 	        }
 	    });
+	    
+	    // 더보기
+	   /* 더보기 버튼 클릭 이벤트 */
+		const moreButton = document.getElementById('more');
+		const morePopup = document.getElementById('more-popup');
+		
+		moreButton.addEventListener('click', (event) => {
+		  event.stopPropagation(); // 이벤트 전파 중지
+		console.log('ddddddddddddd');
+		  morePopup.classList.toggle('active');
+		});
+		
+		/* 팝업 외부 클릭 이벤트 */
+		document.addEventListener('click', (event) => {
+		  if (!morePopup.contains(event.target)) {
+		    morePopup.classList.remove('active');
+		  }
+		});
 
-	
-	
+	    // 더보기
+
 </script>
 

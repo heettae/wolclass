@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.WishVO;
 
 public interface TJService {
 	// 클래스 등록
@@ -38,5 +39,7 @@ public interface TJService {
 	// 반려견 생일 1주일 전 계산
 	public int oneWeekBeforeBirth(String m_id) throws Exception;
 	
+	// 위시리스트 c_no, m_id 가져오기
+	public List<WishVO> getWishInfo(WishVO vo) throws Exception;
 
 }

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.WishVO;
 import com.wolclass.persistance.TJDAO;
 import com.wolclass.utils.TypeParser;
 
@@ -152,5 +153,13 @@ public class TJServiceImpl implements TJService {
 		return Period.between(birthDate, now).getYears();
 	}
 	// 반려견 나이 계산
+
+	@Override
+	public List<WishVO> getWishInfo(WishVO vo) throws Exception {
+		
+		return dao.getWishInfo(vo);
+	}
+	
+	
 
 }
