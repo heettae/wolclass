@@ -5,7 +5,14 @@
 
 <mapper namespace="com.wolclass.mappers.TimetableMapper">
 	
-		<!-- 예약가능한 타임테이블 TH -->	
+	<!-- 클래스 시간, 날짜 등록 TJ -->
+	<insert id="addTime">
+		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no) 
+		values( #{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
+	</insert>
+	<!-- 클래스 시간, 날짜 등록 -->
+	
+	<!-- 예약가능한 타임테이블 TH -->	
 	<select id="getTimetable" resultType="TimetableVO">
 	<![CDATA[  
 	select * from wc_timetable

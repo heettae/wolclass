@@ -157,4 +157,16 @@ public class ClassController {
 	}
 	// 클래스 등록 - 처리
 	
+	// 시간 등록
+	@RequestMapping(value = "/addTime", method = RequestMethod.POST)
+	public String addTimePOST(@RequestParam Map<String, Object> map) throws Exception {
+		logger.info(" addTimePOST() 호출 ");
+
+		tservice.addTime(map);
+		logger.info("Map@@@@@@@@@@@@" + map);
+
+		return "redirect:/member/classWorkSpace";
+	}
+	// 시간 등록
+	
 }

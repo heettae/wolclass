@@ -12,15 +12,7 @@
 		values(#{c_name}, #{m_id}, #{c_maxperson}, #{c_addr1}, #{c_addr2}, #{c_addrdetails}, #{c_lati}, #{c_longi}, 
 		#{c_level}, #{c_time}, #{c_category}, #{c_content}, #{c_img}, #{c_price}, default, default)                         
 	</insert>	
-	<!-- 클래스 등록 -->
-	
-	<!-- 클래스 시간, 날짜 등록 -->
-	<insert id="addTime">
-		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no) 
-		values( #{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
-	</insert>
-	<!-- 클래스 시간, 날짜 등록 -->
-	
+	<!-- 클래스 등록 -->	
 	
 	<!-- 등록 완료 클래스 리스트 -->
 	<select id="registerClassList" resultType="ClassVO">
@@ -37,14 +29,6 @@
 		WHERE c_name REGEXP #{keyword}
 	</select>
 	<!-- 해당 키워드 리스트 출력 -->
-	
-	<!-- 회원 정보 -->	
-	<select id="getMemberInfo" resultType="MemberVO">
-		select *
-		from wc_member
-		where m_id = #{m_id}
-	</select>
-	<!-- 회원 정보 -->	
 	
 	<!-- 카테고리별 리스트 출력 -->	
 	<select id="getCategoryClassList" resultType="ClassVO">
@@ -79,7 +63,7 @@
 		select count(c_no)
 		from wc_class c
 		where c_confirm = 'Y'
-		and c_no in (select c_no from wc_timetable where time(t_start) >= #{timestart} and time(t_end) <= #{timeend})
+		and c.c_no in (select c_no from wc_timetable where t_start >= #{timestart} and t_end <= #{timeend} group by c_no having sum(t_rem_p) > 0)
 		and c_name like concat('%',#{search},'%')
 		and c_category like concat('%',#{category},'%')
 		and c_addr1 like concat('%',#{addr},'%')
@@ -100,7 +84,7 @@
 		from wc_class c left join (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
 		on c.c_no = r.c_no
 		where c_confirm = 'Y'
-		and c.c_no in (select c_no from wc_timetable where time(t_start) >= #{timestart} and time(t_end) <= #{timeend})
+		and c.c_no in (select c_no from wc_timetable where t_start >= #{timestart} and t_end <= #{timeend} group by c_no having sum(t_rem_p) > 0)
 		and c.c_name like concat('%',#{search},'%')
 		and c.c_category like concat('%',#{category},'%')
 		and c.c_addr1 like concat('%',#{addr},'%')

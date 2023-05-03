@@ -7,11 +7,18 @@ import com.wolclass.domain.ClassVO;
 
 public interface ClassDAO {
 	String NAMESPACE = "com.wolclass.mappers.ClassMapper";
+	
+	// 키워드별 추천 - TJ
+	public List<ClassVO> findByKeyword(String keyword) throws Exception;
+	
+	// 생일 1주일 전 - TJ
+	public int  oneWeekBeforeBirth(String m_id) throws Exception;
+	
+	// 메인 카테고리별 리스트 - TJ
+	public List<ClassVO> getCategoryClassList() throws Exception;
+	
 	// 클래스 등록 TJ
 	public void addClass(ClassVO vo) throws Exception;
-	
-	// 클래스 시간 등록 TJ
-	public void addTime(Map<String, Object> map) throws Exception;
 	
 	// 등록 완료 클래스 리스트 TJ
 	public List<ClassVO> registerClassList(String m_id) throws Exception;

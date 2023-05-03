@@ -1,6 +1,7 @@
 package com.wolclass.persistance;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -23,5 +24,12 @@ public class TimetableDAOImpl implements TimetableDAO {
 		logger.info("dao-resultVO: "+resultVO);
 		return resultVO;
 	}
+	
+	// 클래스 시간 등록
+	@Override
+	public void addTime(Map<String, Object> map) throws Exception {
+		session.insert(NAMESPACE+".addTime", map);
+	}
+	// 클래스 시간 등록
 	
 }

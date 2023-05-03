@@ -18,14 +18,31 @@ public class ClassDAOImpl implements ClassDAO{
 	@Autowired
 	private SqlSession session;
 	
+	// 키워드별 추천 - tj
+	@Override
+	public List<ClassVO> findByKeyword(String keyword) {
+		return session.selectList(NAMESPACE+".findByKeyword", keyword);
+	}
+	// 키워드별 추천 - tj
+
+	// 카테고리별 리스트
+	@Override
+	public List<ClassVO> getCategoryClassList() throws Exception {
+		return session.selectList(NAMESPACE+".getCategoryClassList");
+	}
+	// 카테고리별 리스트
+	
+	// 반려견 생일 1주일 전
+	@Override
+	public int oneWeekBeforeBirth(String m_id) throws Exception {
+		
+		return session.selectOne(NAMESPACE+".oneWeekBeforeBirth", m_id);
+	}
+	// 반려견 생일 1주일 전
+	
 	@Override
 	public void addClass(ClassVO vo) throws Exception {
 		session.insert(NAMESPACE+".addClass", vo);
-	}
-
-	@Override
-	public void addTime(Map<String, Object> map) throws Exception {
-		session.insert(NAMESPACE+".addTime", map);
 	}
 	
 	@Override
