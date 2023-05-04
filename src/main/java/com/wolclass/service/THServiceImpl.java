@@ -64,8 +64,8 @@ public class THServiceImpl implements THService {
 	}
 
 	@Override
-	public int makeP_no() throws Exception {
-		int pno = dao.makeP_no();
+	public String makeP_no() throws Exception {
+		String pno = dao.makeP_no();
 		return pno;
 	}
 
@@ -74,7 +74,7 @@ public class THServiceImpl implements THService {
 		logger.info("service도착");
 		
 		double subs = (double) (pdto.isSubs() ? 0.5 : 1);
-		int totalPrice = (int) ((pdto.getC_price()*subs))+(pdto.getC_price()*(pdto.getPNum()-1))-pdto.getPoint();
+		int totalPrice = (int) ((pdto.getC_price()*subs))+(pdto.getC_price()*(pdto.getPeopleNum()-1))-pdto.getPoint();
 		pdto.setP_rsrvdate(pdto.getSelectedDate()+" "+pdto.getT_start());
 		logger.info("totalPrice"+totalPrice);
 		if(totalPrice!=pdto.getPrice()) {

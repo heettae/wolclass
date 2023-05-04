@@ -31,7 +31,7 @@ public interface THDAO {
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
 	
 	// 주문번호+1
-	public int makeP_no() throws Exception;
+	public String makeP_no() throws Exception;
 	
 	// 결제정보 디비에 등록
 	public Integer payment(PayDTO pdto) throws Exception;

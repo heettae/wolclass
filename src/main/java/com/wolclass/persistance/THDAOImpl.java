@@ -1,6 +1,8 @@
 package com.wolclass.persistance;
 
-import java.sql.Date;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -98,9 +100,23 @@ public class THDAOImpl implements THDAO{
 
 
 	@Override
-	public int makeP_no() throws Exception {
-		int maxPno = sqlSession.selectOne(NAMESPACE+".maxP_no");
-		return maxPno+1;
+	public String makeP_no() throws Exception {
+		
+		
+	    String orderNo = null;
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+	    String today = dateFormat.format(new Date());
+	    String lastOrderNo = sqlSession.selectOne(NAMESPACE+".lastP_no");
+	    
+	    if (lastOrderNo != null && lastOrderNo.startsWith(today)) {
+	        int lastNo = Integer.parseInt(lastOrderNo.substring(8));
+	        orderNo = today + String.format("%03d", lastNo + 1);
+	    } else {
+	        orderNo = today + "001";
+	    }
+	    
+	    return orderNo;		
+
 	}
 
 
