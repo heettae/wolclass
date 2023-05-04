@@ -226,10 +226,18 @@ function DaumPostcode() {
 
 // 파일 추가
 var cnt = 2;
-function addFile(){
-	$("#imgForm").append("<input type='file' name='c_img"+cnt+"'/><br>");
-	cnt++;
+function addFile() {
+    var html = "<div class='input-file-container'>";
+    html += "<input type='file' name='c_img" + cnt + "' required>";
+    html += "<button class='delete-file-btn'>삭제</button>";
+    html += "</div>";
+    $("#imgForm").append(html);
+    cnt++;
 }
+
+$(document).on("click", ".delete-file-btn", function() {
+    $(this).parent().remove();
+});
 // 파일 추가
 </script>
 

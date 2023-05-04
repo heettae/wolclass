@@ -3,6 +3,7 @@ package com.wolclass.persistance;
 import java.util.List;
 import java.util.Map;
 
+import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.domain.WishVO;
@@ -29,10 +30,7 @@ public interface TJDAO {
 	// 메인 카테고리별 리스트 - tj
 	public List<ClassVO> getCategoryClassList() throws Exception;
 
-	// 위시리스트 c_no, m_id 가져오기
-	public List<WishVO> getWishInfo(WishVO vo) throws Exception;
+	// 알림 목록
+	public List<AlertVO> getAlertList(String m_id) throws Exception;
 	
-	// 위시리스트에 있는 클래스 시간 등록시 알림 테이블에 insert
-//	public void insertAlert() throws Exception;
-
 }

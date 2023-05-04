@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.domain.WishVO;
@@ -154,11 +155,14 @@ public class TJServiceImpl implements TJService {
 	}
 	// 반려견 나이 계산
 
+	
+	// 알림 목록
 	@Override
-	public List<WishVO> getWishInfo(WishVO vo) throws Exception {
-		
-		return dao.getWishInfo(vo);
+	public List<AlertVO> getAlertList(String m_id) throws Exception {
+		return dao.getAlertList(m_id);
 	}
+	// 알림 목록
+
 	
 	
 

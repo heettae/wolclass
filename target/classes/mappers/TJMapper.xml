@@ -66,19 +66,13 @@
 	AND m_id=#{m_id};
 	</select>
 	<!-- 반려견 생일 7일전 -->	
-
-	<!-- 위시리스트 c_no, m_id 가져오기 -->
-	<select id="getWishInfo" resultType="WishVO">
-		SELECT *
-		FROM WC_WISH
-		WHERE C_NO=#{C_NO} AND M_ID=#{M_ID}
+	
+	<!-- 알림 목록 조회 -->
+	<select id="getAlertList" resultType="AlertVO">
+		select *
+		from wc_alert
+		where m_id = #{m_id}
 	</select>
-	<!-- 위시리스트 c_no, m_id 가져오기 -->
-	
-	<!-- 위시에 담긴 클래스 시간 등록시 알림 등록 -->
-	<insert id="insertAlert">
-	
-	</insert>
-	<!-- 위시에 담긴 클래스 시간 등록시 알림 등록 -->
-	
+	<!-- 알림 목록 조회 -->
+
 </mapper>	

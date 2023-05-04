@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.service.TJService;
@@ -81,6 +83,7 @@ public class TJController {
 				logger.info("반려견 나이 : " + age);
 			}
 		}
+		
 		model.addAttribute("WDATA", OpenweatherAPI.getCurrentWeather((String)session.getAttribute("userLat"), (String)session.getAttribute("userLng")));
 		model.addAttribute("categoryList", classMap);
 		model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
@@ -132,15 +135,18 @@ public class TJController {
 		tjService.addTime(map);
 		logger.info("Map@@@@@@@@@@@@" + map);
 
-		return "redirect:/tj/classWorkSpace";
+		return "redirect:/tj/classWorkSpace"; 
 	}
 	// 시간 등록
 	
-	// 알림
-	public String alert() throws Exception{
-		
-		return "";
-	}
+	// 알림 목록
+	@RequestMapping(value = "/alertList", method = RequestMethod.GET)
+    public @ResponseBody List<AlertVO> alertList(HttpSession session) throws Exception{
+        logger.info(" alertList() 호출 ");
+        String id = (String) session.getAttribute("id");
+        
+        return tjService.getAlertList(id);
+    }
 	// 알림
 
 }
