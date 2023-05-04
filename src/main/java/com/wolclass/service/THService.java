@@ -29,7 +29,7 @@ public interface THService {
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
 	
 	// 주문번호 TH
-	public int makeP_no() throws Exception;
+	public String makeP_no() throws Exception;
 	
 	// 가격 계산 + 결제내역 insert TH
 	public Integer payment(PayDTO pdto) throws Exception;

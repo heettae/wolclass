@@ -107,20 +107,20 @@ public class THController {
 	// 클래스 예약 가능한 인원 가져오기 TH
 	
 	
-	// 주문번호 가져오기 TH
+	// 주문번호 가져오기 TH(0504수정)
 	@RequestMapping(value = "/getP_no", method = RequestMethod.POST)
 	@ResponseBody
-	public int p_noPost() throws Exception{
+	public String p_noPost() throws Exception{
 
 		logger.info(" p_noPost() 호출 ");
 
-		int pno = service.makeP_no();
+		String pno = service.makeP_no();
 		//logger.info("cvo : "+cvo );
 		logger.info("pno : "+pno);
 	
 		return pno;
 	}
-	// 주문번호 가져오기 TH
+	// 주문번호 가져오기 TH(0504수정)
 	
 	
 	 //결제 처리하기 TH

@@ -45,9 +45,15 @@
 	</select>
 	
 	
-	<!-- 마지막 주문번호 조회 TH -->
-	<select id="maxP_no" resultType="int">
-	select max(p_no) from wc_rsrv_pay;
+	<!-- 마지막 주문번호 조회 TH(수정) -->
+	<select id="lastP_no" resultType="int">
+	<![CDATA[
+	SELECT p_no
+	FROM wc_rsrv_pay
+	WHERE p_paydate >= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
+	ORDER BY p_no DESC
+	LIMIT 1
+	]]>
 	</select>
 	
 	
@@ -56,12 +62,12 @@
 	<!-- 결제 테이블 isnert TH -->
 	<insert id="insertPay">
 	insert into wc_rsrv_pay(p_no, m_id, c_no, p_price, p_rsrvdate, p_key, p_peoplenum)
-	values(#{p_no}, #{m_id}, #{c_no}, #{price}, #{p_rsrvdate}, #{p_key}, #{pNum})
+	values(#{p_no}, #{m_id}, #{c_no}, #{price}, #{p_rsrvdate}, #{p_key}, #{peopleNum})
 	</insert>
 	
 	<!-- 타임테이블 t_rem_p 변경 TH -->
 	<update id="updateT_rem_p">
-	 update wc_timetable set t_rem_p=(t_rem_p-#{pNum}) where t_no=#{t_no}
+	 update wc_timetable set t_rem_p=(t_rem_p-#{peopleNum}) where t_no=#{t_no}
 	</update>
 	
 	<!-- 구독 쿠폰 사용시 subs테이블 count 변경 -->
