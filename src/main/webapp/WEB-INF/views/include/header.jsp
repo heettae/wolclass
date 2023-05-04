@@ -125,15 +125,72 @@
 }
 
 .notification-popup {
+  top: -170px;
   position: absolute;
-  right: 0;
+  right: 20%;
   bottom: -310px;
-  width: 250px;
-  height: 300px;
-  background-color: #fff;
   border: 1px solid #ccc;
   display: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0px;
+  transform: translate(-80px, 258px);
+  width: 100%;
+/*   height: 100%; */
+  z-index: 1101;
+  max-width: 448px;
+  background: #FFFFFF;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
+  max-height: 524px;
+  overflow-y: auto;
+  border-radius: 10px;
 }
+/* 팝업 내부 리스트 스타일 */
+.notification-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-popup ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.notification-popup ul li a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.notification-popup ul li a:hover {
+  background-color: #f2f2f2;
+}
+
+#notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#notification-header .notification {
+  margin: 0;
+}
+
+#notification-header button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
 /* 알림 버튼 */
 
 /* 위시리스트 */
@@ -261,7 +318,7 @@
 								    <div class="notification-container">
 								        <button id="notification-button" style="padding-right: 30px; font-size: 25px;">
 								            <i class="fa fa-bell"></i>
-								            <span style="right: 14px;" class="notification-count">10</span>
+								            <span style="right: 14px;" class="notification-count"></span>
 								        </button>
 								    </div>
 								    <!-- 알림 버튼 -->
@@ -277,7 +334,17 @@
 								
 									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">더보기</button>
                   			    </div>
-                  			     <div id="notification-popup" class="notification-popup"></div>
+                  			     <div id="notification-popup" class="notification-popup">
+								  <div id="notification-header" class="notification-header">
+								    <h3 class="notification">알림</h3>
+								    <button>전체 읽음</button>
+								  </div>
+								  <div id="notification-content" class="notification-content">
+								    <ul id="notification-list" class="notification-list"></ul>
+								  </div>
+								</div>
+
+
                   			     
                   			     <div id="more-popup" class="more-popup">
                   			     <ul>
@@ -564,20 +631,68 @@
     });
 	
 	
-	 const notificationButton = document.querySelector("#notification-button");
-	    const notificationPopup = document.querySelector("#notification-popup");
-	    let isOpen = false;
-	    notificationButton.addEventListener("click", (event) => {
-	        event.preventDefault(); // 이벤트의 기본 동작을 막음
+	$(document).ready(function() {
+	    var isOpen = false;
+	    var notificationPopup = $("#notification-popup");
+	    var notificationCount = $(".notification-count"); // 알림 개수를 표시하는 엘리먼트
+
+	    // 서버에서 알림 개수 조회
+	    $.ajax({
+	        type: "GET",
+	        url: "/tj/alertList",
+	        dataType: "json",
+	        success: function(data) {
+	        	var count = data.length;
+	            // 알림 개수를 표시
+	            notificationCount.text(count);
+	        },
+	        error: function() {
+	            console.error("서버에서 알림 개수 조회 실패");
+	        }
+	    });
+
+	    // 알림 버튼 클릭 이벤트 핸들러
+	    $("#notification-button").click(function(event) {
+	        event.preventDefault(); // 버튼 클릭 시 디폴트 액션 중지
+
 	        if (!isOpen) {
-	            notificationPopup.innerHTML = "알림 목록을 출력합니다."; // 출력할 내용 입력
-	            notificationPopup.style.display = "block";
-	            isOpen = true;
+	            // 서버에서 알림 목록 조회
+	            $.ajax({
+	                type: "GET",
+	                url: "/tj/alertList",
+	                dataType: "json",
+	                success: function(alertList) {
+	                    // 알림 목록을 뷰에 출력하는 코드 작성
+	                    var html = "";
+	                    $.each(alertList, function(index, alert) {
+	                        console.log(alert.cate_no)
+	                        html += "<li> <a href='class/detail?c_no='"+alert.cate_no+">" + alert.a_content + "</a></li>";
+	                    });
+	                    $('#notification-list').html(html);
+	                    notificationPopup.show();
+	                    isOpen = true;
+	                },
+	                error: function() {
+	                    console.error("서버에서 알림 목록 조회 실패");
+	                }
+	            });
 	        } else {
-	            notificationPopup.style.display = "none";
+	            notificationPopup.hide();
 	            isOpen = false;
 	        }
 	    });
+
+	    // 다른 곳 클릭 시 알림 팝업 닫기
+	    $(document).click(function(event) {
+	        if (!$(event.target).closest("#notification-popup").length && !$(event.target).is("#notification-button")) {
+	            notificationPopup.hide();
+	            isOpen = false;
+	        }
+	    });
+	});
+
+
+
 	    
 	    // 더보기
 	   /* 더보기 버튼 클릭 이벤트 */

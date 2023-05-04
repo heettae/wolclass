@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.domain.WishVO;
@@ -77,13 +78,14 @@ public class TJDAOImpl implements TJDAO {
 	}
 	// 반려견 생일 1주일 전
 
-	// 위시리스트 c_no, m_id 가져오기
+	// 알림 목록
 	@Override
-	public List<WishVO> getWishInfo(WishVO vo) throws Exception {
+	public List<AlertVO> getAlertList(String m_id) throws Exception {
 		
-		return sqlSession.selectList(NAMESPACE+".getWishInfo", vo);
+		return sqlSession.selectList(NAMESPACE+".getAlertList", m_id);
 	}
-	// 위시리스트 c_no, m_id 가져오기
+	// 알림 목록
+
 
 
 	
