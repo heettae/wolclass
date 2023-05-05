@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -147,6 +148,26 @@ public class TJController {
         
         return tjService.getAlertList(id);
     }
-	// 알림
 
+	// 알림 체크
+	@RequestMapping(value = "/alertCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public void alertCheck(Integer a_no) throws Exception{
+		logger.info("alertCheck() 호출");
+		logger.info("a_no@@@@"+a_no);
+		tjService.alertCheck(a_no);
+	}
+	
+	// 알림 전체 체크
+	@RequestMapping(value = "alertCheckAll", method = RequestMethod.GET)
+	@ResponseBody
+	public void alertCheckAll(HttpSession session) throws Exception{
+		logger.info("alertCheckAll() 호출 ");
+		
+		String id = (String) session.getAttribute("id");
+		tjService.alertCheckAll(id);
+	}
+	
+	
+	
 }

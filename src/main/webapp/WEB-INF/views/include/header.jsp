@@ -57,6 +57,7 @@
         <noscript>
         <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css" />
         </noscript>
+        
         <!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
 		integrity="sha512-......" 
@@ -337,7 +338,7 @@
                   			     <div id="notification-popup" class="notification-popup">
 								  <div id="notification-header" class="notification-header">
 								    <h3 class="notification">알림</h3>
-								    <button>전체 읽음</button>
+								    <button type="button" id="notification-read">전체 읽음</button>
 								  </div>
 								  <div id="notification-content" class="notification-content">
 								    <ul id="notification-list" class="notification-list"></ul>
@@ -645,28 +646,32 @@
 	        	var count = data.length;
 	            // 알림 개수를 표시
 	            notificationCount.text(count);
+	            
+	            if (count === 0) {
+	                notificationCount.hide();
+	            } else {
+	                notificationCount.show();
+	            }
 	        },
 	        error: function() {
 	            console.error("서버에서 알림 개수 조회 실패");
 	        }
 	    });
 
-	    // 알림 버튼 클릭 이벤트 핸들러
+		// 알림목록조회
 	    $("#notification-button").click(function(event) {
 	        event.preventDefault(); // 버튼 클릭 시 디폴트 액션 중지
 
 	        if (!isOpen) {
-	            // 서버에서 알림 목록 조회
 	            $.ajax({
 	                type: "GET",
 	                url: "/tj/alertList",
 	                dataType: "json",
 	                success: function(alertList) {
-	                    // 알림 목록을 뷰에 출력하는 코드 작성
 	                    var html = "";
 	                    $.each(alertList, function(index, alert) {
 	                        console.log(alert.cate_no)
-	                        html += "<li> <a href='class/detail?c_no='"+alert.cate_no+">" + alert.a_content + "</a></li>";
+	                        html += "<li> <a href='#' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                    });
 	                    $('#notification-list').html(html);
 	                    notificationPopup.show();
@@ -681,7 +686,8 @@
 	            isOpen = false;
 	        }
 	    });
-
+		 // 알림목록조회
+		 
 	    // 다른 곳 클릭 시 알림 팝업 닫기
 	    $(document).click(function(event) {
 	        if (!$(event.target).closest("#notification-popup").length && !$(event.target).is("#notification-button")) {
@@ -689,9 +695,78 @@
 	            isOpen = false;
 	        }
 	    });
+	   // 다른 곳 클릭 시 알림 팝업 닫기
+	   
+	   // 알림 읽음 처리
+	    $(document).on('click', '#alertCheck', function() {
+	        var a_no = $(this).data('a-no');
+	        console.log("a_no: " + a_no);
+	        var $alertListItem = $(this).closest('li');
+	        $.ajax({
+	            type: "GET",
+	            url: "/tj/alertCheck",
+	            data: {a_no: a_no},
+	            success: function() {
+	                console.log("알림 읽음 처리 완료");
+	                $alertListItem.fadeOut(300, function() {
+	                    $(this).remove();
+	                    updateNotificationCount();
+	                });
+	            },
+	            error: function() {
+	                console.error("알림 읽음 처리 실패");
+	            }
+	        });
+	    });
+	 // 알림 읽음 처리
+	 
+	 // 알림 전체 읽음 처리
+	 $(document).on('click', '#notification-read', function() {
+    $.ajax({
+        type: "GET",
+        url: "/tj/alertCheckAll",
+        success: function() {
+            console.log("전체 알림 읽음 처리 완료");
+            $(".notification-list").fadeOut(300, function() {
+                $(this).empty().removeAttr("style");
+            });
+            updateNotificationCount();
+        },
+        error: function() {
+            console.error("전체 알림 읽음 처리 실패");
+        }
+	    });
 	});
 
+	 // 알림 전체 읽음 처리
+	});
+	
+	// 알림 개수 갱신 함수
+	function updateNotificationCount() {
+	    var notificationCount = $(".notification-count");
 
+	    // 서버에서 알림 개수 조회
+	    $.ajax({
+	        type: "GET",
+	        url: "/tj/alertList",
+	        dataType: "json",
+	        success: function(data) {
+	            var count = data.length;
+	            // 알림 개수를 표시
+	            notificationCount.text(count);
+	            
+	            if (count === 0) {
+	                notificationCount.hide();
+	            } else {
+	                notificationCount.show();
+	            }
+	        },
+	        error: function() {
+	            console.error("서버에서 알림 개수 조회 실패");
+	        }
+	    });
+	}
+	// 알림 개수 갱신 함수
 
 	    
 	    // 더보기
