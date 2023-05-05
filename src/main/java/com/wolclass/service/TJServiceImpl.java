@@ -163,6 +163,19 @@ public class TJServiceImpl implements TJService {
 	}
 	// 알림 목록
 
+	// 알림 체크
+	@Override
+	public void alertCheck(Integer a_no) throws Exception {
+		dao.alertCheck(a_no);
+	}
+	// 알림 체크
+
+	// 알림 전체 체크
+	@Override
+	public void alertCheckAll(String m_id) throws Exception {
+		dao.alertCheckAll(m_id);
+	}
+	// 알림 전체 체크
 	
 	
 
