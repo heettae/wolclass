@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,22 +68,23 @@ public class TJController {
 				int birth = tjService.oneWeekBeforeBirth(vo.getM_id());
 				if (age >= 8 && birth > 0) {
 					// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
-					keyword = "건강|훈련|영양|생일";
+					keyword = "건강|영양|생일";
 					recommendedClass = tjService.findByKeyword(keyword);
 					model.addAttribute("recClass", recommendedClass);
 				} else if (age >= 8) {
-					keyword = "건강|훈련|영양";
+					keyword = "건강|영양";
 					recommendedClass = tjService.findByKeyword(keyword);
 					model.addAttribute("recClass", recommendedClass);
 				} else if (birth > 0) {
-					keyword = "명절|생일";
+					keyword = "생일";
 					recommendedClass = tjService.findByKeyword(keyword);
 					model.addAttribute("recClass", recommendedClass);
-				}
+				} 
 				logger.info("반려견 나이 : " + age);
 			}
 		}
 		
+		model.addAttribute("onlineList", tjService.getOnlineList());
 		model.addAttribute("WDATA", OpenweatherAPI.getCurrentWeather((String)session.getAttribute("userLat"), (String)session.getAttribute("userLng")));
 		model.addAttribute("categoryList", classMap);
 		model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
@@ -145,7 +145,6 @@ public class TJController {
     public @ResponseBody List<AlertVO> alertList(HttpSession session) throws Exception{
         logger.info(" alertList() 호출 ");
         String id = (String) session.getAttribute("id");
-        
         return tjService.getAlertList(id);
     }
 

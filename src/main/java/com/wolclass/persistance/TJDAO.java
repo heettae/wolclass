@@ -6,7 +6,6 @@ import java.util.Map;
 import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.domain.WishVO;
 
 public interface TJDAO {
 	// 클래스 등록 tj
@@ -23,6 +22,9 @@ public interface TJDAO {
 
 	// 키워드별 추천 - tj
 	public List<ClassVO> findByKeyword(String keyword) throws Exception;
+	
+	// 온라인 클래스 
+	public List<ClassVO> getOnlineList() throws Exception;
 
 	// 생일 1주일 전 - tj
 	public int oneWeekBeforeBirth(String m_id) throws Exception;

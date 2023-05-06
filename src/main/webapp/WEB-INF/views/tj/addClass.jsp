@@ -102,7 +102,7 @@
 <!-- 오프라인 폼 -->
 
 <!-- 온라인 폼 -->
-<form role="form" style="display: none;" id="onlineForm" enctype="multipart/form-data" method="post">
+<form role="form" id="onlineForm" enctype="multipart/form-data" method="post" style="display: none;">
 <div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
@@ -130,12 +130,13 @@
 
 <div class="form-group">
 <label for="img1">대표 이미지</label><span style="color: red">(필수)</span>
-<input type="file" id="img1" name="c_img" required>
-<div id="c_img1_warning"></div>
+<input type="file" id="img1" name="c_img1" required>
+<div id="img1_warning"></div>
 </div>
-<div class="form-group">
-<label for="img2">클래스 이미지</label>
-<input type="file" id="img2" name="c_img">
+
+<div class="form-group" id="imgForm">
+<label for="img2">기타 이미지</label>
+<input type="button" id="img2" value="이미지 추가" onclick="addFile();">
 </div>
 
 <div class="form-group">
@@ -150,6 +151,7 @@
 <input type="radio" id="c_level" name="c_level" value="1">하
 <div id="c_level_warning"></div>
 </div>
+
 <div class="form-group">
 <label for="time">소요시간</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="time" placeholder="시간을 입력하세요." name="c_time" required>
@@ -161,7 +163,6 @@
 <input type="text" class="form-control" id="price" placeholder="금액을 입력하세요." name="c_price" required>
 <div id="c_price_warning"></div>
 </div>
-
 </div>
 
 <div class="box-footer">
@@ -240,22 +241,16 @@ $(document).on("click", ".delete-file-btn", function() {
 });
 // 파일 추가
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-	  $('#offline').prop('checked', true);
-	  $('input[name=way]').on('click', function() {
-		if($(this).val() == "on"){
-			$('#offlineForm').css('display', 'none');
-			$('#onlineForm').css('display', 'block');
-		} else{
-			$('#onlineForm').css('display', 'none');
-			$('#offlineForm').css('display', 'block');
-		}
-		
-	  });
-	  
-var formObj = $('form[role="form"]');
+var tj = $.noConflict();
+	tj(document).ready(function() {
+	  tj('#online').click(function(){
+		  alert('ddddddddddd');
+		 tj('#offlineForm').css('display', 'none');
+		 tj('#onlineForm').css('display', 'block'); 
+	  });  
+var formObj = tj('form[role="form"]');
 		
 		
 // 클래스 등록 유효성 체크
@@ -265,8 +260,6 @@ var formObj = $('form[role="form"]');
 	  if (c_name.trim() === '') {
 	    $('#c_name_warning').text('클래스명을 입력하세요.').css('color', 'red');
 	    $('input[name=c_name]').val('');
-	    $('input[name=c_name]').focus();
-	    event.preventDefault(); // 폼 전송 막기
 	  } else {
 	    $('#c_name_warning').text('').css('color', 'black');
 	  }

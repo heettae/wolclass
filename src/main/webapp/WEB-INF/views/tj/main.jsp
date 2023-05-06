@@ -115,7 +115,43 @@
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
 	<div class="container">
 		
-		<c:if test="${WDATA.contains('Rain') }">비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴</c:if>
+		<!-- 온라인 클래스 -->
+		<c:if test="${WDATA.contains('Rain') }">
+		<div class="row">
+			<div class="proerty-th">
+			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+					<h2>비 오는 날엔 집에서 듣는 온라인 클래스!</h2>
+				</div>
+				<div class="slick-slider col-sm-12">
+				<c:forEach items="${onlineList }" var="vo">
+					<div class="col-sm-6 col-md-3 p0">
+						<div class="box-two proerty-item">
+							<div class="item-thumb">
+								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
+							</div>
+							<div class="item-entry overflow">
+					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${vo.c_name }</a></h4>
+					    <span class="proerty-price pull-left">
+					    <fmt:formatNumber value="${rvo.c_price }"/> 원
+					    </span>
+					    <span class="pull-right"> 평점 :  </span>
+					    <!-- 위시리스트 버튼 -->
+				        <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        </c:if>
+				        <!-- 위시리스트 버튼 -->
+						</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
+		</div>
+		</c:if>
+		<!-- 온라인 클래스 -->
+		
 		<!-- 추천리스트 -->
 		<c:if test="${not empty recClass }">
 		<div class="row">
