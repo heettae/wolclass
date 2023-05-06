@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.domain.WishVO;
 
 @Repository
 public class TJDAOImpl implements TJDAO {
@@ -100,6 +99,14 @@ public class TJDAOImpl implements TJDAO {
 	}
 	// 알림 전체 체크
 
+	// 온라인 리스트
+	@Override
+	public List<ClassVO> getOnlineList() throws Exception {
+		return sqlSession.selectList(NAMESPACE+".onlineClassList");
+	}
+	
+	
+	
 	
 	
 }

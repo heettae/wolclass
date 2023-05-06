@@ -4,13 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.domain.WishVO;
 
 public interface TJService {
 	// 클래스 등록
@@ -49,4 +47,6 @@ public interface TJService {
 	// 알림 전체 읽기
 	public void alertCheckAll(String m_id) throws Exception;
 
+	// 온라인 리스트
+	public List<ClassVO> getOnlineList() throws Exception;
 }

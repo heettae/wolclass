@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.wolclass.domain.AlertVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.domain.WishVO;
 import com.wolclass.persistance.TJDAO;
 import com.wolclass.utils.TypeParser;
 
@@ -176,7 +175,12 @@ public class TJServiceImpl implements TJService {
 		dao.alertCheckAll(m_id);
 	}
 	// 알림 전체 체크
-	
+
+	@Override
+	public List<ClassVO> getOnlineList() throws Exception {
+		return dao.getOnlineList();
+	}
+
 	
 
 }
