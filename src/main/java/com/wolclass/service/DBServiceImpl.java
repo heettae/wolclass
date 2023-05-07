@@ -2,7 +2,6 @@ package com.wolclass.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -16,10 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.protobuf.TextFormat.ParseException;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.persistance.DBDAO;
 
@@ -194,17 +191,7 @@ public class DBServiceImpl implements DBService{
 		return kfindIdVO;
 	}
 	
-//	// 구글 회원가입
-//	@Override
-//	public void googleInsert(MemberVO vo) throws Exception {
-//		dbdao.kakaoInsert(vo);
-//	}
-//	// 구글 로그인
-//	@Override
-//	public MemberVO googleLogin(MemberVO vo) throws Exception {
-//		MemberVO returnVO = dbdao.kfindId(vo);;
-//		return returnVO;
-//	}
+
 	
 	
 }

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolclass.domain.MemberVO;
-import com.wolclass.persistance.DBDAOImpl;
 import com.wolclass.service.DBService;
 
 @Controller
@@ -266,52 +265,40 @@ public class DBController {
 		}
 		return "redirect:/db/main";
 	}
+	// 네이버 콜백 - 다빈
+	@RequestMapping(value="/callback", method=RequestMethod.GET)
+    public String callBack(){
+        return "/db/navercallback";
+    }
 	
-	// 구글 로그인 - 다빈
-//	@PostMapping("/google")
-//	@ResponseBody
-//	public String googleLogin(MemberVO vo, HttpSession session
-//			 ,RedirectAttributes rttr, MemberVO mvo) throws Exception{
-//		MemberVO returnVO = service.googleLogin(vo);
-//		String mvo_ajaxid = mvo.getM_id();
-//		logger.info(" C : 구글아이디 포스트 db에서 가져온 vo"+ vo);
-//		logger.info(" C : 구글아읻 포스트 ajax에서 가져온 id"+ mvo_ajaxid);
-//		
-//		if(returnVO == null) { // 아이디가 DB에 존재하지 않는경우
-//			// 구글 회원가입
-//			service.googleInsert(vo);
-//			
-//			// 구글 로그인
-//			returnVO = service.googleLogin(vo);
-//			session.setAttribute("id", returnVO.getM_id());
-//			rttr.addFlashAttribute("mvo", returnVO);
+	// 네이버 로그인 - 다빈
+	@PostMapping("/naver")
+    public @ResponseBody String naverLogin(@RequestParam("n_email") String n_email,
+    		@RequestParam("n_name") String n_name,@RequestParam("n_id") String n_id,HttpSession session) throws Exception{
+		logger.info("naverLogin() 호출");
+		logger.info(n_email);
+		logger.info(n_name);
+		logger.info(n_id);
+//		MemberVO vo = new MemberVO();
+//		vo.setM_email(n_email);
+//		vo.setM_name(n_name);
+//		vo.setM_pw("1111");
+		
+		//Random random = new Random();
+		//int n_id = random.nextInt(900000000) + 100000000;
+		//String n_id_str = String.format("n%09d", n_id);
+		//vo.setM_id(n_id);
+	    
+//	    if(service.kfindId(vo)!= null) session.setAttribute("id", vo.getM_id());
+//		else {
+//			service.kakaoInsert(vo);
+//			session.setAttribute("id", vo.getM_id());
 //		}
-//		
-//		if(mvo_ajaxid.equals(returnVO.getM_id())) { // 아이디가 DB에 존재하는 경우
-//			// 구글 로그인
-//			service.googleLogin(vo);
-//			session.setAttribute("id", returnVO.getM_id());
-//			rttr.addFlashAttribute("mvo",returnVO);
-//		}else { // 아이디가 DB에 존재하지 않는경우
-//			// 회원가입
-//			service.googleInsert(vo);
-//			
-//			// 로그인
-//			returnVO = service.googleLogin(vo);
-//			session.setAttribute("id", returnVO.getM_id());
-//			rttr.addFlashAttribute("mvo",returnVO);
-//		}
-//		return "redirect:/db/main";
-//	}
-
-	
-	@PostMapping("/google")
-	@ResponseBody
-	public String googleLogin(MemberVO vo, HttpSession session
-			 ,RedirectAttributes rttr, MemberVO mvo) throws Exception{
-		return "";
+//	    logger.info("tllkfkdfksofkaok");
+		return "redirect:/db/main";
 	}
 
+	
 	
 	
 }

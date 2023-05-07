@@ -9,7 +9,6 @@
 	</c:if>
 	<c:if test="${isKakao == ''}">
 		<button type="submit" class="btn btn-default" id="logoutBtn" onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=c6c8f231f2997186bfd65955c7b8f1ab&logout_redirect_uri=http://localhost:8080/db/logout'">로그아웃</button>
-<!-- 	<a href="https://kauth.kakao.com/oauth/logout?client_id=c6c8f231f2997186bfd65955c7b8f1ab&logout_redirect_uri=http://localhost:8080/db/logout">로그아웃</a> -->
 	</c:if>
 </c:if>
 
