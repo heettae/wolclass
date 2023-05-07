@@ -135,7 +135,7 @@
 
   </div>
 </div>
-<c:if test="${WDATA.contains('Rain') }">비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴</c:if>
+<c:if test="${WDATA.contains('Rain') && !WDATA.contains('lightrain') }">비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴</c:if>
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
 	<div class="container">
@@ -279,4 +279,4 @@ $('.slick-slider').slick({
 // 슬라이드
 </script>
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../hj/footer.jsp"%>

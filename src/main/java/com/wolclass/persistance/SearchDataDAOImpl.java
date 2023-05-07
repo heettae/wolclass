@@ -13,12 +13,10 @@ public class SearchDataDAOImpl implements SearchDataDAO{
 	@Autowired
 	private SqlSession session;
 	
-	// 인기검색어 조회 hj
 	@Override
 	public List<String> getPSList() throws Exception {
 		return session.selectList(NAMESPACE+".pslist");
 	}
-	// 인기검색어 조회 hj
 
 	@Override
 	public boolean getClassCount(String word) {

@@ -79,8 +79,9 @@ public class ClassController {
 		// 검색데이터 분석 및 저장
 		new Thread(() -> {
 			if(map.containsKey("search"))
+				map.put("userAddr", (String)session.getAttribute("userAddr"));
 				try {
-					sdservice.analyze(map.get("search"));
+					sdservice.analyze(map);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

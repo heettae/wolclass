@@ -29,8 +29,8 @@ public class SearchDataServiceImpl implements SearchDataService{
 	}
 	
 	@Override
-	public void analyze(Object objStr) throws Exception {
-		String searchData = (String)objStr;
+	public void analyze(Map<String,Object> srchMap) throws Exception {
+		String searchData = (String)srchMap.get("search");
 		if(searchData == null || searchData.equals("")) return;
 		
 		Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
@@ -48,6 +48,7 @@ public class SearchDataServiceImpl implements SearchDataService{
 			Map<String,Object> map = new HashMap<>();
 			String word = iter.next();
 			map.put("word",word);
+			map.put("userAddr", srchMap.get("userAddr") == null ? "" : (String)srchMap.get("userAddr"));
 			if(dao.getClassCount(word)) map.put("exist",'Y');
 			else map.put("exist",'N');
 			dao.insert(map);

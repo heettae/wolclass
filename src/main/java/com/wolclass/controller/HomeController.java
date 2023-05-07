@@ -104,10 +104,19 @@ public class HomeController {
 	@ResponseBody
 	public void setLocation(HttpSession session, @RequestParam("userLat") String lat, @RequestParam("userLng") String lng) {
 		logger.info(" setLocation() 호출 ");
-		logger.info("접속 위치정보  위도 {} , 경도{}", lat, lng);
+		logger.info("접속 위치정보  위도 {} , 경도 {}", lat, lng);
 		session.setAttribute("userLat", lat);
 		session.setAttribute("userLng", lng);
 	}
 	// 사용자 위치정보 세션에 저장 HJ
 	
+	// 사용자 위치정보 세션에 저장 HJ
+	@RequestMapping(value = "/addr", method = RequestMethod.POST)
+	@ResponseBody
+	public void setAddr(HttpSession session, @RequestParam("userAddr") String addr) {
+		logger.info(" setLocation() 호출 ");
+		logger.info("접속 위치정보 행정주소 {} ", addr);
+		session.setAttribute("userAddr", addr);
+	}
+	// 사용자 위치정보 세션에 저장 HJ
 }

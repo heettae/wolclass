@@ -17,9 +17,15 @@ public class HJController {
 	@Autowired
 	private HJService service;
 
+	// http://localhost:8080/hj/getLatLng
 	@RequestMapping("/getLatLng")
 	public void getLatLng() {}
 	
+	// http://localhost:8080/hj/geolocationtest
 	@RequestMapping("/geolocationtest")
 	public void geolocationtest() {}
+	
+	// http://localhost:8080/hj/getAddr
+	@RequestMapping("/getAddr")
+	public void getAddr() {}
 }

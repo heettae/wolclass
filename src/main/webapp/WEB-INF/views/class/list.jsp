@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../hj/header.jsp" %>
 
 <!-- 지도 팝업창 관련 -->
 <input type="hidden" id="srchdata" value='${jsonStr}'>
@@ -175,4 +175,4 @@ function openLocation(){
 </div>
 <!-- 클래스 리스트 HJ-->
 
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../hj/footer.jsp" %>

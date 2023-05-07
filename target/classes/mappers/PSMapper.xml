@@ -5,7 +5,7 @@
 
 <mapper namespace="com.wolclass.mappers.PSMapper">
 
-	<!-- 인기 검색어 조회 hj -->
+	<!-- 인기 검색어 조회 HJ -->
 	<select id="pslist" resultType="String">
 	<![CDATA[  
 		select ps_text
@@ -17,23 +17,24 @@
 		limit 10
 	]]> 
 	</select>
-	<!-- 인기 검색어 조회 hj -->
+	<!-- 인기 검색어 조회 HJ -->
 	
-	<!-- 인기 검색어(강사용) 조회 hj -->
+	<!-- 인기 검색어(강사용) 조회 HJ -->
 	<select id="nslist" resultType="String">
 	<![CDATA[  
 		select ps_text
 		from wc_popular_search
 		where datediff(now(), ps_regdate) < 30
 		and ps_isexist = 'N'
+		and ps_addr like concat('%',#{selectedAddr},'%')
 		group by ps_text
 		order by count(*) desc, max(ps_regdate) desc
 		limit 10
 	]]> 
 	</select>
-	<!-- 인기 검색어(강사용) 조회 hj -->
+	<!-- 인기 검색어(강사용) 조회 HJ -->
 	
-	<!-- 키워드에 해당하는 데이터 조회 hj -->
+	<!-- 키워드에 해당하는 데이터 조회 HJ -->
 	<select id="classCount" resultType="int">
 	<![CDATA[  
 		select count(*)
@@ -41,16 +42,16 @@
 		where c_name like concat('%',#{word},'%')
 	]]> 
 	</select>
-	<!-- 키워드에 해당하는 데이터 조회 hj -->
+	<!-- 키워드에 해당하는 데이터 조회 HJ -->
 
-	<!-- 인기 검색어 등록 hj -->
+	<!-- 인기 검색어 등록 HJ -->
 	<insert id="insert">
 	<![CDATA[  
-		insert into wc_popular_search (ps_text, ps_isexist) 
-		values(#{word},#{exist})
+		insert into wc_popular_search (ps_text, ps_isexist, ps_addr) 
+		values(#{word},#{exist},#{userAddr})
 	]]> 
 	</insert>
-	<!-- 인기 검색어 등록 hj -->
+	<!-- 인기 검색어 등록 HJ -->
 	
 	<update id="updateMember">
 	

@@ -75,9 +75,17 @@ body{
     -webkit-transform-origin: 50% 34px;
     transform-origin: 50% 34px;
 }
+
+.distbtn{
+}
 </style>
 </head>
 <body>
+<!-- <div> -->
+<!-- <input type="button" value="10" class="distbtn"> -->
+<!-- <input type="button" value="30" class="distbtn"> -->
+<!-- <input type="button" value="50" class="distbtn"> -->
+<!-- </div> -->
 <!-- 카카오맵 api -->
 <div id="kakaoMapApi"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031"></script>
