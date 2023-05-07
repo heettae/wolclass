@@ -35,6 +35,13 @@ public class TJDAOImpl implements TJDAO {
 	}
 	// 클래스 시간 등록
 	
+	// 시간 중복 체크
+//	@Override
+//	public int timeOverlapCheck(Map<String, Object> map) throws Exception {
+//		return sqlSession.selectOne(NAMESPACE+".timeOverlapCheck", map);
+//	}
+	// 시간 중복 체크
+	
 	// 등록 완료 클래스 리스트
 	@Override
 	public List<ClassVO> registerClassList(String m_id) throws Exception {
@@ -43,6 +50,7 @@ public class TJDAOImpl implements TJDAO {
 	}
 	// 등록 완료 클래스 리스트
 	
+
 	// 회원정보 조회
 	@Override
 	public MemberVO getMemberInfo(String m_id) {

@@ -2,22 +2,28 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>    
 
+<style>
+.iCheck-helper {
+  display: none;
+}
+
+</style>
 
 
-		<div class="box box-primary" style="width: max-content; margin: auto;">
+		<div class="box box-primary" style="width: max-content; margin: auto; min-width: 500px">
 <div class="box-header with-border">
 <h3 class="box-title">클래스 등록</h3>
 </div>
 
 <!-- 오프라인 폼 -->
-<form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
-<div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
 <input type="radio" class="form-control" id="offline" name="way" value="off">
 <label for="online">온라인</label>
 <input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
+<form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
+<div class="box-body">
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
@@ -104,12 +110,6 @@
 <!-- 온라인 폼 -->
 <form role="form" id="onlineForm" enctype="multipart/form-data" method="post" style="display: none;">
 <div class="box-body">
-<div class="form-group">
-<label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="offline" name="way" value="off">
-<label for="online">온라인</label>
-<input type="radio" class="form-control" id="online" name="way" value="on">
-</div>
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
@@ -245,11 +245,22 @@ $(document).on("click", ".delete-file-btn", function() {
 <script type="text/javascript">
 var tj = $.noConflict();
 	tj(document).ready(function() {
-	  tj('#online').click(function(){
-		  alert('ddddddddddd');
-		 tj('#offlineForm').css('display', 'none');
-		 tj('#onlineForm').css('display', 'block'); 
-	  });  
+		// iCheck-helper 클래스가 선택되었을 때 이벤트 처리
+		tj('.iCheck-helper').on('click', function() {
+		  // parent() 사용해서 부모 요소 div 태그 선택 후 find 사용해서 하위 input[name=way] 요소의 value값 가져오기
+		  var selectedValue = tj(this).parent().find('input[name="way"]:checked').val();
+		  
+		  // value 값을 출력
+		  console.log(selectedValue);
+		  if(selectedValue == 'on'){
+			  tj('#onlineForm').css('display', 'block');
+			  tj('#offlineForm').css('display', 'none');
+		  }else{
+			  tj('#offlineForm').css('display', 'block');
+			  tj('#onlineForm').css('display', 'none');
+		  }
+		});
+
 var formObj = tj('form[role="form"]');
 		
 		
