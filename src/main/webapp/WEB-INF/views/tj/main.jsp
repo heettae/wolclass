@@ -116,14 +116,16 @@
 	<div class="container">
 		
 		<!-- 온라인 클래스 -->
-		<c:if test="${WDATA.contains('Rain') }">
+		<c:if test="${WDATA.contains('Rain') && !WDATA.contains('lightrain') }">
 		<div class="row">
 			<div class="proerty-th">
 			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
 					<h2>비 오는 날엔 집에서 듣는 온라인 클래스!</h2>
 				</div>
 				<div class="slick-slider col-sm-12">
+				<c:set var="count" value="0"/>
 				<c:forEach items="${onlineList }" var="vo">
+				  <c:if test="${count < 8 }">
 					<div class="col-sm-6 col-md-3 p0">
 						<div class="box-two proerty-item">
 							<div class="item-thumb">
@@ -145,6 +147,8 @@
 						</div>
 						</div>
 					</div>
+					<c:set var="count" value="${count + 1 }"/>
+					</c:if>
 				</c:forEach>
 				</div>
 			</div>
@@ -198,7 +202,9 @@
 		        <h2>${vo.key }</h2>
 		      </div>
 		      <div class="slick-slider col-sm-12">
+		      <c:set var="count" value="0"/>
 		        <c:forEach items="${vo.value }" var="classVO">
+		          <c:if test="${count < 8 }">
 		          <div class="col-sm-6 col-md-3 p0">
 		            <div class="box-two proerty-item">
 		              <div class="item-thumb">
@@ -221,6 +227,8 @@
 		              </div>
 		            </div>
 		          </div>
+		          <c:set var="count" value="${count + 1}"/>
+		          </c:if>
 		        </c:forEach>
 		      </div>
 		    </c:forEach>

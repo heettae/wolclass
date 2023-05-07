@@ -133,10 +133,19 @@ public class TJController {
 	public String addTimePOST(@RequestParam Map<String, Object> map) throws Exception {
 		logger.info(" addTimePOST() 호출 ");
 
-		tjService.addTime(map);
-		logger.info("Map@@@@@@@@@@@@" + map);
-
-		return "redirect:/tj/classWorkSpace"; 
+		
+		// 시간 중복 체크
+//		int result = tjService.timeOverlapCheck(map);
+		
+//		if(result == 0) {
+			tjService.addTime(map);
+			logger.info("Map@@@@@@@@@@@@" + map);
+			logger.info("시간 정상 등록");
+			return "redirect:/tj/classWorkSpace"; 
+//		}else {
+//			logger.info("시간 겹침");
+//			return null;
+//		}
 	}
 	// 시간 등록
 	

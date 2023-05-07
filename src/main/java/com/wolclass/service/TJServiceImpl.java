@@ -59,6 +59,25 @@ public class TJServiceImpl implements TJService {
 	}
 	// 클래스 시간 등록
 
+	// 시간 중복 체크
+//	@Override
+//	public int timeOverlapCheck(Map<String, Object> map) throws Exception {
+//		String c_no = (String) map.get("c_no");
+//		String t_rem_p = (String) map.get("t_rem_p");
+//		String t_start = (String) map.get("t_start");
+//		String t_end = (String) map.get("t_end");
+//		String t_date = (String) map.get("t_date");
+//		
+//		map.put("c_no", Integer.parseInt(c_no));
+//		map.put("t_rem_p", Integer.parseInt(t_rem_p));
+//		map.put("t_start", TypeParser.stringToTime(t_start));
+//		map.put("t_end", TypeParser.stringToTime(t_end));
+//		map.put("t_date", TypeParser.stringToDate(t_date));
+//		
+//		return dao.timeOverlapCheck(map);
+//	}
+	// 시간 중복 체크
+
 	// 파일 처리
 	@Override
 	public List<String> fileProcess(MultipartHttpServletRequest multiRequest) throws Exception {
@@ -106,6 +125,7 @@ public class TJServiceImpl implements TJService {
 		return fileList;
 	}
 	// 파일 처리
+
 
 	// 등록 완료 클래스 리스트
 	@Override

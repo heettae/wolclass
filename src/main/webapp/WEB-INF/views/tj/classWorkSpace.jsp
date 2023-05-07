@@ -200,11 +200,11 @@ li a:hover {
 						    <span class="close" onclick="closeModal()">&times;</span>
 						    <h2>시간 등록</h2>
 						    <form id="timeForm" method="post">
-						    <input type="hidden" name="c_no">
-						    <input type="hidden" name="t_rem_p">
+						      <input type="hidden" name="c_no">
+						      <input type="hidden" name="t_rem_p">
 						      <div class="form-group">
 						        <label for="date">날짜</label>
-						        <input type="date" id="date" name="t_date">
+						        <input type="date" id="date" name="t_date" min="<?php echo date('Y-m-d'); ?>">
 						      </div>
 						      <div class="form-group">
 						        <label for="start-time">시작 시간</label>
@@ -235,7 +235,7 @@ $(document).ready(function() {
 	  });
 	});
 
-	
+// 시간 등록 모달	
 function openModal() {
   document.getElementById("modal").style.display = "block";
 }
@@ -243,9 +243,14 @@ function openModal() {
 function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
+// 시간 등록 모달	
+
+// 오늘 날짜 전 미출력
+var today = new Date().toISOString().split('T')[0];
+document.getElementsByName("t_date")[0].setAttribute('min', today);
+// 오늘 날짜 전 미출력
 
 $(document).ready(function(){
-	
 	
 	
 	$('#addTime').click(function(){
