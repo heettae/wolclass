@@ -31,6 +31,20 @@ public interface THService {
 	// 주문번호 TH
 	public String makeP_no() throws Exception;
 	
-	// 가격 계산 + 결제내역 insert TH
-	public Integer payment(PayDTO pdto) throws Exception;
+	// 가격 계산 TH (5/8 수정)
+	public Integer totalPrice(PayDTO pdto) throws Exception;
+	
+
+	public String getAccessToken(PayDTO paymentsModel);
+	// 결제정보 조회 TH
+	public PayDTO getPaymentInfo(String accessToken, PayDTO pdto);
+	
+	// 결제 insert TH
+	public void insertPaymentInfo(PayDTO pdto) throws Exception;
+	
+	// 결제 update TH
+	public Integer updatePaymentInfo(PayDTO pdto) throws Exception;
+
+	// DB price 조회 TH
+	public Integer selectPrice(String p_no) throws Exception;
 }

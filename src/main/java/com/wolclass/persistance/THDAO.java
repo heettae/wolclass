@@ -26,13 +26,19 @@ public interface THDAO {
 	
 	// 예약 가능한 최대 인원 TH
 	public TimetableVO getRemainNum(TimetableVO vo) throws Exception;
-	
-	// 구독정보 조회
+	 
+	// 구독정보 조회TH
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception;
 	
-	// 주문번호+1
+	// 주문번호+1 TH
 	public String makeP_no() throws Exception;
 	
-	// 결제정보 디비에 등록
-	public Integer payment(PayDTO pdto) throws Exception;
+	// 결제정보 디비에 등록 TH
+	public void insertPaymentInfo(PayDTO pdto) throws Exception;
+	
+	// 결제정보 업데이트 TH
+	public Integer updatePaymentInfo(PayDTO pdto) throws Exception;
+
+	// db 가격 조회 TH
+	public Integer selectPrice(String p_no) throws Exception;
 }
