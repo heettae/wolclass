@@ -404,7 +404,7 @@
                                             	<div class="tooltip-arrow"></div><div class="tooltip-inner">00:00 : 24:00
                                             	</div>
                                             </div>
-                                            <input type="time" class="span2" value="" data-slider-min="0" data-slider-max="2400" data-slider-step="5" data-slider-value="[0,2400]" id="price-range" style="">
+                                            <input type="time" class="span2" value="" data-slider-min="0" data-slider-max="2400" data-slider-step="5" data-slider-value="[0,2400]" id="time-selector" style="">
                                             <br>
                                             <b class="pull-left color">00:00</b> 
                                             <b class="pull-right color">24:00</b>
@@ -444,7 +444,7 @@
                                             <div class="tooltip top" style="top: -14px; left: 0px;">
                                             <div class="tooltip-arrow"></div><div class="tooltip-inner">0 : 100,000</div>
                                             </div>
-                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="5" data-slider-value="[0,100000]" id="min-baths" style=""><br>
+                                            <input type="text" class="span2" value="" data-slider-min="${map.pricestart }" data-slider-max="${map.priceend == 0? 100000 : map.priceend }" data-slider-step="100" data-slider-value="[0,100000]" id="price-selector" style=""><br>
                                             <b class="pull-left color">0</b> 
                                             <b class="pull-right color">100,000</b>
                                         </div>
@@ -456,6 +456,29 @@
 							  <!-- 검색 기능 -->
 							  
                             </form>
+                            <!-- 검색 폼 -->
+                            <form role="srch_frm" method="get">
+								<input type="hidden" name="timestart" value="${map.timestart }">
+								<input type="hidden" name="timeend" value="${map.timeend }">
+								<input type="hidden" name="pricestart" value="${map.pricestart }">
+								<input type="hidden" name="priceend" value="${map.priceend }">
+								<input type="hidden" name="lowlv" value="${map.lowlv }">
+								<input type="hidden" name="midlv" value="${map.midlv }">
+								<input type="hidden" name="highlv" value="${map.highlv }">
+								<input type="hidden" name="category" value="${map.category }">
+								<input type="hidden" name="addr" value="${map.addr }">
+								<input type="hidden" name="order" value="${map.order }">
+								<input type="hidden" name="search" value="${map.search }">
+								<input type="hidden" name="pageNum" value="${map.pageNum }">
+							</form>
+							<script>
+// 							document.getElementById('price-selector').addEventListener('input', (event) => {
+// 							  document.getElementByName('pricestart')[0].value = event.target.getAttribute('data-slider-min');
+// 							  document.getElementByName('priceend')[0].value = event.target.getAttribute('data-slider-max');
+// 							});
+
+							</script>
+                            <!-- 검색 폼 -->
                     <ul class="main-nav nav navbar-nav navbar-right">
 
                     </ul>

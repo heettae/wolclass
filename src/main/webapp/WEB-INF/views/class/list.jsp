@@ -124,20 +124,6 @@ function openLocation(){
 			<!-- 페이징 처리 -->
 			
 			<!-- 페이지 이동시 데이터 처리 -->
-			<form role="srch_frm" method="get">
-				<input type="hidden" name="timestart" value="${map.timestart }">
-				<input type="hidden" name="timeend" value="${map.timeend }">
-				<input type="hidden" name="pricestart" value="${map.pricestart }">
-				<input type="hidden" name="priceend" value="${map.priceend }">
-				<input type="hidden" name="lowlv" value="${map.lowlv }">
-				<input type="hidden" name="midlv" value="${map.midlv }">
-				<input type="hidden" name="highlv" value="${map.highlv }">
-				<input type="hidden" name="category" value="${map.category }">
-				<input type="hidden" name="addr" value="${map.addr }">
-				<input type="hidden" name="order" value="${map.order }">
-				<input type="hidden" name="search" value="${map.search }">
-				<input type="hidden" name="pageNum" value="${map.pageNum }">
-			</form>
 			<script type="text/javascript">
 			$(document).ready(function(){
 				var formObj = $("form[role='srch_frm']");
