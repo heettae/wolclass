@@ -1,27 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
-<style>
-.box-for {
-			overflow: auto;
-			width: 50%;
-			background-color: #F5F5F5;
-			padding: 20px;
-			border-radius: 5px;
-		}
 
-		form {
-			margin-top: 20px;
-		}
-
-		button {
-			margin-top: 20px;
-		}
-</style>
-<div class="col-md-6" style="position: absolute; display: contents;">
-	<div class="box-for overflow">
-		<div class="col-md-12 col-xs-12 login-blocks mx-auto">
-			<h2>Login</h2>
+<div class="col-md-6" style="position: absolute; display: contents;" >
+	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
+		<div class="col-md-12 col-xs-12 login-blocks">
+			<h2>WolClass(Login)</h2>
 			<form method="post" id="login_form">
 				<div class="form-group">
 					<label for="m_id">아이디</label> <input type="text"
@@ -42,15 +26,16 @@
 			</div>
 
 			<br>
-			<p>
+			
+			<p style=" display: flex; justify-content: center;">
 				<!-- 카카오 로그인 -->
 				<a
 					href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/db/kakao&response_type=code">
-					<img src="../resources/img/kakao_login_btn.png" width="190"/>
+					<img src="../resources/img/kakao_login_btn.png" width="190px"/>
 				</a>
 				<!-- 카카오 로그인 -->
 				<!-- 네이버 -->
-					<div id="naverIdLogin"></div>
+					<div id="naverIdLogin" style="width: 190px; margin: 0 auto;"></div>
 				<!-- 네이버 -->
 			</p>
 		</div>
@@ -78,12 +63,11 @@
             callbackUrl: "http://localhost:8080/db/callback",
               // 본인의 callBack url로 수정하세요.
             isPopup: false,
-            loginButton: {color: "green", type: 3, height: 60, width : 190}
-              // 네이버 로그인버튼 디자인 설정. 한번 바꿔보세요:D
+            loginButton: {color: "green", type: 3, height: 60}
         }
     );
-	naverLogin.init()
+	naverLogin.init();
 	// 네이버
-    
+	
 </script>
 <%@ include file="../include/footer.jsp"%>

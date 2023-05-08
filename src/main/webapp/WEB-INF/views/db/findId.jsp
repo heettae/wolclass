@@ -12,7 +12,7 @@
 
 
 <div class="col-mda-6">
-	<div class="box-for overflow">
+	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
 		<div class="col-md-12 col-xs-12 login-blocks">
 			<h2>아이디 찾기</h2>
 			<form id="findIdForm" method="post">
@@ -28,9 +28,6 @@
 					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#findIdModal" id="findIdBtn">
 					  아이디 찾기
 					</button>
-					<button type="button" class="btn btn-default" id="loginBtn">
-					  로그인
-					</button>
 				</div>
 			</form>
 		</div>
@@ -38,10 +35,6 @@
 </div>
 
 <script type="text/javascript">
-	// 로그인 페이지 이동 - 다빈
-	$("#loginBtn").click(function(){
-		location.href="/db/login";
-	});
 	// 아이디 찾기(암호화) - 다빈
 	$(document).ready(function() {
 		$("#findIdBtn").click(function() {

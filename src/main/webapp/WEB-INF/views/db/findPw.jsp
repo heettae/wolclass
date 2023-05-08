@@ -3,7 +3,7 @@
 <%@ include file="../include/header.jsp"%>
 
 <div class="col-mda-6">
-	<div class="box-for overflow">
+	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
 		<div class="col-md-12 col-xs-12 login-blocks">
 			<h2>비밀번호 찾기</h2>
 			<form id="findPwForm" method="post">
@@ -50,6 +50,7 @@ $("#findPwBtn").click(function(){
 		}
 	});
 });
+
 </script>
 
 <%@ include file="../include/footer.jsp"%>

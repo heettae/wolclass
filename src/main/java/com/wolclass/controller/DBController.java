@@ -1,8 +1,12 @@
 package com.wolclass.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
@@ -20,10 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolclass.domain.MemberVO;
+import com.wolclass.service.ClassService;
 import com.wolclass.service.DBService;
+import com.wolclass.service.WishService;
 
 @Controller
 @RequestMapping("/db/*")
@@ -33,6 +41,8 @@ public class DBController {
 	
 	@Autowired
 	private DBService service;
+	@Autowired
+	private WishService wservice;
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -276,28 +286,86 @@ public class DBController {
     public @ResponseBody String naverLogin(@RequestParam("n_email") String n_email,
     		@RequestParam("n_name") String n_name,@RequestParam("n_id") String n_id,HttpSession session) throws Exception{
 		logger.info("naverLogin() 호출");
-		logger.info(n_email);
-		logger.info(n_name);
-		logger.info(n_id);
-//		MemberVO vo = new MemberVO();
-//		vo.setM_email(n_email);
-//		vo.setM_name(n_name);
-//		vo.setM_pw("1111");
 		
-		//Random random = new Random();
-		//int n_id = random.nextInt(900000000) + 100000000;
-		//String n_id_str = String.format("n%09d", n_id);
-		//vo.setM_id(n_id);
+		MemberVO vo = new MemberVO();
+		vo.setM_email(n_email);
+		vo.setM_name(n_name);
+		vo.setM_id(n_id);
+		
+		// 랜덤한 8자리 비밀번호 생성
+	    Random random = new Random();
+	    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    String randomPassword = "";
+	    for (int i = 0; i < 8; i++) {
+	        randomPassword += characters.charAt(random.nextInt(characters.length()));
+	    }
+	    String password = randomPassword;
 	    
-//	    if(service.kfindId(vo)!= null) session.setAttribute("id", vo.getM_id());
-//		else {
-//			service.kakaoInsert(vo);
-//			session.setAttribute("id", vo.getM_id());
-//		}
-//	    logger.info("tllkfkdfksofkaok");
+	    // 비밀번호 설정
+	    vo.setM_pw(password);
+		
+		
+		if(service.kfindId(vo)!= null) session.setAttribute("id", vo.getM_id());
+		else {
+			service.kakaoInsert(vo);
+			session.setAttribute("id", vo.getM_id());
+		}
 		return "redirect:/db/main";
 	}
-
+	// 특정 회원조회 - 다빈
+	@GetMapping("/mypage")
+	public String myPage(HttpSession session, Model model) throws Exception{
+		logger.info("mypage() 호출");
+		
+		String id = (String)session.getAttribute("id");
+		
+		MemberVO vo = service.selectMember(id);
+		model.addAttribute("vo", vo);
+		
+		return "/db/mypage";
+	}
+	
+	@PostMapping("/profileImg")
+	@ResponseBody
+	public String profileImg(@RequestParam("m_profile") MultipartFile mFile,
+			HttpSession session) throws Exception{
+		MemberVO vo = new MemberVO();
+		vo.setM_id((String)session.getAttribute("id"));
+		String filePath = 
+				getClass().getResource("/").getPath().split("WEB-INF")[0]+"resources/img/";
+		String oFileName = mFile.getOriginalFilename();
+		logger.info("file이름 저장 완료! ");
+		
+		 // 파일 이름에 고유한 값을 추가하여 파일 이름 변경
+        String fileExtension = oFileName.substring(oFileName.lastIndexOf(".")); // 파일 확장자 추출
+        String uniqueFileName = new SimpleDateFormat("HHmmss").format(new Date()) + UUID.randomUUID().toString() + fileExtension;
+		
+		File file = new File(filePath + uniqueFileName);
+		if (mFile.getSize() != 0) {
+			// 해당 경로에 파일이 없을경우
+			if (!file.exists()) {
+				// 해당하는 디렉터리 생성후 파일을 업로드
+				if (file.getParentFile().mkdirs()) {
+					file.createNewFile();
+				} // mkdirs
+			} // exists
+				// 임시로 생성(저장) MultipartFile을 실제 파일로 전송
+			mFile.transferTo(file);
+		} // getSize
+		
+		vo.setM_profile(uniqueFileName);
+		service.updateProfile(vo);
+		
+		return "success";
+	}
+	
+	@RequestMapping(value = "/wishList", method = RequestMethod.GET)
+	public ModelAndView listGET(HttpSession session) {
+		logger.info(" listGET() 호출 ");
+		ModelAndView mav = new ModelAndView("/db/wishList");
+		mav.addObject(wservice.getClassList((String)session.getAttribute("id")));
+		return mav;
+	}
 	
 	
 	

@@ -3,7 +3,7 @@
 <%@ include file="../include/header.jsp" %>
 
 <div class="col-md-6" style="position: absolute; display: contents;">
-                    <div class="box-for overflow">
+                    <div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px">
                         <div class="col-md-12 col-xs-12 register-blocks">
                             <h2>회원가입 </h2> 
                             <form id="join_form" method="post"> 
@@ -75,7 +75,7 @@
                                     <input type="date" class="form-control" id="m_dogbirth" name="m_dogbirth">
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-default">회원가입</button>
+                                    <button type="submit" class="btn btn-default" style="width: 100%">회원가입</button>
                                 </div>
                             </form>
                         </div>

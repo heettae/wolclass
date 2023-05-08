@@ -35,4 +35,12 @@ public interface DBDAO {
 	
 	// 카카오아이디  - 다빈
 	public MemberVO kfindId(MemberVO vo) throws Exception;
+	
+	// 특정회원조회 - 다빈 
+	public MemberVO selectMember(String id) throws Exception;
+	
+	// 프로필사진 변경 - 다빈	
+	public void updateProfile(MemberVO vo) throws Exception;
+		
+
 }
