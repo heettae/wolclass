@@ -10,7 +10,7 @@ public class AlertVO {
 	private String m_id;
 	private String a_content;
 	private Integer category;
-	private Integer cate_no;
+	private String cate_no;
 	private Timestamp a_senddate;
 	private String a_check;
 }

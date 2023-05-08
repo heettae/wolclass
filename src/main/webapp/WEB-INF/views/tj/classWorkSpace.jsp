@@ -214,7 +214,7 @@ li a:hover {
 						        <label for="end-time">끝나는 시간</label>
 						        <input type="time" id="end-time" name="t_end">
 						      </div>
-						      <button type="submit" class="btn btn-primary" id="addTime">등록</button>
+						      <button type="button" class="btn btn-primary" id="addTime">등록</button>
 						    </form>
 						  </div>
 						</div>
@@ -253,10 +253,24 @@ document.getElementsByName("t_date")[0].setAttribute('min', today);
 $(document).ready(function(){
 	
 	
-	$('#addTime').click(function(){
-		$('#timeForm').attr('action', '/tj/addTime');
-		$('#timeForm').submit();
-	});
+		$('#addTime').click(function(){
+			$.ajax({
+				type : 'POST',
+				url : '/tj/addTime',
+				data : $('#timeForm').serialize(),
+				success : function(result){
+					if(result == 1){
+						alert('성공');
+						location.reload();
+					}else{
+						alert('이미 등록된 시간과 겹칩니다. 다시 시간을 선택해주세요.');
+					}
+				},
+				error : function(){
+					alert('등록 실패');
+				}
+			});
+		});
 	
 	$('.register-box').click(function(){
 		location.href="/tj/addClass";

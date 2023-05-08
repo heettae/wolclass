@@ -15,7 +15,7 @@ public interface TJService {
 	public int addClass(ClassVO vo) throws Exception;
 	
 	// 클래스 시간 등록
-	public void addTime(Map<String, Object> map) throws Exception;
+	public int addTime(Map<String, Object> map) throws Exception;
 	
 	// 시간 중복 체크
 //	public int timeOverlapCheck(Map<String, Object> map) throws Exception;
