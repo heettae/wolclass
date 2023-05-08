@@ -91,7 +91,7 @@
       </div>
 
       <div class="item">
-        <a href="#">
+        <a href="/tj/Event">
           <img src="/resources/img/review.PNG" alt="리뷰">
         </a>
       </div>

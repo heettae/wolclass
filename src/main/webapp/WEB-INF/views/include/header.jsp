@@ -128,7 +128,7 @@
 .notification-popup {
   top: -170px;
   position: absolute;
-  right: 20%;
+  left: 70%;
   bottom: -310px;
   border: 1px solid #ccc;
   display: none;
@@ -223,7 +223,7 @@
 .more-popup {
   position: absolute;
   top: 80px;
-  left: 90%;
+  left: 58%;
   z-index: 1;
   width: 240px;
   padding: 12px;
@@ -266,7 +266,69 @@
 .more-popup ul li a:hover {
   background-color: #f2f2f2;
 }
+
+#more {
+    background-color: transparent;
+    color: black;
+    border: none;
+}
 /* 더보기 */
+
+/* 마이페이지 */
+#user-popup {
+  position: absolute;
+  top: 80px;
+  left: 79%;
+  z-index: 1;
+  width: 240px;
+  padding: 12px;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  border-top: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+#user-popup.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#user-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#user-popup ul li {
+  margin: 0;
+  padding: 0;
+}
+
+#user-popup ul li a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+#user-popup ul li a:hover {
+  background-color: #f2f2f2;
+}
+
+#user-button {
+  background-color: transparent;
+  padding: 0px;
+  font-size: x-large;
+  color: black;
+  border: none;
+}
+
+
+/* 마이페이지 */
 </style>
 
     </head>
@@ -274,13 +336,7 @@
 <input type="hidden" value="${sessionScope.id }" id="id">
 <nav class="navbar navbar-default " style="top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
                 <div class="navbar-header" style="margin-left: 100px;">
-<!--                         <span class="">WolClass</span> -->
-<!--                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"> -->
-<!--                         <span class="icon-bar"></span> -->
-<!--                         <span class="icon-bar"></span> -->
-<!--                         <span class="icon-bar"></span> -->
-<!--                     </button> -->
-                    <a class="navbar-brand" href="/tj/main"><img src="/resources/img/logo.png" alt="wolClass" style="height: 90px;"></a>
+                    <a href="/tj/main"><img src="/resources/img/logo2.png" alt="wolClass" style="height: 90px;"></a>
                 </div>
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -295,27 +351,33 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Key word">
                                 </div>
-                                <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn search-btn" type="submit" id="searchBtn"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding: 0px;">
+								<!-- 더보기 버튼 -->
+									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">
+									  <i class="fa fa-ellipsis-v"></i> 
+									</button>
+								<!-- 더보기 버튼 -->
 								<c:choose>
 								  <c:when test="${sessionScope.id.equals('admin') }">
                        			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s">관리자</button>
 								  </c:when>
 								  <c:otherwise>
                        			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s" 
-                       			  style="margin-right: 30px;" id="addClass">클래스 등록</button>
+								    style=" border: 2px solid #000; background-color: transparent;
+								           border-radius: 50px; font-weight: bold; color: #000;" id="addClass">클래스 등록</button>
+
 								  </c:otherwise>
 								</c:choose>
                        			  
 								<c:if test="${empty sessionScope.id }">
-                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class" data-toggle="modal" data-target="#loginModal" 
-                       			  style="margin-right: 30px;">로그인</button>
-                      			  <button class="navbar-btn nav-button wow fadeInRight" id="join" data-wow-delay="0.5s">회원가입</button>
+                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class"  id="login" style="background-color: transparent; font-weight: bold; color: #000">로그인</button>
+<!--                       			  <button class="navbar-btn nav-button wow fadeInRight" id="join" data-wow-delay="0.5s">회원가입</button> -->
 								</c:if>
 								
 								<c:if test="${not empty sessionScope.id }">
 								<!-- 알림 버튼 -->
-                      			 <div style="display: flex;">
+                      			 <div style="display: flex; margin-left: 25px;">
 								    <div class="notification-container">
 								        <button id="notification-button" style="padding-right: 30px; font-size: 25px;">
 								            <i class="fa fa-bell"></i>
@@ -324,17 +386,21 @@
 								    </div>
 								    <!-- 알림 버튼 -->
 								    <!-- 마이페이지 -->
-								    <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s" style="margin-left: auto; margin-right: 30px;">
-								        <i class="fas fa-user-circle"></i>마이페이지
-								    </button>
+								    <button id="user-button" type="button" class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s">
+									  <i class="fas fa-user-circle fa-lg"></i>
+									</button>
+
 								</div>
 								<!-- 마이페이지 -->
 
-                      			  <button class="navbar-btn nav-button wow fadeInRight" id="logout" data-wow-delay="0.5s">로그아웃</button>
+<!--                       			  <button class="navbar-btn nav-button wow fadeInRight" id="logout" data-wow-delay="0.5s">로그아웃</button> -->
 								</c:if>
 								
-									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">더보기</button>
+								
+
                   			    </div>
+                  			    
+                  			    <!-- 알림 팝업창 -->
                   			     <div id="notification-popup" class="notification-popup">
 								  <div id="notification-header" class="notification-header">
 								    <h3 class="notification">알림</h3>
@@ -344,15 +410,27 @@
 								    <ul id="notification-list" class="notification-list"></ul>
 								  </div>
 								</div>
+                  			    <!-- 알림 팝업창 -->
 
 
-                  			     
+                  			    <!-- 더보기 팝업창 --> 
                   			     <div id="more-popup" class="more-popup">
                   			     <ul>
                   			       <li><a href="/sw/community"> 커뮤니티</a></li>
                   			       <li><a href="#"> 공지사항</a></li>
                   			     </ul>
                   			     </div>
+                  			    <!-- 더보기 팝업창 -->
+                  			    
+                  			    <!-- 마이페이지 팝업창 -->
+                  			    <div id="user-popup" class="user-popup">
+								  <ul>
+								    <li><a href="/db/mypage">마이페이지</a></li>
+								    <li><a href="/db/logout">로그아웃</a></li>
+								  </ul>
+								</div>
+                  			    <!-- 마이페이지 팝업창 -->
+                  			    
                                 <div style="display: none;" class="search-toggle">
 
                                     <div class="search-row">   
@@ -536,53 +614,6 @@
             </div><!-- /.container-fluid -->
         </nav>
         <!-- End of nav bar -->
-        <!-- Modal 내용 -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class= "modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Wolclass</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="col-md-6" style="position: absolute; display: contents;">
-	<div class="box-for overflow" >
-		<div class="col-md-12 col-xs-12 login-blocks" >
-			<h2>Login</h2>
-			<form method="post" id="login_form">
-				<div class="form-group">
-					<label for="m_id">아이디</label> 
-					<input type="text" class="form-control" name="m_id">
-				</div>
-				<div class="form-group">
-					<label for="m_pw">비밀번호</label> 
-					<input type="password" class="form-control" name="m_pw">
-				</div>
-				<div class="text-center">
-					<button class="btn btn-default" id="loginBtn">로그인</button>
-				</div>
-			</form>
-			<div class="text-center">
-				<a href="#" style="color: black;">아이디</a>/<a href="#" style="color: black;">비밀번호 찾기</a>  
-				<a href="/db/join" style="margin-left: 3px; color: black;">회원가입</a>	
-			</div>
-	
-			<br>
-			<p>
-				<a class="login-social" href="#"><i class="fa fa-facebook"></i>&nbsp;Facebook</a>
-				<a class="login-social" href="#"><i class="fa fa-google-plus"></i>&nbsp;Gmail</a>
-				<a class="login-social" href="#"><i class="fa fa-twitter"></i>&nbsp;Twitter</a>
-			</p>
-		</div>
-	</div>
-</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -602,7 +633,7 @@
 		    console.log(id);
 		    if (!id) {
 		    	alert('로그인이 필요합니다.');
-		      $('#loginModal').modal('show');
+		        location.href="/db/login";
 		    } else{
 		    	alert('클래스 등록');
 		    	location.href='/tj/classWorkSpace';
@@ -610,26 +641,47 @@
 		    return false;
 		  });
 		
+		$("#searchBtn").click(function(event) {
+		    event.preventDefault(); // 버튼 클릭 시 디폴트 액션 중지
+
+		    var keyword = $(".form-control").val(); // 입력된 키워드 가져오기
+		    location.href = "/class/list?search=" + encodeURIComponent(keyword); // 페이지 이동
+		});
+		
 	});
 	
-	// 모달창 id,pw 이벤트 전파 막기
-	$("#m_id").click(function(event){
-	    event.stopPropagation(); 
-	  });
-	$("#m_pw").click(function(event){
-	    event.stopPropagation(); 
-	  });
-	// 모달창 id,pw 이벤트 전파 막기
+	// 마이페이지 팝업 
+// 	$(document).ready(function() {
+//   var userButton = $('#user-button');
+//   var userPopup = $('#user-popup');
+//   var isOpen = false;
+
+//   userButton.on('click', function() {
+//     userPopup.toggleClass('active');
+//     isOpen = !isOpen;
+//   });
+
+//   $(document).on('click', function(event) {
+//     if (!userPopup.is(event.target) && userPopup.has(event.target).length === 0 && !userButton.is(event.target)) {
+//       userPopup.removeClass('active');
+//       isOpen = false;
+//     }
+//   });
+// });
+
+
+	// 마이페이지 팝업 
+
 	// 로그인 submit - 다빈
-	$("#loginBtn").click(function(){
-		  $("#login_form").attr("action","/db/login");
-		  $("#login_form").submit();
+	$("#login").click(function(){
+		location.href="/db/login";
 	});
 	$(document).ready(function(){
      <% if (request.getAttribute("result") != null && (int)request.getAttribute("result") == 0) { %>
      		alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.");
      <% } %>
     });
+	
 	
 	
 	$(document).ready(function() {
@@ -671,7 +723,15 @@
 	                    var html = "";
 	                    $.each(alertList, function(index, alert) {
 	                        console.log(alert.cate_no)
-	                        html += "<li> <a href='#' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        if(alert.category == 1){
+	                        	html += "<li> <a href='/class/detail?c_no="+alert.cate_no+"' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        }
+	                        if(alert.category == 2){
+	                        	html += "<li> <a href='/sw/mypage' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        }
+	                        if(alert.category == 3){
+	                        	html += "<li> <a href='/tj/main' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        }
 	                    });
 	                    $('#notification-list').html(html);
 	                    notificationPopup.show();
@@ -690,11 +750,11 @@
 		 
 	    // 다른 곳 클릭 시 알림 팝업 닫기
 	    $(document).click(function(event) {
-	        if (!$(event.target).closest("#notification-popup").length && !$(event.target).is("#notification-button")) {
-	            notificationPopup.hide();
-	            isOpen = false;
-	        }
-	    });
+		  if (!$(event.target).closest("#notification-popup").length && !$(event.target).is("#notification-button")) {
+		    $("#notification-popup").hide();
+		    isOpen = false;
+		  }
+		});
 	   // 다른 곳 클릭 시 알림 팝업 닫기
 	   
 	   // 알림 읽음 처리
@@ -786,8 +846,27 @@
 		    morePopup.classList.remove('active');
 		  }
 		});
-
 	    // 더보기
+	    // 유저
+		const userButton = document.getElementById('user-button');
+		const userPopup = document.getElementById('user-popup');
+		
+		userButton.addEventListener('click', (event) => {
+		  event.stopPropagation(); // 이벤트 전파 중지
+		console.log('user-button 클릭');
+		  userPopup.classList.toggle('active');
+		});
+		
+		/* 팝업 외부 클릭 이벤트 */
+		document.addEventListener('click', (event) => {
+		  if (!userPopup.contains(event.target)) {
+		    userPopup.classList.remove('active');
+		  }
+		});
+	    // 유저
+	    
+	    
+	    
 
 </script>
 
