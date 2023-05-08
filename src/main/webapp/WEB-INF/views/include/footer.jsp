@@ -60,9 +60,19 @@ hj(document).ready(function() {
 	wishlistBtns.forEach(function(btn) {
 	  btn.addEventListener('click', function() {
 		cno = hj(this).val();
-		if (btn.classList.contains('active')) url = '/wish/del';
-		else url = '/wish/add';
-	    wishChange(btn);
+		if (btn.classList.contains('active')) {
+			if(confirm('위시리스트에서 제거하시겠습니까?')){
+				url = '/wish/del';
+				wishChange(btn);
+				setTimeout(function(){
+					location.reload();
+				},50);
+			}
+		}
+		else {
+			url = '/wish/add';
+	    	wishChange(btn);
+		}
 	  });
 	});
 	function wishChange(btn){

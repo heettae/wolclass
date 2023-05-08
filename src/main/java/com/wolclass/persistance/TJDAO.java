@@ -15,7 +15,7 @@ public interface TJDAO {
 	public void addTime(Map<String, Object> map) throws Exception;
 	
 	// 시간 중복 체크
-//	public int timeOverlapCheck(Map<String, Object> map) throws Exception;
+	public int timeOverlapCheck(Map<String, Object> map) throws Exception;
 
 	// 등록 완료 클래스 리스트
 	public List<ClassVO> registerClassList(String m_id) throws Exception;
