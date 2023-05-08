@@ -42,6 +42,10 @@ public interface DBService {
 	public void kakaoInsert(MemberVO vo) throws Exception;
 	public MemberVO kfindId(MemberVO vo) throws Exception;
 	
-
+	// 특정회원 조회 - 다빈
+	public MemberVO selectMember(String m_id) throws Exception;
+	
+	// 프로필사진 변경 - 다빈	
+	public void updateProfile(MemberVO vo) throws Exception;
 	
 }

@@ -191,6 +191,17 @@ public class DBServiceImpl implements DBService{
 		return kfindIdVO;
 	}
 	
+	// 특정회원조회 - 다빈 
+	@Override
+	public MemberVO selectMember(String m_id) throws Exception {
+		return dbdao.selectMember(m_id);
+	}
+	
+	// 프로필사진 변경 - 다빈	
+	@Override
+	public void updateProfile(MemberVO vo) throws Exception {
+		dbdao.updateProfile(vo);
+	}
 
 	
 	

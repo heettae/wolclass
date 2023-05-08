@@ -74,7 +74,18 @@ public class DBDAOImpl implements DBDAO{
 		MemberVO kfindIdVO = sqlSession.selectOne(NAMESPACE+".kfindId", vo);
 		return kfindIdVO;
 	}
-
+	
+	// 특정회원조회 - 다빈
+	@Override
+	public MemberVO selectMember(String id) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".selectM", id);
+	}
+	
+	// 프로필사진 변경 - 다빈
+	@Override
+	public void updateProfile(MemberVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".profileImg", vo);
+	}
 
 
 	

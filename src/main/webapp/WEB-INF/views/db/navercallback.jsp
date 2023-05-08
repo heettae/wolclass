@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
+
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 	var naverLogin = new naver.LoginWithNaverId({
 	    clientId: "eGvYqWZMB4smx8mntk57", 
@@ -24,13 +26,9 @@ window.addEventListener('load', function () {
 		        url: '/db/naver',
 		        data: { 'n_email':email,'n_name':name,'n_id':id},
 		        dataType: 'text',
-		        success: function(result) {
-					if(result=='ok') {
-						alert('성공');
-						location.replace("http://localhost:8080/db/Main");
-					} else if(result=='no') {
-						alert('실패');
-						location.replace("http://localhost:8080/db/login");
+		        success: function(data) {
+					if(data!=null) {
+						location.href="/db/main";
 					}
 				},
 				error: function(result) {
@@ -43,6 +41,7 @@ window.addEventListener('load', function () {
 		}
 	});
 });
+
 </script>
 
 

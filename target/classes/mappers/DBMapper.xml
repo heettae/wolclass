@@ -57,5 +57,15 @@
  		select * from wc_member where m_id = #{m_id} 
  	</select>
  	
+ 	<!-- 특정회원 조회 - 다빈 -->
+ 	<select id="selectM" resultType="MemberVO">
+ 		select * from wc_member where m_id = #{m_id}
+ 	</select>
+ 	
+ 	<!-- 프로필 사진 변경 -->
+ 	<update id="profileImg" parameterType="MemberVO">
+ 		update wc_member set m_profile = #{m_profile} where m_id = #{m_id}
+ 	</update>
+ 	
  
  </mapper>
