@@ -16,14 +16,13 @@ public class PayDTO {
     private boolean subs;
     private Integer c_price;
     private Integer price; // 계산된 가격
-    private String p_key;
-    
+    //private String paid_at;
     private String p_rsrvdate;
-    
-    private int merchant_uid;
-    private int cancel_request_amount;
-
-    
+    private String imp_uid; // p_key 를 바꿀지 고민
+    private String merchant_uid;
+    private String applyNum;
+    private String bankCode;
+    private String status;
     
 
 }

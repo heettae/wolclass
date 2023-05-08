@@ -46,7 +46,7 @@
 	
 	
 	<!-- 마지막 주문번호 조회 TH(수정) -->
-	<select id="lastP_no" resultType="int">
+	<select id="lastP_no" resultType="String">
 	<![CDATA[
 	SELECT p_no
 	FROM wc_rsrv_pay
@@ -60,10 +60,20 @@
 <!-- 결제시 insert,update -->
 	
 	<!-- 결제 테이블 isnert TH -->
-	<insert id="insertPay">
-	insert into wc_rsrv_pay(p_no, m_id, c_no, p_price, p_rsrvdate, p_key, p_peoplenum)
-	values(#{p_no}, #{m_id}, #{c_no}, #{price}, #{p_rsrvdate}, #{p_key}, #{peopleNum})
+	<insert id="insertPay" parameterType="PayDTO">
+	insert into wc_rsrv_pay (p_no, m_id, c_no, p_price, p_rsrvdate, p_peoplenum, p_subs, p_usedpoint, imp_uid, p_status)
+	values (#{p_no}, #{m_id}, #{c_no}, #{price}, #{p_rsrvdate}, #{peopleNum}, #{subs}, #{point}, #{imp_uid}, #{status})
 	</insert>
+	
+	<!-- 결제 테이블 select TH -->
+	<select id="selectPrice" resultType="int">
+	select p_price from wc_rsrv_pay where p_no=#{p_no}
+	</select>
+	
+	<!-- 결제 테이블 update TH -->
+	<update id="updatePay">
+	update wc_rsrv_pay set p_status=#{status} where p_price=#{price}
+	</update>
 	
 	<!-- 타임테이블 t_rem_p 변경 TH -->
 	<update id="updateT_rem_p">

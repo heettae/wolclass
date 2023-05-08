@@ -102,12 +102,13 @@ public class THDAOImpl implements THDAO{
 	@Override
 	public String makeP_no() throws Exception {
 		
-		
+		logger.info("dao - makiP_no 호출 ");
 	    String orderNo = null;
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 	    String today = dateFormat.format(new Date());
 	    String lastOrderNo = sqlSession.selectOne(NAMESPACE+".lastP_no");
 	    
+	    logger.info("dao - makiP_no 쿼리 실행 ");
 	    if (lastOrderNo != null && lastOrderNo.startsWith(today)) {
 	        int lastNo = Integer.parseInt(lastOrderNo.substring(8));
 	        orderNo = today + String.format("%03d", lastNo + 1);
@@ -115,33 +116,54 @@ public class THDAOImpl implements THDAO{
 	        orderNo = today + "001";
 	    }
 	    
+	    logger.info("주문번호 "+orderNo);
 	    return orderNo;		
 
 	}
 
 
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Integer payment(PayDTO pdto) throws Exception {
+	public void insertPaymentInfo(PayDTO pdto) throws Exception {
 		logger.info("dao.insertPay() 실행");
 		logger.info(pdto+"");
-		Integer cnt = 0;
-		
-		cnt += sqlSession.insert(NAMESPACE+".insertPay",pdto);
-		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", pdto);
-		 
-
-		if(pdto.getPoint()!=0) {
-			cnt += sqlSession.update(NAMESPACE+".updatePoint", pdto);
-		}
-		if(pdto.isSubs()) {
-			cnt += sqlSession.update(NAMESPACE+".updateS_cnt", pdto);
-		}
-		logger.info("cnt(실행된 sql 개수) : "+cnt);
+		sqlSession.insert(NAMESPACE+".insertPay",pdto);
 		
 		
-		return cnt;
+		// 결제가 완료된 후 수정
+//		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", pdto);
+//		 
+//
+//		if(pdto.getPoint()!=0) {
+//			cnt += sqlSession.update(NAMESPACE+".updatePoint", pdto);
+//		}
+//		if(pdto.isSubs()) {
+//			cnt += sqlSession.update(NAMESPACE+".updateS_cnt", pdto);
+//		}
+//		logger.info("cnt(실행된 sql 개수) : "+cnt);
+//		
+		
+		
 	}
+
+
+
+	@Override
+	public Integer updatePaymentInfo(PayDTO pdto) throws Exception {
+		
+		return sqlSession.update(NAMESPACE+".updatePay",pdto);
+	}
+
+
+
+	@Override
+	public Integer selectPrice(String p_no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".selectprice",p_no);
+		
+		
+	}
+	
+	
 	
 	
 	

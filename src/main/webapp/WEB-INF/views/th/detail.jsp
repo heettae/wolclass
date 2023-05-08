@@ -1059,19 +1059,20 @@ $(document).ready(function(){
 					    pay_method : 'card',
 					    merchant_uid: p_no, // 상점에서 관리하는 주문 번호${p_no}
 					    name : "${classVO.c_name}",
-					    amount : 100,
+					    amount : price,
 					    buyer_email: "${memberVO.m_email}",
 					    buyer_name: "${memberVO.m_name}",
-					    buyer_tel: "${memberVO.m_phone}",
-					    buyer_addr : '서울특별시 강남구 삼성동',
-					    buyer_postcode : '123-456'
+					    buyer_tel: "${memberVO.m_phone}"
+					   // ,buyer_addr : '서울특별시 강남구 삼성동',
+					   // buyer_postcode : '123-456'
 					}, function(rsp) {
 						if ( rsp.success ) {
 					    alert("결제까지 성공했음");
-					    alert($("#pNum").val());
+					    //alert($("#pNum").val());
 					    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 					    	var result = {
-							"p_key" : rsp.imp_uid,
+							"imp_uid" : rsp.imp_uid,
+							"merchant_uid" : rsp.merchant_uid,
 							"p_no" : p_no,
 							"t_no" : $("#t_no").val(),
 							"m_id" : "${id}",
@@ -1081,34 +1082,62 @@ $(document).ready(function(){
 							"peopleNum": $("#pNum").val(),
 							"point" : $('#point').val(),
 							"subs": $('#subs').is(':checked'),
-							"c_price" : "${classVO.c_price}" 
-							// c_price가 아니라 price : rsp.amount로 수정해야할듯
-							// 그리고 결제창까지 가기전에 ajax로 가격 계산하는 거 미리 보낸다음에 
-							// 계산 다 하고나서 결제 해야할듯~!~!~
+							"c_price" : "${classVO.c_price}" ,
+							"price" : rsp.paid_amount
 							}
-					    console.log(result);
+					   		console.log(result);
+					    	
+					    	
 					    	jQuery.ajax({
-					    		url: "/th/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+					    		url: "/th/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
 					    		type: 'POST',
-// 					    		contentType : "application/json",
+ 					    		//contentType : "application/json",
 					    		data: JSON.stringify(result),
-					    		contentType:'application/json; charset=utf-8',
+					    		contentType:'application/json;',
 						        success: function(res){
-							        alert("complete 성공");
 							        console.log(res);
-						        	if(res == 1){
-						        		
+						        	if (res === "ok") {
 						        	
-			           
-							          }else{
+						        	alert("insert ok!");
+						        	
+									
+						        	
+						        	
+						        	}else{
 							             console.log("Insert Fail!!!");
-							          }
-							        },
-							        error:function(){
-							          console.log("Insert ajax 통신 실패!!!");
 							        }
+							     },
+						        error:function(){
+						          console.log("Insert ajax 통신 실패!!!");
+						        }
+					    	
+					    	
+					    	
 					    	}).done(function(data) {
 					    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+					    		console.log("done"+data);
+					    		console.log("done"+rsp.imp_uid);
+					    		
+					    		 $.ajax({
+					    	            url: "/th/complete",
+					    	            type: "POST",
+							    		data: JSON.stringify(result),
+							    		contentType:'application/json;',
+								        success: function(r){
+								        	alert("complete 호출")
+								        	console.log("r : "+r);
+								        	
+								        	 if (r === "success") {
+								        	 	// 
+								        	 }
+								        	
+								        }
+					    		 });
+					    		
+					    		
+					    		
+					    		
+					    		
 					    		if ( everythings_fine ) {
 					    			var msg = '결제가 완료되었습니다.';
 					    			msg += '\n고유ID : ' + rsp.imp_uid;

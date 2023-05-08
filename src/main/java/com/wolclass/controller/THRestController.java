@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wolclass.domain.PayDTO;
 import com.wolclass.service.THService;
 
-@RequestMapping("/th/payments")
+@RequestMapping("/th")
 @RestController
 public class THRestController {
 
@@ -27,31 +27,75 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 	@Autowired
 	private THService service;
 	
-	
+
+	@RequestMapping(value = "/insertPaymentInfo", method = RequestMethod.POST)
+	public String insertPaymentInfo(@RequestBody PayDTO pdto) {
+		// STEP5-3. 결제 정보 검증 후 저장하기
+		// 처음에 요청했던 금액 저장하기
+		try {
+			service.insertPaymentInfo(pdto);
+			return "ok";	
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+			return "ng";
+		}
+	}
+
+
+
 
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public ResponseEntity<String> paymentsPOST(@RequestBody PayDTO dto) throws Exception{
+	public ResponseEntity<String> paymentsPOST(@RequestBody PayDTO pdto) throws Exception{
 		logger.info("paymensPOST() 호출");
-		logger.info("dto : "+dto);
+		logger.info("dto : "+pdto);
 		int result = 0;
 		ResponseEntity<String> respEntity = null;
 		
+		logger.info("pdto:"+pdto);
+		// STEP5. 결제 정보 검증 및 저장하기
 		try {
-			result = service.payment(dto);
-			if (result == 1) {
-				respEntity = new ResponseEntity<String>("payOK", HttpStatus.OK);
+			// STEP5-2. 결제 정보 조회하기
+			// 액세스 토큰(access token) 발급 받기
+			String accessToken = service.getAccessToken(pdto);
+			logger.info("token"+accessToken);
+			// imp_uid로 아임포트 서버에서 결제 정보 조회
+			PayDTO paymentInfo = service.getPaymentInfo(accessToken, pdto);
+			logger.info("결제정보조회"+paymentInfo);
+			// STEP5-3. 결제 정보 검증 후 저장하기
+			// 결제되어야 하는 금액 조회
+			int selectPrice = service.selectPrice(pdto.getP_no());
+			int amount = paymentInfo.getPrice();
+			logger.info("db에 입력된 금액"+selectPrice+",결제된 금액"+amount);
+										// 내부에서 price 계산하는건데 여기 있으면 안될듯
+										//int totalPrice = service.totalPrice(pdto); 
+			// 결제 검증하기
+			if(selectPrice == amount) {
+				service.updatePaymentInfo(paymentInfo); // DB에 결제 정보 저장
+				logger.info("update"+pdto);
+				if(paymentInfo.getStatus().equals("paid")) { // 결제 완료
+					respEntity = new ResponseEntity<String>("success", HttpStatus.OK);
+				//}else if(paymentInfo.getStatus().equals("ready")) { // 가상계좌발급
+				//	return "vbankIssued";
+				}else {
+					respEntity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST); // error 400
+				}
+			}else { // 결제금액 불일치. 위/변조 된 결제
+				respEntity = new ResponseEntity<String>("ddd", HttpStatus.BAD_REQUEST);
 			}
-
-		} catch (Exception e) { // Exception : 예외에 대한 정보를 알려줌
-
-			if (result != 1) { // 수정 실패
-				respEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST); // error 400
-			}
+			
+		}catch(Exception e) {
+			respEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+
 		return respEntity;		
 	}
 
 
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/refund", method = RequestMethod.POST)
 	public String refundPOST(@RequestBody PayDTO dto) throws Exception {
@@ -61,27 +105,5 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 		return "";
 	}
 	
-//	
-//	
-//	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-//    public String completePayment(@PathVariable("imp_uid") String impUid) {
-//		String apiUrl = "https://api.iamport.kr/payments/" + impUid;
-//		URL url = new URL(apiUrl);
-//		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//		conn.setRequestMethod("GET");
-//		conn.setRequestProperty("Authorization", "Basic " + Base64.getEncoder().encodeToString((apiKey + ":" + apiSecret).getBytes()));
-//		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-//		StringBuffer sb = new StringBuffer();
-//		String line;
-//		while ((line = br.readLine()) != null) {
-//		    sb.append(line);
-//		}
-//		conn.disconnect();
-//
-//		Gson gson = new Gson();
-//		Payment payment = gson.fromJson(sb.toString(), Payment.class);
-//		PaymentResult paymentResult = new PaymentResult(payment);
-//    
-//}
-	
+
 }
