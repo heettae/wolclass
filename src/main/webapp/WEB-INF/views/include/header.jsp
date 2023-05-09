@@ -326,9 +326,26 @@
   color: black;
   border: none;
 }
-
-
 /* 마이페이지 */
+
+/* 검색창 select 박스 */
+.form-control {
+  height: 35px;
+  border-radius: 0;
+  box-shadow: none;
+  border-color: #ddd;
+  font-size: 14px;
+}
+
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M5 6L0 0h10z'/></svg>") no-repeat right 10px center/8px 8px #fff;
+  padding-right: 30px;
+}
+
+/* 검색창 select 박스 */
 </style>
 
     </head>
@@ -431,46 +448,54 @@
 								</div>
                   			    <!-- 마이페이지 팝업창 -->
                   			    
+                  			    <!-- Search Toggle -->
                                 <div style="display: none;" class="search-toggle">
 
-                                    <div class="search-row">   
+									<div class="search-row">
+										<div class="form-group mar">
+										  <label for="region">지역</label>
+										  <select class="form-control" id="region">
+										    <option value="전체">전체</option>
+										    <option value="서울">서울</option>
+										    <option value="부산">부산</option>
+										    <option value="인천">인천</option>
+										    <option value="대구">대구</option>
+										    <option value="광주">광주</option>
+										    <option value="대전">대전</option>
+										    <option value="울산">울산</option>
+										    <option value="세종">세종</option>
+										    <option value="경기">경기도</option>
+										    <option value="경남">경상남도</option>
+										    <option value="경북">경상북도</option>
+										    <option value="전남">전라남도</option>
+										    <option value="전북">전라북도</option>
+										    <option value="충남">충청남도</option>
+										    <option value="충북">충청북도</option>
+										    <option value="강원">강원도</option>
+										    <option value="제주">제주도</option>
+										  </select>
+										</div>
+										
+									</div>
 
-                                        <div class="form-group mar-r-20">
-                                            <label for="price-range">Price range ($):</label>
-                                            <div class="slider-selection" style="left: 0%; width: 75%;"></div>
-                                            <div class="slider-handle round left-round" style="left: 0%;"></div>
-                                            <div class="slider-handle round" style="left: 75%;"></div>
-                                            <div class="tooltip top" style="top: -14px; left: 0px;">
-                                            	<div class="tooltip-arrow"></div><div class="tooltip-inner">0 : 450
-                                            	</div>
-                                            </div>
-                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[0,450]" id="price-range" style="">
-                                            <br>
-                                            <b class="pull-left color">2000$</b> 
-                                            <b class="pull-right color">100000$</b>
-                                        </div>
-                                        <!-- End of  -->  
-
-                                        <div class="form-group mar-l-20">
-                                            <label for="property-geo">Property geo (m2) :</label>
-                                            <div class="slider-selection" style="left: 8.33333%; width: 66.6667%;">
-                                            </div>
-                                            <div class="slider-handle round left-round" style="left: 8.33333%;"></div>
-                                            <div class="slider-handle round" style="left: 75%;"></div><div class="tooltip top" style="top: -14px; left: 0px;">
-                                            <div class="tooltip-arrow"></div>
-                                            <div class="tooltip-inner">50 : 450</div></div>
-                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[50,450]" id="property-geo" style="">
-                                            <br>
-                                            <b class="pull-left color">40m</b> 
-                                            <b class="pull-right color">12000m</b>
-                                        </div>
-                                        <!-- End of  --> 
-                                    </div>
+									<div class="search-row">
+										<div class="form-group mar">
+										  <label for="category">카테고리</label>
+										  <select class="form-control" id="category">
+										    <option value="">전체</option>
+												<option>펫 푸드</option>
+												<option>펫 훈련</option>
+												<option>펫 에티켓</option>
+												<option>펫 액세서리</option>
+												<option>펫 미용</option>
+											</select>
+										</div>
+									</div>
 
                                     <div class="search-row">
 
                                         <div class="form-group mar-r-20">
-                                            <label for="price-range">Min baths :</label>
+                                            <label for="price-range">시간</label>
                                             <div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div>
                                             <div class="slider-handle round left-round" style="left: 41.6667%;"></div>
                                             <div class="slider-handle round" style="left: 75%;"></div>
@@ -484,7 +509,7 @@
                                         <!-- End of  --> 
 
                                         <div class="form-group mar-l-20">
-                                            <label for="property-geo">Min bed :</label>
+                                            <label for="property-geo">금액</label>
 		                                            <div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div>
 		                                            <div class="slider-handle round left-round" style="left: 41.6667%;"></div>
 		                                            <div class="slider-handle round" style="left: 75%;"></div>
@@ -502,113 +527,43 @@
                                     </div>
                                     <br>
                                     <div class="search-row">  
-
-                                        <div class="form-group">
+                                      <label for="level">난이도</label> <br>
+                                        <div class="form-group" style="width:max-content; min-width: 80px;">
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                     Fire Place(3100)
+                                                     입문
                                                 </label>
                                             </div>
                                         </div>
                                         <!-- End of  -->  
 
-                                        <div class="form-group">
+                                        <div class="form-group" style="width:max-content; min-width: 80px;">
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                     Dual Sinks(500)
+                                                     초급
                                                 </label>
                                             </div>
                                         </div>
                                         <!-- End of  --> 
 
-                                        <div class="form-group">
+                                        <div class="form-group" style="width:max-content; min-width: 80px;">
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                     Hurricane Shutters(99)
+                                                     고급
                                                 </label>
                                             </div>
                                         </div>
                                         <!-- End of  --> 
                                     </div>
 
-                                    <div class="search-row">  
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                    Swimming Pool(1190)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  -->  
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                  <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                   2 Stories(4600)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  --> 
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                     Emergency Exit(200)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  --> 
-                                    </div>                                    
-
-                                    <div class="search-row">  
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                        			 Laundry Room(10073)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  -->  
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                   Jog Path(1503)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  --> 
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                                   26' Ceilings(1200)
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!-- End of  --> 
-                                        <br>
-                                        <hr>
-                                    </div>                             
                                     <button class="btn search-btn prop-btm-sheaerch" type="submit"><i class="fa fa-search"></i></button>  
                                     
                                 </div>                    
-							  
+							  <!-- Search Toggle -->
                             </form>
-                    <ul class="main-nav nav navbar-nav navbar-right">
-
-                    </ul>
 				</div>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -650,27 +605,6 @@
 		
 	});
 	
-	// 마이페이지 팝업 
-// 	$(document).ready(function() {
-//   var userButton = $('#user-button');
-//   var userPopup = $('#user-popup');
-//   var isOpen = false;
-
-//   userButton.on('click', function() {
-//     userPopup.toggleClass('active');
-//     isOpen = !isOpen;
-//   });
-
-//   $(document).on('click', function(event) {
-//     if (!userPopup.is(event.target) && userPopup.has(event.target).length === 0 && !userButton.is(event.target)) {
-//       userPopup.removeClass('active');
-//       isOpen = false;
-//     }
-//   });
-// });
-
-
-	// 마이페이지 팝업 
 
 	// 로그인 submit - 다빈
 	$("#login").click(function(){
