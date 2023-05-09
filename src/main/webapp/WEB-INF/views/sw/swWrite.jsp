@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<!-- header  -->
+	<%@ include file="../include/header.jsp"%>
+	<!-- header  -->
 <style type="text/css">
 
 
@@ -38,15 +36,9 @@ border-radius:6px;
  background: #A58C59;
  color: white;
 }
-
-
 </style>
 
-</head>
-<body>
-	<!-- header  -->
-	<%@ include file="../include/header.jsp"%>
-	<!-- header  -->
+
 
 	<!-- body  -->
 	<div style="margin: 45px 0;">
@@ -73,17 +65,17 @@ border-radius:6px;
 
 					</div>
 					<!-- content  -->
-					<form role="form" method="post">
+					<form role="form">
 					<div style="display: flex;">
 						<div class="category-search" style="margin: 2px 4% 0 20%;">
 							<select style="width: 125px; height: 45px; font-size: 20px;"
 								name="b_category">
-								<option value="board">자유게시글</option>
+								<option value="board">일반글</option>
 								<option value="recruit">모집글</option>
 							</select>
 							
 			<!--  나중에 수정해야됨   -->
-							<input type="text" name="b_writer" <%-- value="${Sessionscope.m_id}"  --%>
+							<input type="text" name="b_writer" <%-- value="${SessionScope.m_id}"   히든으로해야함--%>
 							style="border: 1px solid black;">
 		<!--  나중에 수정해야됨   -->					
 						</div>
@@ -91,11 +83,11 @@ border-radius:6px;
 							<div style="display: block; width: 100%;">
 								<label>글 제목</label>
 								<input style="margin-bottom: 30px;border: 1px solid gray;"
-									type="text" name="b_title" placeholder="제목을 입력해주세요.">
+									type="text" id="b_title1" name="b_title" placeholder="제목을 입력해주세요.">
 							</div>
 							<div style="">
 								<label>글 내용</label>
-								<textarea rows="15" name="b_content" placeholder=" 내용을 입력해주세요." 
+								<textarea rows="15" id="b_content1" name="b_content" placeholder=" 내용을 입력해주세요." 
 								style="width:100%; overflow: initial"></textarea>
 							</div>
 							<!-- button   -->
@@ -103,28 +95,58 @@ border-radius:6px;
 								<div>
 									<button type="submit" class="btn-write">작성하기 </button>
 								</div>
-			<!--  나중에 수정해야됨   -->
 								<div>
-									<button class="btn-backlist" onclick="location.href='./sw/community';"> 목록으로 </button>
+									<button id="backList" class="btn-backlist" onclick="return false;"> 목록으로 </button>
 								</div>
-			<!--  나중에 수정해야됨   -->
 							</div>
 							<!-- button   -->
 						</div>
 						
 					</div>
 					</form>
-					</fieldset>
 					<!-- content  -->
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- body  -->
-
+      <script type="text/javascript">
+     	 $(document).ready(function(){
+		    	 
+     		 
+     		 // 글번호를 저장한 폼태그
+		    	 var formObj = $("form");
+		    	 // alert(formObj);
+		    	 console.log(formObj);
+		    	 
+		    	// 글쓰기
+				  $(".btn-write").click(function(){
+					  var title = document.getElementById("b_title1");
+					  var content = document.getElementById("b_content1");
+					  if(title.value === ""){
+						  alert("글 제목을 입력하여주세요!");
+						  title.focus();
+						  }
+					  else if(content.value === ""){
+						  alert("글 내용을 입력하여주세요!");
+						  content.focus();
+						  
+					  }else{
+					  
+					  formObj.attr("action","/sw/swWrite");
+					  // 폼태그 이동방식 설정 GET
+					  formObj.attr("method","post");
+					  // 폼태그 정보 저장해서 페이지 이동
+					  formObj.submit();			  
+					  }
+				  });
+		    	
+		     	 $("#backList").click(function(){
+		     		 return window.location.href = "community";
+		     	 })
+		  });
+      
+      </script>
 	<!-- footer  -->
 	<%@ include file="../include/footer.jsp"%>
 	<!-- footer  -->
-
-</body>
-</html>
