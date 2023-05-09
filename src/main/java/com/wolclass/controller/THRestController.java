@@ -30,6 +30,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 
 	@RequestMapping(value = "/insertPaymentInfo", method = RequestMethod.POST)
 	public String insertPaymentInfo(@RequestBody PayDTO pdto) {
+		logger.info("insertPaymentInfo 호출 ");
 		// STEP5-3. 결제 정보 검증 후 저장하기
 		// 처음에 요청했던 금액 저장하기
 		try {
@@ -37,7 +38,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 			return "ok";	
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println(e);
+			logger.info("e"+e);
 			return "ng";
 		}
 	}
@@ -65,6 +66,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 			// STEP5-3. 결제 정보 검증 후 저장하기
 			// 결제되어야 하는 금액 조회
 			int selectPrice = service.selectPrice(pdto.getP_no());
+			logger.info("selectPrice"+selectPrice);
 			int amount = paymentInfo.getPrice();
 			logger.info("db에 입력된 금액"+selectPrice+",결제된 금액"+amount);
 										// 내부에서 price 계산하는건데 여기 있으면 안될듯

@@ -1083,7 +1083,8 @@ $(document).ready(function(){
 							"point" : $('#point').val(),
 							"subs": $('#subs').is(':checked'),
 							"c_price" : "${classVO.c_price}" ,
-							"price" : rsp.paid_amount
+							"price" : rsp.paid_amount,
+							"status" : rsp.status
 							}
 					   		console.log(result);
 					    	
@@ -1128,29 +1129,43 @@ $(document).ready(function(){
 								        	console.log("r : "+r);
 								        	
 								        	 if (r === "success") {
-								        	 	// 
-								        	 }
+								        		
+									    		 $.ajax({
+									    	            url: "/th/orderSuccess",
+									    	            type: "POST",
+											    		data: JSON.stringify(result),
+											    		contentType:'application/json;',
+												        success: function(){
+												        	
+												        }
+								        		});
+								        		 
+								        		var msg = '결제가 완료되었습니다.';
+								    			msg += '\n고유ID : ' + rsp.imp_uid;
+								    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+								    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+								    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
+								    			
+								    			alert(msg);
+								    			//location.href='/th/payments';
+								    		} else {
+								    			//[3] 아직 제대로 결제가 되지 않았습니다.
+								    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+								    		}
+								        	 
+								        		 
+								        		 
+								        		 
 								        	
-								        }
-					    		 });
+								        } // complete success
+					    		 }); // ajax
 					    		
 					    		
 					    		
 					    		
 					    		
-					    		if ( everythings_fine ) {
-					    			var msg = '결제가 완료되었습니다.';
-					    			msg += '\n고유ID : ' + rsp.imp_uid;
-					    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-					    			msg += '\결제 금액 : ' + rsp.paid_amount;
-					    			msg += '카드 승인번호 : ' + rsp.apply_num;
-					    			
-					    			alert(msg);
-					    		} else {
-					    			//[3] 아직 제대로 결제가 되지 않았습니다.
-					    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-					    		}
-					    	});
+					    		
+					    	}); // done
 					    } else {
 					        var msg = '결제에 실패하였습니다.';
 					        msg += '에러내용 : ' + rsp.error_msg;
@@ -1159,9 +1174,7 @@ $(document).ready(function(){
 					    }
 					});					
 								
-/////////
-						  
-					//formObj.submit();
+
 					  
 		  });
 

@@ -210,7 +210,7 @@ public class THServiceImpl implements THService {
 
 	@Override
 	public Integer selectPrice(String p_no) throws Exception {
-		
+		logger.info("service.selectPrice"+p_no);
 		return dao.selectPrice(p_no);
 	}
 	

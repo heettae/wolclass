@@ -140,26 +140,25 @@ public class THController {
 	
 	
 	 //결제 처리하기 TH
-//	@RequestMapping(value = "/payments", method = RequestMethod.POST)
-//	public String payments(HttpSession session) throws Exception{
-//		logger.info("payment() 실행 ");
-//		String id = (String) session.getAttribute("id");
-//
-////		logger.info("pdto : "+pdto);
-////		service.payment(pdto);
-//		return "redirect:/th/payments";
-//		
-//	}
+	@RequestMapping(value = "/orderSuccess", method = RequestMethod.POST)
+	public String payments(HttpSession session, @RequestBody PayDTO pdto) throws Exception{
+		logger.info("payment() 실행 ");
+		String id = (String) session.getAttribute("id");
+
+		logger.info("pdto : "+pdto);
+//		service.payment(pdto);
+		return "redirect:/th/payments";
+		
+	}
 
 	 //결제 처리하기 TH
 	
-	
+	// payments
 	@RequestMapping(value = "/payments", method = RequestMethod.GET)
 	public void paymentsGET() throws Exception{
 		logger.info("payments() 실행 ");
 		
-		RsrvPayVO vo = new RsrvPayVO();
-		vo.setP_no(1);
+		
 
 	}
 	
@@ -186,62 +185,6 @@ public class THController {
 	}
 	
 	
-	
-	/////////////////////////////////////////////////
-	
-	   //private PaymentsService paymentsService;
-		
-//		@ResponseBody
-//		@PostMapping("/insertPaymentInfo")
-//		public String insertPaymentInfo(@RequestBody PaymentsModel paymentsModel) {
-//			// STEP5-3. 결제 정보 검증 후 저장하기
-//			// 처음에 요청했던 금액 저장하기
-//			try {
-//				paymentsService.insertPaymentInfo(paymentsModel);
-//				return "ok";	
-//			}catch(Exception e){
-//				return "ng";
-//			}
-//		}
-//		
-		
-	
-//		@ResponseBody
-//		@RequestMapping(value = "/complete", method = RequestMethod.POST)
-//		public String complete(@ModelAttribute PayDTO pdto) throws Exception {
-//			logger.info("pdto:"+pdto);
-//			// STEP5. 결제 정보 검증 및 저장하기
-//			try {
-//				// STEP5-2. 결제 정보 조회하기
-//				// 액세스 토큰(access token) 발급 받기
-//				String accessToken = service.getAccessToken(pdto);
-//				logger.info("token"+accessToken);
-//				// imp_uid로 아임포트 서버에서 결제 정보 조회
-//				PayDTO paymentInfo = service.getPaymentInfo(accessToken, pdto);
-//				logger.info("결제정보조회"+paymentInfo);
-//				// STEP5-3. 결제 정보 검증 후 저장하기
-//				// DB에서 결제되어야 하는 금액 조회
-////				String amountToBePaid = service.getAmountToBePaid(paymentsModel);
-////				int amount = paymentInfo.getAmount();
-////				// 결제 검증하기
-////				if(Integer.parseInt(amountToBePaid) == amount) {
-////					service.updatePaymentInfo(paymentInfo); // DB에 결제 정보 저장
-////					if(paymentInfo.getStatus().equals("paid")) { // 결제 완료
-////						return "success";
-////					}else if(paymentInfo.getStatus().equals("ready")) { // 가상계좌발급
-////						return "vbankIssued";
-////					}else {
-////						return "fail";
-////					}
-////				}else { // 결제금액 불일치. 위/변조 된 결제
-////					return "forgery";
-////				}
-//				return null; // 임시
-//			}catch(Exception e) {
-//				return "exception";
-//			}
-//		}
-
 
 
 
