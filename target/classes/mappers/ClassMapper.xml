@@ -140,10 +140,6 @@
 	</select>
 	<!-- 주변검색 기능 HJ -->
 	
-	<insert id="insert">
-	
-	</insert>
-	
 	<update id="updateMember">
 	
 	</update>
