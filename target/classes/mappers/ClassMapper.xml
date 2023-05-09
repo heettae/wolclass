@@ -127,7 +127,13 @@
 		from wc_class c left join (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
 		on c.c_no = r.c_no
 		where c_confirm = 'Y'
+		and c.c_lati is not null
 		having distance <= 30
+	]]>
+		<if test="userAddr != null and userAddr != ''">
+		or c.c_addr1 like concat('%',#{userAddr},'%')
+		</if>
+	<![CDATA[  
 		order by distance
 		limit 30
 	]]> 

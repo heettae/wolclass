@@ -76,10 +76,11 @@ public class ClassServiceImpl implements ClassService {
 	}
 	
 	@Override
-	public List<ClassVO> getNearbyClassList(Object lat, Object lng) throws Exception {
+	public List<ClassVO> getNearbyClassList(Object lat, Object lng, Object addr) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userLat",Double.parseDouble(lat.toString()));
 		map.put("userLng",Double.parseDouble(lng.toString()));
+		map.put("userAddr",addr == null ? addr : addr.toString());
 		return dao.getNearbyClassList(map);
 	}
 
