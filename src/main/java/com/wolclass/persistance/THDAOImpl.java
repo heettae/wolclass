@@ -158,7 +158,9 @@ public class THDAOImpl implements THDAO{
 
 	@Override
 	public Integer selectPrice(String p_no) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+".selectprice",p_no);
+		Integer price = sqlSession.selectOne(NAMESPACE+".selectPrice",p_no);
+		logger.info("daoPrice"+price);
+		return price;
 		
 		
 	}
