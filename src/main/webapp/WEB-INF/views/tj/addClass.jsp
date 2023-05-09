@@ -18,7 +18,7 @@
 <!-- 오프라인 폼 -->
 <div class="form-group">
 <label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="offline" name="way" value="off">
+<input type="radio" class="form-control" id="offline" name="way" value="off" checked>
 <label for="online">온라인</label>
 <input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
@@ -250,8 +250,6 @@ var tj = $.noConflict();
 		  // parent() 사용해서 부모 요소 div 태그 선택 후 find 사용해서 하위 input[name=way] 요소의 value값 가져오기
 		  var selectedValue = tj(this).parent().find('input[name="way"]:checked').val();
 		  
-		  // value 값을 출력
-		  console.log(selectedValue);
 		  if(selectedValue == 'on'){
 			  tj('#onlineForm').css('display', 'block');
 			  tj('#offlineForm').css('display', 'none');

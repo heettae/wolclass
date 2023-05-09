@@ -92,18 +92,7 @@
 
       <div class="item">
         <a href="/tj/Event">
-          <img src="/resources/img/review.PNG" alt="리뷰">
-        </a>
-      </div>
-
-      <div class="item">
-        <a href="#">
-          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+3" alt="Slide 3">
-        </a>
-      </div>
-      <div class="item">
-        <a href="#">
-          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+4" alt="Slide 4">
+          <img src="/resources/img/review.png" alt="리뷰">
         </a>
       </div>
 
