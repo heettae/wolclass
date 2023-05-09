@@ -1,9 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!-- header  -->
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="root" value="${pageContext.request.contextPath }"/>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Insert title here</title>
+
+<meta name="description" content="GARO is a real-estate template">
+        <meta name="author" content="Kimarotec">
+        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/resources/assets/fonts/icon-7-stroke/css/helper.css">
+        <link rel="stylesheet" href="/resources/assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css">
+        <link rel="stylesheet" href="/resources/assets/css/normalize.css">
+        <link rel="stylesheet" href="/resources/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/resources/assets/css/fontello.css">
+        <link rel="stylesheet" href="/resources/assets/css/bootstrap-select.min.css"> 
+        <link rel="stylesheet" href="/resources/assets/css/icheck.min_all.css">
+        <link rel="stylesheet" href="/resources/assets/css/price-range.css">
+        <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">  
+        <link rel="stylesheet" href="/resources/assets/css/owl.theme.css">
+        <link rel="stylesheet" href="/resources/assets/css/owl.transitions.css">
+        <link rel="stylesheet" href="/resources/assets/css/jquery.slitslider.css">
+        <link rel="stylesheet" href="/resources/assets/css/style.css">
+        <link rel="stylesheet" href="/resources/assets/css/responsive.css">
+        <noscript>
+        <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css"/>
+        </noscript>
+        <!-- Font Awesome CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-......" crossorigin="anonymous" />
+        <!-- Font Awesome CSS -->
+        
+        <!-- jQuery cdn -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <!-- jQuery cdn -->
+
+<%-- <!-- header  -->
 <%@ include file="../include/header.jsp"%>
 <!-- header  -->
-
+ --%>
 <style type="text/css">
 .clearfix li {
 	float: none;
@@ -18,7 +62,8 @@ th {
 	background: #FDC600;
 }
 </style>
-
+</head>
+<body>
 
 	<!-- body  -->
 	<div style="margin: 45px 0;">
@@ -94,12 +139,13 @@ th {
 									</c:if> <c:if test="${boardList[i].b_category =='announcement'}">
 												<strong>공지사항</strong>
 											</c:if></td>
-										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }">
+										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
+										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
 										<td>${boardList[i].b_writer }</td>
 										<td><span class="badge bg-yellow">
 												${boardList[i].b_viewcnt } </span></td>
-										<td>${boardList[i].b_regdate }</td>
+										<td><fmt:formatDate value="${boardList[i].b_regdate}" pattern="yyyy.MM.dd HH:mm"/></td>
 									</tr>
 								</c:forEach>
 							</c:if>
@@ -114,37 +160,18 @@ th {
 									</c:if> <c:if test="${boardList[i].b_category =='announcement'}">
 												<strong>공지사항</strong>
 											</c:if></td>
-										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }">
+										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
+										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
 										<td>${boardList[i].b_writer }</td>
 										<td><span class="badge bg-yellow">
 												${boardList[i].b_viewcnt } </span></td>
-										<td>${boardList[i].b_regdate }</td>
+										<td>${boardList[i].b_regdate}</td>
 									</tr>
 								</c:forEach>
 							</c:if>
 							
-						<%-- <c:if test="${boardList.size() >0 && boardList != null }">
-								<c:forEach var="vo" items="${boardList}">
-									<tr>
-										<td>${vo.b_no}</td>
-										<td><c:if test="${vo.b_category == 'board'}">
-									일반글
-									</c:if> <c:if test="${vo.b_category == 'recruit'}">
-									모집글
-									</c:if> <c:if test="${vo.b_category =='announcement'}">
-												<strong>공지사항</strong>
-											</c:if></td>
-										<td><a href="/sw/swRead?b_no=${vo.b_no }">
-												${vo.b_title } </a></td>
-										<td>${vo.b_writer }</td>
-										<td><span class="badge bg-yellow">
-												${vo.b_viewcnt } </span></td>
-										<td>${vo.b_regdate }</td>
-									</tr>
-								</c:forEach>
-							</c:if> --%>
-							
+						
 						</tbody>
 					</table>
 				</div>
@@ -166,7 +193,7 @@ th {
 			<!-- 페이징처리  -->
 			<div class="box-footer clearfix">
 				<div>
-					<ul class="pagination pagination-sm no-margin pull-right" >
+					<ul class="pagination pagination-sm no-margin " >
 						<c:if test="${map.endPage <= map.pageBlock}">
 						<li></li>
 						</c:if>
@@ -177,7 +204,8 @@ th {
 						
 						
 						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
+							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}
+							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
 						</c:forEach>
 						
 						<c:if test="${map.pageCount <= map.endPage}">
@@ -199,6 +227,8 @@ th {
 	<script type="text/javascript">
 		var result = "${result}";
 
+		
+		
 		if (result == "ok") {
 			alert("정상적으로 글 작성 완료!");
 		}
@@ -229,8 +259,11 @@ th {
 		function inputPageNum(pageNum){
 			map.put("pageNum", pageNum);
 		};
+		 
 		
- 
+		
+		
+       
 	</script>
 
 
