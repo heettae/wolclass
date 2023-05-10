@@ -34,17 +34,28 @@ public interface THService {
 	// 가격 계산 TH (5/8 수정)
 	public Integer totalPrice(PayDTO pdto) throws Exception;
 	
-
-	public String getAccessToken(PayDTO paymentsModel);
-	// 결제정보 조회 TH
-	public PayDTO getPaymentInfo(String accessToken, PayDTO pdto);
+	// 토큰 TH
+	public String getAccessToken();
+	
+	// 서버 결제정보 조회 TH (5/10 타입 PayDTO -> RsrvPayVO 수정)
+	public RsrvPayVO getPaymentInfo(String accessToken, PayDTO pdto);
 	
 	// 결제 insert TH
 	public void insertPaymentInfo(PayDTO pdto) throws Exception;
 	
-	// 결제 update TH
-	public Integer updatePaymentInfo(PayDTO pdto) throws Exception;
+	// 결제 update TH (5/10 수정 (PayDTO -> RsrvPayVO))
+	public Integer updatePaymentInfo(RsrvPayVO rvo) throws Exception;
 
 	// DB price 조회 TH
 	public Integer selectPrice(String p_no) throws Exception;
+	
+	// 결제 완료 - 업데이트 TH
+	public Integer modifyOrder(String p_no) throws Exception;
+	
+	// DB 결제정보 조회 TH
+	public RsrvPayVO selectPayInfo(String p_no) throws Exception;
+	
+	// 서버 결제졍보 조회 TH
+	public RsrvPayVO getCancelInfo(String accessToken, RsrvPayVO rvo) throws Exception;
+	
 }

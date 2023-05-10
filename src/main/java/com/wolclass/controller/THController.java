@@ -141,13 +141,17 @@ public class THController {
 	
 	 //결제 처리하기 TH
 	@RequestMapping(value = "/orderSuccess", method = RequestMethod.POST)
-	public String payments(HttpSession session, @RequestBody PayDTO pdto) throws Exception{
-		logger.info("payment() 실행 ");
-		String id = (String) session.getAttribute("id");
+	@ResponseBody
+	public Integer orderSuccess(@RequestBody PayDTO pdto) throws Exception{
+		logger.info("orderSuccess() 실행 ");
 
 		logger.info("pdto : "+pdto);
+		
+		
+		
+		
 //		service.payment(pdto);
-		return "redirect:/th/payments";
+		return service.modifyOrder(pdto.getP_no());
 		
 	}
 

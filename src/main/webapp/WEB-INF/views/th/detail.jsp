@@ -1090,7 +1090,7 @@ $(document).ready(function(){
 					    	
 					    	
 					    	jQuery.ajax({
-					    		url: "/th/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
+					    		url: "/thr/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
 					    		type: 'POST',
  					    		//contentType : "application/json",
 					    		data: JSON.stringify(result),
@@ -1120,7 +1120,7 @@ $(document).ready(function(){
 					    		console.log("done"+rsp.imp_uid);
 					    		
 					    		 $.ajax({
-					    	            url: "/th/complete",
+					    	            url: "/thr/complete",
 					    	            type: "POST",
 							    		data: JSON.stringify(result),
 							    		contentType:'application/json;',
@@ -1135,19 +1135,21 @@ $(document).ready(function(){
 									    	            type: "POST",
 											    		data: JSON.stringify(result),
 											    		contentType:'application/json;',
-												        success: function(){
-												        	
+												        success: function(orderSuccessCnt){
+												        	if(orderSuccessCnt > 1) {
+												        		var msg = '결제가 완료되었습니다.';
+												    			msg += '\n고유ID : ' + rsp.imp_uid;
+												    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+												    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+												    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
+												    			
+												    			alert(msg);
+												    			location.href='/th/payments';
+												        	}
 												        }
 								        		});
 								        		 
-								        		var msg = '결제가 완료되었습니다.';
-								    			msg += '\n고유ID : ' + rsp.imp_uid;
-								    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-								    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-								    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
-								    			
-								    			alert(msg);
-								    			//location.href='/th/payments';
+								        		
 								    		} else {
 								    			//[3] 아직 제대로 결제가 되지 않았습니다.
 								    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
