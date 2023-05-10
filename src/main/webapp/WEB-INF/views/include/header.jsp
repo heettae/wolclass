@@ -63,6 +63,12 @@
 		integrity="sha512-......" 
 		crossorigin="anonymous" />
         <!-- Font Awesome CSS -->
+	
+		<!-- noUiSlider cdn -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.4/nouislider.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.4/nouislider.min.js"></script>
+		<!-- noUiSlider cdn -->
+		
         
         <!-- jQuery cdn -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -318,6 +324,9 @@
 #user-popup ul li a:hover {
   background-color: #f2f2f2;
 }
+#user-popup ul li:hover {
+  background-color: #f2f2f2;
+}
 
 #user-button {
   background-color: transparent;
@@ -345,7 +354,17 @@ select.form-control {
   padding-right: 30px;
 }
 
+/* 슬라이더 */
+.noUi-connect {
+  background-color: #FDC600;
+}
+/* 슬라이더 */
 /* 검색창 select 박스 */
+#logoutBtn {
+  background-color: transparent;
+  border: none;
+}
+
 </style>
 
     </head>
@@ -366,9 +385,9 @@ select.form-control {
                                 <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Key word">
+                                    <input type="text" class="form-control" placeholder="Key word" id="search">
                                 </div>
-                                <button class="btn search-btn" type="submit" id="searchBtn"><i class="fa fa-search"></i></button>
+                                <button class="btn search-btn" type="button" id="searchBtn"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding: 0px;">
 								<!-- 더보기 버튼 -->
 									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">
@@ -410,7 +429,6 @@ select.form-control {
 								</div>
 								<!-- 마이페이지 -->
 
-<!--                       			  <button class="navbar-btn nav-button wow fadeInRight" id="logout" data-wow-delay="0.5s">로그아웃</button> -->
 								</c:if>
 								
 								
@@ -443,145 +461,269 @@ select.form-control {
                   			    <div id="user-popup" class="user-popup">
 								  <ul>
 								    <li><a href="/db/mypage">마이페이지</a></li>
-								    <li><a href="/db/logout">로그아웃</a></li>
+								    <c:set var="isKakao" value="${sessionScope.id.toString().replaceAll('[0-9]','') }" />
+									<c:if test="${sessionScope.id != null }">
+										<c:if test="${isKakao != '' && sessionScope.id.toString().length()<20}">
+											<li><a href="/db/logout">로그아웃</a></li>
+										</c:if>
+										<c:if test="${isKakao == '' && sessionScope.id.toString().length()<20}">
+											<li><button type="button" class="btn btn-default" id="logoutBtn" onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=c6c8f231f2997186bfd65955c7b8f1ab&logout_redirect_uri=http://localhost:8080/db/logout'">
+											로그아웃
+											</button>
+											</li>
+										</c:if>
+										<c:if test="${sessionScope.id.toString().length()>20 }">
+											<li><a href="#" onclick="nLogout()">로그아웃</a> </li>
+										</c:if>
+								    </c:if>
+								    <!-- <li><a href="/db/logout">로그아웃</a></li> -->
 								  </ul>
 								</div>
                   			    <!-- 마이페이지 팝업창 -->
                   			    
                   			    <!-- Search Toggle -->
-                                <div style="display: none;" class="search-toggle">
+                                <div style="display: none;" class="search-toggle" id="search-toggle">
 
 									<div class="search-row">
-										<div class="form-group mar">
+										<div class="form-group mar" style="width: 35%;">
 										  <label for="region">지역</label>
 										  <select class="form-control" id="region">
-										    <option value="전체">전체</option>
-										    <option value="서울">서울</option>
-										    <option value="부산">부산</option>
-										    <option value="인천">인천</option>
-										    <option value="대구">대구</option>
-										    <option value="광주">광주</option>
-										    <option value="대전">대전</option>
-										    <option value="울산">울산</option>
-										    <option value="세종">세종</option>
-										    <option value="경기">경기도</option>
-										    <option value="경남">경상남도</option>
-										    <option value="경북">경상북도</option>
-										    <option value="전남">전라남도</option>
-										    <option value="전북">전라북도</option>
-										    <option value="충남">충청남도</option>
-										    <option value="충북">충청북도</option>
-										    <option value="강원">강원도</option>
-										    <option value="제주">제주도</option>
+										    <option value="">전체</option>
+										    <option value="서울" ${map.addr == '서울' ? 'selected' : ''}>서울</option>
+										    <option value="부산" ${map.addr == '부산' ? 'selected' : ''}>부산</option>
+										    <option value="인천" ${map.addr == '인천' ? 'selected' : ''}>인천</option>
+										    <option value="대구" ${map.addr == '대구' ? 'selected' : ''}>대구</option>
+										    <option value="광주" ${map.addr == '광주' ? 'selected' : ''}>광주</option>
+										    <option value="대전" ${map.addr == '대전' ? 'selected' : ''}>대전</option>
+										    <option value="울산" ${map.addr == '울산' ? 'selected' : ''}>울산</option>
+										    <option value="세종" ${map.addr == '세종' ? 'selected' : ''}>세종</option>
+										    <option value="경기" ${map.addr == '경기' ? 'selected' : ''}>경기도</option>
+										    <option value="경남" ${map.addr == '경남' ? 'selected' : ''}>경상남도</option>
+										    <option value="경북" ${map.addr == '경북' ? 'selected' : ''}>경상북도</option>
+										    <option value="전남" ${map.addr == '전남' ? 'selected' : ''}>전라남도</option>
+										    <option value="전북" ${map.addr == '전북' ? 'selected' : ''}>전라북도</option>
+										    <option value="충남" ${map.addr == '충남' ? 'selected' : ''}>충청남도</option>
+										    <option value="충북" ${map.addr == '충북' ? 'selected' : ''}>충청북도</option>
+										    <option value="강원" ${map.addr == '강원' ? 'selected' : ''}>강원도</option>
+										    <option value="제주" ${map.addr == '제주' ? 'selected' : ''}>제주도</option>
 										  </select>
 										</div>
 										
 									</div>
 
 									<div class="search-row">
-										<div class="form-group mar">
+										<div class="form-group mar" style="width: 35%;">
 										  <label for="category">카테고리</label>
 										  <select class="form-control" id="category">
 										    <option value="">전체</option>
-												<option>펫 푸드</option>
-												<option>펫 훈련</option>
-												<option>펫 에티켓</option>
-												<option>펫 액세서리</option>
-												<option>펫 미용</option>
+												<option value="펫 푸드" ${map.category == '펫 푸드' ? 'selected' : '' }>펫 푸드</option>
+												<option value="펫 훈련" ${map.category == '펫 훈련' ? 'selected' : '' }>펫 훈련</option>
+												<option value="펫 에티켓" ${map.category == '펫 에티켓' ? 'selected' : '' }>펫 에티켓</option>
+												<option value="펫 액세서리" ${map.category == '펫 액세서리' ? 'selected' : '' }>펫 액세서리</option>
+												<option value="펫 미용" ${map.category == '펫 미용' ? 'selected' : '' }>펫 미용</option>
 											</select>
 										</div>
 									</div>
 
                                     <div class="search-row">
 
-                                        <div class="form-group mar-r-20">
-                                            <label for="price-range">시간</label>
-                                            <div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div>
-                                            <div class="slider-handle round left-round" style="left: 41.6667%;"></div>
-                                            <div class="slider-handle round" style="left: 75%;"></div>
-                                            <div class="tooltip top" style="top: -14px; left: 0px;">
-                                            <div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div>
-                                            </div>
-                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="min-baths" style=""><br>
-                                            <b class="pull-left color">1</b> 
-                                            <b class="pull-right color">120</b>
-                                        </div>
-                                        <!-- End of  --> 
+                                        <div class="form-group mar-r-20" style="margin-left: 10px; width: 35%;">
+										  <label for="price-range">시간</label>
+										  <div id="slider-range"></div>
+										  <br>
+										  <b class="pull-left color" id="start-time">00:00</b> 
+										  <b class="pull-right color" id="end-time">24:00</b>
+										</div>
 
-                                        <div class="form-group mar-l-20">
-                                            <label for="property-geo">금액</label>
-		                                            <div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div>
-		                                            <div class="slider-handle round left-round" style="left: 41.6667%;"></div>
-		                                            <div class="slider-handle round" style="left: 75%;"></div>
-                                            <div class="tooltip top" style="top: -14px; left: 0px;">
-                                            <div class="tooltip-arrow"></div>
-                                            <div class="tooltip-inner">250 : 450</div>
-                                        </div>
-                                        <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="min-bed" style="">
-                                            <br>
-                                            <b class="pull-left color">1</b> 
-                                            <b class="pull-right color">120</b>
-                                        </div>
                                         <!-- End of  --> 
 
                                     </div>
-                                    <br>
                                     <div class="search-row">  
                                       <label for="level">난이도</label> <br>
-                                        <div class="form-group" style="width:max-content; min-width: 80px;">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        <div class="form-group" style="width: 35%; min-width: 80px; padding-bottom: 35px;">
+                                            <div class="checkbox" id="c_level">
+                                                    <input type="checkbox" name="c_level" value="1" 
+                                                    ${map.lowlv == '1' ? 'checked' : '' }
+                                                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
                                                      입문
-                                                </label>
                                             </div>
-                                        </div>
-                                        <!-- End of  -->  
 
-                                        <div class="form-group" style="width:max-content; min-width: 80px;">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            <div class="checkbox" id="c_level">
+                                                    <input type="checkbox" value="2" name="c_level" 
+                                                    ${map.midlv == '2' ? 'checked' : '' }
+                                                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
                                                      초급
-                                                </label>
                                             </div>
-                                        </div>
-                                        <!-- End of  --> 
 
-                                        <div class="form-group" style="width:max-content; min-width: 80px;">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            <div class="checkbox" id="c_level">
+                                                    <input type="checkbox" value="3" name="c_level" 
+                                                    ${map.highlv == '3' ? 'checked' : '' }
+                                                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
                                                      고급
-                                                </label>
                                             </div>
                                         </div>
-                                        <!-- End of  --> 
                                     </div>
 
-                                    <button class="btn search-btn prop-btm-sheaerch" type="submit"><i class="fa fa-search"></i></button>  
+<!--                                     <button class="btn search-btn prop-btm-sheaerch" id="reset" type="button" style="display: block; width: max-content;">초기화</button>   -->
+                                    <button class="btn search-btn prop-btm-sheaerch" id="search-btn" type="button" style="display: block; width: 100%; text-align: 
+                                    center; max-width: 30%; margin: auto;">
+                                    검색하기
+                                    </button>  
                                     
                                 </div>                    
 							  <!-- Search Toggle -->
                             </form>
-				</div>
+                            <!-- 검색 폼 -->
+                            <form role="srch_frm" method="get">
+								<input type="hidden" name="timestart" value="${map.timestart }">
+								<input type="hidden" name="timeend" value="${map.timeend }">
+								<input type="hidden" name="lowlv" value="${map.lowlv }">
+								<input type="hidden" name="midlv" value="${map.midlv }">
+								<input type="hidden" name="highlv" value="${map.highlv }">
+								<input type="hidden" name="category" value="${map.category }">
+								<input type="hidden" name="addr" value="${map.addr }">
+								<input type="hidden" name="order" value="${map.order }">
+								<input type="hidden" name="search" value="${map.search }">
+								<input type="hidden" name="pageNum" value="${map.pageNum }">
+							</form>
+                            <!-- 검색 폼 -->
+
+<!-- 검색 폼 전송 -->                            
+<script type="text/javascript">
+$(document).ready(function(){
+	var addr = null;
+	var category = null;
+	var level = null;
+	var timestar = null;
+	var timeend = null;
+	
+// 	function updateStartEndTimes() {
+// 		  var values = slider.noUiSlider.get();
+// 		  var start = formatTime(values[0]);
+// 		  var end = formatTime(values[1]);
+// 		  document.getElementById('start-time').innerHTML = start;
+// 		  document.getElementById('end-time').innerHTML = end;
+		  
+// 		  timestart = $('input[name=timestart]').val(start);
+// 		  timeend = $('input[name=timeend]').val(end);
+		  
+// 		  console.log($('input[name=timestart]').val());
+// 		  console.log($('input[name=timeend]').val());
+// 		}
+	// 시간
+ 	// 슬라이더 초기값 설정
+ 	
+ 	var initStartStr = '${map.timestart}';
+ 	var initEndStr = '${map.timeend}';
+ 	var initStart = Number(initStartStr.split(":")[0])*60;
+ 	var initEnd = Number(initEndStr.split(":")[0])*60;
+ 	initEnd = initEnd == 0 ? 1440 : initEnd;
+ 	
+	var slider = document.getElementById('slider-range');
+	noUiSlider.create(slider, {
+	  start: [initStart, initEnd],
+	  connect: true,
+	  step: 60,
+	  range: {
+	    'min': 0,
+	    'max': 1440
+	  }
+	});
+	
+	// 시작시간, 끝시간 출력 함수
+	function updateStartEndTimes() {
+	  var values = slider.noUiSlider.get();
+	  var start = formatTime(values[0]);
+	  var end = formatTime(values[1]);
+	  document.getElementById('start-time').innerHTML = start;
+	  document.getElementById('end-time').innerHTML = end;
+	  
+	  timestart = $('input[name=timestart]').val(start);
+	  timeend = $('input[name=timeend]').val(end);
+	  
+	  console.log($('input[name=timestart]').val());
+	  console.log($('input[name=timeend]').val());
+	}
+	
+	// 슬라이더 이벤트 리스너 등록
+	slider.noUiSlider.on('update', updateStartEndTimes);
+	
+	// 시간 포맷 변환 함수
+	function formatTime(minutes) {
+	  var hours = Math.floor(minutes / 60);
+	  var mins = minutes % 60;
+	  hours = hours < 10 ? '0' + hours : hours;
+	  mins = mins < 10 ? '0' + mins : mins;
+	  var strTime = hours + ':' + mins;
+	  return strTime;
+	}
+	// 시간
+
+	$('#region').on('change', function() {
+	    var selectedValue = $(this).val();
+	    addr = $('input[name="addr"]').val(selectedValue);
+	    console.log($(this).val());
+	    console.log($(addr).val());
+	  });
+	
+	$('#category').on('change', function(){
+		console.log($(this).val());
+		$('input[name="category"]').val($(this).val());
+		console.log($('input[name="category"]').val());
+	});
+	
+	$('input[name="c_level"]').on('ifChecked', function(event){
+	    if($(this).val() == 1){
+	    	level = $('input[name="lowlv"]').val($(this).val());
+	    	console.log($(level).val());
+	    }else if($(this).val() == 2){
+	    	level = $('input[name="midlv"]').val($(this).val());
+	    	console.log($(level).val());
+	    }else{
+	    	level = $('input[name=highlv]').val($(this).val());
+	    	console.log($(level).val());
+	    }
+	});
+	
+	$('#search').on('input', function() {
+	    $('input[name="search"]').val($(this).val());
+	});
+
+	
+	var formObj = $('form[role="srch_frm"]');
+	$('#search-btn').click(function(){
+		formObj.attr("action","/class/list");
+		formObj.submit();
+	});
+	
+	$('#searchBtn').click(function(){
+		formObj.attr("action","/class/list");
+		formObj.submit();
+	});
+	 
+});
+</script>
+<!-- 검색 폼 전송 -->                             
+			    	</div>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         <!-- End of nav bar -->
 
 <script type="text/javascript">
+	
+	
+		function nLogout(){ 
+		 	let popup = window.open('https://nid.naver.com/nidlogin.logout?returl=https%3A%2F%2Fwww.naver.com','네이버 로그아웃','width=1,height=1,bottom=0,right=0,location=no'); 
+		 	window.addEventListener("beforeunload", function() { 
+		 		popup.close(); 
+		 	}); 
+		 	setTimeout(function(){ 
+		 		location.href="/db/logout"; 
+		 	},150) 
+		 } 
 	$(document).ready(function(){
 		
-		$('#join').click(function(){
-			location.href="/db/join";
-			return false;
-		})
-		
-		$('#logout').click(function(){
-			location.href="/db/logout";
-			return false;
-		});
 		
 		$('#addClass').on('click', function() {
 		    var id = $('#id').val();
@@ -590,18 +732,10 @@ select.form-control {
 		    	alert('로그인이 필요합니다.');
 		        location.href="/db/login";
 		    } else{
-		    	alert('클래스 등록');
 		    	location.href='/tj/classWorkSpace';
 		    }
 		    return false;
 		  });
-		
-		$("#searchBtn").click(function(event) {
-		    event.preventDefault(); // 버튼 클릭 시 디폴트 액션 중지
-
-		    var keyword = $(".form-control").val(); // 입력된 키워드 가져오기
-		    location.href = "/class/list?search=" + encodeURIComponent(keyword); // 페이지 이동
-		});
 		
 	});
 	
