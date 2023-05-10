@@ -65,28 +65,46 @@
 	values (#{p_no}, #{m_id}, #{c_no}, #{price}, #{p_rsrvdate}, #{peopleNum}, #{subs}, #{point}, #{imp_uid}, #{status})
 	</insert>
 	
-	<!-- 결제 테이블 select TH -->
+	<!-- 결제 테이블 selectPrice TH -->
 	<select id="selectPrice" resultType="int">
 	select p_price from wc_rsrv_pay where p_no=#{p_no}
 	</select>
 	
-	<!-- 결제 테이블 update TH -->
-	<update id="updatePay">
-	update wc_rsrv_pay set p_status=#{status} where p_price=#{price}
+	<!-- 결제 테이블 select TH -->
+	<select id="selectPay" resultType="RsrvPayVO">
+	select * from wc_rsrv_pay where p_no=#{p_no}
+	</select>
+	
+	<!-- 결제 테이블 결제 상태 update TH -->
+	<update id="updatePay" parameterType="map">
+	update wc_rsrv_pay set p_status=#{p_status} ,
+ 	p_canceldate =
+      <choose>
+        <when test="p_status == 'cancelled'">now()</when>
+        <otherwise>null</otherwise>
+      </choose>
+	where p_no=#{p_no}
+	</update>
+	
+	<!-- 결제 테이블 결제 상태 update TH -->
+	<update id="updateCancle">
+	update wc_rsrv_pay set p_status=#{p_status}, p_canceldate=now() where p_no=#{p_no}
 	</update>
 	
 	<!-- 타임테이블 t_rem_p 변경 TH -->
 	<update id="updateT_rem_p">
-	 update wc_timetable set t_rem_p=(t_rem_p-#{peopleNum}) where t_no=#{t_no}
+	update wc_timetable set t_rem_p=(t_rem_p-#{p_peoplenum})
+	where CONCAT(t_date, ' ', t_start) in (select p_rsrvdate from wc_rsrv_pay where p_no = #{p_no})
+	and c_no in (select c_no from wc_rsrv_pay where p_no = #{p_no});
 	</update>
 	
 	<!-- 구독 쿠폰 사용시 subs테이블 count 변경 -->
 	<update id="updateS_cnt">
-	update wc_subscription set s_cnt=(s_cnt-1) where m_id=#{m_id}
+	update wc_subscription set s_cnt=(s_cnt-#{p_subs}) where m_id=#{m_id}
 	</update>
 	
 	<!-- 포인트 사용시 member테이블 point 변경 -->
 	<update id="updatePoint">
-	update wc_member set m_point=(m_point-#{point}) where m_id=#{m_id}
+	update wc_member set m_point=(m_point-#{p_usedpoint}) where m_id=#{m_id}
 	</update>
 </mapper>	

@@ -12,26 +12,43 @@
 $(document).ready(function(){
 	$('#cancel').click(function(){
 		alert("취소 버튼 클릭!");
-		
-		var vo = { cancel_request_amount : 100, merchant_uid : 44 };
-		
-		$.ajax({
-			url:"",
-			type:"POST",
-			contentType:"application/json",
-			//data: vo,
-			data: JSON.stringify(vo),
-// 			dataType: "json",
-			success:function(){
-				alert("성공~!");
-			},
-			error:function(){
-				alert("실패");
-			}
-		});
 
-	})
-});
+		   jQuery.ajax({
+			      url: "/thr/checkPayment", 
+			      type: "POST",
+			      contentType: "application/json",
+			      data: "20230510026", // p_no 값 넣기
+			      success: function(p_no) {
+			    	      console.log(p_no)
+			    	  	  jQuery.ajax({
+			    	        url: "/thr/refund", 
+			    	        type: "POST",
+			    	        contentType: "application/json",
+			    	        data: p_no,
+			    	        success: function(refundResponse) {
+			    	          // refund ajax 실행 후 작업 수행
+			    	          
+			    	        	  if(refundResponse === "ok"){	
+			    	                  alert('환불 요청이 완료되었습니다.');
+			    	               // 예약취소 버튼 수정하기
+			    	              } else{
+			    	                  alert('실패: 관리자에게 문의해주세요');
+			    	              }	
+
+
+			    	          
+			    	          
+			    	        },
+			    	        error: function(error) {
+			    	          // refund ajax 실행 중 에러 발생 시 처리
+			    	        }
+			    	      }); // refund ajax
+			      } // ajax-check-success
+			    }); // ajax-check
+			  
+
+	}) // cancel.click
+}); // jQuery
 
 
 </script>

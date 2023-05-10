@@ -130,18 +130,7 @@ public class THDAOImpl implements THDAO{
 		sqlSession.insert(NAMESPACE+".insertPay",pdto);
 		
 		
-		// 결제가 완료된 후 수정
-//		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", pdto);
-//		 
-//
-//		if(pdto.getPoint()!=0) {
-//			cnt += sqlSession.update(NAMESPACE+".updatePoint", pdto);
-//		}
-//		if(pdto.isSubs()) {
-//			cnt += sqlSession.update(NAMESPACE+".updateS_cnt", pdto);
-//		}
-//		logger.info("cnt(실행된 sql 개수) : "+cnt);
-//		
+
 		
 		
 	}
@@ -149,9 +138,9 @@ public class THDAOImpl implements THDAO{
 
 
 	@Override
-	public Integer updatePaymentInfo(PayDTO pdto) throws Exception {
+	public Integer updatePaymentInfo(RsrvPayVO rvo) throws Exception {
 		
-		return sqlSession.update(NAMESPACE+".updatePay",pdto);
+		return sqlSession.update(NAMESPACE+".updatePay",rvo);
 	}
 
 
@@ -164,7 +153,46 @@ public class THDAOImpl implements THDAO{
 		
 		
 	}
-	
+
+
+
+	@Override
+	public Integer modifyOrder(String p_no) throws Exception {
+		int cnt = 0;
+		
+		RsrvPayVO rvo = sqlSession.selectOne(NAMESPACE+".selectPay",p_no);
+		logger.info("rvo : " + rvo);
+		if(rvo.getP_status().equals("cancelled")) {
+			rvo.setP_peoplenum(rvo.getP_peoplenum()*(-1));
+			rvo.setP_subs(rvo.getP_subs()*(-1));
+			rvo.setP_usedpoint(rvo.getP_usedpoint()*(-1));
+			//logger.info("cancelled일때 rvo : "+rvo);
+		}
+		
+		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", rvo);
+		logger.info("t_rem_p 완료"+cnt);
+		cnt += sqlSession.update(NAMESPACE+".updatePoint", rvo);
+		logger.info("point 완료"+cnt);
+		if(Math.abs(rvo.getP_subs())==1) {
+		cnt += sqlSession.update(NAMESPACE+".updateS_cnt", rvo);
+
+		}
+		
+		logger.info("cnt(실행된 sql 개수) : "+cnt);
+		
+		return cnt;
+
+	}
+
+
+
+	@Override
+	public RsrvPayVO selectPayInfo(String p_no) throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectPay",p_no);
+	}
+
+
 	
 	
 	
