@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wolclass.mappers.AdminMapper">
+	
+	<!-- 커뮤니티 리스트 -->
+	<select id="getBoardListCnt" resultType="int">
+	<![CDATA[  
+	select count(b_no)
+	from wc_board
+	where b_reciver is null
+	and b_category != '공지사항'
+	order by b_regdate desc
+	]]> 
+	</select>
+	<select id="getBoardList" resultType="BoardVO">
+	<![CDATA[  
+	select *
+	from wc_board
+	where b_reciver is null
+	and b_category != '공지사항'
+	order by b_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 커뮤니티 리스트 -->
+	
+	<!-- 1:1 문의 리스트 -->
+	<select id="getMsgListCnt" resultType="int">
+	<![CDATA[  
+	select count(b_no)
+	from wc_board
+	where b_reciver = 'admin'
+	order by b_regdate desc
+	]]> 
+	</select>
+	<select id="getMsgList" resultType="BoardVO">
+	<![CDATA[  
+	select *
+	from wc_board
+	where b_reciver = 'admin'
+	order by b_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 1:1 문의 리스트 -->
+	
+	<!-- 회원 리스트 -->
+	<select id="getMemberListCnt" resultType="int">
+	<![CDATA[  
+	select count(m_id)
+	from wc_member
+	where m_id != 'admin'
+	order by m_regdate desc
+	]]> 
+	</select>
+	<select id="getMemberList" resultType="MemberVO">
+	<![CDATA[  
+	select *
+	from wc_member
+	where m_id != 'admin'
+	order by m_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 회원 리스트 -->
+	
+	<!-- 클래스 리스트 -->
+	<select id="getClassListCnt" resultType="int">
+	<![CDATA[  
+	select count(c_no)
+	from wc_class
+	where c_confirm = 'N'
+	order by c_regdate desc
+	]]> 
+	</select>
+	<select id="getClassList" resultType="ClassVO">
+	<![CDATA[  
+	select *
+	from wc_class
+	where c_confirm = 'N'
+	order by c_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 클래스 리스트 -->
+	
+	<!-- 리뷰 리스트 -->
+	<select id="getReviewListCnt" resultType="int">
+	<![CDATA[  
+	select count(r_no)
+	from wc_reply
+	where b_no is null
+	order by r_regdate desc
+	]]> 
+	</select>
+	<select id="getReviewList" resultType="ReplyVO">
+	<![CDATA[  
+	select *
+	from wc_reply
+	where b_no is null
+	order by r_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 리뷰 리스트 -->
+	
+	<!-- 결제 리스트 -->
+	<select id="getPayListCnt" resultType="int">
+	<![CDATA[  
+	select count(p_no)
+	from wc_rsrv_pay
+	order by p_paydate desc
+	]]> 
+	</select>
+	<select id="getPayList" resultType="RsrvPayVO">
+	<![CDATA[  
+	select *
+	from wc_rsrv_pay
+	order by p_paydate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 결제 리스트 -->
+	
+	<!-- 공지사항 등록 / 1:1문의 답변 -->
+	<insert id="writeBoard">
+	insert into wc_board (b_category,b_writer,b_title,b_content,b_reciver) 
+   	values('공지사항','admin',#{b_title},#{b_content},#{b_reciver})
+	</insert>
+	<!-- 공지사항 등록 / 1:1문의 답변 -->
+	
+	<!-- 글 조회 -->
+	<select id="getBoard" resultType="BoardVO">
+	<![CDATA[  
+	select *
+	from wc_board
+	where b_no = #{bno}
+	]]> 
+	</select>
+	<!-- 글 조회 -->
+	
+	<!-- 커뮤니티 글 삭제 -->
+	<delete id="deleteBoard">
+	delete from wc_board where b_no = #{bno}
+	</delete>
+	<!-- 커뮤니티 글 삭제 -->
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateMember">
+	update wc_member set
+	m_pw = #{m_pw}
+	m_email = #{m_email}
+	m_name = #{m_name}
+	m_nick = #{m_nick}
+	m_regdate = #{m_regdate}
+	m_phone = #{m_phone}
+	m_dogtype = #{m_dogtype}
+	m_dogbirth = #{m_dogbirth}
+	m_profile = #{m_profile}
+	m_point = #{m_point}
+	where m_id = #{m_id}
+	</update>
+	<!-- 회원정보 수정 -->
+	<!-- 회원정보 삭제 -->
+	<update id="deleteMember">
+	update wc_member set
+	m_pw = #{m_pw}
+	m_email = null
+	m_name = null
+	m_nick = null
+	m_regdate = null
+	m_phone = null
+	m_dogtype = null
+	m_dogbirth = null
+	m_profile = null
+	m_point = null
+	where m_id = #{m_id}
+	</update>
+	<!-- 회원정보 삭제 -->
+	
+	<!-- 클래스 상세정보 -->
+	<select id="getClass" resultType="ClassVO">
+	<![CDATA[  
+	select *
+	from wc_class
+	where c_no = #{cno}
+	]]> 
+	</select>
+	<!-- 클래스 상세정보 -->
+	
+	<!-- 클래스 등록 승인 -->
+	<update id="confirmClass">
+	update wc_class set
+	c_confirm = 'Y'
+	where c_no = #{cno}
+	</update>
+	<!-- 클래스 등록 승인 -->
+	
+	<!-- 클래스 등록 승인 거부 -->
+	<delete id="deleteClass">
+	delete from wc_class where c_no = #{cno}
+	</delete>
+	<!-- 클래스 등록 승인 거부 -->
+	
+	<!-- 리뷰 삭제 -->
+	<update id="deleteReview">
+	update wc_reply set
+	r_content = '관리자에 의해 삭제된 글 입니다'
+	where r_no = #{rno}
+	</update>
+	<!-- 리뷰 삭제 -->
+	
+</mapper>	
