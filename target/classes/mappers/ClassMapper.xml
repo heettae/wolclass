@@ -67,7 +67,6 @@
 		and c_name like concat('%',#{search},'%')
 		and c_category like concat('%',#{category},'%')
 		and c_addr1 like concat('%',#{addr},'%')
-		and c_price between #{pricestart} and #{priceend}
 	]]>
 	<if test="lowlv != 0 || midlv != 0 || highlv != 0">
 		and c.c_level in (#{lowlv},#{midlv},#{highlv})
@@ -88,7 +87,6 @@
 		and c.c_name like concat('%',#{search},'%')
 		and c.c_category like concat('%',#{category},'%')
 		and c.c_addr1 like concat('%',#{addr},'%')
-		and c.c_price between #{pricestart} and #{priceend}
 	]]>
 	<if test="lowlv != 0 || midlv != 0 || highlv != 0">
 	and c.c_level in (#{lowlv},#{midlv},#{highlv})
