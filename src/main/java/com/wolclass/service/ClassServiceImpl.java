@@ -89,8 +89,6 @@ public class ClassServiceImpl implements ClassService {
 		// 데이터 전처리
 		if(!map.containsKey("timestart") || ((String)map.get("timestart")).equals("")) map.put("timestart", "00:00");
 		if(!map.containsKey("timeend") || ((String)map.get("timeend")).equals("")) map.put("timeend", "24:00");
-		if(!map.containsKey("pricestart") || ((String)map.get("pricestart")).equals("")) map.put("pricestart", 0);
-		if(!map.containsKey("priceend") || ((String)map.get("priceend")).equals("")) map.put("priceend", 1000000);
 		if(!map.containsKey("lowlv")) map.put("lowlv", 0);
 		if(!map.containsKey("midlv")) map.put("midlv", 0);
 		if(!map.containsKey("highlv")) map.put("highlv", 0);
@@ -98,7 +96,7 @@ public class ClassServiceImpl implements ClassService {
 		if(!map.containsKey("addr")) map.put("addr", "");
 		if(!map.containsKey("order") || ((String)map.get("order")).equals("")) map.put("order", 0);
 		if(!map.containsKey("search")) map.put("search", "");
-		if(!map.containsKey("pageNum")) map.put("pageNum", "1");
+		if(!map.containsKey("pageNum") || ((String)map.get("pageNum")).equals("")) map.put("pageNum", "1");
 		map.put("userLat", Double.parseDouble(map.get("userLat").toString()));
 		map.put("userLng", Double.parseDouble(map.get("userLng").toString()));
 		// 데이터 전처리
