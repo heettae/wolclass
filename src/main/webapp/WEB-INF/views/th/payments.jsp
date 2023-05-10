@@ -17,7 +17,7 @@ $(document).ready(function(){
 			      url: "/thr/checkPayment", 
 			      type: "POST",
 			      contentType: "application/json",
-			      data: "20230510021",
+			      data: "20230510026", // p_no 값 넣기
 			      success: function(p_no) {
 			    	      console.log(p_no)
 			    	  	  jQuery.ajax({
@@ -29,7 +29,8 @@ $(document).ready(function(){
 			    	          // refund ajax 실행 후 작업 수행
 			    	          
 			    	        	  if(refundResponse === "ok"){	
-			    	                  alert('환불 요청이 완료되었습니다.')
+			    	                  alert('환불 요청이 완료되었습니다.');
+			    	               // 예약취소 버튼 수정하기
 			    	              } else{
 			    	                  alert('실패: 관리자에게 문의해주세요');
 			    	              }	
@@ -42,8 +43,6 @@ $(document).ready(function(){
 			    	          // refund ajax 실행 중 에러 발생 시 처리
 			    	        }
 			    	      }); // refund ajax
-			    	
-			    	  
 			      } // ajax-check-success
 			    }); // ajax-check
 			  

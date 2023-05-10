@@ -75,13 +75,23 @@
 	select * from wc_rsrv_pay where p_no=#{p_no}
 	</select>
 	
-	<!-- 결제 테이블 결제 상태 update TH(5/10 변경 where=p_no)  -->
-	<update id="updatePay">
-	update wc_rsrv_pay set p_status=#{p_status} where p_no=#{p_no}
+	<!-- 결제 테이블 결제 상태 update TH -->
+	<update id="updatePay" parameterType="map">
+	update wc_rsrv_pay set p_status=#{p_status} ,
+ 	p_canceldate =
+      <choose>
+        <when test="p_status == 'cancelled'">now()</when>
+        <otherwise>null</otherwise>
+      </choose>
+	where p_no=#{p_no}
+	</update>
+	
+	<!-- 결제 테이블 결제 상태 update TH -->
+	<update id="updateCancle">
+	update wc_rsrv_pay set p_status=#{p_status}, p_canceldate=now() where p_no=#{p_no}
 	</update>
 	
 	<!-- 타임테이블 t_rem_p 변경 TH -->
-	<!-- 기존 dto 사용: update wc_timetable set t_rem_p=(t_rem_p-#{peopleNum}) where t_no=#{t_no} -->
 	<update id="updateT_rem_p">
 	update wc_timetable set t_rem_p=(t_rem_p-#{p_peoplenum})
 	where CONCAT(t_date, ' ', t_start) in (select p_rsrvdate from wc_rsrv_pay where p_no = #{p_no})

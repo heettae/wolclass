@@ -81,11 +81,8 @@ public class THController {
 	@ResponseBody
 	public List<TimetableVO> timePost(@RequestBody TimetableVO vo) throws Exception{
 		logger.info(" timePost() 호출 ");
-		//logger.info("t_date:"+t_date);
-		//logger.info("c_no:"+c_no);
 		logger.info("vo:"+vo);
 		List<TimetableVO> tvo = service.getTime(vo);
-		//logger.info("cvo : "+cvo );
 		logger.info("tvo : "+tvo);
 	
 		return tvo;
@@ -101,7 +98,6 @@ public class THController {
 		logger.info(" PNumPost() 호출 ");
 		logger.info("vo:"+vo);
 		TimetableVO pNum = service.getRemainNum(vo);
-		//logger.info("cvo : "+cvo );
 		logger.info("tvo : "+pNum);
 	
 		return pNum;
@@ -117,7 +113,7 @@ public class THController {
 		logger.info(" p_noPost() 호출 ");
 
 		String pno = service.makeP_no();
-		//logger.info("cvo : "+cvo );
+
 		logger.info("pno : "+pno);
 	
 		return pno;
@@ -125,32 +121,12 @@ public class THController {
 	// 주문번호 가져오기 TH(0504수정)
 	
 	
-//	 //결제 처리하기 TH
-//	@RequestMapping(value = "/detail", method = RequestMethod.POST)
-//	public String payment(@ModelAttribute PayDTO pdto, HttpSession session) throws Exception{
-//		logger.info("payment() 실행 ");
-//		String id = (String) session.getAttribute("id");
-//
-//		logger.info("pdto : "+pdto);
-//		service.insertPaymentinfo()(pdto);
-//		return "redirect:/th/payments";
-//		
-//	}
-//	 //결제 처리하기 TH
-	
-	
 	 //결제 처리하기 TH
 	@RequestMapping(value = "/orderSuccess", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer orderSuccess(@RequestBody PayDTO pdto) throws Exception{
-		logger.info("orderSuccess() 실행 ");
-
+		logger.info("orderSuccess() 호출 ");
 		logger.info("pdto : "+pdto);
-		
-		
-		
-		
-//		service.payment(pdto);
 		return service.modifyOrder(pdto.getP_no());
 		
 	}
@@ -162,31 +138,11 @@ public class THController {
 	public void paymentsGET() throws Exception{
 		logger.info("payments() 실행 ");
 		
-		
+	}
+	
 
-	}
 	
-//	// 환불하기 TH
-//	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String cancelPOST(@RequestBody String merchant_uid) throws Exception{
-//
-//		logger.info(" cancelPOST() 호출 ");
-//
-//
-//		logger.info("m : "+merchant_uid);
-//	
-//		return merchant_uid;
-//	}
-//	// 환불하기 TH
-	
-	
-	
-	// http://localhost:8080/th/cancelTest
-	@RequestMapping(value = "/cancelTest")
-	public void cancelTestGET() {
-		logger.info(" cancelTestGET() 호출 ");
-	}
+
 	
 	
 

@@ -55,7 +55,7 @@ public interface THService {
 	// DB 결제정보 조회 TH
 	public RsrvPayVO selectPayInfo(String p_no) throws Exception;
 	
-	// 서버 결제졍보 조회 TH
+	// 서버 결제정보 조회 TH
 	public RsrvPayVO getCancelInfo(String accessToken, RsrvPayVO rvo) throws Exception;
 	
 }

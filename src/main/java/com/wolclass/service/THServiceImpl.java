@@ -232,7 +232,7 @@ public class THServiceImpl implements THService {
 	public RsrvPayVO getCancelInfo(String accessToken, RsrvPayVO rvo) throws Exception {
 		RsrvPayVO cancelInfo = new RsrvPayVO();
 		cancelInfo.setP_no(rvo.getP_no());
-	
+		
 		String reqURL = "https://api.iamport.kr/payments/cancel";
 		String data = "{ \"reason\" : \"사용자 요청\", "
 				+ "\"imp_uid\" : \"" + rvo.getImp_uid() + "\"} ";

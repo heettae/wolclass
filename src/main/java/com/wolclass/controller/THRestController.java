@@ -111,7 +111,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 		logger.info("p_no: "+p_no);
 		RsrvPayVO resultVO = service.selectPayInfo(p_no);
 		logger.info(resultVO + "");
-		return p_no; // return 뭘로할지 고민하기
+		return p_no; 
 	}
 	
 	@RequestMapping(value = "/refund", method = RequestMethod.POST)
@@ -137,7 +137,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 		RsrvPayVO cancelInfo = service.getCancelInfo(accessToken, resultVO);
 		/*환불결과 동기화*/
 		service.updatePaymentInfo(cancelInfo);
-		
+		service.modifyOrder(p_no);
 		return "ok";
 
 
