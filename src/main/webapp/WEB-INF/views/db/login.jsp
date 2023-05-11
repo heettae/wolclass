@@ -3,41 +3,46 @@
 <%@ include file="../include/header.jsp"%>
 
 <div class="col-md-6" style="position: absolute; display: contents;" >
-	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
-		<div class="col-md-12 col-xs-12 login-blocks">
-			<h2>WolClass(Login)</h2>
-			<form method="post" id="login_form">
-				<div class="form-group">
-					<label for="m_id">아이디</label> <input type="text"
-						class="form-control" id="m_id" name="m_id">
-				</div>
-				<div class="form-group">
-					<label for="m_pw">비밀번호</label> <input type="password"
-						class="form-control" id="m_pw" name="m_pw">
-				</div>
+	<div style="min-height: 600px; height: auto;">
+		<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
+			<div class="col-md-12 col-xs-12 login-blocks">
+				
+				 <div style="text-align: center;">
+		               <h2>WolClass(Login)</h2>
+	             </div> 
+				<form method="post" id="login_form">
+					<div class="form-group">
+						<label for="m_id">아이디</label> <input type="text"
+							class="form-control" id="m_id" name="m_id">
+					</div>
+					<div class="form-group">
+						<label for="m_pw">비밀번호</label> <input type="password"
+							class="form-control" id="m_pw" name="m_pw">
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-default" id="loginBtn">로그인</button>
+					</div>
+				</form>
 				<div class="text-center">
-					<button type="submit" class="btn btn-default" id="loginBtn">로그인</button>
+					<a href="/db/findId" style="color: black;">아이디 찾기</a>/<a
+						href="/db/findPw" style="color: black;">비밀번호 찾기</a>/<a
+						href="/db/join" style="margin-left: 3px; color: black;">회원가입</a>
 				</div>
-			</form>
-			<div class="text-center">
-				<a href="/db/findId" style="color: black;">아이디 찾기</a>/<a
-					href="/db/findPw" style="color: black;">비밀번호 찾기</a> <a
-					href="/db/join" style="margin-left: 3px; color: black;">회원가입</a>
+	
+				<br>
+				
+				<p style=" display: flex; justify-content: center;">
+					<!-- 카카오 로그인 -->
+					<a
+						href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/db/kakao&response_type=code">
+						<img src="../resources/img/kakao_login_btn.png" width="190px"/>
+					</a>
+					<!-- 카카오 로그인 -->
+					<!-s- 네이버 -->
+						<div id="naverIdLogin" style="width: 190px; margin: 0 auto;"></div>
+					<!-- 네이버 -->
+				</p>
 			</div>
-
-			<br>
-			
-			<p style=" display: flex; justify-content: center;">
-				<!-- 카카오 로그인 -->
-				<a
-					href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/db/kakao&response_type=code">
-					<img src="../resources/img/kakao_login_btn.png" width="190px"/>
-				</a>
-				<!-- 카카오 로그인 -->
-				<!-- 네이버 -->
-					<div id="naverIdLogin" style="width: 190px; margin: 0 auto;"></div>
-				<!-- 네이버 -->
-			</p>
 		</div>
 	</div>
 </div>

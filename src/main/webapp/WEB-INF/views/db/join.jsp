@@ -5,7 +5,9 @@
 <div class="col-md-6" style="position: absolute; display: contents;">
                     <div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px">
                         <div class="col-md-12 col-xs-12 register-blocks">
-                            <h2>회원가입 </h2> 
+                        	<div style="text-align: center;">
+	                            <h2>회원가입 </h2> 
+                        	</div>
                             <form id="join_form" method="post"> 
                                 <div class="form-group">
                                     <label for="m_id">아이디</label> <span style="color: red">(필수)</span> 
@@ -316,7 +318,7 @@ $(document).ready(function(){
 	});
 	
 		// 전화번호 중복검사 - 다빈
-		$('#m_phone').on('input',function(){
+		$('#m_phone').on('keyup',function(){
 			var m_phone = $('#m_phone').val();
 			if(m_phone.length < 13){
 				return;

@@ -22,7 +22,7 @@
  		popup.close(); 
  	}); 
  	setTimeout(function(){ 
- 		location.href="/db/login"; 
+ 		location.href="/db/logout"; 
  	},150) 
  } 
 </script>

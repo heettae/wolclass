@@ -14,7 +14,9 @@
 <div class="col-mda-6">
 	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
 		<div class="col-md-12 col-xs-12 login-blocks">
-			<h2>아이디 찾기</h2>
+			<div style="text-align: center;">
+               	<h2>아이디 찾기</h2>
+           	</div>
 			<form id="findIdForm" method="post">
 				<div class="form-group">
 					<label for="m_name">이름</label>

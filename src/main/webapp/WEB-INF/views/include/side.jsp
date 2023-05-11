@@ -19,7 +19,7 @@ a, button:hover {
 }
 
 .body_sidebar_box {
-	width: 13%;
+	width: 247px !important;
 	height: 99%;
 	background: #353942;
 	align-items: center;
@@ -30,6 +30,7 @@ a, button:hover {
 /* } */
 
 .menu_container {
+width: 247px !important;
 	height: 90%;
 	display: flex;
 	flex-direction: column;
@@ -166,13 +167,13 @@ margin-top: 18px;
 			<div class="body_sidebar_box">
 
 				<div class="menu_container">
-					<div
-						style="font-size: x-large; font-weight: 550; color: white; text-align: center; margin: 10%;">마이페이지
+					<div style="font-size: x-large; font-weight: 550; color: white; text-align: center; margin: 10%;">
+						<a href="/db/mypage">마이페이지</a>
 					</div>
 					<div class="side_menu">
 						<div id="icon1" class="side_icon"></div>
 						<div>
-							<a>회원정보 수정</a>
+							<a href="/db/updateMember">회원정보 수정</a>
 						</div>
 					</div>
 					<div class="side_menu">
@@ -184,33 +185,39 @@ margin-top: 18px;
 					<div class="side_menu">
 						<div id="icon3" class="side_icon"></div>
 						<div>
-							<a>내가신청한클래스</a>
+							<a href="/db/classList">내가신청한클래스</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon4" class="side_icon"></div>
 						<div>
-							<a>결제내역</a>
+							<a href="/db/payList">결제내역</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon5" class="side_icon"></div>
 						<div>
-							<a>메시지</a>
+							<a href="/db/msgList">메시지</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon6" class="side_icon"></div>
 						<div>
-							<a>구독</a>
+							<a href="/db/subscribe">구독</a>
 						</div>
 					</div>
-					<div class="side_menu">
-						<div id="icon7" class="side_icon"></div>
-						<div>
-							<a>회원탈퇴</a>
-						</div>
-					</div>
+					
+					<c:set var="isKakao" value="${sessionScope.id.toString().replaceAll('[0-9]','') }" />
+					<c:if test="${sessionScope.id != null }">
+						<c:if test="${isKakao != '' && sessionScope.id.toString().length()<20}">
+							<div class="side_menu">
+								<div id="icon7" class="side_icon"></div>
+								<div>
+									<a href="/db/deleteMember">회원탈퇴</a>
+								</div>
+							</div>
+						</c:if>
+					</c:if>
 
 					<hr
 						style="border-top: 1px solid #777; width: 80%; margin-left: 10%;">

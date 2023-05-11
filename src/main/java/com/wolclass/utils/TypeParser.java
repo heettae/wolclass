@@ -2,6 +2,7 @@ package com.wolclass.utils;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 // 데이터 타입 변환 HJ
@@ -29,6 +30,14 @@ public class TypeParser {
 	 */
 	public static Date stringToDate(String dateStr) throws Exception{
 		return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr).getTime());
+	}
+	
+	/**
+	 * @param dateStr yyyy-MM-dd
+	 * @return java.sql.Timestamp
+	 */
+	public static Timestamp stringToTimestamp(String dateStr) throws Exception{
+		return new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr).getTime());
 	}
 
 }

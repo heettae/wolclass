@@ -1,5 +1,6 @@
 package com.wolclass.persistance;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wolclass.domain.BoardVO;
+import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.RsrvPayVO;
+import com.wolclass.domain.SubscriptionVO;
 
 @Repository
 public class DBDAOImpl implements DBDAO{
@@ -86,8 +91,53 @@ public class DBDAOImpl implements DBDAO{
 	public void updateProfile(MemberVO vo) throws Exception {
 		sqlSession.update(NAMESPACE+".profileImg", vo);
 	}
-
-
 	
+	// 회원정보 수정 - 다빈
+	@Override
+	public void updateMember(Map<String,Object> map) throws Exception {
+		sqlSession.update(NAMESPACE+".updateMember",map);
+	}
+	
+	// 회원탈퇴 - 다빈
+	@Override
+	public void deleteMember(MemberVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".deleteMember",vo);
+	}
+	
+	// 결제내역 - 다빈
+	@Override
+	public List<Map<String,Object>> payList(String id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".payList",id);
+	}
+	
+	// 내가 신청한 클래스(예약클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList(String id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".classList", id);
+	}
+	
+	// 내가 신청한 클래스(지난클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList2(String id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".classList2", id);
+	}
+	
+	// 메시지(받은) - 다빈
+	@Override
+	public List<BoardVO> msgList1(String id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".msgList1", id);
+	}
+	
+	// 메시지(보낸) - 다빈
+	@Override
+	public List<BoardVO> msgList2(String id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".msgList2", id);
+	}
+	
+	// 구독(남은기간) - 다빈 
+	@Override
+	public SubscriptionVO subscribe(String id) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".subday",id);
+	}
 	
 }
