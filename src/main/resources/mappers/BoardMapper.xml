@@ -5,6 +5,38 @@
 
 <mapper namespace="com.wolclass.mappers.BoardMapper">
 	
+	<!-- 공지사항 리스트 -->
+	<select id="getNoticeListCnt" resultType="int">
+	<![CDATA[  
+	select count(b_no)
+	from wc_board
+	where b_reciver is null
+	and b_category = '공지사항'
+	]]> 
+	</select>
+	<select id="getNoticeList" resultType="BoardVO">
+	<![CDATA[  
+	select *
+	from wc_board
+	where b_reciver is null
+	and b_category = '공지사항'
+	order by b_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 공지사항 리스트 -->
+	
+	<!-- 공지사항 상세 -->
+	<select id="getBoard" resultType="BoardVO">
+	<![CDATA[  
+	select *
+	from wc_board
+	where b_no = #{b_no}
+	]]> 
+	</select>
+	<!-- 공지사항 상세 -->
+	
 	<select id="cnt" resultType="int">
 	<![CDATA[  
 	

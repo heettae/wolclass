@@ -25,9 +25,9 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
-	private BoardService bservice;
+	private BoardService service;
 	@Autowired
-	private SwBoardService service;
+	private SwBoardService swservice;
 	
 	// 글쓰기 정보 입력
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -41,7 +41,7 @@ public class BoardController {
 	public String registPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
 		logger.info(" registPOST()  - 글쓰기처리! ");
 		logger.info(" 글쓰기 정보: " + vo);
-		service.writeBoard(vo);
+		swservice.writeBoard(vo);
 		
 		rttr.addFlashAttribute("result", "ok");
 
@@ -53,7 +53,7 @@ public class BoardController {
 	public void listAllGET(@RequestParam Map<String, Object> cmap, Model model) throws Exception {
 		logger.info(" listAllGet() 글전체 조회");
 
-		List<BoardVO> boardList = service.selectPageNumBoTotal(cmap);
+		List<BoardVO> boardList = swservice.selectPageNumBoTotal(cmap);
 		logger.info(" boardList {}", boardList.size());
 		logger.info(" boardList {}", boardList);
 
@@ -67,14 +67,14 @@ public class BoardController {
 		
 		logger.info("  b_no : " + b_no);
 		
-		service.incrementViewCnt(b_no); 
-		BoardVO resultVO = service.getBoard(b_no);
+		swservice.incrementViewCnt(b_no); 
+		BoardVO resultVO = swservice.getBoard(b_no);
 		logger.info(resultVO.toString()); 
 		model.addAttribute("resultVO", resultVO); 
 		
 		logger.info(" readGET() 글전체 조회");
 		
-		List<ReplyVO> replyList = service.getReplyList(cmap);
+		List<ReplyVO> replyList = swservice.getReplyList(cmap);
 		logger.info(" replyList {}", replyList.size());
 		logger.info(" replyList {}", replyList);
 			
@@ -91,7 +91,7 @@ public class BoardController {
 		logger.info(vo.toString());
 		
 		
-		int result = service.modifyBoard(vo); 
+		int result = swservice.modifyBoard(vo); 
 		if (result == 1) {
 		rttr.addFlashAttribute("result", "updOK"); }
 		
@@ -105,10 +105,26 @@ public class BoardController {
 		
 		logger.info(" b_no : " + b_no);
 		
-		int result = service.removeBoard(b_no);
+		int result = swservice.removeBoard(b_no);
 		
 		if (result == 1) { rttr.addFlashAttribute("result", "delOK"); }
 		
 		return "redirect:/board/community"; 
 	}
+	
+	
+	//공지사항 출력
+	@RequestMapping("/notice")
+	public void notice(@RequestParam Map<String, Object> nmap, Model model) throws Exception {
+		model.addAttribute(service.getNoticeList(nmap));
+		model.addAttribute("nmap", nmap);
+	}
+	
+	//공지사항 상세
+	@RequestMapping("/readNotice")
+	public void readNotice(@RequestParam Map<String, Object> nmap, Model model) throws Exception {
+		model.addAttribute(service.getBoard(nmap.get("b_no")));
+		model.addAttribute("nmap", nmap);
+	}
+	
 }
