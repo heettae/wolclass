@@ -51,7 +51,7 @@ public class AdminController {
 	
 	// 1:1  문의 읽기
 	@RequestMapping("/readMsg")
-	public void readMsg(int bno, Model model) throws Exception {
+	public void readMsg(@RequestParam("b_no") int bno, Model model) throws Exception {
 		model.addAttribute(service.getBoard(bno));
 	}
 	
@@ -79,7 +79,7 @@ public class AdminController {
 	// 회원 정보 삭제
 	@RequestMapping("/deleteMember")
 	@ResponseBody
-	public void deleteMember(String id) throws Exception {
+	public void deleteMember(@RequestParam("m_id") String id) throws Exception {
 		service.deleteMember(id);
 	}
 	
@@ -92,21 +92,21 @@ public class AdminController {
 	
 	// 클래스 상세정보
 	@RequestMapping("/classDetail")
-	public void classDetail(int cno, Model model) throws Exception {
+	public void classDetail(@RequestParam("c_no") int cno, Model model) throws Exception {
 		model.addAttribute(service.getClass(cno));
 	}
 	
 	// 클래스 등록 승인
 	@RequestMapping("/confirmClass")
 	@ResponseBody
-	public void confirmClass(int cno) throws Exception {
+	public void confirmClass(@RequestParam("c_no") int cno) throws Exception {
 		service.confirmClass(cno);
 	}
 	
 	// 클래스 등록 승인 거부
 	@RequestMapping("/deleteClass")
 	@ResponseBody
-	public void deleteClass(int cno) throws Exception {
+	public void deleteClass(@RequestParam("c_no") int cno) throws Exception {
 		service.deleteClass(cno);
 	}
 	
@@ -119,7 +119,7 @@ public class AdminController {
 	
 	// 커뮤니티 읽기
 	@RequestMapping("/readBoard")
-	public void readBoard(int bno, Model model) throws Exception {
+	public void readBoard(@RequestParam("b_no") int bno, Model model) throws Exception {
 		model.addAttribute(service.getBoard(bno));
 	}
 	
@@ -132,7 +132,7 @@ public class AdminController {
 	
 	// 커뮤니티 글 삭제
 	@RequestMapping("/deleteBoard")
-	public String deleteBoard(int bno) throws Exception {
+	public String deleteBoard(@RequestParam("b_no") int bno) throws Exception {
 		service.deleteBoard(bno);
 		return "redirect:/admin/boardList";
 	}
@@ -147,7 +147,7 @@ public class AdminController {
 	// 수강후기 삭제
 	@RequestMapping("/deleteReview")
 	@ResponseBody
-	public void deleteReview(int rno) throws Exception {
+	public void deleteReview(@RequestParam("r_no") int rno) throws Exception {
 		service.deleteReview(rno);
 	}
 	

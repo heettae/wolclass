@@ -36,50 +36,35 @@
 								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
 								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">버튼</th>
 							</tr>
+							<c:forEach var='vo' items='${boardVOList }'>
 							<tr>
-								<td>${b_no}</td>
-								<td>${b_category}</td>
-								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
-								<td>${b_writer}</td>
-								<td>${b_regdate}</td>
+								<td>${vo.b_no}</td>
+								<td>${vo.b_category}</td>
+								<td><a href="/admin/readBoard?b_no=${vo.b_no}">${vo.b_title}</a></td>
+								<td>${vo.b_writer}</td>
+								<td>${vo.b_regdate}</td>
 								<td>버튼</td>
 							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
+					<!-- 페이징처리  -->
+					<div class="pagination">
+						<ul>
+							<c:if test="${amap.startPage > amap.pageBlock }">
+							<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+							<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
+							</c:forEach>
+							<c:if test="${amap.pageCount > amap.endPage }">
+							<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
+							</c:if>
+						</ul>
+			        </div>
+					<!-- 페이징처리  -->
 				</div>
 			</div>
-		</div>
-
-		<div>
-			<!-- 페이징처리  -->
-			<div class="box-footer clearfix">
-				<div>
-					<%-- <ul class="pagination pagination-sm no-margin " >
-						<c:if test="${map.endPage <= map.pageBlock}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.endPage > map.pageBlock}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage - map.pageBlock}" 
-						onclick="backPage();">«</a></li>
-						</c:if>
-						
-						
-						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}
-							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
-						</c:forEach>
-						
-						<c:if test="${map.pageCount <= map.endPage}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.pageCount > map.endPage}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage + map.pageBlock}" 
-						onclick="nextPage();">»</a></li>
-						</c:if>
-					</ul> --%>
-				</div>
-			</div>
-			<!-- 페이징처리  -->
 		</div>
 	</div>
 
