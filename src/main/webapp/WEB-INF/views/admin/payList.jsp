@@ -29,23 +29,30 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
+								<th style="width: 6%; background: #FDC600;border-right: 2px solid;">예약번호</th>
+								<th style="width: 13%; background: #FDC600;border-right: 2px solid;">성명</th>
+								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">클래스명</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">예약일</th>
+								<th style="width: 6%; background: #FDC600;border-right: 2px solid;">인원</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">금액</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">결제일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">취소여부(Y/N)</th> 
 							</tr>
-							<tr>
-								<td>${b_no}</td>
-								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
-								<td>${b_writer}</td>
-								<td>${b_regdate}</td>
+								<tr>
+								<td>${p_no}번</td>
+								<td>${m_id}이름</td>
+								<td>${c_no}클</td>
+								<td>${p_rsrvdate}예약일</td>
+								<td>${p_peoplenum}명</td>
+								<td>${p_price}금액</td>
+								<td>${p_paydate}결제일</td>
+								<td>${p_cancel}Y/N</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-
 		<div>
 			<!-- 페이징처리  -->
 			<div class="box-footer clearfix">

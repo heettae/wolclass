@@ -1,53 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="root" value="${pageContext.request.contextPath }"/>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Insert title here</title>
-
-<meta name="description" content="GARO is a real-estate template">
-        <meta name="author" content="Kimarotec">
-        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/resources/assets/fonts/icon-7-stroke/css/helper.css">
-        <link rel="stylesheet" href="/resources/assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css">
-        <link rel="stylesheet" href="/resources/assets/css/normalize.css">
-        <link rel="stylesheet" href="/resources/assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/resources/assets/css/fontello.css">
-        <link rel="stylesheet" href="/resources/assets/css/bootstrap-select.min.css"> 
-        <link rel="stylesheet" href="/resources/assets/css/icheck.min_all.css">
-        <link rel="stylesheet" href="/resources/assets/css/price-range.css">
-        <link rel="stylesheet" href="/resources/assets/css/owl.carousel.css">  
-        <link rel="stylesheet" href="/resources/assets/css/owl.theme.css">
-        <link rel="stylesheet" href="/resources/assets/css/owl.transitions.css">
-        <link rel="stylesheet" href="/resources/assets/css/jquery.slitslider.css">
-        <link rel="stylesheet" href="/resources/assets/css/style.css">
-        <link rel="stylesheet" href="/resources/assets/css/responsive.css">
-        <noscript>
-        <link rel="stylesheet" type="text/css" href="/resources/assets/css/styleNoJS.css"/>
-        </noscript>
-        <!-- Font Awesome CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-......" crossorigin="anonymous" />
-        <!-- Font Awesome CSS -->
-        
-        <!-- jQuery cdn -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <!-- jQuery cdn -->
-
-<%-- <!-- header  -->
+<!-- header  -->
 <%@ include file="../include/header.jsp"%>
 <!-- header  -->
- --%>
+ 
 <style type="text/css">
 .clearfix li {
 	float: none;
@@ -90,9 +46,8 @@ th {
 							<div class="category-search">
 								<select style="width: 100px;" name="b_category" id="b_category1">
 									<option value="">전체글</option>
-									<option value="board">일반글</option>
-									<option value="recruit">모집글</option>
-									<option value="announcement">공지사항</option>
+									<option value="일반">일반글</option>
+									<option value="모집">모집글</option>
 								</select>
 							</div>
 
@@ -100,7 +55,7 @@ th {
 								<div class="input-group input-group-sm hidden-xs">
 									<input style="width: 200px; margin-left: 58px;" type="text"
 										name="search" class="form-control pull-right"
-										placeholder="키워드를 입력해주세요" value="${map.get('search')}">
+										placeholder="키워드를 입력해주세요" value="${map.search}">
 
 									<div class="input-group-btn">
 										<button type="submit" class="btn btn-default">
@@ -132,13 +87,11 @@ th {
 								<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.pageNum*map.pageSize-1}">
 									<tr>
 										<td>${boardList[i].b_no}</td>
-										<td><c:if test="${boardList[i].b_category == 'board'}">
+										<td><c:if test="${boardList[i].b_category == '일반'}">
 									일반글
-									</c:if> <c:if test="${boardList[i].b_category == 'recruit'}">
+									</c:if> <c:if test="${boardList[i].b_category == '모집'}">
 									모집글
-									</c:if> <c:if test="${boardList[i].b_category =='announcement'}">
-												<strong>공지사항</strong>
-											</c:if></td>
+									</c:if> </td>
 										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
 										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
@@ -153,13 +106,11 @@ th {
 								<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.count-1}">
 									<tr>
 										<td>${boardList[i].b_no}</td>
-										<td><c:if test="${boardList[i].b_category == 'board'}">
+											<td><c:if test="${boardList[i].b_category == '일반'}">
 									일반글
-									</c:if> <c:if test="${boardList[i].b_category == 'recruit'}">
+									</c:if> <c:if test="${boardList[i].b_category == '모집'}">
 									모집글
-									</c:if> <c:if test="${boardList[i].b_category =='announcement'}">
-												<strong>공지사항</strong>
-											</c:if></td>
+									</c:if> </td>
 										<td><a href="/sw/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
 										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
@@ -177,16 +128,15 @@ th {
 				</div>
 				<div></div>
 			</div>
-			<%-- <c:if test="${Sessionscope.id} = null">
-			<button style="margin: 10px 0 30px 85%; width: 100px; height: 30px;">
-				<a href="/sw/login">글작성</a>
-			</button>
-			</c:if> --%>
-			<%-- <c:if test="${Sessionscope.id} != null"> --%>
-			<a href="/sw/swWrite" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px;">
+			
+			
+			<!-- <a href="/sw/swWrite" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px;">
+				글작성
+			</a> -->
+			<a onclick="boardWrite();" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px; cursor: pointer;">
 				글작성
 			</a>
-			<%-- </c:if> --%>
+			
 		</div>
 
 		<div>
@@ -260,7 +210,12 @@ th {
 			map.put("pageNum", pageNum);
 		};
 		 
-		
+		function boardWrite(){
+			if("${sessionScope.id}" == ""){
+				return location.href="/db/login";
+			}
+			return location.href="/sw/swWrite";
+		}
 		
 		
        

@@ -29,16 +29,24 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">아이디</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">성명</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">생년월일</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">전화번호</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">이메일</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">가입일</th>
+								<th style="width: 5%; background: #FDC600;border-right: 2px solid;">버튼1</th>
+								<th style="width: 5%; background: #FDC600;border-right: 2px solid;">버튼2</th>
 							</tr>
 							<tr>
-								<td>${b_no}</td>
-								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
-								<td>${b_writer}</td>
-								<td>${b_regdate}</td>
+								<td>${m_id}</td>
+								<td>${m_name}</td>
+								<td>${m_dogbirth}</td>
+								<td>${m_phone}</td>
+								<td>${m_email}</td>
+								<td>${m_regdate}</td>
+								<td><input type="button" value="111"></td>
+								<td><button>123</button></td>
 							</tr>
 						</tbody>
 					</table>

@@ -5,9 +5,6 @@
 	<!-- header  -->
 <style type="text/css">
 
-
-  
- 
 .btn-backlist {
 font-weight:bold;
 font-size:15px;
@@ -70,14 +67,11 @@ border-radius:6px;
 						<div class="category-search" style="margin: 2px 4% 0 20%;">
 							<select style="width: 125px; height: 45px; font-size: 20px;"
 								name="b_category">
-								<option value="board">일반글</option>
-								<option value="recruit">모집글</option>
+								<option value="일반">일반글</option>
+								<option value="모집">모집글</option>
 							</select>
 							
-			<!--  나중에 수정해야됨   -->
-							<input type="text" name="b_writer" <%-- value="${SessionScope.m_id}"   히든으로해야함--%>
-							style="border: 1px solid black;">
-		<!--  나중에 수정해야됨   -->					
+							<input type="hidden" name="b_writer" value="${sessionScope.id}">
 						</div>
 						<div style="display: block;width: 40%;border: solid 1px gray;padding: 55px;border-radius: 5px;">
 							<div style="display: block; width: 100%;">

@@ -30,15 +30,19 @@
 
 							<tr>
 								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
+								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">카테고리</th>
 								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
 								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
 								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">버튼</th>
 							</tr>
 							<tr>
 								<td>${b_no}</td>
+								<td>${b_category}</td>
 								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
 								<td>${b_writer}</td>
 								<td>${b_regdate}</td>
+								<td>버튼</td>
 							</tr>
 						</tbody>
 					</table>
