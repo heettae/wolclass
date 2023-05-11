@@ -7,6 +7,10 @@
   display: none;
 }
 
+#addClassBtn:hover{
+ background-color: #333;
+ color: #FDC600;
+}
 </style>
 
 
@@ -228,16 +232,22 @@ function DaumPostcode() {
 // 파일 추가
 var cnt = 2;
 function addFile() {
-    var html = "<div class='input-file-container'>";
-    html += "<input type='file' name='c_img" + cnt + "' required>";
-    html += "<button class='delete-file-btn'>삭제</button>";
-    html += "</div>";
-    $("#imgForm").append(html);
-    cnt++;
+	if(cnt == 5) {
+		alert('4개까지 등록가능');
+	}else{
+	    var html = "<div class='input-file-container'>";
+	    html += "<input type='file' name='c_img" + cnt + "' required>";
+	    html += "<button class='delete-file-btn'>삭제</button>";
+	    html += "</div>";
+	    $("#imgForm").append(html);
+	    cnt++;
+	}
 }
 
 $(document).on("click", ".delete-file-btn", function() {
     $(this).parent().remove();
+    cnt--;
+    if(cnt < 2) cnt = 2;
 });
 // 파일 추가
 </script>

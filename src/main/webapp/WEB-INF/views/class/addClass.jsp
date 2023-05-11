@@ -230,13 +230,20 @@ function DaumPostcode() {
 // 파일 추가
 var cnt = 2;
 function addFile() {
-    var html = "<div class='input-file-container'>";
-    html += "<input type='file' name='c_img" + cnt + "' required>";
-    html += "<button class='delete-file-btn'>삭제</button>";
-    html += "</div>";
-    $("#imgForm").append(html);
-    cnt++;
+    if(cnt < 5) { // 이미지 추가 태그가 3개 이하일 때만 실행
+        var html = "<div class='input-file-container'>";
+        html += "<input type='file' name='c_img" + cnt + "' required>";
+        html += "<button class='delete-file-btn'>삭제</button>";
+        html += "</div>";
+        $("#imgForm").append(html);
+        cnt++;
+
+        if(cnt === 5) { // 이미지 추가 태그가 3개일 경우, 버튼 비활성화
+            $("#img2").attr("disabled", true);
+        }
+    }
 }
+
 
 $(document).on("click", ".delete-file-btn", function() {
     $(this).parent().remove();
