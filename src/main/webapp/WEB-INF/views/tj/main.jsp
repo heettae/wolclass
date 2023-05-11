@@ -77,6 +77,18 @@
 }
 /* 도트 모양 스타일 */
 
+.item-thumb {
+  position: relative; /* 이미지를 포지션:absolute;로 설정할 때 기준이 될 부모 요소를 설정 */
+}
+.item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 </style>
 
 <div class="slider-area">

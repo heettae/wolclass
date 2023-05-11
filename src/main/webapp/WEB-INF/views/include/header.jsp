@@ -94,6 +94,18 @@
 
 
 <style type="text/css">
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+*{
+	font-family: 'LINESeedKR-Bd';
+}
+button{
+	font-family: 'LINESeedKR-Bd';
+}
 /* 알림 버튼 */
 .button {
   display: flex;
@@ -108,7 +120,7 @@
   outline: none;
   cursor: pointer;
   font-size: 20px;
-  color: #555;
+  color: #858585;
 }
 
 .notification-count {
@@ -359,13 +371,32 @@ select.form-control {
   background-color: #FDC600;
 }
 /* 슬라이더 */
+#search-btn:hover{
+  background-color: #333;
+  color: #FDC600;
+}
+
+#reset-btn{
+background-color: #333;
+  color: #FDC600;
+}
+
+#reset-btn:hover{
+  background-color: #FDC600;
+  color: #FFF;
+}
 /* 검색창 select 박스 */
 
 
-#logoutBtn {
+#logoutBtn{
   background-color: transparent;
   border: none;
 }
+
+.proerty-th .proerty-item .item-thumb img {
+ max-height: 225px;
+}
+
 
 </style>
 
@@ -394,7 +425,7 @@ select.form-control {
                                 <button class="btn search-btn" type="button" id="searchBtn"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding: 0px;">
 								<!-- 더보기 버튼 -->
-									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px;">
+									<button type="button" class="navbar-btn nav-button wow fadeInRight more" id="more" style="margin-left: 30px; color: #858585;">
 									  <i class="fa fa-ellipsis-v"></i> 
 									</button>
 								<!-- 더보기 버튼 -->
@@ -404,7 +435,7 @@ select.form-control {
 								  </c:when>
 								  <c:otherwise>
                        			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s" 
-								    style=" border: 2px solid #000; background-color: transparent;
+								    style=" border: 2px solid #858585; background-color: transparent;
 								           border-radius: 50px; font-weight: bold; color: #000;" id="addClass">클래스 등록</button>
 
 								  </c:otherwise>
@@ -426,7 +457,7 @@ select.form-control {
 								    </div>
 								    <!-- 알림 버튼 -->
 								    <!-- 마이페이지 -->
-								    <button id="user-button" type="button" class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s">
+								    <button id="user-button" type="button" class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s" style="color: #858585">
 									  <i class="fas fa-user-circle fa-lg"></i>
 									</button>
 								</div>
@@ -441,7 +472,7 @@ select.form-control {
                   			    <!-- 알림 팝업창 -->
                   			     <div id="notification-popup" class="notification-popup">
 								  <div id="notification-header" class="notification-header">
-								    <h3 class="notification">알림</h3>
+								    <h4 class="notification">알림</h4>
 								    <button type="button" id="notification-read">전체 읽음</button>
 								  </div>
 								  <div id="notification-content" class="notification-content">
@@ -455,7 +486,8 @@ select.form-control {
                   			     <div id="more-popup" class="more-popup">
                   			     <ul>
                   			       <li><a href="/sw/community"> 커뮤니티</a></li>
-                  			       <li><a href="#"> 공지사항</a></li>
+                  			       <li><a href="/board/notice"> 공지사항</a></li>
+                  			       <li><a href="#"> 문의하기</a></li>
                   			     </ul>
                   			     </div>
                   			    <!-- 더보기 팝업창 -->
@@ -568,12 +600,16 @@ select.form-control {
                                             </div>
                                         </div>
                                     </div>
-
-<!--                                     <button class="btn search-btn prop-btm-sheaerch" id="reset" type="button" style="display: block; width: max-content;">초기화</button>   -->
-                                    <button class="btn search-btn prop-btm-sheaerch" id="search-btn" type="button" style="display: block; width: 100%; text-align: 
-                                    center; max-width: 30%; margin: auto;">
-                                    검색하기
-                                    </button>  
+									<div>
+	                                    <button class="btn search-btn prop-btm-sheaerch" id="reset-btn" type="button" style="display: inline-block; width: 100%; text-align: 
+	                                    center; max-width: 30%; margin: auto;">
+	                                    초기화
+	                                    </button>  
+	                                    <button class="btn search-btn prop-btm-sheaerch" id="search-btn" type="button" style="display: inline-block; width: 100%; text-align: 
+	                                    center; max-width: 30%; margin: auto;">
+	                                    검색하기
+	                                    </button>  
+									</div>
                                     
                                 </div>                    
 							  <!-- Search Toggle -->
@@ -687,7 +723,15 @@ $(document).ready(function(){
 	    $('input[name="search"]').val($(this).val());
 	}).trigger('input');
 
-
+	$('#reset-btn').click(function(){
+		  $('#region').val('').trigger('change');
+		  $('#category').val('').trigger('change');
+		  $('input[name="c_level"]').iCheck('uncheck');
+		  $('#search').val('').trigger('input');
+		  slider.noUiSlider.set([0,1440]);
+// 		  slider.noUiSlider.reset();
+// 		  updateStartEndTimes();
+		});
 	
 	var formObj = $('form[role="srch_frm"]');
 	$('#search-btn').click(function(){
