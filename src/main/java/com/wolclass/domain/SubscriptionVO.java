@@ -11,4 +11,7 @@ public class SubscriptionVO {
 	private Timestamp s_start;
 	private Timestamp s_end;
 	private Integer s_cnt;
+	
+	// 구독 남은기간 - 다빈
+	private Integer day;
 }

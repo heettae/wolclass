@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -28,8 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
-import com.wolclass.service.ClassService;
 import com.wolclass.service.DBService;
 import com.wolclass.service.WishService;
 
@@ -312,12 +313,16 @@ public class DBController {
 		}
 		return "redirect:/db/main";
 	}
-	// 특정 회원조회 - 다빈
+	
+	// 마이페이지 - 다빈
 	@GetMapping("/mypage")
 	public String myPage(HttpSession session, Model model) throws Exception{
 		logger.info("mypage() 호출");
 		
 		String id = (String)session.getAttribute("id");
+		if (id == null) {
+			return "redirect:/db/login";
+		}
 		
 		MemberVO vo = service.selectMember(id);
 		model.addAttribute("vo", vo);
@@ -325,6 +330,7 @@ public class DBController {
 		return "/db/mypage";
 	}
 	
+	// 마이페이지 프로필사진 변경 - 다빈
 	@PostMapping("/profileImg")
 	@ResponseBody
 	public String profileImg(@RequestParam("m_profile") MultipartFile mFile,
@@ -351,15 +357,15 @@ public class DBController {
 			} // exists
 				// 임시로 생성(저장) MultipartFile을 실제 파일로 전송
 			mFile.transferTo(file);
-		} // getSize
+		} 
 		
 		vo.setM_profile(uniqueFileName);
 		service.updateProfile(vo);
 		
 		return "success";
 	}
-	
-	@RequestMapping(value = "/wishList", method = RequestMethod.GET)
+	// 마이페이지 위시리스트 - 다빈
+	@GetMapping("/wishList")
 	public ModelAndView listGET(HttpSession session) {
 		logger.info(" listGET() 호출 ");
 		ModelAndView mav = new ModelAndView("/db/wishList");
@@ -367,6 +373,95 @@ public class DBController {
 		return mav;
 	}
 	
+	// 회원정보 수정 - 다빈
+	@GetMapping("/updateMember")
+	public String updateMember(HttpSession session,Model model) throws Exception{
+		logger.info("updateMember() 호출!");
+		
+		String id = (String) session.getAttribute("id");
+		if (id == null) {
+			return "redirect:/db/login";
+		}
+		model.addAttribute("vo",service.selectMember(id));
+		
+		return "/db/updateMember";
+	}
+	
+	// 회원정보 수정 처리 - 다빈
+	@PostMapping("/updateMember")
+	public String updateMemberPro(@RequestParam Map<String,Object> map) throws Exception{
+		logger.info("updateMemberPro() 호출!");
+		service.updateMember(map);
+		return "redirect:/db/mypage";
+	}
+	
+	@GetMapping("/deleteMember")
+	// 회원탈퇴 -  다빈
+	public String deleteMember(HttpSession session) throws Exception{
+		logger.info("deleteMember() 호출 !");
+		return "/db/deleteMember";
+	}
+	
+	// 회원탈퇴 처리 - 다빈
+	@PostMapping("/deleteMember")
+	@ResponseBody
+	public String deleteMemberPro(@RequestParam("m_pw") String m_pw, 
+				HttpSession session) throws Exception{
+		logger.info("deleteMemberPro() 호출");
+		String m_id = (String) session.getAttribute("id");
+		MemberVO vo = service.selectMember(m_id);
+		if(vo.getM_pw().equals(m_pw)) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	// 회원탈퇴 처리 - 다빈
+	@PostMapping("/CheckPW")
+	@ResponseBody
+	public String CheckPW(HttpSession session) throws Exception{
+		logger.info("CheckPW() 호출");
+		String m_id = (String) session.getAttribute("id");
+		service.deleteMember(m_id);
+		session.invalidate();
+		return "success";
+	}
+	
+	// 결제내역 - 다빈
+	@GetMapping("/payList")
+	public void payList(HttpSession session, Model model) throws Exception{
+		logger.info("payList() 호출 ");
+		List<Map<String,Object>> payList = service.payList((String)session.getAttribute("id"));
+		
+		model.addAttribute("payList",payList );
+	}
+	
+	// 예약 리스트 - 다빈
+	@GetMapping("/classList")
+	public void classList(HttpSession session, Model model) throws Exception{
+		logger.info("classList() 호출 ");
+		String id = (String)session.getAttribute("id");
+		model.addAttribute("classList", service.classList(id));
+		model.addAttribute("classList2", service.classList2(id));
+	}
+	
+	// 메세지 리스트 - 다빈
+	@GetMapping("/msgList")
+	public void msgList(HttpSession session, Model model) throws Exception{
+		logger.info("msgList() 호출 ");
+		String id = (String)session.getAttribute("id");
+		model.addAttribute("msgList1", service.msgList1(id));
+		model.addAttribute("msgList2", service.msgList2(id));
+	}
+	
+	// 구독 페이지 - 다빈 
+	@GetMapping("/subscribe")
+	public void subscribe(HttpSession session, Model model) throws Exception{
+		logger.info("subscribe() 호출 ");
+		String id = (String)session.getAttribute("id");
+		
+		model.addAttribute("sub", service.subscribe(id));
+	}
 	
 	
 }

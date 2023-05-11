@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,8 +18,13 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wolclass.domain.BoardVO;
+import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.RsrvPayVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.persistance.DBDAO;
+import com.wolclass.utils.TypeParser;
 
 @Service
 public class DBServiceImpl implements DBService{
@@ -202,7 +208,66 @@ public class DBServiceImpl implements DBService{
 	public void updateProfile(MemberVO vo) throws Exception {
 		dbdao.updateProfile(vo);
 	}
+	
+	// 회원정보 수정 - 다빈
+	@Override
+	public void updateMember(Map<String,Object> map) throws Exception {
+		dbdao.updateMember(map);
+	}
+	
+	// 회원탈퇴 - 다빈
+	@Override
+	public void deleteMember(String m_id) throws Exception {
+		
+		MemberVO vo = new MemberVO();
+		// 랜덤한  비밀번호 생성
+	    Random random = new Random();
+	    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    String randomPassword = "";
+	    for (int i = 0; i < 20; i++) {
+	        randomPassword += characters.charAt(random.nextInt(characters.length()));
+	    }
+	    String password = randomPassword;
 
+		vo.setM_id(m_id);
+	    vo.setM_pw(password);
+		dbdao.deleteMember(vo);
+	}
+	
+	// 결제내역 - 다빈
+	@Override
+	public List<Map<String,Object>> payList(String id) throws Exception {
+		return dbdao.payList(id);
+	}
+	
+	// 내가 신청한클래스(예약클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList(String id) throws Exception {
+		return dbdao.classList(id);
+	}
+	
+	// 내가 신청한클래스(지난클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList2(String id) throws Exception {
+		return dbdao.classList2(id);
+	}
+	
+	// 메시지(받은) - 다빈
+	@Override
+	public List<BoardVO> msgList1(String id) throws Exception {
+		return dbdao.msgList1(id);
+	}
+	// 메시지(보낸) - 다빈
+	@Override
+	public List<BoardVO> msgList2(String id) throws Exception {
+		return dbdao.msgList2(id);
+	}
+	
+	// 구독(남은기간) - 다빈
+	@Override
+	public SubscriptionVO subscribe(String id) throws Exception {
+		return dbdao.subscribe(id);
+	}
 	
 	
 }

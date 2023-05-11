@@ -55,6 +55,10 @@
 	<!-- 리스트 컨테이너 -->
 </div>
 <!-- 클래스 리스트 HJ-->
+
+<!-- side.jsp -->
 </div>
 </section>
+<!-- side.jsp -->
+
 <%@ include file="../include/footer.jsp" %>

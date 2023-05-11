@@ -172,52 +172,57 @@ margin-top: 18px;
 			<div class="body_sidebar_box">
 
 				<div class="menu_container">
-					<div
-						style="font-size: x-large; font-weight: 550; color: white; text-align: center; margin: 10%;">마이페이지
+					<div style="font-size: x-large; font-weight: 550; color: white; text-align: center; margin: 10%;">
+						<a href="/db/mypage">마이페이지</a>
 					</div>
 					<div class="side_menu">
 						<div id="icon1" class="side_icon"></div>
 						<div>
-							<a>회원정보 수정</a>
+							<a href="/db/updateMember">회원정보 수정</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon2" class="side_icon"></div>
 						<div>
-							<a>위시리스트</a>
+							<a href="/db/wishList">위시리스트</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon3" class="side_icon"></div>
 						<div>
-							<a>내가신청한클래스</a>
+							<a href="/db/classList">내가신청한클래스</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon4" class="side_icon"></div>
 						<div>
-							<a>결제내역</a>
+							<a href="/db/payList">결제내역</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon5" class="side_icon"></div>
 						<div>
-							<a>메시지</a>
+							<a href="/db/msgList">메시지</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon6" class="side_icon"></div>
 						<div>
-							<a>구독</a>
+							<a href="/db/subscribe">구독</a>
 						</div>
 					</div>
-					<div class="side_menu">
-						<div id="icon7" class="side_icon"></div>
-						<div>
-							<a>회원탈퇴</a>
-						</div>
-					</div>
-
+					<c:set var="isKakao" value="${sessionScope.id.toString().replaceAll('[0-9]','') }" />
+					<c:if test="${sessionScope.id != null }">
+						<c:if test="${isKakao != '' && sessionScope.id.toString().length()<20}">
+							<div class="side_menu">
+								<div id="icon7" class="side_icon"></div>
+								<div>
+									<a href="/db/deleteMember">회원탈퇴</a>
+								</div>
+							</div>
+						</c:if>
+					</c:if>
+	
 					<hr
 						style="border-top: 1px solid #777; width: 80%; margin-left: 10%;">
 					<div>
@@ -245,7 +250,7 @@ margin-top: 18px;
 			<div class="content_box"
 				style="width: 87%; display: flex; align-items: center;">
 				<div class="mypage_myinfo"
-					style="width: 45%; height: 80%; margin: auto; border: 3px black double;">
+					style="width: 45%; height: 80%; margin: auto; border: 3px black outset; border-radius: 25%;">
 					<div class="myinfo_img" style="border-bottom: 2px solid; height: 70%; display: flex; justify-content: center;
 					 align-items: center; position: relative; width: 100%;">
 					  <div class="myinfo_img_spot" style="position: absolute; top: 50%; left: 50%;
@@ -271,7 +276,9 @@ margin-top: 18px;
 								</c:if>
 							님</div>
 							
-							<div class="myinfo_point" style="font-size: 30px;">포인트 : ${vo.m_point }P</div>
+							<div class="myinfo_point" style="font-size: 30px;">
+								포인트 : <fmt:formatNumber value="${vo.m_point }"/> P
+							</div>
 <!-- 							<form method="post" enctype="multipart/form-data"> -->
 <!-- 								<div class="myinfo_button" style="font-size :15px;"> -->
 <!-- 									<button class="navbar-btn nav-button wow fadeInRight animated" >프로필사진 변경</button> -->
@@ -302,7 +309,7 @@ $(function() {
       processData: false,
       contentType: false,
       success: function(response) {
-        alert('성공');
+        alert('프로필 사진 변경 !!');
         console.log(response);
         setTimeout(function(){
         	location.href = '/db/mypage';
