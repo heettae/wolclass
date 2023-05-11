@@ -7,9 +7,6 @@ import java.util.Scanner;
 
 // 날씨정보 가져오는 API임 HJ
 public class OpenweatherAPI {
-	// API 키
-	private static String key = "82e953adfeafadc9e3212e9aad777930";
-	
 	/**
 	 * 위도(lat) 경도(lon) 데이터 받아서 날씨정보를 리턴합니다.
 	 * 전체 데이터를 받아오지만, 현재는 Clear(맑음), Rain(비) 등 기본값만 활용합니다.
@@ -21,6 +18,8 @@ public class OpenweatherAPI {
 	 */
 	public static String getCurrentWeather(String lat, String lon) {
 		if(lat == null) return "";
+		// API 키
+		String key = "82e953adfeafadc9e3212e9aad777930";
 		
 		StringBuilder url = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?lat=");
 		url.append(lat);

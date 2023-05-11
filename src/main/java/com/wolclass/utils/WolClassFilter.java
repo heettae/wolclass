@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletResponse;
 
 @WebFilter(urlPatterns = "/*")
 public class WolClassFilter implements Filter {
@@ -25,17 +24,8 @@ public class WolClassFilter implements Filter {
 		// 한글처리
 		request.setCharacterEncoding("UTF-8");
 		// 한글처리
-		
-		//구글 로그인 관련
-		((HttpServletResponse)response).setHeader("Referrer-Policy", "no-referrer-when-downgrade");
-		//구글 로그인 관련
 
-		// 알림
-		// 알림
-		
-		// 이거 지우면 서버 사망함
 		chain.doFilter(request, response);
-		// 이거 지우면 서버 사망함
 	}
 	
 	// 사용하는 부분 아님
