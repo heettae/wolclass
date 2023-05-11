@@ -42,10 +42,11 @@
 
 	<!-- 해당 키워드 리스트 출력 -->
 	<select id="findByKeyword" resultType="ClassVO">
-		select *
-		from wc_class
+		select c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+		from wc_class c left join  (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+        on c.c_no = r.c_no
 		WHERE c_name REGEXP #{keyword} AND c_confirm = 'Y'
-		ORDER BY c_regdate desc
+		ORDER BY c_regdate desc;
 	</select>
 	<!-- 해당 키워드 리스트 출력 -->
 	
@@ -59,8 +60,9 @@
 	
 	<!-- 카테고리별 리스트 출력 -->	
 	<select id="getCategoryClassList" resultType="ClassVO">
-		SELECT *
-		FROM wc_class
+		SELECT c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+		from wc_class c left join  (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+        on c.c_no = r.c_no
 		WHERE c_category IN (
 		    SELECT DISTINCT c_category
 		    FROM wc_class

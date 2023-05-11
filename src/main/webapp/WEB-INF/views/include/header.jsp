@@ -360,6 +360,8 @@ select.form-control {
 }
 /* 슬라이더 */
 /* 검색창 select 박스 */
+
+
 #logoutBtn {
   background-color: transparent;
   border: none;
@@ -372,7 +374,9 @@ select.form-control {
 <input type="hidden" value="${sessionScope.id }" id="id">
 <nav class="navbar navbar-default " style="top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
                 <div class="navbar-header" style="margin-left: 100px;">
-                    <a href="/tj/main"><img src="/resources/img/logo2.png" alt="wolClass" style="height: 90px;"></a>
+				<a href="/tj/main">
+                    <img src="/resources/img/logo2.png" alt="wolClass" style="height: 90px;">
+                </a>
                 </div>
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -396,7 +400,7 @@ select.form-control {
 								<!-- 더보기 버튼 -->
 								<c:choose>
 								  <c:when test="${sessionScope.id.equals('admin') }">
-                       			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s">관리자</button>
+                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s">관리자</button>
 								  </c:when>
 								  <c:otherwise>
                        			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s" 
@@ -425,7 +429,6 @@ select.form-control {
 								    <button id="user-button" type="button" class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.5s">
 									  <i class="fas fa-user-circle fa-lg"></i>
 									</button>
-
 								</div>
 								<!-- 마이페이지 -->
 
@@ -460,7 +463,9 @@ select.form-control {
                   			    <!-- 마이페이지 팝업창 -->
                   			    <div id="user-popup" class="user-popup">
 								  <ul>
+								    <c:if test="${sessionScope.id != 'admin'}">
 								    <li><a href="/db/mypage">마이페이지</a></li>
+									</c:if>
 								    <c:set var="isKakao" value="${sessionScope.id.toString().replaceAll('[0-9]','') }" />
 									<c:if test="${sessionScope.id != null }">
 										<c:if test="${isKakao != '' && sessionScope.id.toString().length()<20}">
@@ -597,22 +602,8 @@ $(document).ready(function(){
 	var timestar = null;
 	var timeend = null;
 	
-// 	function updateStartEndTimes() {
-// 		  var values = slider.noUiSlider.get();
-// 		  var start = formatTime(values[0]);
-// 		  var end = formatTime(values[1]);
-// 		  document.getElementById('start-time').innerHTML = start;
-// 		  document.getElementById('end-time').innerHTML = end;
-		  
-// 		  timestart = $('input[name=timestart]').val(start);
-// 		  timeend = $('input[name=timeend]').val(end);
-		  
-// 		  console.log($('input[name=timestart]').val());
-// 		  console.log($('input[name=timeend]').val());
-// 		}
 	// 시간
  	// 슬라이더 초기값 설정
- 	
  	var initStartStr = '${map.timestart}';
  	var initEndStr = '${map.timeend}';
  	var initStart = Number(initStartStr.split(":")[0])*60;
@@ -672,22 +663,30 @@ $(document).ready(function(){
 		console.log($('input[name="category"]').val());
 	});
 	
-	$('input[name="c_level"]').on('ifChecked', function(event){
-	    if($(this).val() == 1){
-	    	level = $('input[name="lowlv"]').val($(this).val());
-	    	console.log($(level).val());
-	    }else if($(this).val() == 2){
-	    	level = $('input[name="midlv"]').val($(this).val());
-	    	console.log($(level).val());
-	    }else{
-	    	level = $('input[name=highlv]').val($(this).val());
-	    	console.log($(level).val());
+	$('input[name="c_level"]').on('ifChecked ifUnchecked', function(event){
+	    if($('input[name="c_level"]').is(':checked')) {
+	        if($(this).val() == 1){
+	            level = $('input[name="lowlv"]').val($(this).val());
+	            console.log($(level).val());
+	        } else if($(this).val() == 2){
+	            level = $('input[name="midlv"]').val($(this).val());
+	            console.log($(level).val());
+	        } else {
+	            level = $('input[name="highlv"]').val($(this).val());
+	            console.log($(level).val());
+	        }
+	    } else {
+	        $('input[name="lowlv"]').val("");
+	        $('input[name="midlv"]').val("");
+	        $('input[name="highlv"]').val("");
 	    }
 	});
+
 	
 	$('#search').on('input', function() {
 	    $('input[name="search"]').val($(this).val());
-	});
+	}).trigger('input');
+
 
 	
 	var formObj = $('form[role="srch_frm"]');
@@ -744,13 +743,6 @@ $(document).ready(function(){
 	$("#login").click(function(){
 		location.href="/db/login";
 	});
-	$(document).ready(function(){
-     <% if (request.getAttribute("result") != null && (int)request.getAttribute("result") == 0) { %>
-     		alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.");
-     <% } %>
-    });
-	
-	
 	
 	$(document).ready(function() {
 	    var isOpen = false;
@@ -781,7 +773,6 @@ $(document).ready(function(){
 		// 알림목록조회
 	    $("#notification-button").click(function(event) {
 	        event.preventDefault(); // 버튼 클릭 시 디폴트 액션 중지
-
 	        if (!isOpen) {
 	            $.ajax({
 	                type: "GET",
@@ -798,7 +789,9 @@ $(document).ready(function(){
 	                        	html += "<li> <a href='/sw/mypage' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                        if(alert.category == 3){
-	                        	html += "<li> <a href='/tj/main' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/tj/main' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
+	                        	else{html += "<li> <a href='/admin/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
+	                        	
 	                        }
 	                    });
 	                    $('#notification-list').html(html);

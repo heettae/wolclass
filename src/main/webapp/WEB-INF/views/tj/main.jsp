@@ -79,7 +79,6 @@
 
 </style>
 
-
 <div class="slider-area">
   <div class="slider">
     <div id="bg-slider" class="owl-carousel owl-theme">
@@ -165,7 +164,7 @@
 					    <span class="proerty-price pull-left">
 					    <fmt:formatNumber value="${rvo.c_price }"/> 원
 					    </span>
-					    <span class="pull-right"> 평점 :  </span>
+					    <span class="pull-right"> 평점 : ${rvo.score }</span>
 					    <!-- 위시리스트 버튼 -->
 				        <c:if test="${not empty sessionScope.id }">
 				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
@@ -205,7 +204,7 @@
 		                <span class="proerty-price pull-left">
 		                  <fmt:formatNumber value="${classVO.c_price}"/> 원
 		                </span>
-		                <span class="pull-right"> 평점 : </span>
+		                <span class="pull-right"> 평점 : ${classVO.score }</span>
 		                <!-- 위시리스트 버튼 -->
 		                <c:if test="${not empty sessionScope.id }">
 				        <button class="wishlist-btn ${wishList.contains(classVO.c_no) ? 'active' : ''}" value="${classVO.c_no }">

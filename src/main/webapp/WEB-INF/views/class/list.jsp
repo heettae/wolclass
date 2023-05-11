@@ -64,6 +64,9 @@ function openLocation(){
 	<div class="col-md-12 "> 
 		<div id="list-type" class="proerty-th">
 			<!-- 검색된 클래스 데이터 출력 -->
+			<c:if test="${classVOList == null || classVOList.size() == 0}">
+			<div style="height: 800px">검색결과없음</div>
+			</c:if>
 			<c:if test="${classVOList != null && classVOList.size() > 0}">
 			<c:forEach var="vo" items="${classVOList }">
 			<div class="col-sm-6 col-md-3 p0">
