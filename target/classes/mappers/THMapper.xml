@@ -57,6 +57,11 @@
 	</select>
 	
 	
+
+	
+	
+	
+	
 <!-- 결제시 insert,update -->
 	
 	<!-- 결제 테이블 isnert TH -->
@@ -107,4 +112,13 @@
 	<update id="updatePoint">
 	update wc_member set m_point=(m_point-#{p_usedpoint}) where m_id=#{m_id}
 	</update>
+	
+	<!-- 구독 테이블 insert TH -->
+	<insert id="insertSubs">
+	insert into wc_subscription(m_id, s_start, s_end, s_cnt)
+	values(#{m_id}, now(), adddate(now(), interval 30 day), 5)
+	</insert>
+	
+	
+	
 </mapper>	

@@ -169,12 +169,17 @@ public class THDAOImpl implements THDAO{
 			//logger.info("cancelled일때 rvo : "+rvo);
 		}
 		
+		if(Math.abs(rvo.getP_peoplenum())>0) {
+		logger.info("peoplenum"+rvo.getP_peoplenum());
 		cnt += sqlSession.update(NAMESPACE+".updateT_rem_p", rvo);
 		logger.info("t_rem_p 완료"+cnt);
-		cnt += sqlSession.update(NAMESPACE+".updatePoint", rvo);
-		logger.info("point 완료"+cnt);
+		}
+		if(Math.abs(rvo.getP_usedpoint())>0) {
+			cnt += sqlSession.update(NAMESPACE+".updatePoint", rvo);
+			logger.info("point 완료"+cnt);
+		}
 		if(Math.abs(rvo.getP_subs())==1) {
-		cnt += sqlSession.update(NAMESPACE+".updateS_cnt", rvo);
+			cnt += sqlSession.update(NAMESPACE+".updateS_cnt", rvo);
 
 		}
 		
@@ -190,6 +195,17 @@ public class THDAOImpl implements THDAO{
 	public RsrvPayVO selectPayInfo(String p_no) throws Exception {
 		
 		return sqlSession.selectOne(NAMESPACE+".selectPay",p_no);
+	}
+
+
+
+	@Override
+	public Integer insertSubs(String m_id) throws Exception {
+	
+		int cnt = sqlSession.insert(NAMESPACE+".insertSubs",m_id);
+		
+		logger.info("cnt : "+cnt);
+		return cnt;
 	}
 
 

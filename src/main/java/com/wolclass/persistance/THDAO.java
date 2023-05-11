@@ -47,4 +47,7 @@ public interface THDAO {
 	
 	// DB 결제정보 조회 TH
 	public RsrvPayVO selectPayInfo(String p_no) throws Exception;
+	
+	// 구독 테이블 insert TH
+	public Integer insertSubs(String m_id) throws Exception;
 }

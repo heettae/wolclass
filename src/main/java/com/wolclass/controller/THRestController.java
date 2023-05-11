@@ -123,7 +123,10 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 		String accessToken = service.getAccessToken();
 		/*결제정보 조회*/
 		RsrvPayVO resultVO = service.selectPayInfo(p_no);
-		
+		logger.info("p_status"+resultVO.getP_status());
+		if(resultVO.getP_status().equals("cancelled")) {
+			return "already refund";
+		}
 //		int cancelableAmount = paymentInfoByMerchantId.getAmount() - paymentInfoByMerchantId.getCancelAmount();
 //		
 //		if(cancelableAmount <= 0) {// 이미 전액 환불된 경우
@@ -138,6 +141,7 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 		/*환불결과 동기화*/
 		service.updatePaymentInfo(cancelInfo);
 		service.modifyOrder(p_no);
+		
 		return "ok";
 
 

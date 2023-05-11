@@ -198,7 +198,9 @@ public class THServiceImpl implements THService {
 	@Override
 	public void insertPaymentInfo(PayDTO pdto) throws Exception{
 		
+		if(pdto.getSelectedDate()!=null) {
 		pdto.setP_rsrvdate(pdto.getSelectedDate()+" "+pdto.getT_start());
+		}
 		dao.insertPaymentInfo(pdto); 
 		
 		
@@ -212,7 +214,7 @@ public class THServiceImpl implements THService {
 
 	@Override
 	public Integer selectPrice(String p_no) throws Exception {
-		logger.info("service.selectPrice"+p_no);
+		logger.info("service.selectPrice 호출, p_no : "+p_no);
 		return dao.selectPrice(p_no);
 	}
 
@@ -306,6 +308,12 @@ public class THServiceImpl implements THService {
 		}
 		return cancelInfo;
 
+	}
+
+	@Override
+	public Integer insertSubs(String m_id) throws Exception {
+		
+		return dao.insertSubs(m_id);
 	}
 	
 	
