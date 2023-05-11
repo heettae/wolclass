@@ -196,7 +196,6 @@ textarea {
 									</div>
 									<div>
 										<input type="button" value="댓글작성" id="commentWrite" class="input_btn1">
-<!-- 										<button id="commentWrite" class="input_btn1">댓글작성</button> -->
 									</div>
 								</div>
 						</div>
@@ -222,17 +221,17 @@ textarea {
 													readonly="readonly"
 													value="작성일 : ${replyList[i].r_regdate.toString().split(' ')[0]}">
 											</div>
+													<c:if test="${sessionScope.id == replyList[i].m_id}">
 											<div
 												style="list-style: none; padding: 5px; margin: 0; display: flex; flex-direction: column; justify-content: space-around;">
-													<c:if test="${sessionScope.id == replyList[i].m_id}">
 													<div class="input_btn"  id="commentUpdate">
 														<input id="upok" type="button" class="input_btn upok" value="수정완료">
 													</div>
 													<div class="input_btn" id="commentDelete">
 														<input id="comdel" type="button" class="input_btn comdel" value="삭제">
 													</div>
-													</c:if>
 											</div>
+													</c:if>
 										</div>
 									</c:forEach>
 								</c:if>
@@ -257,17 +256,17 @@ textarea {
 													readonly="readonly"
 													value="작성일 : ${replyList[i].r_regdate.toString().split(' ')[0]}">
 											</div>
+													<c:if test="${sessionScope.id == replyList[i].m_id}">
 											<div
 												style="list-style: none; padding: 5px; margin: 0; display: flex; flex-direction: column; justify-content: space-around;">
-													<c:if test="${sessionScope.id == replyList[i].m_id}">
 													<div class="input_btn"  id="commentUpdate">
 														<input id="${replyList[i].r_no}" type="button" class="input_btn upok" value="수정완료">
 													</div>
 													<div class="input_btn" id="commentDelete">
 														<input id="${replyList[i].r_no}" type="button" class="input_btn comdel" value="삭제">
 													</div>
-													</c:if>
 											</div>
+													</c:if>
 										</div>
 									</c:forEach>
 								</c:if>
@@ -316,6 +315,7 @@ textarea {
 	</div>
 	</div>
 						<script type="text/javascript">
+						
 						var result = "${result}";
 						
 						if (result == "ok") {
@@ -386,6 +386,10 @@ textarea {
 						   			document.getElementById("comment_content").focus();
 						   			return;
 						       }
+						       if(m_id == ""){
+						    	   alert("로그인 후 댓글 작성이 가능합니다!");
+						    	   return location.href="/db/login";
+						       }
 								// 폼태그 이동주소 설정 /boards/modify
 								formObj.attr("action","/sw/commentWrite");
 								// 폼태그 이동방식 설정 POST
@@ -444,26 +448,7 @@ textarea {
 							});
 						});
 						
-							/* 예시*/
-						/* 	$(document).ready(function(){
-						    	 // 글번호를 저장한 폼태그
-						    	 var formObj = $("#");
-						    	 // alert(formObj);
-						    	 console.log(formObj);
-						    	 
-						    	 
-						    	// 수정
-								  $(".btn-warning").click(function(){
-									  // 수정 - 기존의 정보 출력(GET)
-									  // 폼태그 이동주소 설정 /boards/modify
-									  formObj.attr("action","/boards/modify");
-									  // 폼태그 이동방식 설정 GET
-									  formObj.attr("method","post");
-									  // 폼태그 정보 저장해서 페이지 이동
-									  formObj.submit();			  
-								  });
-							}); */
-							
+						
 							
 						</script>
 <!-- body  -->

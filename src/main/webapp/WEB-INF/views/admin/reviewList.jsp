@@ -17,7 +17,7 @@
 					<div style="display: flex; padding-bottom: 45px;"
 						class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">글 목록</h3>
+							<h3 class="box-title" style="font-size: x-large;">리뷰 목록</h3>
 						</div>
 					</div>
 				</div>
@@ -29,16 +29,22 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">리뷰번호</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">클래스번호</th>
+								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">멤버아이디</th>
+								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">내용</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">등록일</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">평점</th>
+								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">버튼</th>
 							</tr>
 							<tr>
-								<td>${b_no}</td>
-								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
-								<td>${b_writer}</td>
-								<td>${b_regdate}</td>
+								<td>${r_no}</td>
+								<td>${c_no}</td>
+								<td>${m_id}</td>
+								<td>${r_content}</td>
+								<td>${r_regdate}</td>
+								<td>${r_score}</td>
+								<td>버튼</td> 
 							</tr>
 						</tbody>
 					</table>

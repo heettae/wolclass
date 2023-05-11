@@ -44,52 +44,85 @@ a, button:hover {
 	padding-left: 15%;
 }
 .side_menu a{
-color: white;
-margin-left: 20px;
+	color: white;
+	margin-left: 20px;
 }
 .side_menu:hover{
-transition: background 0.8s;
-background: #FDC600;
+	transition: background 0.8s;
+	background: #FDC600;
 
 }
 .side_menu:hover a{
-color: #353942;
-transition: color 0.8s;
+	color: #353942;
+	transition: color 0.8s;
 }
+.side_menu1{
+	background: #FDC600;
+
+}
+.side_menu1 a{
+	color: #353942;
+}
+
 #icon1{
-background-image: url('../../../resources/img/member10.png');
+	background-image: url('../../../resources/img/member10.png');
 }
 #icon2{
-background-image: url('../../../resources/img/class10.png');
+	background-image: url('../../../resources/img/class10.png');
 }
 #icon3{
-background-image: url('../../../resources/img/inquiry10.png');
+	background-image: url('../../../resources/img/inquiry10.png');
 }
 #icon4{
-background-image: url('../../../resources/img/board10.png');
+	background-image: url('../../../resources/img/board10.png');
 }
 #icon5{
-background-image: url('../../../resources/img/payment10.png');
+	background-image: url('../../../resources/img/payment10.png');
+}
+#icon6{
+	background-image: url('../../../resources/img/payment10.png');
 }
 .side_menu:hover #icon1{
-background-image: url("../../../resources/img/member11.png");
-transition: background-image 0.8s;
+	background-image: url("../../../resources/img/member11.png");
+	transition: background-image 0.8s;
 } 
 .side_menu:hover #icon2{
-background-image: url("../../../resources/img/class11.png");
-transition: background-image 0.8s;
+	background-image: url("../../../resources/img/class11.png");
+	transition: background-image 0.8s;
 } 
 .side_menu:hover #icon3{
-background-image: url("../../../resources/img/inquiry11.png");
-transition: background-image 0.8s;
+	 background-image: url("../../../resources/img/inquiry11.png");
+	 transition: background-image 0.8s;
 } 
 .side_menu:hover #icon4{
-background-image: url("../../../resources/img/board11.png");
-transition: background-image 0.8s;
+	 background-image: url("../../../resources/img/board11.png");
+	 transition: background-image 0.8s;
 } 
 .side_menu:hover #icon5{
-background-image: url("../../../resources/img/payment11.png");
-transition: background-image 0.8s;
+	background-image: url("../../../resources/img/payment11.png");
+	transition: background-image 0.8s;
+} 
+.side_menu:hover #icon6{
+	background-image: url("../../../resources/img/payment11.png");
+	transition: background-image 0.8s;
+} 
+.side_menu1 #icon1{
+	background-image: url("../../../resources/img/member11.png");
+} 
+.side_menu1 #icon2{
+	background-image: url("../../../resources/img/class11.png");
+} 
+.side_menu1 #icon3{
+	 background-image: url("../../../resources/img/inquiry11.png");
+} 
+.side_menu1 #icon4{
+	 background-image: url("../../../resources/img/board11.png");
+} 
+.side_menu1 #icon5{
+	background-image: url("../../../resources/img/payment11.png");
+} 
+.side_menu1 #icon6{
+	background-image: url("../../../resources/img/payment11.png");
 } 
 
 
@@ -99,24 +132,27 @@ transition: background-image 0.8s;
 	align-items: center;
 }
 .admin_header_button{
-display: flex; 
-margin: 12px 10px 0 0;
+	display: flex; 
+	margin: 12px 10px 0 0;
 }
 
 .admin_header_button a{
-padding: 5px 10px;
-margin: 30px;
-border-left: 2px #ddd solid; 
-border-right: 2px #ddd solid;
+	padding: 5px 10px;
+	margin: 30px;
+	border-left: 2px #ddd solid; 
+	border-right: 2px #ddd solid;
 }
 
 .content_box{
-width: 87%;
+	idth: 87%;
 }
 
 
 
 /* body css   */
+
+
+
 </style>
 
 	<!-- body  -->
@@ -128,14 +164,14 @@ width: 87%;
 						<div id="icon1" class="side_icon">
 						</div>
 						<div>
-							<a>회원관리</a>
+							<a href="/admin/memberList">회원관리</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon2" class="side_icon">
 						</div>
 						<div>
-							<a>클래스관리</a>
+							<a href="/admin/classList">클래스관리</a>
 						</div>
 					</div>
 					<div class="side_menu">
@@ -143,21 +179,28 @@ width: 87%;
 							
 						</div>
 						<div>
-							<a>문의관리</a>
+							<a href="/admin/msgList">문의관리</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon4" class="side_icon">
 						</div>
 						<div>
-							<a>게시판관리</a>
+							<a href="/admin/boardList">게시판관리</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon5" class="side_icon">
 						</div>
 						<div>
-							<a>결제내역관리</a>
+							<a href="/admin/reviewList">수강후기관리</a>
+						</div>
+					</div>
+					<div class="side_menu">
+						<div id="icon6" class="side_icon">
+						</div>
+						<div>
+							<a href="/admin/payList">결제내역관리</a>
 						</div>
 					</div>
 
@@ -166,3 +209,9 @@ width: 87%;
 
 				</div>
 			</div>
+			
+			<script type="text/javascript">
+			
+			
+			
+			</script>
