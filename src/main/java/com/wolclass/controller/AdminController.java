@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,9 +56,15 @@ public class AdminController {
 		model.addAttribute(service.getBoard(bno));
 	}
 	
+	// 1:1  문의 답신 페이지 이동
+	@GetMapping("/writeMsg")
+	public void writeMsgGET(@RequestParam("b_no") int bno, Model model) throws Exception {
+		model.addAttribute(service.getBoard(bno));
+	}
+	
 	// 1:1  문의 답신
-	@RequestMapping("/writeMsg")
-	public String writeMsg(BoardVO vo) throws Exception {
+	@PostMapping("/writeMsg")
+	public String writeMsgPOST(BoardVO vo) throws Exception {
 		service.writeBoard(vo);
 		return "redirect:/admin/msgList";
 	}
@@ -154,7 +161,7 @@ public class AdminController {
 	// 결제 리스트
 	@GetMapping("/payList")
 	public void payList(@RequestParam Map<String,Object> map, Model model) throws Exception {
-		model.addAttribute(service.getPayList(map));
+		model.addAttribute("rsrvPayVOList",service.getPayList(map));
 		model.addAttribute("amap",map);
 	}
 	

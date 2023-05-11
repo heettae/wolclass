@@ -170,4 +170,9 @@ public class SWController {
 			model.addAttribute("reviewList", reviewList);
 		}
 	  
+		//http://localhost:8080/sw/detail?c_no=30 
+	  @RequestMapping(value = "/detail", method = RequestMethod.GET)
+	  public void detailGET() {
+	  }
+
 }

@@ -67,8 +67,13 @@ border-radius:6px;
 						<div class="category-search" style="margin: 2px 4% 0 20%;">
 							<select style="width: 125px; height: 45px; font-size: 20px;"
 								name="b_category">
+								<c:if test="">
 								<option value="일반">일반글</option>
 								<option value="모집">모집글</option>
+								</c:if>
+								<c:if test="">
+								<option value="공지사항" selected="selected">공지사항</option>
+								</c:if>
 							</select>
 							
 							<input type="hidden" name="b_writer" value="${sessionScope.id}">

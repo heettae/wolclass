@@ -17,7 +17,7 @@
 					<div style="display: flex; padding-bottom: 45px;"
 						class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">글 목록</h3>
+							<h3 class="box-title" style="font-size: x-large;">결제내역 목록</h3>
 						</div>
 					</div>
 				</div>
@@ -29,60 +29,62 @@
 
 
 							<tr>
-								<th style="width: 6%; background: #FDC600;border-right: 2px solid;">예약번호</th>
-								<th style="width: 13%; background: #FDC600;border-right: 2px solid;">성명</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">클래스명</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">예약일</th>
-								<th style="width: 6%; background: #FDC600;border-right: 2px solid;">인원</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">금액</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">결제일</th>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">취소여부(Y/N)</th> 
+								<th style="width: 6%; background: #FDC600;border-right: 1px #ddd solid;">예약번호</th>
+								<th style="width: 13%; background: #FDC600;border-right: 1px #ddd solid;">성명</th>
+								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">클래스명</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">예약일</th>
+								<th style="width: 6%; background: #FDC600;border-right: 1px #ddd solid;">인원</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">금액</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">결제일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 1px #ddd solid;">취소여부</th> 
 							</tr>
+							<c:if test="${rsrvPayVOList != null && rsrvPayVOList.size() > 0}">
+							<c:forEach var="payList" items="${rsrvPayVOList}">
 								<tr>
-								<td>${p_no}번</td>
-								<td>${m_id}이름</td>
-								<td>${c_no}클</td>
-								<td>${p_rsrvdate}예약일</td>
-								<td>${p_peoplenum}명</td>
-								<td>${p_price}금액</td>
-								<td>${p_paydate}결제일</td>
-								<td>${p_cancel}Y/N</td>
+								<td>${payList.p_no}</td>
+								<td>${payList.m_id}</td>
+								<td>${payList.c_name == null ? '구독' : payList.c_name}</td>
+								<td><fmt:formatDate value="${payList.p_rsrvdate}" pattern="yyyy.MM.dd HH:mm"/></td>
+								<td>${payList.p_peoplenum}</td>
+								<td>${payList.p_price}</td>
+								<td><fmt:formatDate value="${payList.p_paydate}" pattern="yyyy.MM.dd HH:mm"/></td>
+<!-- 								p_status (string): 결제상태. ready:미결제, complete,paid:결제완료, cancelled:결제취소, failed:결제실패 = ['ready', 'paid', 'cancelled', 'failed'] -->
+								<c:if test="${payList.p_status == 'ready'}">
+								<td>미결제</td>
+								</c:if>
+								<c:if test="${payList.p_status == 'cancelled'}">
+								<td>결제취소</td>
+								</c:if>
+								<c:if test="${payList.p_status == 'failed'}">
+								<td>결제실패</td>
+								</c:if>
+								<c:if test="${payList.p_status == 'complete' || payList.p_status == 'paid'}">
+								<td>결제완료</td>
+								</c:if>
 							</tr>
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-		<div>
 			<!-- 페이징처리  -->
-			<div class="box-footer clearfix">
-				<div>
-					<%-- <ul class="pagination pagination-sm no-margin " >
-						<c:if test="${map.endPage <= map.pageBlock}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.endPage > map.pageBlock}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage - map.pageBlock}" 
-						onclick="backPage();">«</a></li>
-						</c:if>
-						
-						
-						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}
-							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
-						</c:forEach>
-						
-						<c:if test="${map.pageCount <= map.endPage}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.pageCount > map.endPage}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage + map.pageBlock}" 
-						onclick="nextPage();">»</a></li>
-						</c:if>
-					</ul> --%>
+			<div class="box-footer clearfix pagination" style="margin: auto; width: 100%;">
+				<div style="display: flex; justify-content: center;">
+						<ul>
+							<c:if test="${amap.startPage > amap.pageBlock }">
+							<li><a id="prev" href="/admin/payList?pageNum=${amap.startPage-1}">이전</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+							<li><a class="pageNumbers" href="/admin/payList?pageNum=${i}">${i }</a></li>
+							</c:forEach>
+							<c:if test="${amap.pageCount > amap.endPage }">
+							<li><a id="next" href="/admin/payList?pageNum=${amap.endPage+1}">다음</a></li>
+							</c:if>
+						</ul>
 				</div>
 			</div>
 			<!-- 페이징처리  -->
+			</div>
 		</div>
 	</div>
 

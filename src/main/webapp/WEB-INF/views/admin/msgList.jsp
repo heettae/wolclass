@@ -29,57 +29,45 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 1px #ddd solid;">글번호</th>
+								<th style="width: 25%; background: #FDC600;border-right: 1px #ddd solid;">제목</th>
+								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">작성자</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">작성일</th>
 							</tr>
 							<tr>
-								<td>${b_no}</td>
-								<td><a href="/admin/readMsg?b_no=">${b_title}</a></td>
-								<td>${b_writer}</td>
-								<td>${b_regdate}</td>
+								<c:if test="${boardVOList != null && boardVOList.size() > 0}">
+									<c:forEach var="msgList" items="${boardVOList}">
+										<td>${msgList.b_no}</td>
+										<td><a href="/admin/readMsg?b_no=${msgList.b_no}">${msgList.b_title}</a></td>
+										<td>${msgList.b_writer}</td>
+										<td>${msgList.b_regdate.toString().split(' ')[0]}</td>
+									</c:forEach>
+								</c:if>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-
-		<div>
 			<!-- 페이징처리  -->
-			<div class="box-footer clearfix">
-				<div>
-					<%-- <ul class="pagination pagination-sm no-margin " >
-						<c:if test="${map.endPage <= map.pageBlock}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.endPage > map.pageBlock}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage - map.pageBlock}" 
-						onclick="backPage();">«</a></li>
-						</c:if>
-						
-						
-						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}
-							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
-						</c:forEach>
-						
-						<c:if test="${map.pageCount <= map.endPage}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.pageCount > map.endPage}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage + map.pageBlock}" 
-						onclick="nextPage();">»</a></li>
-						</c:if>
-					</ul> --%>
+			<div class="box-footer clearfix pagination" style="margin: auto; width: 100%;">
+				<div style="display: flex; justify-content: center;">
+						<ul>
+							<c:if test="${amap.startPage > amap.pageBlock }">
+							<li><a id="prev" href="/admin/msgList?pageNum=${amap.startPage-1}">이전</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+							<li><a class="pageNumbers" href="/admin/msgList?pageNum=${i}">${i }</a></li>
+							</c:forEach>
+							<c:if test="${amap.pageCount > amap.endPage }">
+							<li><a id="next" href="/admin/msgList?pageNum=${amap.endPage+1}">다음</a></li>
+							</c:if>
+						</ul>
 				</div>
 			</div>
 			<!-- 페이징처리  -->
+			</div>
 		</div>
 	</div>
 
 <!-- content -->
-
 
 <%@ include file="../include/adminFooter.jsp" %>

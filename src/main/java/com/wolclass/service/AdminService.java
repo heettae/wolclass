@@ -54,6 +54,6 @@ public interface AdminService {
 	public void deleteReview(int rno) throws Exception;
 	
 	//결제 리스트
-	public List<RsrvPayVO> getPayList(Map<String, Object> map) throws Exception;
+	public List<Map<String,Object>> getPayList(Map<String, Object> map) throws Exception;
 
 }
