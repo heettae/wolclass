@@ -1,100 +1,98 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- header  -->
+<%-- <!-- header  -->
 <%@ include file="../include/header.jsp"%>
-<!-- header  -->
+<!-- header  --> --%>
 
 <style type="text/css">
-/* .btn-detail { */
-/* 	font-weight: bold; */
-/* 	font-size: 15px; */
-/* 	border-radius: 6px; */
-/* 	width: 150px; */
-/* 	height: 45px; */
-/* 	background: #C9BA9B; */
-/* } */
+/* .btn-detail {
+	font-weight: bold;
+	font-size: 15px;
+	border-radius: 6px;
+	width: 150px;
+	height: 45px;
+	background: #C9BA9B;
+}
 
-/* .btn-detail:active { */
-/* 	border: 3px gray inset; */
-/* 	background: #A58C59; */
-/* 	color: white; */
-/* } */
+.btn-detail:active {
+	border: 3px gray inset;
+	background: #A58C59;
+	color: white;
+}
 
-/* .review_write_container { */
-/* 	border: black solid 1px; */
-/* 	margin: auto; */
-/* 	width: 100%;	 */
-/* } */
+.review_write_container {
+	border: black solid 1px;
+	margin: auto;
+	width: 100%;	
+}
 
-/* .detail_container { */
-/* 	margin-top: 30px; */
-/* } */
+.detail_container {
+	margin-top: 30px;
+}
 
-/* table { */
-/* 	border: 1px black solid; */
-/* 	text-align: center; */
-/* 	margin: auto; */
-/* 	width: 80%; */
-/* 	background: #c2c2c2; */
-/* 	color: white; */
-/* } */
+table {
+	border: 1px black solid;
+	text-align: center;
+	margin: auto;
+	width: 80%;
+	background: #c2c2c2;
+	color: white;
+}
 
-/* td { */
-/* 	border: 1px solid black; */
-/* } */
+td {
+	border: 1px solid black;
+}
 
-/* textarea { */
-/* 	width: 100%; */
-/* 	height: 30%; */
-/* 	min-height: 250px; */
-/* } */
+textarea {
+	width: 100%;
+	height: 30%;
+	min-height: 250px;
+} */
 
-/* /* 댓글 css  */ */
-/* .review_write_input { */
-/* 	display: flex; */
-/* 	width: 100%; */
-/* } */
+/* 댓글 css  */
+/* .review_write_input {
+	display: flex;
+	width: 100%;
+}
 
-/* .review_write { */
-/* 	border: 1px #ddd solid; */
-/* 	width: 80%; */
-/* 	border-radius: 6px; */
-/* 	height: 37px; */
-/* 	margin: 30px auto; */
-/* } */
+.review_write {
+	border: 1px #ddd solid;
+	width: 80%;
+	border-radius: 6px;
+	height: 37px;
+	margin: 30px auto;
+}
 
-/* .input_btn1 { */
-/* 	border-radius: 6px; */
-/* 	height: 35px; */
-/* 	width: 80px; */
-/* 	background: #FDC600; */
-/* 	color: white; */
-/* 	font-size: 15px; */
-/* } */
+.input_btn1 {
+	border-radius: 6px;
+	height: 35px;
+	width: 80px;
+	background: #FDC600;
+	color: white;
+	font-size: 15px;
+}
 
-/* .input_btn { */
-/* 	border-radius: 6px; */
-/* 	height: 30px; */
-/* 	width: 80px; */
-/* 	background: #FDC600; */
-/* 	color: white; */
-/* 	font-size: 15px; */
-/* } */
+.input_btn {
+	border-radius: 6px;
+	height: 30px;
+	width: 80px;
+	background: #FDC600;
+	color: white;
+	font-size: 15px;
+}
 
-/* .input_btn:hover { */
-/* 	background: #c2c2c2; */
-/* 	transition: all 1s ease; */
-/* } */
+.input_btn:hover {
+	background: #c2c2c2;
+	transition: all 1s ease;
+}
 
-/* .review_list_container { */
-/* 	margin: auto; */
-/* 	width: 100%; */
-/* 	border: 1px #ddd solid; */
-/* } */
+.review_list_container {
+	margin: auto;
+	width: 100%;
+	border: 1px #ddd solid;
+}
+ */
 
-/* .comment { */
-/* 	display: flex; */
-/* } */
 
 /* 댓글 css  */
 </style>
@@ -111,7 +109,7 @@
 			<div class="review_list">
 				<c:if test="${reviewList.size() >0 && reviewList != null && map.pageNum != map.pageCount}">
 					<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.pageNum*map.pageSize-1}">
-						<div style="border: 1px solid #ddd; height: 150px;">
+						<div style="border-bottom: 1px solid #ddd;height: 150px;">
 								<div style="width: 100%; display: flex; font-weight: 600; justify-content: space-between;	border-bottom: 1px solid #ddd; height: 30%;">
 									<div style="width: 15%;">
 									<input style=" text-align: center;" type="text"
@@ -119,7 +117,14 @@
 									</div>
 									<input type="hidden" name="r_no" value="${reviewList[i].r_no}">
 									<div style="width: 60%;">
-									별점
+										<c:forEach  begin="1" end="${reviewList[i].score}">
+										   <img alt="별" src="../../../resources/img/star5.png">
+										   </c:forEach>
+										<c:if test="${reviewList[i].score < 5}">
+										   <c:forEach begin="0" end="${4-reviewList[i].score}">
+										   <img alt="빈별" src="../../../resources/img/star6.png">
+										   </c:forEach>
+										</c:if>
 									</div>
 									<div style="width: 25%">
 									<input type="text"
@@ -136,26 +141,27 @@
 						</div>
 					</c:forEach>
 				</c:if>
-				
-				
-				<c:if test="${map.pageNum == map.pageCount }">
-					<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}"
-						end="${map.count-1}">
-						<div
-							style="border: 1px solid; padding: 5px 20px 5px 5px; height: 100px;display: flex; justify-content: space-between;">
-								<div
-									style="width: 15%; text-align: center; border-right: #ddd 1px double; 
-									background: #A5A5A5; color: white; font-weight: 600; ">
-									<div>
-									<input style="text-align: center;" type="text"
+				<c:if test="${map.pageNum == map.pageCount}">
+					<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.count-1}">
+						<div style="border-bottom: 1px solid #ddd;height: 150px;">
+								<div style="width: 100%; display: flex; font-weight: 600; justify-content: space-between;	border-bottom: 1px solid #ddd; height: 30%;">
+									<div style="width: 15%;">
+									<input style=" text-align: center;" type="text"
 										readonly="readonly" value="작성자 ID : ${reviewList[i].m_id}">
 									</div>
 									<input type="hidden" name="r_no" value="${reviewList[i].r_no}">
-									<div>
-									별점
+									<div style="width: 60%;">
+										<c:forEach begin="1" end="${reviewList[i].score}">
+										   <img alt="별" src="../../../resources/img/star5.png">
+										   </c:forEach>
+										<c:if test="${reviewList[i].score < 5}">
+										   <c:forEach begin="0" end="${4-reviewList[i].score}">
+										   <img alt="빈별" src="../../../resources/img/star6.png">
+										   </c:forEach>
+										</c:if>
 									</div>
-									<div>
-									<input style="height: 20%; padding-left: 50%;" type="text"
+									<div style="width: 25%">
+									<input type="text"
 										readonly="readonly"
 										value="작성일 : ${reviewList[i].r_regdate.toString().split(' ')[0]}">
 									</div>

@@ -43,7 +43,7 @@
 								<td><a href="/admin/readBoard?b_no=${vo.b_no}">${vo.b_title}</a></td>
 								<td>${vo.b_writer}</td>
 								<td>${vo.b_regdate}</td>
-								<td>버튼</td>
+								<td><input type="button" value="삭제"></td>
 							</tr>
 							</c:forEach>
 						</tbody>

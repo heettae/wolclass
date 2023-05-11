@@ -93,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<RsrvPayVO> getPayList(Map<String, Object> map) throws Exception {
+	public List<Map<String,Object>> getPayList(Map<String, Object> map) throws Exception {
 		return getListByType(map, 5);
 	}
 
@@ -121,7 +121,7 @@ public class AdminServiceImpl implements AdminService {
 		map.put("pageSize", pageSize);
 		if(count > 0) {
 			switch (type) {
-			case 0: list = dao.getBoardList(map); break;// 커뮤니티 글 조회
+			case 0: list = dao.getBoardList  (map); break;// 커뮤니티 글 조회
 			case 1: list = dao.getMsgList(map); break;// 1:1 문의 조회
 			case 2: list = dao.getMemberList(map); break;// 회원목록 조회
 			case 3: list = dao.getClassList(map); break;// 등록대기 클래스 조회

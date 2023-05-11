@@ -55,6 +55,7 @@
 	select count(m_id)
 	from wc_member
 	where m_id != 'admin'
+	and m_regdate is not null
 	order by m_regdate desc
 	]]> 
 	</select>
@@ -63,6 +64,7 @@
 	select *
 	from wc_member
 	where m_id != 'admin'
+	and m_regdate is not null
 	order by m_regdate desc
 	limit #{pageSize,javaType=INTEGER}
 	offset #{startRow,javaType=INTEGER}
@@ -120,10 +122,11 @@
 	order by p_paydate desc
 	]]> 
 	</select>
-	<select id="getPayList" resultType="RsrvPayVO">
+	<select id="getPayList" resultType="map">
 	<![CDATA[  
 	select *
-	from wc_rsrv_pay
+	from wc_rsrv_pay p left join wc_class c
+	on p.c_no = c.c_no
 	order by p_paydate desc
 	limit #{pageSize,javaType=INTEGER}
 	offset #{startRow,javaType=INTEGER}
@@ -173,7 +176,6 @@
 	<!-- 회원정보 삭제 -->
 	<update id="deleteMember">
 	update wc_member set
-	m_pw = #{m_pw},
 	m_email = null,
 	m_name = null,
 	m_nick = null,
@@ -182,7 +184,7 @@
 	m_dogtype = null,
 	m_dogbirth = null,
 	m_profile = null,
-	m_point = null,
+	m_point = null
 	where m_id = #{m_id}
 	</update>
 	<!-- 회원정보 삭제 -->

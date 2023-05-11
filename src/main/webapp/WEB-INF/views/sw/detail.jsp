@@ -404,6 +404,92 @@ for(var i=0; i<ableDays.length; i++){
                             </div>
                             <!-- End video area  -->
                             
+                            <!-- 후기 내용  -->
+                            <div class="section property-features">
+								<h4 class="s-property-title">Review</h4>
+							
+								<div class="review_write_container">
+									<div class="review_list_container">
+										<div class="review_list">
+										<%-- 	<c:if test="${reviewList.size() >0 && reviewList != null && map.pageNum != map.pageCount}"> --%>
+												<%-- <c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.pageNum*map.pageSize-1}"> --%>
+													<div style="border-bottom: 1px solid #ddd;height: 150px;">
+															<div style="width: 100%; display: flex; font-weight: 600; justify-content: space-between;	
+															border-bottom: 1px solid #ddd; height: 30%; align-items: baseline; ">
+																<div style="width: 15%;">
+																<input style=" text-align: center; margin-top: 6%; font-size: inherit;" type="text"
+																	readonly="readonly" value="작성자 ID :<%--  ${reviewList[i].m_id} --%>">
+																</div>
+																<input type="hidden" name="r_no" value="<%-- ${reviewList[i].r_no} --%>">
+																<div style="width: 60%;">
+																별점
+																<img alt="별" src="../../../resources/img/star5.png">
+																<img alt="빈별" src="../../../resources/img/star6.png">
+																		<%-- <c:forEach begin="1" end="${reviewList[i].score}">
+																		   <img alt="별" src="../../../resources/img/star5.png">
+																		   </c:forEach>
+																		<c:if test="${reviewList[i].score < 5}">
+																		   <c:forEach begin="0" end="${4-reviewList[i].score}">
+																		   <img alt="빈별" src="../../../resources/img/star6.png">
+																		   </c:forEach>
+																		</c:if> --%>
+																</div>
+																<div style="width: 25%;">
+																<input style="font-size: inherit;" 
+																type="text"	readonly="readonly"	value="작성일 : <%-- ${reviewList[i].r_regdate.toString().split(' ')[0]} --%>">
+																</div>
+															</div>
+															<div style="width: 100%;">
+																<div style="height: 80%;">
+																	<textarea
+																	 rows="3" style="border: none;width: 96%; margin: 5px 2%;" maxlength="280" id="r_content1" name="r_content" ><%-- ${reviewList[i].r_content } --%></textarea>	
+																</div>
+															</div>
+													</div>
+												<%-- </c:forEach> --%>
+											<%-- </c:if> --%>
+										</div>
+										
+										
+										
+										<div class="box-footer clearfix">
+											<div style="width: 100%; display: flex;margin: 10px 0;">
+					        <!-- 후기페이징  -->
+												<%-- <ul class="pagination pagination-sm no-margin pull-right"
+													style="margin: auto;">
+													<c:if test="${map.endPage <= map.pageBlock}">
+														<li></li>
+													</c:if>
+													<c:if test="${map.endPage > map.pageBlock}">
+														<li><a
+															href="swRead?b_no=${map.b_no}&pageNum=${map.startPage - map.pageBlock}"
+															onclick="backPage();">«</a></li>
+													</c:if>
+							
+							
+													<c:forEach var="pageNum" begin="${map.startPage}"
+														end="${map.endPage}">
+														<li><a onclick="inputpageNum(pageNum);"
+															href="review?c_no=${map.c_no}&pageNum=${pageNum}">${pageNum}</a></li>
+													</c:forEach>
+							
+													<c:if test="${map.pageCount <= map.endPage}">
+														<li></li>
+													</c:if>
+													<c:if test="${map.pageCount > map.endPage}">
+														<li><a
+															href="swRead?b_no=${map.b_no}&pageNum=${map.startPage + map.pageBlock}"
+															onclick="nextPage();">»</a></li>
+													</c:if>
+												</ul>
+							 --%>
+							 <!-- 후기페이징  -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+                            <!-- 후기 내용  -->
                             
 
                             <div class="section property-share"> 

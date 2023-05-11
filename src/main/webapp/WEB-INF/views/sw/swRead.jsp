@@ -319,7 +319,7 @@ textarea {
 						var result = "${result}";
 						
 						if (result == "ok") {
-							alert("정상적으로 댓글 작성 완료!");
+							alert("댓글 작성 완료!");
 						}
 						if (result == "updOK") {
 							alert("댓글 수정 완료!");

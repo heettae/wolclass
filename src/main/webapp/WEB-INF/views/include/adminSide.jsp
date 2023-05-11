@@ -77,7 +77,7 @@ a, button:hover {
 	background-image: url('../../../resources/img/board10.png');
 }
 #icon5{
-	background-image: url('../../../resources/img/payment10.png');
+	background-image: url('../../../resources/img/review10.png');
 }
 #icon6{
 	background-image: url('../../../resources/img/payment10.png');
@@ -99,7 +99,7 @@ a, button:hover {
 	 transition: background-image 0.8s;
 } 
 .side_menu:hover #icon5{
-	background-image: url("../../../resources/img/payment11.png");
+	background-image: url("../../../resources/img/review11.png");
 	transition: background-image 0.8s;
 } 
 .side_menu:hover #icon6{
@@ -119,7 +119,7 @@ a, button:hover {
 	 background-image: url("../../../resources/img/board11.png");
 } 
 .side_menu1 #icon5{
-	background-image: url("../../../resources/img/payment11.png");
+	background-image: url("../../../resources/img/review11.png");
 } 
 .side_menu1 #icon6{
 	background-image: url("../../../resources/img/payment11.png");

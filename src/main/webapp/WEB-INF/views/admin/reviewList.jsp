@@ -29,60 +29,50 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">리뷰번호</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">클래스번호</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">멤버아이디</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">내용</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">등록일</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">평점</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">버튼</th>
+								<th style="width: 10%; background: #FDC600;border-right: 1px #ddd solid;">리뷰번호</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">클래스번호</th>
+								<th style="width: 25%; background: #FDC600;border-right: 1px #ddd solid;">멤버아이디</th>
+								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">내용</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">등록일</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">평점</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">버튼</th>
 							</tr>
+							<c:if test="${replyVOList != null && replyVOList.size() > 0}">
+							<c:forEach var="reviewList" items="${replyVOList}">
 							<tr>
-								<td>${r_no}</td>
-								<td>${c_no}</td>
-								<td>${m_id}</td>
-								<td>${r_content}</td>
-								<td>${r_regdate}</td>
-								<td>${r_score}</td>
-								<td>버튼</td> 
+								<td>${reviewList.r_no}</td>
+								<td>${reviewList.c_no}</td>
+								<td>${reviewList.m_id}</td>
+								<td>${reviewList.r_content}</td>
+								<td>${reviewList.r_regdate}</td>
+								<td>${reviewList.r_score}</td>
+								<td><input type="button" value="삭제"></td> 
 							</tr>
+							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-
-		<div>
 			<!-- 페이징처리  -->
-			<div class="box-footer clearfix">
-				<div>
-					<%-- <ul class="pagination pagination-sm no-margin " >
-						<c:if test="${map.endPage <= map.pageBlock}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.endPage > map.pageBlock}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage - map.pageBlock}" 
-						onclick="backPage();">«</a></li>
-						</c:if>
-						
-						
-						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="community?b_category=${map.b_category}
-							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
-						</c:forEach>
-						
-						<c:if test="${map.pageCount <= map.endPage}">
-						<li></li>
-						</c:if>
-						<c:if test="${map.pageCount > map.endPage}">
-						<li><a href="community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage + map.pageBlock}" 
-						onclick="nextPage();">»</a></li>
-						</c:if>
-					</ul> --%>
+			<div class="box-footer clearfix pagination" style="margin: auto; width: 100%;">
+				<div style="display: flex; justify-content: center;">
+						<ul>
+							<c:if test="${amap.startPage > amap.pageBlock }">
+							<li><a id="prev" href="/admin/payList?pageNum=${amap.startPage-1}">이전</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+							<li><a class="pageNumbers" href="/admin/payList?pageNum=${i}">${i }</a></li>
+							</c:forEach>
+							<c:if test="${amap.pageCount > amap.endPage }">
+							<li><a id="next" href="/admin/payList?pageNum=${amap.endPage+1}">다음</a></li>
+							</c:if>
+						</ul>
 				</div>
 			</div>
 			<!-- 페이징처리  -->
+			</div>
 		</div>
+
 	</div>
 
 <!-- content -->
