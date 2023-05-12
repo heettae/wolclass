@@ -43,32 +43,85 @@
 								<td><a href="/admin/readBoard?b_no=${vo.b_no}">${vo.b_title}</a></td>
 								<td>${vo.b_writer}</td>
 								<td>${vo.b_regdate}</td>
-								<td><input type="button" value="삭제"></td>
+								<td><input id="${vo.b_no}" class="delete" type="button" value="삭제"></td>
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<!-- 페이징처리  -->
-					<div class="pagination">
+					</div>
+			<!-- 페이징처리  -->
+			<div class="box-footer clearfix pagination" style="margin: auto; width: 100%;">
+				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${amap.startPage > amap.pageBlock }">
-							<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
-							<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
+							<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i}</a></li>
 							</c:forEach>
 							<c:if test="${amap.pageCount > amap.endPage }">
-							<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">»</a></li>
 							</c:if>
 						</ul>
-			        </div>
-					<!-- 페이징처리  -->
 				</div>
+			</div>
+			<!-- 페이징처리  -->
 			</div>
 		</div>
 	</div>
 
+
 <!-- content -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		 /* 삭제  */
+		 $(".delete").click(function(){
+			 if(confirm("게시물을 삭제 하시겠습니까?")){
+			 var id = $(this).attr('id');
+			 $.ajax({
+				  url: '/admin/deleteBoard',
+				  method: 'post',
+				  data: {b_no:id},
+				  success: function(response) {
+				    // 요청이 성공한 경우 처리할 로직
+				    setTimeout(function(){
+				   		location.reload();
+				    },50);
+				  },
+				  error: function(xhr, status, error) {
+				    // 요청이 실패한 경우 처리할 로직
+				    console.log('승인거부를 실패 하였습니다.');
+				  }
+				});
+			 }
+		 });
+		 
+		 /* 삭제  */
+		 $(".confirm").click(function(){
+			 if(confirm("클래스 개설을 하시겠습니다?")){
+			 var id = $(this).attr('id');
+			 $.ajax({
+				  url: '/admin/confirmClass',
+				  method: 'post',
+				  data: {c_no:id},
+				  success: function(response) {
+				    // 요청이 성공한 경우 처리할 로직
+				    setTimeout(function(){
+				   		location.reload();
+				    },50);
+				  },
+				  error: function(xhr, status, error) {
+				    // 요청이 실패한 경우 처리할 로직
+				    console.log('승인 실패');
+				  }
+				});
+			 }
+		 });
+		 
+		 
+	});
+	</script>
 
 
 <%@ include file="../include/adminFooter.jsp" %>

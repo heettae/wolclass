@@ -93,27 +93,38 @@ th {
 							</c:if>
 						</tbody>
 					</table>
-					<!-- 페이징처리  -->
-					<div class="pagination">
+					<c:if test="${sessionScope.id == 'admin'}">
+					<a onclick="boardWrite();" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px; cursor: pointer;">
+						글작성
+					</a>
+				 	</c:if>
+				</div>
+			<!-- 페이징처리  -->
+			<div class="box-footer clearfix pagination" style="margin: auto; width: 100%;">
+				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${nmap.startPage > nmap.pageBlock }">
-							<li><a id="prev" href="/board/notice?pageNum=${nmap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/board/notice?pageNum=${nmap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${nmap.startPage }" end="${nmap.endPage }">
 							<li><a class="pageNumbers" href="/board/notice?pageNum=${i}">${i }</a></li>
 							</c:forEach>
 							<c:if test="${nmap.pageCount > nmap.endPage }">
-							<li><a id="next" href="/board/notice?pageNum=${nmap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/board/notice?pageNum=${nmap.endPage+1}">»</a></li>
 							</c:if>
-						</ul>
-			        </div>
-					<!-- 페이징처리  -->
+												</ul>
 				</div>
 			</div>
-
+			<!-- 페이징처리  -->
+			</div>
 		</div>
 	</div>
 	<!-- list  -->
+		<script type="text/javascript">
+		function boardWrite() {
+			return location.href="/admin/boardWrite"
+		}
+		</script>
 
 <!-- footer  -->
 <%@ include file="../include/footer.jsp"%>

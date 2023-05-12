@@ -38,15 +38,15 @@
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">버튼</th>
 							</tr>
 							<c:if test="${replyVOList != null && replyVOList.size() > 0}">
-							<c:forEach var="reviewList" items="${replyVOList}">
+							<c:forEach var="review" items="${replyVOList}">
 							<tr>
-								<td>${reviewList.r_no}</td>
-								<td>${reviewList.c_no}</td>
-								<td>${reviewList.m_id}</td>
-								<td>${reviewList.r_content}</td>
-								<td>${reviewList.r_regdate}</td>
-								<td>${reviewList.r_score}</td>
-								<td><input type="button" value="삭제"></td> 
+								<td>${review.r_no}</td>
+								<td>${review.c_no}</td>
+								<td>${review.m_id}</td>
+								<td>${review.r_content}</td>
+								<td>${review.r_regdate}</td>
+								<td>${review.r_score}</td>
+								<td><input id="${review.r_no}" class="deleteReview" type="button" value="삭제"></td> 
 							</tr>
 							</c:forEach>
 							</c:if>
@@ -58,13 +58,13 @@
 				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${amap.startPage > amap.pageBlock }">
-							<li><a id="prev" href="/admin/payList?pageNum=${amap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/admin/reviewList?pageNum=${amap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
-							<li><a class="pageNumbers" href="/admin/payList?pageNum=${i}">${i }</a></li>
+							<li><a class="pageNumbers" href="/admin/reviewList?pageNum=${i}">${i }</a></li>
 							</c:forEach>
 							<c:if test="${amap.pageCount > amap.endPage }">
-							<li><a id="next" href="/admin/payList?pageNum=${amap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/admin/reviewList?pageNum=${amap.endPage+1}">»</a></li>
 							</c:if>
 						</ul>
 				</div>
@@ -76,6 +76,35 @@
 	</div>
 
 <!-- content -->
+<script type="text/javascript">
+$(document).ready(function(){
+	 
+	 /* 삭제  */
+	 $(".deleteReview").click(function(){
+		 if(confirm("정말로 삭제 하시겠습니다?")){
+		 var r_no = $(this).attr('id');
+		 $.ajax({
+			  url: '/admin/deleteReview',
+			  method: 'post',
+			  data: {r_no:r_no},
+			  success: function(response) {
+			    // 요청이 성공한 경우 처리할 로직
+			    setTimeout(function(){
+			   		location.reload();
+			    },50);
+			  },
+			  error: function(xhr, status, error) {
+			    // 요청이 실패한 경우 처리할 로직
+			    console.log('리뷰 삭제 실패');
+			  }
+			});
+		 }
+		 return;
+	 });
+	 
+	 
+});
+</script>
 
 
 <%@ include file="../include/adminFooter.jsp" %>

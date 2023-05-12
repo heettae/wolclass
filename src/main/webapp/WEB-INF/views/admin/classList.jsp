@@ -53,13 +53,13 @@
 				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${amap.startPage > amap.pageBlock }">
-							<li><a id="prev" href="/admin/classList?pageNum=${amap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/admin/classList?pageNum=${amap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
 							<li><a class="pageNumbers" href="/admin/classList?pageNum=${i}">${i}</a></li>
 							</c:forEach>
 							<c:if test="${amap.pageCount > amap.endPage }">
-							<li><a id="next" href="/admin/classList?pageNum=${amap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/admin/classList?pageNum=${amap.endPage+1}">»</a></li>
 							</c:if>
 						</ul>
 				</div>

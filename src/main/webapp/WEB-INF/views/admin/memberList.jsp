@@ -17,7 +17,7 @@
 					<div style="display: flex; padding-bottom: 45px;"
 						class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">글 목록</h3>
+							<h3 class="box-title" style="font-size: x-large;">회원 목록</h3>
 						</div>
 					</div>
 				</div>
@@ -60,13 +60,13 @@
 				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${amap.startPage > amap.pageBlock }">
-							<li><a id="prev" href="/admin/memberList?pageNum=${amap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/admin/memberList?pageNum=${amap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
 							<li><a class="pageNumbers" href="/admin/memberList?pageNum=${i}">${i }</a></li>
 							</c:forEach>
 							<c:if test="${amap.pageCount > amap.endPage }">
-							<li><a id="next" href="/admin/memberList?pageNum=${amap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/admin/memberList?pageNum=${amap.endPage+1}">»</a></li>
 							</c:if>
 						</ul>
 				</div>

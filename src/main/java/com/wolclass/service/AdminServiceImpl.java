@@ -43,6 +43,11 @@ public class AdminServiceImpl implements AdminService {
 	public void deleteBoard(int bno) throws Exception {
 		dao.deleteBoard(bno);
 	}
+	
+	@Override
+	public void deleteReply(int rno) throws Exception {
+		dao.deleteReply(rno);
+	}
 
 	@Override
 	public List<MemberVO> getMemberList(Map<String, Object> map) throws Exception {
@@ -96,6 +101,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<Map<String,Object>> getPayList(Map<String, Object> map) throws Exception {
 		return getListByType(map, 5);
 	}
+	
+	@Override
+	public List<ReplyVO> getCommentList(Map<String, Object> map) throws Exception{
+		return getListByType(map, 6);
+	}
 
 	private List getListByType(Map<String, Object> map, int type) throws Exception {
 		// 데이터 전처리
@@ -115,6 +125,7 @@ public class AdminServiceImpl implements AdminService {
 		case 3: count = dao.getClassListCnt(map); break;// 등록대기 클래스 조회
 		case 4: count = dao.getReviewListCnt(map); break;// 수강후기 조회
 		case 5: count = dao.getPayListCnt(map); break;// 결제리스트 조회
+		case 6: count = dao.getCommentListCnt(map); break;// 댓글리스트 조회
 		}
 		List list = new ArrayList<>();
 		map.put("startRow", startRow-1);
@@ -127,6 +138,7 @@ public class AdminServiceImpl implements AdminService {
 			case 3: list = dao.getClassList(map); break;// 등록대기 클래스 조회
 			case 4: list = dao.getReviewList(map); break;// 수강후기 조회
 			case 5: list = dao.getPayList(map); break;// 결제리스트 조회
+			case 6: list = dao.getCommentList(map); break;// 댓글리스트 조회
 			}
 		}
 		int pageCount = count/pageSize + (count%pageSize==0? 0:1);
@@ -146,4 +158,5 @@ public class AdminServiceImpl implements AdminService {
 		
 		return list;
 	}
+	
 }

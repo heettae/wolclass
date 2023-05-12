@@ -6,6 +6,7 @@ import java.util.Map;
 import com.wolclass.domain.BoardVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.ReplyVO;
 
 public interface AdminDAO {
 
@@ -35,6 +36,10 @@ public interface AdminDAO {
 	public Integer getPayListCnt(Map<String, Object> map) throws Exception;
 	public List getPayList(Map<String, Object> map) throws Exception;
 	
+	//커뮤니티 댓글 조회
+	public Integer getCommentListCnt(Map<String, Object> map) throws Exception;
+	public List getCommentList(Map<String, Object> map) throws Exception;
+	
 	//공지사항 등록
 	//1:1  문의 답신
 	public void writeBoard(BoardVO vo) throws Exception;
@@ -42,9 +47,12 @@ public interface AdminDAO {
 	//커뮤니티 읽기
 	//1:1  문의 읽기
 	public BoardVO getBoard(int bno) throws Exception;
-
+	
 	//커뮤니티 글 삭제
 	public void deleteBoard(int bno) throws Exception;
+	
+	//커뮤니티 댓글 삭제
+	public void deleteReply(int rno) throws Exception;
 	
 	//회원 정보 수정
 	public void updateMember(MemberVO vo) throws Exception;
@@ -63,5 +71,5 @@ public interface AdminDAO {
 	
 	//수강후기 삭제
 	public void deleteReview(int rno) throws Exception;
-
+	
 }
