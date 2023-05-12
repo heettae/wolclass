@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- header  -->
 <%@ include file="../include/header.jsp"%>
@@ -130,9 +130,6 @@ th {
 			</div>
 			
 			
-			<!-- <a href="/sw/swWrite" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px;">
-				글작성
-			</a> -->
 			<a onclick="boardWrite();" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px; cursor: pointer;">
 				글작성
 			</a>

@@ -123,6 +123,7 @@ public class BoardController {
 	//공지사항 상세
 	@RequestMapping("/readNotice")
 	public void readNotice(@RequestParam Map<String, Object> nmap, Model model) throws Exception {
+		swservice.incrementViewCnt(Integer.parseInt((String)nmap.get("b_no").toString())); 
 		model.addAttribute(service.getBoard(nmap.get("b_no")));
 		model.addAttribute("nmap", nmap);
 	}

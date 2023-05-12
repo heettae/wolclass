@@ -21,7 +21,6 @@
 }
 
 .board_detail_container {
-	border: black solid 1px;
 	margin: auto;
 	width: 85%;
 }
@@ -120,12 +119,12 @@ textarea {
 				<!-- content  -->
 
 				<div
-					style="display: block; width: 80%; border: solid 1px gray; padding: 55px; border-radius: 5px; margin: auto;">
+					style="display: block; width: 80%;padding: 55px; border-radius: 5px; margin: auto;">
 					<!-- detail_header  -->
 					<div style="display: flex; padding-bottom: 30px; margin-left: 13%;"
 						class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">문의 조회</h3>
+							<h3 class="box-title" style="font-size: x-large;">글 조회</h3>
 						</div>
 					</div>
 					<!-- detail_header  -->

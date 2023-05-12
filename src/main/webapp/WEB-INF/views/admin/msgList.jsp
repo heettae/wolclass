@@ -17,7 +17,7 @@
 					<div style="display: flex; padding-bottom: 45px;"
 						class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">글 목록</h3>
+							<h3 class="box-title" style="font-size: x-large;">문의 목록</h3>
 						</div>
 					</div>
 				</div>
@@ -34,16 +34,16 @@
 								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">작성자</th>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">작성일</th>
 							</tr>
-							<tr>
-								<c:if test="${boardVOList != null && boardVOList.size() > 0}">
-									<c:forEach var="msgList" items="${boardVOList}">
+							<c:if test="${boardVOList != null && boardVOList.size() > 0}">
+								<c:forEach var="msgList" items="${boardVOList}">
+									<tr>
 										<td>${msgList.b_no}</td>
 										<td><a href="/admin/readMsg?b_no=${msgList.b_no}">${msgList.b_title}</a></td>
 										<td>${msgList.b_writer}</td>
 										<td>${msgList.b_regdate.toString().split(' ')[0]}</td>
-									</c:forEach>
-								</c:if>
-							</tr>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -52,13 +52,13 @@
 				<div style="display: flex; justify-content: center;">
 						<ul>
 							<c:if test="${amap.startPage > amap.pageBlock }">
-							<li><a id="prev" href="/admin/msgList?pageNum=${amap.startPage-1}">이전</a></li>
+							<li><a id="prev" href="/admin/msgList?pageNum=${amap.startPage-1}">«</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
 							<li><a class="pageNumbers" href="/admin/msgList?pageNum=${i}">${i }</a></li>
 							</c:forEach>
 							<c:if test="${amap.pageCount > amap.endPage }">
-							<li><a id="next" href="/admin/msgList?pageNum=${amap.endPage+1}">다음</a></li>
+							<li><a id="next" href="/admin/msgList?pageNum=${amap.endPage+1}">»</a></li>
 							</c:if>
 						</ul>
 				</div>

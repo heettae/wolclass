@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.wolclass.domain.BoardVO;
 import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.ReplyVO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO{
@@ -80,6 +81,18 @@ public class AdminDAOImpl implements AdminDAO{
 	public List getPayList(Map<String, Object> map) throws Exception {
 		return session.selectList(NAMESPACE+".getPayList", map);
 	}
+	
+	
+
+	@Override
+	public Integer getCommentListCnt(Map<String, Object> map) throws Exception {
+		return session.selectOne(NAMESPACE+".getCommentListCnt",map);
+	}
+
+	@Override
+	public List getCommentList(Map<String, Object> map) throws Exception {
+		return session.selectList(NAMESPACE+".getCommentList", map);
+	}
 
 	@Override
 	public void writeBoard(BoardVO vo) throws Exception {
@@ -94,6 +107,11 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public void deleteBoard(int bno) throws Exception {
 		session.delete(NAMESPACE+".deleteBoard", bno);
+	}
+	
+	@Override
+	public void deleteReply(int rno) throws Exception {
+		session.delete(NAMESPACE+".deleteReply", rno);
 	}
 
 	@Override
@@ -123,7 +141,8 @@ public class AdminDAOImpl implements AdminDAO{
 
 	@Override
 	public void deleteReview(int rno) throws Exception {
-		session.update(NAMESPACE+".deleteReview", rno);
+		session.delete(NAMESPACE+".deleteReview", rno);
 	}
+
 	
 }

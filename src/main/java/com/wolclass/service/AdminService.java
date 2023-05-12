@@ -26,6 +26,12 @@ public interface AdminService {
 	//커뮤니티 글 삭제
 	public void deleteBoard(int bno) throws Exception;
 	
+	//댓글 리스트
+	public List<ReplyVO> getCommentList(Map<String, Object> map) throws Exception;
+
+	//커뮤니티 댓글 삭제
+	public void deleteReply(int rno) throws Exception;
+	
 	//회원목록 출력
 	public List<MemberVO> getMemberList(Map<String, Object> map) throws Exception;
 	
@@ -56,4 +62,5 @@ public interface AdminService {
 	//결제 리스트
 	public List<Map<String,Object>> getPayList(Map<String, Object> map) throws Exception;
 
+	
 }

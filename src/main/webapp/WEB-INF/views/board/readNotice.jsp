@@ -21,7 +21,6 @@
 }
 
 .board_detail_container {
-	border: black solid 1px;
 	margin: auto;
 	width: 85%;
 }
@@ -118,7 +117,7 @@ textarea {
 
 				<!-- content  -->
 
-				<div style="display: block; width: 80%; border: solid 1px gray; padding: 55px; border-radius: 5px; margin: auto;">
+				<div style="display: block; width: 80%; padding: 55px; border-radius: 5px; margin: auto;">
 					<!-- detail_header  -->
 					<div style="display: flex; padding-bottom: 30px; margin-left: 13%;"
 						class="search-box">

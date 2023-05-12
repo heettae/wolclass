@@ -41,7 +41,7 @@ border-radius:6px;
 	<div style="margin: 45px 0;">
 	<div style="padding-left:20px; position: relative;" >
 	<hr style="width: 8%;position: absolute; ">
-		<h1 style="margin-left: 10%;line-height: inherit;">커뮤니티 - 글 작성 </h1>
+		<h1 style="margin-left: 10%;line-height: inherit;">공지사항 </h1>
 	</div>
 </div>
 	
@@ -55,7 +55,7 @@ border-radius:6px;
 					<!-- search  -->
 					<div style="display: flex; padding-bottom: 30px; margin-left: 31%;" class="search-box">
 						<div>
-							<h3 class="box-title" style="font-size: x-large;">글 작성</h3>
+							<h3 class="box-title" style="font-size: x-large;">글작성</h3>
 						</div>
 
 
@@ -64,16 +64,7 @@ border-radius:6px;
 					<!-- content  -->
 					<form role="form">
 					<div style="display: flex;">
-						<div class="category-search" style="margin: 2px 4% 0 20%;">
-							<select style="width: 125px; height: 45px; font-size: 20px;"
-								name="b_category">
-								<option value="일반">일반글</option>
-								<option value="모집">모집글</option>
-							</select>
-							
-							<input type="hidden" name="b_writer" value="${sessionScope.id}">
-						</div>
-						<div style="display: block;width: 40%;border: solid 1px gray;padding: 55px;border-radius: 5px;">
+						<div style="display: block;width: 40%;border: solid 1px gray;padding: 55px;border-radius: 5px; margin: auto;">
 							<div style="display: block; width: 100%;">
 								<label>글 제목</label>
 								<input style="margin-bottom: 30px;border: 1px solid gray;"
@@ -90,7 +81,7 @@ border-radius:6px;
 									<button type="submit" class="btn-write">작성하기 </button>
 								</div>
 								<div>
-									<button id="backList" class="btn-backlist" onclick="return false;"> 목록으로 </button>
+									<button id="backList" class="btn-backlist" > 목록으로 </button>
 								</div>
 							</div>
 							<!-- button   -->
@@ -127,7 +118,7 @@ border-radius:6px;
 						  
 					  }else{
 					  
-					  formObj.attr("action","/sw/swWrite");
+					  formObj.attr("action","/admin/boardWrite");
 					  // 폼태그 이동방식 설정 GET
 					  formObj.attr("method","post");
 					  // 폼태그 정보 저장해서 페이지 이동
@@ -136,7 +127,7 @@ border-radius:6px;
 				  });
 		    	
 		     	 $("#backList").click(function(){
-		     		 return window.location.href = "community";
+		     		 return window.location.href = "/board/notice";
 		     	 })
 		  });
       

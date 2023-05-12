@@ -31,18 +31,23 @@
 	<!-- 1:1 문의 리스트 -->
 	<select id="getMsgListCnt" resultType="int">
 	<![CDATA[  
-	select count(b_no)
-	from wc_board
-	where b_reciver = 'admin'
-	order by b_regdate desc
+	select count(w.b_no)
+	from wc_board w left join wc_board r
+	on w.b_reciver = r.b_writer
+	and w.b_writer = r.b_reciver
+	where w.b_reciver = 'admin'
+	and r.b_no is null
 	]]> 
 	</select>
 	<select id="getMsgList" resultType="BoardVO">
 	<![CDATA[  
-	select *
-	from wc_board
-	where b_reciver = 'admin'
-	order by b_regdate desc
+	select w.*
+	from wc_board w left join wc_board r
+	on w.b_reciver = r.b_writer
+	and w.b_writer = r.b_reciver
+	where w.b_reciver = 'admin'
+	and r.b_no is null
+	order by w.b_regdate desc
 	limit #{pageSize,javaType=INTEGER}
 	offset #{startRow,javaType=INTEGER}
 	]]> 
@@ -56,7 +61,6 @@
 	from wc_member
 	where m_id != 'admin'
 	and m_regdate is not null
-	order by m_regdate desc
 	]]> 
 	</select>
 	<select id="getMemberList" resultType="MemberVO">
@@ -78,7 +82,6 @@
 	select count(c_no)
 	from wc_class
 	where c_confirm = 'N'
-	order by c_regdate desc
 	]]> 
 	</select>
 	<select id="getClassList" resultType="ClassVO">
@@ -99,7 +102,6 @@
 	select count(r_no)
 	from wc_reply
 	where b_no is null
-	order by r_regdate desc
 	]]> 
 	</select>
 	<select id="getReviewList" resultType="ReplyVO">
@@ -119,7 +121,6 @@
 	<![CDATA[  
 	select count(p_no)
 	from wc_rsrv_pay
-	order by p_paydate desc
 	]]> 
 	</select>
 	<select id="getPayList" resultType="map">
@@ -133,6 +134,27 @@
 	]]> 
 	</select>
 	<!-- 결제 리스트 -->
+	
+	<!-- 댓글 리스트 조회 -->
+	<select id="getCommentListCnt" resultType="int">
+	<![CDATA[  
+	select count(r_no)
+	from wc_reply
+	where b_no = #{b_no}
+	
+	]]> 
+	</select>
+	<select id="getCommentList" resultType="ReplyVO">
+	<![CDATA[  
+	select *
+	from wc_reply
+	where b_no = #{b_no}
+	order by r_regdate desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]> 
+	</select>
+	<!-- 댓글 리스트 조회 -->
 	
 	<!-- 공지사항 등록 / 1:1문의 답변 -->
 	<insert id="writeBoard">
@@ -150,12 +172,18 @@
 	]]> 
 	</select>
 	<!-- 글 조회 -->
-	
+		
 	<!-- 커뮤니티 글 삭제 -->
 	<delete id="deleteBoard">
 	delete from wc_board where b_no = #{bno}
 	</delete>
 	<!-- 커뮤니티 글 삭제 -->
+	
+	<!-- 커뮤니티 댓글 삭제 -->
+	<delete id="deleteReply">
+	delete from wc_reply where r_no = #{rno}
+	</delete>
+	<!-- 커뮤니티 댓글 삭제 -->
 	
 	<!-- 회원정보 수정 -->
 	<update id="updateMember">
@@ -214,11 +242,11 @@
 	<!-- 클래스 등록 승인 거부 -->
 	
 	<!-- 리뷰 삭제 -->
-	<update id="deleteReview">
-	update wc_reply set
-	r_content = '관리자에 의해 삭제된 글 입니다'
-	where r_no = #{rno}
-	</update>
+	<delete id="deleteReview">
+	delete from wc_reply
+	where r_no = #{rno}  
+	</delete>
 	<!-- 리뷰 삭제 -->
+	
 	
 </mapper>	
