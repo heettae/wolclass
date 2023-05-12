@@ -543,85 +543,82 @@ $(document).ready(function(){
 									<div class="pagination">
 										<ul>
 											<c:if test="${map.startPage > map.pageBlock }">
-												<li><a class="pageNumbers" id="${map.startPage-1}">이전</a></li>
+												<li><a onclick="getList(${map.startPage-1})">이전</a></li>
 											</c:if>
 											
 											<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
-												<li><a class="pageNumbers" id="${i }">${i }</a></li>
+												<li><a onclick="getList(${i})">${i }</a></li>
 											</c:forEach>
 											
 											<c:if test="${map.pageCount > map.endPage }">
-												<li><a class="pageNumbers" id="${map.endPage+1}">다음</a></li>
+												<li><a onclick="getList(${map.endPage+1})">다음</a></li>
 											</c:if>
 										</ul>
 									</div>
 									<!-- 페이지 이동시 데이터 처리 -->
 									<script type="text/javascript">
-									$(document).ready(function(){
-										const criteria = new Object();
-										criteria.c_no = Number('${map.c_no}');
-										criteria.pageNum = 1;
-										criteria.startPage = Number('${map.startPage}');
-										criteria.endPage = Number('${map.endPage}');
-										criteria.pageCount = Number('${map.pageCount}');
-										criteria.pageBlock = Number('${map.pageBlock}');
-										
-										// pageNum			
-										$(".pageNumbers").click(function(){
-											criteria.pageNum = Number($(this).attr('id'));
-											console.log(criteria.pageNum);
-											getList();
-										});	
-	
-										
-										function getList(){
-											$.ajax({
-												url: "/replyrest/list",
-												type: "POST",
-												data: criteria,
-												success: function(data) {
-													var html = "";
-													$.each(data.reviewList, function(index, vo) { // 데이터를 순회하면서 HTML 코드 생성
-												        html += "<div style='border-bottom: 1px solid #ddd; height: 150px;'>";
-												        html += "<div style='width: 100%; display: flex; font-weight: 600; justify-content: space-between; border-bottom: 1px solid #ddd; height: 30%; align-items: baseline;'>";
-												        html += "<div style='width: 30%;'><input style='text-align: center; margin-top: 6%; font-size: inherit;' type='text' readonly='readonly' value='작성자 ID: " + vo.m_id + "'></div>";
-												        html += "<div>별점";
-												        for (var i = 1; i <= vo.r_score; i++) {
-												          html += "<img alt='별' src='/resources/img/star5.png'>";
-												        }
-												        if (vo.r_score < 5) {
-												          for (var i = 1; i <= 5 - vo.r_score; i++) {
-												            html += "<img alt='빈별' src='/resources/img/star6.png'>";
-												          }
-												        }
-												        html += "</div>";
-												        html += "<div style='width:40%;'><input style='font-size: inherit;' type='text' readonly='readonly' value='작성일: " + new Date(vo.r_regdate).toLocaleString() + "'></div>";
-												        html += "</div>";
-												        html += "<div style='width: 100%; padding: 10px'>";
-												        html += "<div style='height: 80%;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + vo.r_content + "</div>";
-												        html += "</div>";
-												        html += "</div>";
-												      });
-													$('.review_list').html(html);
-													html = "<ul>";
-													if(data.map.startPage > data.map.pageBlock) {
-														html += "<li><a class='pageNumbers' id='"+(data.map.startPage-1)+"'>이전</a></li>";
-													}
-													for(var i=data.map.startPage; i<data.map.endPage; i++){
-														html += "<li><a class='pageNumbers' id='"+i+"'>"+i+"</a></li>";
-													}
-													if(data.map.pageCount > data.map.endPage) {
-														html += "<li><a class='pageNumbers' id='"+(data.map.endPage+1)+"'>다음</a></li>";
-													}
-													html += "</ul>";
-													$('.pagination').html(html);
-												},
-												error: function(data) {
-													console.log("후기 가져오기 실패 : "+data);
+									const criteria = new Object();
+									criteria.c_no = Number('${map.c_no}');
+									criteria.pageNum = 1;
+									criteria.startPage = Number('${map.startPage}');
+									criteria.endPage = Number('${map.endPage}');
+									criteria.pageCount = Number('${map.pageCount}');
+									criteria.pageBlock = Number('${map.pageBlock}');
+
+									
+									function getList(pageNum){
+										criteria.pageNum = pageNum;
+										$.ajax({
+											url: "/replyrest/list",
+											type: "POST",
+											data: criteria,
+											success: function(data) {
+												var html = "";
+												$.each(data.reviewList, function(index, vo) { // 데이터를 순회하면서 HTML 코드 생성
+											        html += "<div style='border-bottom: 1px solid #ddd; height: 150px;'>";
+											        html += "<div style='width: 100%; display: flex; font-weight: 600; justify-content: space-between; border-bottom: 1px solid #ddd; height: 30%; align-items: baseline;'>";
+											        html += "<div style='width: 30%;'><input style='text-align: center; margin-top: 6%; font-size: inherit;' type='text' readonly='readonly' value='작성자 ID: " + vo.m_id + "'></div>";
+											        html += "<div>별점";
+											        for (var i = 1; i <= vo.r_score; i++) {
+											          html += "<img alt='별' src='/resources/img/star5.png'>";
+											        }
+											        if (vo.r_score < 5) {
+											          for (var i = 1; i <= 5 - vo.r_score; i++) {
+											            html += "<img alt='빈별' src='/resources/img/star6.png'>";
+											          }
+											        }
+											        html += "</div>";
+											        html += "<div style='width:40%;'><input style='font-size: inherit;' type='text' readonly='readonly' value='작성일: " + new Date(vo.r_regdate).toLocaleString() + "'></div>";
+											        html += "</div>";
+											        html += "<div style='width: 100%; padding: 10px'>";
+											        html += "<div style='height: 80%;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + vo.r_content + "</div>";
+											        html += "</div>";
+											        html += "</div>";
+											      });
+												$('.review_list').html(html);
+												criteria.startPage = Number(data.map.startPage);
+												criteria.endPage = Number(data.map.endPage);
+												criteria.pageCount = Number(data.map.pageCount);
+												criteria.pageBlock = Number(data.map.pageBlock);
+												console.log(criteria);
+												html = "<ul>";
+												if(criteria.startPage > criteria.pageBlock) {
+													html += "<li><a onclick='getList("+(criteria.startPage-1)+")'>이전</a></li>";
 												}
-											});
-										}
-									});
+												for(var i=criteria.startPage; i<=criteria.endPage; i++){
+													html += "<li><a onclick='getList("+i+")'>"+i+"</a></li>";
+												}
+												if(criteria.pageCount > criteria.endPage) {
+													html += "<li><a onclick='getList("+(criteria.endPage+1)+")'>다음</a></li>";
+												}
+												html += "</ul>";
+												$('.pagination').html(html);
+											},
+											error: function(data) {
+												console.log("후기 가져오기 실패 : "+data);
+											}
+										});
+									}
 									</script> 
 									<!-- 페이지 이동시 데이터 처리 -->
 									 <!-- 후기페이징  -->

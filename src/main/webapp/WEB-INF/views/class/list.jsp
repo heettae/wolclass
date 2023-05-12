@@ -25,6 +25,53 @@ function openLocation(){
 </script>
 <!-- 지도 팝업창 관련 -->
 
+<style>
+	.col-xs-10 {
+    width: 100%;
+	}
+
+	#btnMap{
+	border: 1.5px solid #fff;
+    /* background: transparent none repeat scroll 0% 0%; */
+    border-radius: 5px;
+    padding: 9px 25px;
+    margin-top: 10px;
+    margin-right: 5px;
+    background-color: lightgray;
+	}
+
+ 	#best { 
+     border: 1.5px solid #777777; 
+     border-radius: 200px; 
+     padding: 9px 25px; 
+     margin-top: 10px; 
+     margin-right: 5px; 
+ 	} 
+
+	#orderSelector{
+	border: 1px solid lightgrey;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: gray;
+    margin-right: 0px;
+    margin-left: 703px;
+    }
+    
+    #mapDiv{
+    display: contents;
+    }
+    
+    #btnPage{
+      display: flex;
+	  justify-content: center;
+  	  align-items: center;
+    
+    }
+
+</style>
+
 <div class="content-area recent-property" style="padding-bottom: 60px; background-color: rgb(252, 252, 252);">
 <div class="container">   
 <div class="row">
@@ -38,7 +85,7 @@ function openLocation(){
 			인기 검색어<br>
 			<c:if test="${psList != null && psList.size() > 0}">
 			<c:forEach var="ps" items="${psList }">
-				<button class="btn border-btn more-black"
+				<button class="btn border-btn more-black" id="best"
 				onclick="location.href='/class/list?search=${ps }'">${ps }</button>
 			</c:forEach>
 			</c:if>
@@ -47,6 +94,10 @@ function openLocation(){
 		<!-- 정렬 조건 설정  -->
 		<div class="col-xs-10 page-subheader sorting pl0">
 		<hr>
+	        <div id="mapDiv">
+	            <button class="btn border-btn more-black" id="btnMap" onclick="openLocation()"><i class="fa fa-map-marker" ></i> 내 주변 검색</button>
+	            <button class="btn border-btn more-black" id="btnMap" onclick="openMap()"><i class="fa fa-map-marker" ></i> 지도 열기</button>
+	        </div>
 			<select id="orderSelector">
 		  		<option value="0" ${map.order == 0 ? 'selected' : ''}>최신순</option>
 				<option value="1" ${map.order == 1 ? 'selected' : ''}>인기순</option>
@@ -54,10 +105,6 @@ function openLocation(){
 				<option value="3" ${map.order == 3 ? 'selected' : ''}>낮은 가격순</option>
 				<option value="4" ${map.order == 4 ? 'selected' : ''}>높은 가격순</option>
 			</select>
-	        <div>
-	            <button class="btn border-btn more-black" onclick="openLocation()"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
-	            <button class="btn border-btn more-black" onclick="openMap()"><i class="fa fa-map-marker"></i> 지도 열기</button>
-	        </div>
 		</div>
 		<!-- 정렬 조건 설정  -->
 		<!-- 지도 열기 버튼  -->
@@ -111,7 +158,7 @@ function openLocation(){
 			<!-- 검색된 클래스 데이터 출력 -->
 		
 			<!-- 페이징 처리  -->
-			<div class="col-md-12"> 
+			<div class="col-md-12" id="btnPage"> 
 			    <div class="pull-right">
 			        <div class="pagination">
 						<ul>
@@ -119,7 +166,7 @@ function openLocation(){
 							<li><a id="prev">이전</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
-							<li><a class="pageNumbers">${i }</a></li>
+							<li><a style="cursor: pointer;" class="pageNumbers">${i }</a></li>
 							</c:forEach>
 							<c:if test="${map.pageCount > map.endPage }">
 							<li><a id="next">다음</a></li>
