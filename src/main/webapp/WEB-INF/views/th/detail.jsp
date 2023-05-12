@@ -410,14 +410,17 @@ $(document).ready(function(){
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
                                     <span class="property-info-entry">
                                         <span class="property-info-label">레벨</span>
-                                        <span class="property-info-value">${classVO.c_level }</span>
+                                        <span class="property-info-value">
+<%--                                         <c:if test="${classVO.c_level==1 }"> --%>
+                                        ${classVO.c_level }</span>
+<%--                                         </c:if> --%>
                                     </span>
                                 </div>
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
                                     <span class="property-info-entry">
                                         <span class="property-info-label">최대인원</span>
-                                        <span class="property-info-value">${classVO.c_maxperson }</span>
+                                        <span class="property-info-value">${classVO.c_maxperson }명</span>
                                     </span>
                                 </div>
 
@@ -496,13 +499,139 @@ $(document).ready(function(){
 
                             <div class="section property-video"> 
                                 <h4 class="s-property-title" id="review">후기</h4> 
-<!--                                 <div class="video-thumb"> -->
-<!--                                     <a class="video-popup" href="yout" title="Virtual Tour"> -->
-<!--                                         <img src="assets/img/property-video.jpg" class="img-responsive wp-post-image" alt="Exterior">             -->
-<!--                                     </a> -->
-<!--                                 </div> -->
-                            </div>
-                            <!-- End video area  -->
+<!-- 후기 -->
+
+							<div class="review_write_container">
+									<div class="review_list_container">
+										<div class="review_list">
+										<c:if test="${reviewList != null && reviewList.size() > 0}">
+											<c:forEach var="vo" items="${reviewList }">
+													<div>
+															<div style="width: 100%; display: flex; font-weight: 600; justify-content: space-between;	
+															border-bottom: 1px solid #ddd; height: 30%; align-items: baseline; ">
+																<div style="width: 30%;">
+																<input style=" text-align: center; margin-top: 6%; font-size: inherit;" type="text"
+																	readonly="readonly" value="${vo.m_id}">
+																</div>
+																<div>
+
+																		<c:forEach begin="1" end="${vo.r_score }">
+																		   <img alt="별" src="/resources/img/star5.png">
+																		   </c:forEach>
+																		<c:if test="${vo.r_score < 5}">
+																		   <c:forEach begin="1" end="${5-vo.r_score}">
+																		   <img alt="빈별" src="/resources/img/star6.png">
+																		   </c:forEach>
+																		</c:if>
+																</div>
+																<div style="width:40%;">
+																<input style="font-size: inherit;" 
+																type="text"	readonly="readonly"	value="${vo.r_regdate.toString().split(' ')[0]}">
+																</div>
+															</div>
+															<div style="width: 100%; padding: 10px">
+																<div style="height: 80%;">
+																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${vo.r_content }
+<%-- 																	<textarea rows="3" style="border: none;width: 96%; margin: 5px 2%;" maxlength="280" readonly="readonly"> ${vo.r_content }</textarea>	 --%>
+																</div>
+															</div>
+													</div>
+												</c:forEach>
+											</c:if>
+										</div>
+							        <!-- 후기페이징  -->
+									<div class="pagination">
+										<ul>
+											<c:if test="${map.startPage > map.pageBlock }">
+												<li><a class="pageNumbers" id="${map.startPage-1}">이전</a></li>
+											</c:if>
+											
+											<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
+												<li><a class="pageNumbers" id="${i }">${i }</a></li>
+											</c:forEach>
+											
+											<c:if test="${map.pageCount > map.endPage }">
+												<li><a class="pageNumbers" id="${map.endPage+1}">다음</a></li>
+											</c:if>
+										</ul>
+									</div>
+									<!-- 페이지 이동시 데이터 처리 -->
+									<script type="text/javascript">
+									$(document).ready(function(){
+										const criteria = new Object();
+										criteria.c_no = Number('${map.c_no}');
+										criteria.pageNum = 1;
+										criteria.startPage = Number('${map.startPage}');
+										criteria.endPage = Number('${map.endPage}');
+										criteria.pageCount = Number('${map.pageCount}');
+										criteria.pageBlock = Number('${map.pageBlock}');
+										
+										// pageNum			
+										$(".pageNumbers").click(function(){
+											criteria.pageNum = Number($(this).attr('id'));
+											console.log(criteria.pageNum);
+											getList();
+										});	
+	
+										
+										function getList(){
+											$.ajax({
+												url: "/replyrest/list",
+												type: "POST",
+												data: criteria,
+												success: function(data) {
+													var html = "";
+													$.each(data.reviewList, function(index, vo) { // 데이터를 순회하면서 HTML 코드 생성
+												        html += "<div style='border-bottom: 1px solid #ddd; height: 150px;'>";
+												        html += "<div style='width: 100%; display: flex; font-weight: 600; justify-content: space-between; border-bottom: 1px solid #ddd; height: 30%; align-items: baseline;'>";
+												        html += "<div style='width: 30%;'><input style='text-align: center; margin-top: 6%; font-size: inherit;' type='text' readonly='readonly' value='작성자 ID: " + vo.m_id + "'></div>";
+												        html += "<div>별점";
+												        for (var i = 1; i <= vo.r_score; i++) {
+												          html += "<img alt='별' src='/resources/img/star5.png'>";
+												        }
+												        if (vo.r_score < 5) {
+												          for (var i = 1; i <= 5 - vo.r_score; i++) {
+												            html += "<img alt='빈별' src='/resources/img/star6.png'>";
+												          }
+												        }
+												        html += "</div>";
+												        html += "<div style='width:40%;'><input style='font-size: inherit;' type='text' readonly='readonly' value='작성일: " + new Date(vo.r_regdate).toLocaleString() + "'></div>";
+												        html += "</div>";
+												        html += "<div style='width: 100%; padding: 10px'>";
+												        html += "<div style='height: 80%;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + vo.r_content + "</div>";
+												        html += "</div>";
+												        html += "</div>";
+												      });
+													$('.review_list').html(html);
+													html = "<ul>";
+													if(data.map.startPage > data.map.pageBlock) {
+														html += "<li><a class='pageNumbers' id='"+(data.map.startPage-1)+"'>이전</a></li>";
+													}
+													for(var i=data.map.startPage; i<data.map.endPage; i++){
+														html += "<li><a class='pageNumbers' id='"+i+"'>"+i+"</a></li>";
+													}
+													if(data.map.pageCount > data.map.endPage) {
+														html += "<li><a class='pageNumbers' id='"+(data.map.endPage+1)+"'>다음</a></li>";
+													}
+													html += "</ul>";
+													$('.pagination').html(html);
+												},
+												error: function(data) {
+													console.log("후기 가져오기 실패 : "+data);
+												}
+											});
+										}
+									});
+									</script> 
+									<!-- 페이지 이동시 데이터 처리 -->
+									 <!-- 후기페이징  -->
+									</div>
+								</div>
+							</div>
+<!-- 후기 내용  -->
+
+
+
                             
                             
 						
@@ -581,178 +710,153 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 $(document).ready(function(){
-	// 글 번호를 저장한 폼태그
-//  	var formObj = $("form[role='form']"); 
-		  // 결제하기
-		  $("#reserve").click(function(){
-			 if( ${id == null}){
-			  location.href='/db/login';
-			  return;
-			 }
-			 
-				 alert('결제창띄우기');
-			        var IMP = window.IMP; 
-			        IMP.init("imp75550270"); 
-			       	
-			        
-			        $.ajax({
-							url:"/th/getP_no",
-							type:"post",
-						 	//contentType: "application/json; charset=utf-8",
-							dataType:"json",
-							success:function(data){
-								alert("p_no 가져오기");
-								console.log(data);
-								p_no = data;
-								$('#p_no').val(p_no);
-							
-							},	
-							error:function(data){
-								alert("실패");
-								// 페이지 이동 후 실패했을 때 동작
-							}
-						}); // p_no ajax
 
-			       
-						//$("#d_file").append("<input type='hidden' name='file"+cnt+"'><br>");
+  $("#reserve").click(function(){
+	 if( ${id == null}){
+	  location.href='/db/login';
+	  return;
+	 }
+
+		 //alert('결제창띄우기');
+	        var IMP = window.IMP; 
+	        IMP.init("imp75550270"); 
+	       	
+	        
+	        $.ajax({
+					url:"/th/getP_no",
+					type:"post",
+				 	//contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					success:function(data){
+						//alert("p_no 가져오기");
+						console.log(data);
+						p_no = data;
+						$('#p_no').val(p_no);
+					
+					},	
+					error:function(data){
+						alert("실패");
+						// 페이지 이동 후 실패했을 때 동작
+					}
+				}); // p_no ajax
+
+	       
+				//$("#d_file").append("<input type='hidden' name='file"+cnt+"'><br>");
+				
+				date = $("#thdatepicker").val();
+				$('#selectedDate').val(date);
+				$('#price').val(price);
 						
-						date = $("#thdatepicker").val();
-						$('#selectedDate').val(date);
-						$('#price').val(price);
-								
-							
-//////
-						IMP.request_pay({
-					    pg : 'html5_inicis.INIpayTest',
-					    pay_method : 'card',
-					    merchant_uid: p_no, // 상점에서 관리하는 주문 번호${p_no}
-					    name : "${classVO.c_name}",
-					    amount : price,
-					    buyer_email: "${memberVO.m_email}",
-					    buyer_name: "${memberVO.m_name}",
-					    buyer_tel: "${memberVO.m_phone}"
-					   // ,buyer_addr : '서울특별시 강남구 삼성동',
-					   // buyer_postcode : '123-456'
-					}, function(rsp) {
-						if ( rsp.success ) {
-					    alert("결제까지 성공했음");
-					    //alert($("#pNum").val());
-					    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-					    	var result = {
-							"imp_uid" : rsp.imp_uid,
-							"merchant_uid" : rsp.merchant_uid,
-							"p_no" : p_no,
-							"t_no" : $("#t_no").val(),
-							"m_id" : "${id}",
-							"selectedDate": $("#thdatepicker").val(),
-							"c_no": c_no,
-							"t_start":$("#time").val(),
-							"peopleNum": $("#pNum").val(),
-							"point" : $('#point').val(),
-							"subs": $('#subs').is(':checked'),
-							"c_price" : "${classVO.c_price}" ,
-							"price" : rsp.paid_amount,
-							"status" : rsp.status
-							}
-					   		console.log(result);
-					    	
-					    	
-					    	jQuery.ajax({
-					    		url: "/thr/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
-					    		type: 'POST',
- 					    		//contentType : "application/json",
+					
+
+				IMP.request_pay({
+			    pg : 'html5_inicis.INIpayTest',
+			    pay_method : 'card',
+			    merchant_uid: p_no, // 상점에서 관리하는 주문 번호${p_no}
+			    name : "${classVO.c_name}",
+			    amount : price,
+			    buyer_email: "${memberVO.m_email}",
+			    buyer_name: "${memberVO.m_name}",
+			    buyer_tel: "${memberVO.m_phone}"
+			   // ,buyer_addr : '서울특별시 강남구 삼성동',
+			   // buyer_postcode : '123-456'
+			}, function(rsp) {
+				if ( rsp.success ) {
+			    alert("결제까지 성공했음");
+			    //alert($("#pNum").val());
+			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+			    	var result = {
+					"imp_uid" : rsp.imp_uid,
+					"merchant_uid" : rsp.merchant_uid,
+					"p_no" : p_no,
+					"t_no" : $("#t_no").val(),
+					"m_id" : "${id}",
+					"selectedDate": $("#thdatepicker").val(),
+					"c_no": c_no,
+					"t_start":$("#time").val(),
+					"peopleNum": $("#pNum").val(),
+					"point" : $('#point').val(),
+					"subs": $('#subs').is(':checked'),
+					"c_price" : "${classVO.c_price}" ,
+					"price" : rsp.paid_amount,
+					"status" : rsp.status
+					}
+			   		console.log(result);
+
+			    	jQuery.ajax({
+			    		url: "/thr/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
+			    		type: 'POST',
+				    		//contentType : "application/json",
+			    		data: JSON.stringify(result),
+			    		contentType:'application/json;',
+				        success: function(res){
+					        console.log(res);
+				        	if (res === "ok") {		    	
+				        		//console.log("insert ok!");
+	
+				        	}else{
+					            console.log("Insert Fail!!!");
+					        }
+					     },
+				        error:function(){
+				          console.log("Insert ajax 통신 실패!!!");
+				        }
+			    	
+			    	
+			    	
+			    	}).done(function(data) {
+			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+			    		console.log("done"+data);
+			    		console.log("done"+rsp.imp_uid);
+			    		
+			    		 $.ajax({
+			    	            url: "/thr/complete",
+			    	            type: "POST",
 					    		data: JSON.stringify(result),
 					    		contentType:'application/json;',
-						        success: function(res){
-							        console.log(res);
-						        	if (res === "ok") {
+						        success: function(r){
+						        	//alert("complete 호출")
+						        	console.log("r : "+r);
 						        	
-						        	alert("insert ok!");
-						        	
-									
-						        	
-						        	
-						        	}else{
-							             console.log("Insert Fail!!!");
-							        }
-							     },
-						        error:function(){
-						          console.log("Insert ajax 통신 실패!!!");
-						        }
-					    	
-					    	
-					    	
-					    	}).done(function(data) {
-					    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-					    		console.log("done"+data);
-					    		console.log("done"+rsp.imp_uid);
-					    		
-					    		 $.ajax({
-					    	            url: "/thr/complete",
-					    	            type: "POST",
-							    		data: JSON.stringify(result),
-							    		contentType:'application/json;',
-								        success: function(r){
-								        	alert("complete 호출")
-								        	console.log("r : "+r);
-								        	
-								        	 if (r === "success") {
-								        		
-									    		 $.ajax({
-									    	            url: "/th/orderSuccess",
-									    	            type: "POST",
-											    		data: JSON.stringify(result),
-											    		contentType:'application/json;',
-												        success: function(orderSuccessCnt){
-												        	if(orderSuccessCnt >= 1) {
-												        		var msg = '결제가 완료되었습니다.';
-												    			msg += '\n고유ID : ' + rsp.imp_uid;
-												    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-												    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-												    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
-												    			
-												    			alert(msg);
-												    			location.href='/th/payments';
-												        	}
-												        }
-								        		});
-								        		 
-								        		
-								    		} else {
-								    			//[3] 아직 제대로 결제가 되지 않았습니다.
-								    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-								    		}
-								        	 
-								        		 
-								        		 
-								        		 
-								        	
-								        } // complete success
-					    		 }); // ajax
-					    		
-					    		
-					    		
-					    		
-					    		
-					    		
-					    	}); // done
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += '에러내용 : ' + rsp.error_msg;
-					        
-					        alert(msg);
-					    }
-					});					
-								
+						        	 if (r === "success") {
+							    		 $.ajax({
+						    	            url: "/th/orderSuccess",
+						    	            type: "POST",
+								    		data: JSON.stringify(result),
+								    		contentType:'application/json;',
+									        success: function(orderSuccessCnt){
+									        	if(orderSuccessCnt >= 1) {
+									        		var msg = '결제가 완료되었습니다.';
+									    			msg += '\n고유ID : ' + rsp.imp_uid;
+									    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+									    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+									    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
+									    			alert(msg);
+									    			location.href='../db/classList';
+									        	}
+									        }
+						        		});
+						    		} else {
+						    			//[3] 아직 제대로 결제가 되지 않았습니다.
+						    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+						    		}	
+						        } // complete success
+			    		 }); // ajax
 
-					  
-		  });
+			    		
+			    	}); // done
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        
+			        alert(msg);
+			    }
+			});					
+						
 
-		  // 수정하기
-// 	  $(".btn-success").click(function(){
-// 		 formObj.submit();
-// 	  });	
-		  
+			  
+  });
+
 		  
  });
  
@@ -760,4 +864,4 @@ $(document).ready(function(){
  
 
 </script>
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../include/detailFooter.jsp" %>

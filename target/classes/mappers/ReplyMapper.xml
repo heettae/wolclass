@@ -5,6 +5,26 @@
 
 <mapper namespace="com.wolclass.mappers.ReplyMapper">
 	
+ 	<!-- 특정클래스 후기목록 조회 -->
+	<select id="getReviewListCnt" resultType="int">
+ 	<![CDATA[
+ 	select count(r_no)
+	from wc_reply 
+	where c_no = #{c_no}
+	 ]]>  
+ 	</select>
+ 	<select id="getReviewList" resultType="ReplyVO">
+ 	<![CDATA[
+	select *
+	from wc_reply 
+	where c_no = #{c_no}
+	order by r_no desc
+	limit #{pageSize,javaType=INTEGER}
+	offset #{startRow,javaType=INTEGER}
+	]]>
+ 	</select>
+ 	<!-- 특정클래스 후기목록 조회 -->
+
 	<select id="cnt" resultType="int">
 	<![CDATA[  
 	
