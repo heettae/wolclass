@@ -25,7 +25,11 @@ function openLocation(){
 </script>
 <!-- 지도 팝업창 관련 -->
 
-<!-- 클래스 리스트 HJ -->
+<div class="content-area recent-property" style="padding-bottom: 60px; background-color: rgb(252, 252, 252);">
+<div class="container">   
+<div class="row">
+
+<!-- 클래스 컨테이너 -->
 <div class="col-md-12 padding-top-40 properties-page">
 	<!-- 버튼 컨테이너 -->
 	<div class="col-md-12 "> 
@@ -50,13 +54,13 @@ function openLocation(){
 				<option value="3" ${map.order == 3 ? 'selected' : ''}>낮은 가격순</option>
 				<option value="4" ${map.order == 4 ? 'selected' : ''}>높은 가격순</option>
 			</select>
+	        <div>
+	            <button class="btn border-btn more-black" onclick="openLocation()"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
+	            <button class="btn border-btn more-black" onclick="openMap()"><i class="fa fa-map-marker"></i> 지도 열기</button>
+	        </div>
 		</div>
 		<!-- 정렬 조건 설정  -->
 		<!-- 지도 열기 버튼  -->
-        <div class="col-xs-2 layout-switcher">
-            <button class="btn border-btn more-black" onclick="openLocation()"><i class="fa fa-map-marker"></i> 내 주변 검색</button>
-            <button class="btn border-btn more-black" onclick="openMap()"><i class="fa fa-map-marker"></i> 지도 열기</button>
-        </div>
 		<!-- 지도 열기 버튼  -->
 	</div>
 	<!-- 버튼 컨테이너 -->
@@ -163,5 +167,8 @@ function openLocation(){
 	<!-- 리스트 컨테이너 -->
 </div>
 <!-- 클래스 리스트 HJ-->
+</div>
+</div>
+</div>
 
 <%@ include file="../include/footer.jsp" %>
