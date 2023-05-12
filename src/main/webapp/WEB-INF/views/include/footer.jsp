@@ -161,10 +161,10 @@ $(document).ready(function() {
 </script>
 <!-- 사용자 위치정보 받아오기 -->
 <script src="/resources/assets/js/modernizr-2.6.2.min.js"></script>
-<script src="/resources/assets/js/jquery-1.10.2.min.js"></script>
+<!-- <script src="/resources/assets/js/jquery-1.10.2.min.js"></script> -->
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="/resources/assets/js/bootstrap-select.min.js"></script>
-<script src="/resources/assets/js/bootstrap-hover-dropdown.js"></script>
+<!-- <script src="/resources/assets/js/bootstrap-select.min.js"></script> -->
+<!-- <script src="/resources/assets/js/bootstrap-hover-dropdown.js"></script> -->
 <script src="/resources/assets/js/easypiechart.min.js"></script>
 <script src="/resources/assets/js/jquery.easypiechart.min.js"></script>
 <script src="/resources/assets/js/owl.carousel.min.js"></script>

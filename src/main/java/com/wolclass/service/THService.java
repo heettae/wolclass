@@ -57,5 +57,8 @@ public interface THService {
 	
 	// 서버 결제정보 조회 TH
 	public RsrvPayVO getCancelInfo(String accessToken, RsrvPayVO rvo) throws Exception;
+
+	// 구독 테이블 insert TH
+	public Integer insertSubs(String m_id) throws Exception;
 	
 }
