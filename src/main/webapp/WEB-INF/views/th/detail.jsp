@@ -72,6 +72,53 @@
 /* 	border: 5px solid #e7e7e7; */
 /* 	border-radius: 15px; */
 	} 
+	
+	#div_review{
+	border-bottom: 5px solid #e7e7e7;
+    margin-bottom: 15px;
+	}
+	
+	
+	.review_list{
+	height: 350px;
+	}
+	
+
+	
+	#div_review ul {
+     list-style: none;
+     display: table;
+ 	 width: 100%;
+ 	 padding-inline-start : 0px;
+	}
+	
+	#div_review li {
+	display: inline-block;
+
+    
+	}
+	#div_review li:first-child {
+  	width: 150px
+	}
+	
+	#div_review li:last-child {
+	display: table-cell;
+  	text-align: right;
+  	width: 150px;
+	}
+	
+	.s-property-title {
+    margin-bottom: 25px;
+    color: #FFA500;
+    font-size: 25px;
+    }
+	.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+	}
 
 
   </style>
@@ -120,7 +167,7 @@ $(document).ready(function() {
    	 date = $("#thdatepicker").val();
    	 
    	 
-        alert(date);
+//         alert(date);
         if(date!=null){
        	 console.log(date+"null아님~!1111");
        	 
@@ -132,7 +179,7 @@ $(document).ready(function() {
 			 	contentType: "application/json; charset=utf-8",
 				dataType:"json",
 				success:function(data){
-					alert("성공");
+// 					alert("성공");
 					console.log(data);
 
 					
@@ -178,7 +225,7 @@ function timeSelected(){
 	   // if($("#time").val()!=null){
 	    	time = $("#time").val();
 	    	
-	    	alert(time+"dd");
+// 	    	alert(time+"dd");
 	    	
 	    	
 	       	 // 최대 인원 가져오기ajax
@@ -189,7 +236,7 @@ function timeSelected(){
 				 	contentType: "application/json; charset=utf-8",
 					dataType:"json",
 					success:function(data){
-						alert("인원 가져오기 성공");
+// 						alert("인원 가져오기 성공");
 						console.log(data.t_rem_p);
 						pNum=data.t_rem_p;
 						let t_no = data.t_no;
@@ -217,45 +264,58 @@ function timeSelected(){
 	    };
 
 	function changePNum(){
-	 	if($("#pNum").val()>pNum){
+// 	 	if($("#pNum").val()>pNum){
 		 	
-		 	alert(pNum+"명 이하로 입력하세요");
-		 	$("#pNum").val(1);
-		 	// 여기 바꾸기
-		 	}
+// 		 	alert(pNum+"명 이하로 입력하세요");
+// 		 	$("#pNum").val(1);
+// 		 	// 여기 바꾸기
+// 		 	}
 	}
 	
 	function changePoint(){
 	
-	let point = ${memberVO.m_point };
-	 	if($("#point").val()>point){
-		 	alert("보유 포인트 초과 (보유 포인트 : "+point+"p)");
-		 	}
+	// 	let point = ${memberVO.m_point };
+	// 	 	if($("#point").val()>point){
+	// 		 	alert("보유 포인트 초과 (보유 포인트 : "+point+"p)");
+	// 		 	}
 	}
 	
 	$(document).ready(function(){
-	   
-
-	
+		  let memberPoint = Number('${memberVO.m_point }');
 	  $('#time, #pNum, #point, #subs').on('input', function(){
-		  
-		  if(!($('#point').val()>=0)){
-			  $('#point').val(0);
-		  }
+// 		  if(!($('#point').val()>=0)){
+// 			  $('#point').val(0);
+// 		  }
+// 		  if(!($('#pNum').val()>=1)){
+// // 			  $('#pNum').val(0);
+// 			  parseInt($("#pNum").val(0));
+// 		  }
+
 		  var point = $('#point').val() ? $('#point').val() : 0;
 		  var subs = $('#subs').prop('checked') ? 0.5 : 1;
 		  var bPrice = ${classVO.c_price};
 		  price = (bPrice*subs)+(bPrice*($("#pNum").val()-1)) - point;
+		  if($("#point").val()>memberPoint){
+			 	alert("보유 포인트 초과 (보유 포인트 : "+memberPoint+"p)");
+			 	$('#point').val(memberPoint);
+		 	}
 		  
-		  // if 위치 바꾸자~!
+// 	 	  if($("#pNum").val()>pNum){
+// 		 	alert(pNum+"명 이하로 입력하세요");
+// 		 	parseInt($("#pNum").val(0));
+// 		  }
+		  
 		  if(price < 0){
 			   $('#point').val(0);
 			   $('#subs').prop('checked', false);
+			   $("#priceDisplay").text(bPrice + "원");
 			   
+		  }else{
+			  
+	        var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
+	        $("#priceDisplay").text(formattedPrice + "원"); // 가격 출력
 		  }
 	  
-        var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
-        $("#priceDisplay").text(formattedPrice + "원"); // 가격 출력
 	   
 	  })
 	});
@@ -446,7 +506,7 @@ $(document).ready(function(){
 
 						<!-- 클래스 소개 -->
                             <div class="section" id="detail">
-                                <h4 class="s-property-title">클래스 소개</h4>
+                                <h3 class="s-property-title">클래스 소개</h3>
 
                               	<img src="../resources/img/${classVO.c_img.split(',')[1] }" />
                            		<img src="../resources/img/${classVO.c_img.split(',')[2] }" />
@@ -506,35 +566,26 @@ $(document).ready(function(){
 										<div class="review_list">
 										<c:if test="${reviewList != null && reviewList.size() > 0}">
 											<c:forEach var="vo" items="${reviewList }">
+												<div id="div_review">
 													<div>
-															<div style="width: 100%; display: flex; font-weight: 600; justify-content: space-between;	
-															border-bottom: 1px solid #ddd; height: 30%; align-items: baseline; ">
-																<div style="width: 30%;">
-																<input style=" text-align: center; margin-top: 6%; font-size: inherit;" type="text"
-																	readonly="readonly" value="${vo.m_id}">
-																</div>
-																<div>
-
-																		<c:forEach begin="1" end="${vo.r_score }">
-																		   <img alt="별" src="/resources/img/star5.png">
-																		   </c:forEach>
-																		<c:if test="${vo.r_score < 5}">
-																		   <c:forEach begin="1" end="${5-vo.r_score}">
-																		   <img alt="빈별" src="/resources/img/star6.png">
-																		   </c:forEach>
-																		</c:if>
-																</div>
-																<div style="width:40%;">
-																<input style="font-size: inherit;" 
-																type="text"	readonly="readonly"	value="${vo.r_regdate.toString().split(' ')[0]}">
-																</div>
-															</div>
-															<div style="width: 100%; padding: 10px">
-																<div style="height: 80%;">
-																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${vo.r_content }
-<%-- 																	<textarea rows="3" style="border: none;width: 96%; margin: 5px 2%;" maxlength="280" readonly="readonly"> ${vo.r_content }</textarea>	 --%>
-																</div>
-															</div>
+													<ul>
+														<li>${vo.m_id}</li>
+														<li>
+														<c:forEach begin="1" end="${vo.r_score }">
+														   <img alt="별" src="/resources/img/star5.png">
+														   </c:forEach>
+														<c:if test="${vo.r_score < 5}">
+														   <c:forEach begin="1" end="${5-vo.r_score}">
+														   <img alt="빈별" src="/resources/img/star6.png">
+														   </c:forEach>
+														</c:if>
+														</li>
+														<li>
+														${vo.r_regdate.toString().split(' ')[0]}
+														</li>
+														</ul>
+													</div>
+													<div>${vo.r_content }</div>
 													</div>
 												</c:forEach>
 											</c:if>
@@ -543,15 +594,15 @@ $(document).ready(function(){
 									<div class="pagination">
 										<ul>
 											<c:if test="${map.startPage > map.pageBlock }">
-												<li><a onclick="getList(${map.startPage-1})">이전</a></li>
+												<li><a style= "cursor: pointer;" onclick="getList(${map.startPage-1})">이전</a></li>
 											</c:if>
 											
 											<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
-												<li><a onclick="getList(${i})">${i }</a></li>
+												<li><a style= "cursor: pointer;" onclick="getList(${i})">${i }</a></li>
 											</c:forEach>
 											
 											<c:if test="${map.pageCount > map.endPage }">
-												<li><a onclick="getList(${map.endPage+1})">다음</a></li>
+												<li><a style= "cursor: pointer;" onclick="getList(${map.endPage+1})">다음</a></li>
 											</c:if>
 										</ul>
 									</div>
@@ -575,10 +626,8 @@ $(document).ready(function(){
 											success: function(data) {
 												var html = "";
 												$.each(data.reviewList, function(index, vo) { // 데이터를 순회하면서 HTML 코드 생성
-											        html += "<div style='border-bottom: 1px solid #ddd; height: 150px;'>";
-											        html += "<div style='width: 100%; display: flex; font-weight: 600; justify-content: space-between; border-bottom: 1px solid #ddd; height: 30%; align-items: baseline;'>";
-											        html += "<div style='width: 30%;'><input style='text-align: center; margin-top: 6%; font-size: inherit;' type='text' readonly='readonly' value='작성자 ID: " + vo.m_id + "'></div>";
-											        html += "<div>별점";
+											        html += "<div id='div_review'>";
+											        html += "<div><ul><li>" + vo.m_id + "</li><li>";
 											        for (var i = 1; i <= vo.r_score; i++) {
 											          html += "<img alt='별' src='/resources/img/star5.png'>";
 											        }
@@ -587,14 +636,15 @@ $(document).ready(function(){
 											            html += "<img alt='빈별' src='/resources/img/star6.png'>";
 											          }
 											        }
+											        html += "</li><li>";
+											        html += new Date(vo.r_regdate).toISOString().split("T")[0];
+											        html += "</li>";
 											        html += "</div>";
-											        html += "<div style='width:40%;'><input style='font-size: inherit;' type='text' readonly='readonly' value='작성일: " + new Date(vo.r_regdate).toLocaleString() + "'></div>";
-											        html += "</div>";
-											        html += "<div style='width: 100%; padding: 10px'>";
-											        html += "<div style='height: 80%;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + vo.r_content + "</div>";
-											        html += "</div>";
+											        html += "<div>"+ vo.r_content + "</div>";
 											        html += "</div>";
 											      });
+												
+												
 												$('.review_list').html(html);
 												criteria.startPage = Number(data.map.startPage);
 												criteria.endPage = Number(data.map.endPage);
@@ -603,13 +653,13 @@ $(document).ready(function(){
 												console.log(criteria);
 												html = "<ul>";
 												if(criteria.startPage > criteria.pageBlock) {
-													html += "<li><a onclick='getList("+(criteria.startPage-1)+")'>이전</a></li>";
+													html += "<li><a style='cursor: pointer;' onclick='getList("+(criteria.startPage-1)+")'>이전</a></li>";
 												}
 												for(var i=criteria.startPage; i<=criteria.endPage; i++){
-													html += "<li><a onclick='getList("+i+")'>"+i+"</a></li>";
+													html += "<li><a style='cursor: pointer;' onclick='getList("+i+")'>"+i+"</a></li>";
 												}
 												if(criteria.pageCount > criteria.endPage) {
-													html += "<li><a onclick='getList("+(criteria.endPage+1)+")'>다음</a></li>";
+													html += "<li><a style='cursor: pointer;' onclick='getList("+(criteria.endPage+1)+")'>다음</a></li>";
 												}
 												html += "</ul>";
 												$('.pagination').html(html);
@@ -759,7 +809,7 @@ $(document).ready(function(){
 			   // buyer_postcode : '123-456'
 			}, function(rsp) {
 				if ( rsp.success ) {
-			    alert("결제까지 성공했음");
+// 			    alert("결제까지 성공했음");
 			    //alert($("#pNum").val());
 			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 			    	var result = {
