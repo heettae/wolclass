@@ -1,5 +1,6 @@
 package com.wolclass.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import com.wolclass.domain.ReplyVO;
 import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.domain.TimetableVO;
+import com.wolclass.service.ReplyService;
 import com.wolclass.service.SwBoardService;
 import com.wolclass.service.THService;
 import com.wolclass.service.TJService;
@@ -54,6 +56,9 @@ public class THController {
 	@Autowired
 	private SwBoardService swService;
 	
+	@Autowired
+	private ReplyService replyService;
+	
 	
 	
 	
@@ -64,7 +69,7 @@ public class THController {
 	}
 	
 	// 클래스 상세정보 TH
-	// http://localhost:8080/th/detail?c_no=1
+	// http://localhost:8080/th/detail?c_no=56
 	@RequestMapping(value = "/detail")
 	public void detailGET(@RequestParam("c_no")int c_no, Model model, HttpSession session) throws Exception {
 		logger.info(" detailGET() 호출 ");
@@ -90,17 +95,13 @@ public class THController {
 		model.addAttribute(cvo);
 		model.addAttribute("dateList", tvo);
 		
-		
-		
-		
+	
+		// 후기
+		Map<String,Object> map = new HashMap<>();
+		map.put("c_no",c_no);
+		model.addAttribute("reviewList", replyService.getList(map));
+		model.addAttribute("map", map);
 
-
-//		List<ReplyVO> reviewList = swService.selectPageNumReTotal(map);
-//		logger.info(" reviewList {}", reviewList.size());
-//		logger.info(" reviewList {}", reviewList);
-//
-//		model.addAttribute("map", map);
-//		model.addAttribute("reviewList", reviewList);
 	}
 	// 클래스 상세정보 TH
 	
@@ -176,42 +177,6 @@ public class THController {
 		
 	}
 	
-
-	
-
-	
-	// 구독
-	// http://localhost:8080/th/subscription
-	@RequestMapping(value = "/subscription")
-	public void subscriptionGET(Model model, HttpSession session) throws Exception {
-		logger.info(" subscriptionGET() 호출 ");
-		
-		String id = (String) session.getAttribute("id");
-		logger.info("session.id : "+id);
-//		if (id != null) {
-//			MemberVO mvo = tjService.getMemberInfo(id);
-//			SubscriptionVO svo = service.getSubsInfo(id);
-//			logger.info("getInfo"+mvo);
-//			logger.info("svo:"+svo);
-//			model.addAttribute(mvo);
-//			if(svo==null) {
-//				svo = new SubscriptionVO();
-//			}
-//			model.addAttribute(svo);
-//		}
-		//ClassVO cvo = service.getClassDetail(c_no);
-		//List<TimetableVO> tvo = service.getTimetable(c_no);
-		//logger.info("cvo : "+cvo );
-		//logger.info("tvo.size  : "+tvo.size());
-		//model.addAttribute(cvo);
-		//model.addAttribute("dateList", tvo);
-		
-	}
-	// 구독
-
-
-
-
 
 
 	

@@ -64,7 +64,6 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 			String accessToken = service.getAccessToken();
 			logger.info("token"+accessToken);
 			// imp_uid로 아임포트 서버에서 결제 정보 조회
-			// PayDTO -> rsrvPay로 변경하였음 (이유: service.updatePaymentInfo 환불할때도 쓸거라서)
 			RsrvPayVO paymentInfo = service.getPaymentInfo(accessToken, pdto);
 			
 			logger.info("결제정보조회"+paymentInfo);
@@ -72,18 +71,16 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 			// 결제되어야 하는 금액 조회
 			int selectPrice = service.selectPrice(pdto.getP_no());
 			logger.info("selectPrice"+selectPrice);
-			int amount = paymentInfo.getP_price(); // paymentInfo 타입 변경해서 바꿈
+			int amount = paymentInfo.getP_price(); 
 			logger.info("db에 입력된 금액"+selectPrice+",결제된 금액"+amount);
-										// 내부에서 price 계산하는건데 여기 있으면 안될듯
-										//int totalPrice = service.totalPrice(pdto); 
+
 			// 결제 검증하기
 			if(selectPrice == amount) {
 				service.updatePaymentInfo(paymentInfo); // DB에 결제 정보 저장
 				logger.info("update"+pdto);
-				if(paymentInfo.getP_status().equals("paid")) { // 결제 완료 // paymentInfo 타입 변경해서 바꿈
+				if(paymentInfo.getP_status().equals("paid")) { // 결제 완료
 					respEntity = new ResponseEntity<String>("success", HttpStatus.OK);
-				//}else if(paymentInfo.getStatus().equals("ready")) { // 가상계좌발급
-				//	return "vbankIssued";
+
 				}else {
 					respEntity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST); // error 400
 				}
@@ -99,11 +96,6 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 	}
 
 
-	
-	
-	
-	
-	
 	@RequestMapping(value = "/checkPayment", method = RequestMethod.POST)
 	public String checkPaymentPOST(@RequestBody String p_no) throws Exception {
 		logger.info("checkPaymentPOST() 호출");
@@ -118,27 +110,17 @@ private static final Logger logger = LoggerFactory.getLogger(THController.class)
 	public String refundPOST(@RequestBody String p_no) throws Exception {
 		logger.info("refundPOST() 호출");
 		logger.info("p_no: "+p_no);
-		
-		/*엑세스 토큰(access token) 발급 */
+
+		//엑세스 토큰
 		String accessToken = service.getAccessToken();
-		/*결제정보 조회*/
+		//결제정보 조회
 		RsrvPayVO resultVO = service.selectPayInfo(p_no);
 		logger.info("p_status"+resultVO.getP_status());
 		if(resultVO.getP_status().equals("cancelled")) {
 			return "already refund";
 		}
-//		int cancelableAmount = paymentInfoByMerchantId.getAmount() - paymentInfoByMerchantId.getCancelAmount();
-//		
-//		if(cancelableAmount <= 0) {// 이미 전액 환불된 경우
-//			return ("already refund");
-//		}
-		/*아임포트 REST API로 결제환불 요청*/
-		
-		//paymentInfoByMerchantId.setAmount(여기에 환불할 금액을 계산해서 넣으면 됨);
-		
-		//PaymentsModel cancelInfo = paymentsService.getCancelInfo(accessToken, paymentInfoByMerchantId, cancelableAmount);
 		RsrvPayVO cancelInfo = service.getCancelInfo(accessToken, resultVO);
-		/*환불결과 동기화*/
+		//환불결과 동기화
 		service.updatePaymentInfo(cancelInfo);
 		service.modifyOrder(p_no);
 		
