@@ -66,7 +66,7 @@ public class THController {
 	// 클래스 상세정보 TH
 	// http://localhost:8080/th/detail?c_no=1
 	@RequestMapping(value = "/detail")
-	public void detailGET(@RequestParam("c_no")int c_no, Model model,@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+	public void detailGET(@RequestParam("c_no")int c_no, Model model, HttpSession session) throws Exception {
 		logger.info(" detailGET() 호출 ");
 		
 		String id = (String) session.getAttribute("id");
@@ -81,6 +81,7 @@ public class THController {
 				svo = new SubscriptionVO();
 			}
 			model.addAttribute(svo);
+			model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
 		}
 		ClassVO cvo = service.getClassDetail(c_no);
 		List<TimetableVO> tvo = service.getTimetable(c_no);
@@ -88,19 +89,18 @@ public class THController {
 		logger.info("tvo.size  : "+tvo.size());
 		model.addAttribute(cvo);
 		model.addAttribute("dateList", tvo);
-		model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
 		
 		
 		
 		
 
 
-		List<ReplyVO> reviewList = swService.selectPageNumReTotal(map);
-		logger.info(" reviewList {}", reviewList.size());
-		logger.info(" reviewList {}", reviewList);
-
-		model.addAttribute("map", map);
-		model.addAttribute("reviewList", reviewList);
+//		List<ReplyVO> reviewList = swService.selectPageNumReTotal(map);
+//		logger.info(" reviewList {}", reviewList.size());
+//		logger.info(" reviewList {}", reviewList);
+//
+//		model.addAttribute("map", map);
+//		model.addAttribute("reviewList", reviewList);
 	}
 	// 클래스 상세정보 TH
 	
