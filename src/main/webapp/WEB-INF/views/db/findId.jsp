@@ -89,16 +89,6 @@
         <div class="modal-body">
 	      <div class="col-md-6" style="position: absolute; display: contents;">
 			<div class="box-for overflow" >
-				<!-- 이름과 이메일이 일치하지 않을때 -->
-<%-- 				<c:if test="${check == 1 }"> --%>
-<!-- 					<h2>일치하는 정보가 존재하지 않습니다.</h2> -->
-<%-- 				</c:if> --%>
-				
-				<!-- 이름과 이메일이 일치할때 -->
-<%-- 				<c:if test="${check == 0 }"> --%>
-<!-- 					<h2>귀하의 아이디는</h2> -->
-<%-- 					<h1>${id }</h1> --%>
-<%-- 				</c:if> --%>
 			</div>
 		  </div>
         </div>
@@ -108,6 +98,7 @@
     </div>
   </div>
 </div>
+<!-- Modal 내용 -->
 
 
 

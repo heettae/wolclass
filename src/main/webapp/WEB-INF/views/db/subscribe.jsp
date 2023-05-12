@@ -62,11 +62,11 @@
 	<div class="container">
 		 <div class="box-big">
 		  <div class="box-content">
-		    <h1>구독시 5번 50% 할인</h1>
-		    <button onclick="location.href='#'">구독하기</button>
+		    <h1>구독시 5번 50% 할인<br>9,900원</h1>
+		    <button type="button" id="subs">구독하기</button>
 		  </div>
 		</div>
-		<div style="margin: auto; width: 450px" >
+		<div style="margin: auto; width: 450px; padding-left: 45px" >
 			<c:if test="${vo != null }">
 			  <div class="box-small" style="display: inline-block;">
 			  	잔여기간 : ${vo.s_start.toString().split(' ')[0] }~${vo.s_end.toString().split(' ')[0] }

@@ -13,7 +13,7 @@
                                     <input type="hidden" name="m_id"  value="${vo.m_id }">
                                 <div class="form-group">
                                     <label for="m_pw">비밀번호</label>
-                                    <input type="password" class="form-control" id="m_pw" name="m_pw"  value="${vo.m_pw }"
+                                    <input type="password" class="form-control" id="m_pw" name="m_pw" 
                                     placeholder="비밀번호를 입력하세요. (영문,숫자,특수문자 조합하여 8~16자)" maxlength="16">
                                     <span class="final_pw_ck" style="display: none">비밀번호를 입력해주세요.</span>
                 					<span class="pwck_input_re_3" style="color: red; display: none">형식에 맞게 입력하시오(영문,숫자,특수문자 조합하여 8~16자)</span>

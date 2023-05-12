@@ -60,7 +60,8 @@
 		        <td>${vo.p_rsrvdate.toString().split('\\.')[0] }</td>
 		        <td>${vo.c_addr1 }${vo.c_addr2 }${vo.c_addrdetails}</td>
 		        <td>
-		        	<input type="button" value="문의하기" id="btn">
+		        	<input type="button" value="문의하기" id="btn"  
+		        		 onclick="location.href='/db/myinquiry?m_id=${vo.m_id}&&c_no=${vo.c_no }'">
 		        </td>
 		      </tr>
 	      </c:forEach>
@@ -73,7 +74,7 @@
 	      <th>클래스명</th>
 	      <th>예약날짜</th>
 	      <th>주소</th>
-	      <th>수강상태</th>
+	      <th>상태/리뷰</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -84,31 +85,31 @@
 		        <td>${vo2.c_addr1 }${vo2.c_addr2 }${vo2.c_addrdetails}</td>
 		        <td>
 		        	<c:if test="${vo2.p_status != 'paid' }">
-		        	<font color="blue">수강완료</font>
+			        	<font color="green">수강완료</font>
 		        	</c:if>
 		        	<c:if test="${vo2.p_status == 'paid' }">
-		        	<font color="red">리뷰등록</font>
+			        	<input type="button" value="리뷰등록" id="btn"  
+			        	onclick="location.href='/db/myreview?c_no=${vo2.c_no }&&p_no=${vo2.p_no }'">
 		        	</c:if>
 		        </td>
 		      </tr>
 	      </c:forEach>
 	  </tbody>
 	</table>
-	
 	<!-- 페이징처리  -->
-	<div class="pagination">
-		<ul>
-			<c:if test="${amap.startPage > amap.pageBlock }">
-			<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
-			</c:if>
-			<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
-			<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
-			</c:forEach>
-			<c:if test="${amap.pageCount > amap.endPage }">
-			<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
-			</c:if>
-		</ul>
-       </div>
+		<div class="pagination">
+			<ul>
+				<c:if test="${amap.startPage > amap.pageBlock }">
+				<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+				<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
+				</c:forEach>
+				<c:if test="${amap.pageCount > amap.endPage }">
+				<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
+				</c:if>
+			</ul>
+	    </div>
 	<!-- 페이징처리  -->
 </div>
 
