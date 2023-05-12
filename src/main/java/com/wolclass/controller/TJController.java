@@ -58,8 +58,6 @@ public class TJController {
 			categoryList.add(classVO);
 		}
 		String id = (String) session.getAttribute("id");
-		// 특정일 기준
-//		List<ClassVO> list = service.getClassList(map);
 
 		if (id != null) {
 			MemberVO vo = tjService.getMemberInfo(id);
