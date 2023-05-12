@@ -71,6 +71,9 @@
 			        <c:if test="${vo.p_status == 'cancelled'}">
 			        	<font color="red">결제취소</font>
 			        </c:if>
+			        <c:if test="${vo.p_status == 'complete'}">
+			        	<font color="blue">수강완료</font>
+			        </c:if>
 		        </td>
 		         <td>
 		          <c:if test="${vo.p_status == 'paid'}">
@@ -81,6 +84,23 @@
 	      </c:forEach>
 	  </tbody>
 	</table>
+	
+	<!-- 페이징처리  -->
+	<div class="pagination">
+		<ul>
+			<c:if test="${amap.startPage > amap.pageBlock }">
+			<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
+			</c:if>
+			<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+			<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
+			</c:forEach>
+			<c:if test="${amap.pageCount > amap.endPage }">
+			<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
+			</c:if>
+		</ul>
+      </div>
+	<!-- 페이징처리  -->
+	
 </div>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"

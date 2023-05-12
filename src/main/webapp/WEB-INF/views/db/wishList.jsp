@@ -53,6 +53,23 @@
 		</div>
 	</div>
 	<!-- 리스트 컨테이너 -->
+	
+	<!-- 페이징처리  -->
+		<div class="pagination">
+			<ul>
+				<c:if test="${amap.startPage > amap.pageBlock }">
+				<li><a id="prev" href="/admin/boardList?pageNum=${amap.startPage-1}">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+				<li><a class="pageNumbers" href="/admin/boardList?pageNum=${i}">${i }</a></li>
+				</c:forEach>
+				<c:if test="${amap.pageCount > amap.endPage }">
+				<li><a id="next" href="/admin/boardList?pageNum=${amap.endPage+1}">다음</a></li>
+				</c:if>
+			</ul>
+	    </div>
+	<!-- 페이징처리  -->
+	
 </div>
 <!-- 클래스 리스트 HJ-->
 

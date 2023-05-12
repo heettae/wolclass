@@ -106,32 +106,32 @@ public class DBDAOImpl implements DBDAO{
 	
 	// 결제내역 - 다빈
 	@Override
-	public List<Map<String,Object>> payList(String id) throws Exception {
-		return sqlSession.selectList(NAMESPACE+".payList",id);
+	public List<Map<String,Object>> payList(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".payList",map);
 	}
 	
 	// 내가 신청한 클래스(예약클래스) - 다빈
 	@Override
-	public List<Map<String,Object>> classList(String id) throws Exception {
-		return sqlSession.selectList(NAMESPACE+".classList", id);
+	public List<Map<String,Object>> classList(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".classList", map);
 	}
 	
 	// 내가 신청한 클래스(지난클래스) - 다빈
 	@Override
-	public List<Map<String,Object>> classList2(String id) throws Exception {
-		return sqlSession.selectList(NAMESPACE+".classList2", id);
+	public List<Map<String,Object>> classList2(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".classList2", map);
 	}
 	
 	// 메시지(받은) - 다빈
 	@Override
-	public List<BoardVO> msgList1(String id) throws Exception {
-		return sqlSession.selectList(NAMESPACE+".msgList1", id);
+	public List<BoardVO> msgList1(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".msgList1", map);
 	}
 	
 	// 메시지(보낸) - 다빈
 	@Override
-	public List<BoardVO> msgList2(String id) throws Exception {
-		return sqlSession.selectList(NAMESPACE+".msgList2", id);
+	public List<BoardVO> msgList2(Map<String,Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".msgList2", map);
 	}
 	
 	// 구독(남은기간) - 다빈 
@@ -140,4 +140,49 @@ public class DBDAOImpl implements DBDAO{
 		return sqlSession.selectOne(NAMESPACE+".subday",id);
 	}
 	
+	// 문의하기 - 다빈
+	@Override
+	public void myinquiry(RsrvPayVO vo) throws Exception {
+		sqlSession.selectOne(NAMESPACE+".qna", vo);
+	}
+	
+	// 문의하기 - 처리 - 다빈
+	@Override
+	public void myinquiryPro(Map<String, Object> map) throws Exception {
+		sqlSession.insert(NAMESPACE+".insertQna", map);
+	}
+	
+	// 마이페이지(후기등록) - 다빈
+	@Override
+	public void myreviewPro(Map<String, Object> map) throws Exception {
+		sqlSession.insert(NAMESPACE+".myreview", map);
+	}
+	
+	// 마이페이지(리뷰등록 완려) - 다빈
+	@Override
+	public void myreviewOk(String p_no) throws Exception {
+		sqlSession.update(NAMESPACE+".reviewOK", p_no);
+	}
+	
+	// 페이징 - 다빈
+	@Override
+	public Integer getclassListCnt(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".classListCnt", map);
+	}
+	@Override
+	public Integer getclassList2Cnt(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".classList2Cnt", map);
+	}
+	@Override
+	public Integer getmsgListCnt(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".msgList1Cnt", map);
+	}
+	@Override
+	public Integer getmsgList2Cnt(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".msgList2Cnt", map);
+	}
+	@Override
+	public Integer getpayListCnt(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".payListCnt", map);
+	}
 }

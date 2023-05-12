@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,31 +237,31 @@ public class DBServiceImpl implements DBService{
 	
 	// 결제내역 - 다빈
 	@Override
-	public List<Map<String,Object>> payList(String id) throws Exception {
-		return dbdao.payList(id);
+	public List<Map<String,Object>> payList(Map<String,Object> map) throws Exception {
+		return getListByType(map, 4);
 	}
 	
 	// 내가 신청한클래스(예약클래스) - 다빈
 	@Override
-	public List<Map<String,Object>> classList(String id) throws Exception {
-		return dbdao.classList(id);
+	public List<Map<String,Object>> classList(Map<String,Object> map) throws Exception {
+		return getListByType(map, 0);
 	}
 	
 	// 내가 신청한클래스(지난클래스) - 다빈
 	@Override
-	public List<Map<String,Object>> classList2(String id) throws Exception {
-		return dbdao.classList2(id);
+	public List<Map<String,Object>> classList2(Map<String,Object> map) throws Exception {
+		return getListByType(map, 1);
 	}
 	
 	// 메시지(받은) - 다빈
 	@Override
-	public List<BoardVO> msgList1(String id) throws Exception {
-		return dbdao.msgList1(id);
+	public List<BoardVO> msgList1(Map<String,Object> map) throws Exception {
+		return getListByType(map, 2);
 	}
 	// 메시지(보낸) - 다빈
 	@Override
-	public List<BoardVO> msgList2(String id) throws Exception {
-		return dbdao.msgList2(id);
+	public List<BoardVO> msgList2(Map<String,Object> map) throws Exception {
+		return getListByType(map, 3);
 	}
 	
 	// 구독(남은기간) - 다빈
@@ -269,5 +270,76 @@ public class DBServiceImpl implements DBService{
 		return dbdao.subscribe(id);
 	}
 	
+	// 문의하기 - 다빈
+	@Override
+	public void myinquiry(RsrvPayVO vo) throws Exception {
+		dbdao.myinquiry(vo);
+	}
 	
+	// 문의하기 처리 - 다빈
+	@Override
+	public void myinquiryPro(Map<String, Object> map) throws Exception {
+		dbdao.myinquiryPro(map);
+	}
+	
+	// 마이페이지(후기등록) - 다빈
+	@Override
+	public void myreviewPro(Map<String, Object> map) throws Exception {
+		dbdao.myreviewPro(map);
+	}
+	
+	// 마이페이지(리뷰등록 완려) - 다빈
+	@Override
+	public void myreviewOK(String p_no) throws Exception {
+		dbdao.myreviewOk(p_no);
+	}
+	
+	// 페이징 처리 - 다빈
+	private List getListByType(Map<String, Object> map, int type) throws Exception {
+		// 데이터 전처리
+		if(!map.containsKey("pageNum")) map.put("pageNum", "1");
+		// 데이터 전처리
+		
+		// 페이징 계산
+		int pageSize = 5;
+		int pageBlock = 10;
+		int currentPage = Integer.parseInt((String)map.get("pageNum"));
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int count = 0;
+		switch (type) {
+		case 0: count = dbdao.getclassListCnt(map); break;
+		case 1: count = dbdao.getclassList2Cnt(map); break;
+		case 2: count = dbdao.getmsgListCnt(map); break;
+		case 3: count = dbdao.getmsgList2Cnt(map); break;
+		case 4: count = dbdao.getpayListCnt(map); break;
+		}
+		List list = new ArrayList<>();
+		map.put("startRow", startRow-1);
+		map.put("pageSize", pageSize);
+		if(count > 0) {    
+			switch (type) {
+			case 0: list = dbdao.classList(map); break;
+			case 1: list = dbdao.classList2(map); break;
+			case 2: list = dbdao.msgList1(map); break;
+			case 3: list = dbdao.msgList2(map); break;
+			case 4: list = dbdao.payList(map); break;
+			}
+		}
+		int pageCount = count/pageSize + (count%pageSize==0? 0:1);
+		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
+		int endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		// 페이징 계산
+		
+		// 페이징 처리에 필요한 데이터 셋팅
+		map.put("count", count);
+		map.put("pageCount", pageCount);
+		map.put("pageBlock", pageBlock);
+		map.put("pageSize", pageSize);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		// 페이징 처리에 필요한 데이터 셋팅
+		
+		return list;
+	}
 }

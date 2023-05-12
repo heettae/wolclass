@@ -29,8 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wolclass.domain.ClassVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.RsrvPayVO;
 import com.wolclass.service.DBService;
 import com.wolclass.service.WishService;
 
@@ -429,29 +429,35 @@ public class DBController {
 	
 	// 결제내역 - 다빈
 	@GetMapping("/payList")
-	public void payList(HttpSession session, Model model) throws Exception{
+	public void payList(@RequestParam Map<String,Object> map, HttpSession session, Model model) throws Exception{
 		logger.info("payList() 호출 ");
-		List<Map<String,Object>> payList = service.payList((String)session.getAttribute("id"));
-		
+		String id = (String)session.getAttribute("id");
+		map.put("m_id",id);
+		List<Map<String,Object>> payList = service.payList(map);
 		model.addAttribute("payList",payList );
+		model.addAttribute("amap", map);
 	}
 	
 	// 예약 리스트 - 다빈
 	@GetMapping("/classList")
-	public void classList(HttpSession session, Model model) throws Exception{
+	public void classList(@RequestParam Map<String,Object> map ,HttpSession session, Model model) throws Exception{
 		logger.info("classList() 호출 ");
 		String id = (String)session.getAttribute("id");
-		model.addAttribute("classList", service.classList(id));
-		model.addAttribute("classList2", service.classList2(id));
+		map.put("m_id",id);
+		model.addAttribute("classList", service.classList(map));
+		model.addAttribute("classList2", service.classList2(map));
+		model.addAttribute("amap", map);
 	}
 	
 	// 메세지 리스트 - 다빈
 	@GetMapping("/msgList")
-	public void msgList(HttpSession session, Model model) throws Exception{
+	public void msgList(@RequestParam Map<String,Object> map, HttpSession session, Model model) throws Exception{
 		logger.info("msgList() 호출 ");
 		String id = (String)session.getAttribute("id");
-		model.addAttribute("msgList1", service.msgList1(id));
-		model.addAttribute("msgList2", service.msgList2(id));
+		map.put("m_id",id);
+		model.addAttribute("msgList1", service.msgList1(map));
+		model.addAttribute("msgList2", service.msgList2(map));
+		model.addAttribute("amap", map);
 	}
 	
 	// 구독 페이지 - 다빈 
@@ -461,6 +467,40 @@ public class DBController {
 		String id = (String)session.getAttribute("id");
 		
 		model.addAttribute("sub", service.subscribe(id));
+	}
+	
+	// 마이페이지(문의하기) - 다빈
+	@GetMapping("/myinquiry")
+	public void inquiry(RsrvPayVO vo,Model model) throws Exception{
+		logger.info("inquiry() 호출 ");
+		service.myinquiry(vo);
+		model.addAttribute("vo", vo);
+	}
+	
+	// 마이페이지(문의하기 처리) - 다빈
+	@PostMapping("/myinquiry")
+	@ResponseBody
+	public void inquiryPro(@RequestParam Map<String, Object> map, Model model) throws Exception{
+		logger.info("inquiryPro() 호출 ");
+		service.myinquiryPro(map);
+	}
+	
+	// 마이페이지(후기등록) - 다빈
+	@GetMapping("/myreview")
+	public void myreview(@RequestParam("c_no") String c_no,@RequestParam("p_no") String p_no,Model model) throws Exception{
+		logger.info("myreview() 호출 ");
+		model.addAttribute("c_no", c_no);
+		model.addAttribute("p_no", p_no);
+	}
+	
+	// 마이페이지(후기등록 처리) - 다빈
+	@PostMapping("/myreview")
+	@ResponseBody
+	public String myreviewPro(@RequestParam Map<String, Object> map,String p_no) throws Exception{
+		logger.info("myreviewPro() 호출 ");
+		service.myreviewPro(map);
+		service.myreviewOK(p_no);
+		return "success";
 	}
 	
 	
