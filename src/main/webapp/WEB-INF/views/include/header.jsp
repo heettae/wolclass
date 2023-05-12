@@ -106,6 +106,10 @@
 button{
 	font-family: 'LINESeedKR-Bd';
 }
+ul li a{
+	font-family: 'LINESeedKR-Bd';
+	font-size: 14px;
+}
 /* 알림 버튼 */
 .button {
   display: flex;
@@ -180,10 +184,6 @@ button{
   padding: 8px 16px;
   text-decoration: none;
   color: #333;
-}
-
-.notification-popup ul li a:hover {
-  background-color: #f2f2f2;
 }
 
 #notification-header {
@@ -279,11 +279,9 @@ button{
   padding: 8px 16px;
   text-decoration: none;
   color: #333;
+  margin-right: 30px;
 }
 
-.more-popup ul li a:hover {
-  background-color: #f2f2f2;
-}
 
 #more {
     background-color: transparent;
@@ -331,13 +329,7 @@ button{
   padding: 8px 16px;
   text-decoration: none;
   color: #333;
-}
-
-#user-popup ul li a:hover {
-  background-color: #f2f2f2;
-}
-#user-popup ul li:hover {
-  background-color: #f2f2f2;
+  margin-right: 30px;  
 }
 
 #user-button {
@@ -487,7 +479,6 @@ background-color: #333;
                   			     <ul>
                   			       <li><a href="/sw/community"> 커뮤니티</a></li>
                   			       <li><a href="/board/notice"> 공지사항</a></li>
-                  			       <li><a href="#"> 문의하기</a></li>
                   			     </ul>
                   			     </div>
                   			    <!-- 더보기 팝업창 -->
@@ -830,10 +821,10 @@ $(document).ready(function(){
 	                        	html += "<li> <a href='/class/detail?c_no="+alert.cate_no+"' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                        if(alert.category == 2){
-	                        	html += "<li> <a href='/sw/mypage' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        	html += "<li> <a href='/db/classList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                        if(alert.category == 3){
-	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/tj/main' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
+	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/db/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
 	                        	else{html += "<li> <a href='/admin/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
 	                        	
 	                        }

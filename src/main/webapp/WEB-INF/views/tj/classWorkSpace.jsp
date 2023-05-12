@@ -42,7 +42,7 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+#sidebar li a:hover {
     background-color: #ddd;
 }
 
