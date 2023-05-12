@@ -826,7 +826,9 @@ $(document).ready(function(){
 	                        if(alert.category == 3){
 	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/db/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
 	                        	else{html += "<li> <a href='/admin/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
-	                        	
+	                        }
+	                        if(alert.category == 4){
+	                        	html += "<li> <a href='/db/subscribe' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                    });
 	                    $('#notification-list').html(html);
