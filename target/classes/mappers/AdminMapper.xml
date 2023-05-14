@@ -101,14 +101,14 @@
 	<![CDATA[  
 	select count(r_no)
 	from wc_reply
-	where b_no is null
+	where c_no is not null
 	]]> 
 	</select>
 	<select id="getReviewList" resultType="ReplyVO">
 	<![CDATA[  
 	select *
 	from wc_reply
-	where b_no is null
+	where c_no is not null
 	order by r_regdate desc
 	limit #{pageSize,javaType=INTEGER}
 	offset #{startRow,javaType=INTEGER}
