@@ -457,6 +457,7 @@ setTimeout(function() {
 	// 클래스 리스트 + 내 위치
 	for (let i=0; i<classList.length; i++) {
 		// 툴팁을 노출하는 마커를 생성합니다.
+		if(classList[i].c_lati == null || classList[i].c_lati == '') continue;
 	    markers.push(new TooltipMarker(new kakao.maps.LatLng(classList[i].c_lati, classList[i].c_longi),
 	    		classList[i].c_name,
 	    		classList[i].c_no));
