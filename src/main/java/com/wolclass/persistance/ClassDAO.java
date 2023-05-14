@@ -11,9 +11,6 @@ public interface ClassDAO {
 	// 키워드별 추천 - TJ
 	public List<ClassVO> findByKeyword(String keyword) throws Exception;
 	
-	// 생일 1주일 전 - TJ
-	public int  oneWeekBeforeBirth(String m_id) throws Exception;
-	
 	// 메인 카테고리별 리스트 - TJ
 	public List<ClassVO> getCategoryClassList() throws Exception;
 	
@@ -34,5 +31,8 @@ public interface ClassDAO {
 
 	// 주변 검색 클래스 리스트 조회 HJ
 	public List<ClassVO> getNearbyClassList(Map<String, Object> map) throws Exception;
+
+	// 온라인 클래스 
+	public List<ClassVO> getOnlineList() throws Exception;
 
 }

@@ -3,30 +3,6 @@
 
 <%@ include file="../include/header.jsp"%>
 <style>
-/* 위시리스트 */
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 24px;
-  color: #ccc;
-  transition: all 0.3s ease;
-}
-
-.wishlist-btn.active i:first-child {
-  display: none;
-}
-
-.wishlist-btn.active i:last-child {
-  display: inline;
-  color: #f44336;
-}
-/* 위시리스트 */
-
 
 /* 도트 모양 스타일 */
 /* 도트 위치 조정 */
@@ -101,8 +77,19 @@
 }
 /* 도트 모양 스타일 */
 
-</style>
+.item-thumb {
+  position: relative; /* 이미지를 포지션:absolute;로 설정할 때 기준이 될 부모 요소를 설정 */
+}
+.item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
+</style>
 
 <div class="slider-area">
   <div class="slider">
@@ -115,19 +102,8 @@
       </div>
 
       <div class="item">
-        <a href="#">
-          <img src="/resources/img/review.PNG" alt="리뷰">
-        </a>
-      </div>
-
-      <div class="item">
-        <a href="#">
-          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+3" alt="Slide 3">
-        </a>
-      </div>
-      <div class="item">
-        <a href="#">
-          <img src="https://via.placeholder.com/1903x615/000000/FFFFFF?text=Slide+4" alt="Slide 4">
+        <a href="/reviewEvent">
+          <img src="/resources/img/review.png" alt="리뷰">
         </a>
       </div>
 
@@ -135,18 +111,51 @@
 
   </div>
 </div>
-<c:if test="${WDATA.contains('Rain') && !WDATA.contains('lightrain') }">비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴비옴</c:if>
 <div class="content-area home-area-1 recent-property"
 	style="background-color: #FCFCFC; padding-bottom: 55px;">
 	<div class="container">
+		
+		<!-- 온라인 클래스 -->
+		<c:if test="${WDATA.contains('Rain') && !WDATA.contains('lightrain') }">
 		<div class="row">
-			<div
-				class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-				<!-- /.feature title -->
-				<h2>인기/추천 검색어</h2>
-				<p>내 주변 검색 & 지도</p>
+			<div class="proerty-th">
+			<div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+					<h2>비 오는 날엔 집에서 듣는 온라인 클래스!</h2>
+				</div>
+				<div class="slick-slider col-sm-12">
+				<c:set var="count" value="0"/>
+				<c:forEach items="${onlineList }" var="vo">
+				  <c:if test="${count < 8 }">
+					<div class="col-sm-6 col-md-3 p0">
+						<div class="box-two proerty-item">
+							<div class="item-thumb">
+								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
+							</div>
+							<div class="item-entry overflow">
+					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${vo.c_name }</a></h4>
+					    <span class="proerty-price pull-left">
+					    <fmt:formatNumber value="${rvo.c_price }"/> 원
+					    </span>
+					    <span class="pull-right"> 평점 :  </span>
+					    <!-- 위시리스트 버튼 -->
+				        <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        </c:if>
+				        <!-- 위시리스트 버튼 -->
+						</div>
+						</div>
+					</div>
+					<c:set var="count" value="${count + 1 }"/>
+					</c:if>
+				</c:forEach>
+				</div>
 			</div>
 		</div>
+		</c:if>
+		<!-- 온라인 클래스 -->
+		
 		<!-- 추천리스트 -->
 		<c:if test="${not empty recClass }">
 		<div class="row">
@@ -159,7 +168,7 @@
 					<div class="col-sm-6 col-md-3 p0">
 						<div class="box-two proerty-item">
 							<div class="item-thumb">
-								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/no_img.PNG"></a>
+								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
 							</div>
 							<div class="item-entry overflow">
 					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${rvo.c_name }</a></h4>
@@ -167,11 +176,13 @@
 					    <span class="proerty-price pull-left">
 					    <fmt:formatNumber value="${rvo.c_price }"/> 원
 					    </span>
-					    <span class="pull-right"> 평점 :  </span>
+					    <span class="pull-right"> 평점 : ${rvo.score }</span>
 					    <!-- 위시리스트 버튼 -->
-				        <button class="wishlist-btn">
+				        <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
 				          <i class="fas fa-heart"></i>
 				        </button>
+				        </c:if>
 				        <!-- 위시리스트 버튼 -->
 						</div>
 						</div>
@@ -182,6 +193,7 @@
 		</div>
 			</c:if>
 		<!-- 추천리스트 -->
+		
 		<!-- 일반 리스트 -->
 		<div class="row">
 		  <div class="proerty-th">
@@ -190,11 +202,13 @@
 		        <h2>${vo.key }</h2>
 		      </div>
 		      <div class="slick-slider col-sm-12">
+		      <c:set var="count" value="0"/>
 		        <c:forEach items="${vo.value }" var="classVO">
+		          <c:if test="${count < 8 }">
 		          <div class="col-sm-6 col-md-3 p0">
 		            <div class="box-two proerty-item">
 		              <div class="item-thumb">
-		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/no_img.PNG"></a>
+		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/${classVO.c_img.split(',')[0] }"></a>
 		              </div>
 		              <div class="item-entry overflow">
 		                <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>
@@ -202,15 +216,19 @@
 		                <span class="proerty-price pull-left">
 		                  <fmt:formatNumber value="${classVO.c_price}"/> 원
 		                </span>
-		                <span class="pull-right"> 평점 : </span>
+		                <span class="pull-right"> 평점 : ${classVO.score }</span>
 		                <!-- 위시리스트 버튼 -->
-		                <button class="wishlist-btn">
-		                  <i class="fas fa-heart"></i>
-		                </button>
+		                <c:if test="${not empty sessionScope.id }">
+				        <button class="wishlist-btn ${wishList.contains(classVO.c_no) ? 'active' : ''}" value="${classVO.c_no }">
+				          <i class="fas fa-heart"></i>
+				        </button>
+				        </c:if>
 		                <!-- 위시리스트 버튼 -->
 		              </div>
 		            </div>
 		          </div>
+		          <c:set var="count" value="${count + 1}"/>
+		          </c:if>
 		        </c:forEach>
 		      </div>
 		    </c:forEach>
@@ -219,15 +237,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-
-// 위시 리스트 
-const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-wishlistBtns.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    btn.classList.toggle('active');
-  });
-});
-// 위시 리스트 
 
 // 상단 베너
 $(document).ready(function() {
@@ -279,4 +288,4 @@ $('.slick-slider').slick({
 // 슬라이드
 </script>
 
-<%@ include file="../hj/footer.jsp"%>
+<%@ include file="../include/footer.jsp"%>

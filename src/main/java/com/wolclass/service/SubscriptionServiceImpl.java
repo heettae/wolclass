@@ -16,5 +16,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception {
 		return dao.getSubsInfo(m_id);
 	}
+	
+	@Override
+	public Integer insertSubs(String m_id) throws Exception {
+		return dao.insertSubs(m_id);
+	}
 
 }

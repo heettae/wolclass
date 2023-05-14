@@ -1,8 +1,12 @@
 package com.wolclass.persistance;
 
+import java.util.List;
 import java.util.Map;
 
+import com.wolclass.domain.BoardVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.RsrvPayVO;
+import com.wolclass.domain.SubscriptionVO;
 
 public interface MemberDAO {
 	String NAMESPACE = "com.wolclass.mappers.MemberMapper";
@@ -39,4 +43,52 @@ public interface MemberDAO {
 	
 	// 카카오아이디  - 다빈
 	public MemberVO kfindId(MemberVO vo) throws Exception;
+	
+	// 프로필사진 변경 - 다빈	
+	public void updateProfile(MemberVO vo) throws Exception;
+		
+	// 회원정보 수정 - 다빈
+	public void updateMember(Map<String,Object> map) throws Exception;
+	
+	// 회원탈퇴 - 다빈
+	public void deleteMember(MemberVO vo) throws Exception;
+	
+	// 결제 내역 - 다빈
+	public List<Map<String,Object>> payList(Map<String,Object> map) throws Exception;
+
+	// 내가신청한 클래스(예약클래스) - 다빈
+	public List<Map<String,Object>> classList(Map<String,Object> map) throws Exception;
+	
+	// 내가신청한 클래스(지난클래스) - 다빈
+	public List<Map<String,Object>> classList2(Map<String,Object> map) throws Exception;
+	
+	// 메시지(받은) - 다빈
+	public List<BoardVO> msgList1(Map<String,Object> map) throws Exception;
+	
+	// 메시지(보낸) - 다빈
+	public List<BoardVO> msgList2(Map<String,Object> map) throws Exception;
+	
+	// 구독(남은기간) - 다빈 
+	public SubscriptionVO subscribe(String id) throws Exception;
+	
+	// 문의하기 - 다빈
+	public void myinquiry(RsrvPayVO vo) throws Exception;
+	// 문의하기 - 처리 - 다빈
+	public void myinquiryPro(Map<String,Object> map) throws Exception;
+	
+	// 마이페이지(후기등록) - 다빈
+	public void myreviewPro(Map<String,Object> map) throws Exception;
+	
+	// 마이페이지(리뷰등록 완려) - 다빈
+	public void myreviewOk(String p_no) throws Exception;
+	
+	// 페이징 - 다빈
+	public Integer getpayListCnt(Map<String, Object> map) throws Exception;
+	public Integer getmsgListCnt(Map<String, Object> map) throws Exception;
+	public Integer getmsgList2Cnt(Map<String, Object> map) throws Exception;
+	public Integer getclassListCnt(Map<String, Object> map) throws Exception;
+	public Integer getclassList2Cnt(Map<String, Object> map) throws Exception;
+
+	// 생일 1주일 전 - tj
+	public int oneWeekBeforeBirth(String m_id) throws Exception;
 }

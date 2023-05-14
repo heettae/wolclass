@@ -202,8 +202,8 @@ textarea {
 
 						<div class="detail_comment_list">
 							<div class="comment_list">
-								<c:if test="${replyList.size() >0 && replyList != null && cmap.cPageNum != cmap.pageCount}">
-									<c:forEach var="i" begin="${(cmap.cPageNum-1)*cmap.pageSize}"	end="${cmap.cPageNum*cmap.pageSize-1}">
+								<c:if test="${replyList.size() >0 && replyList != null && map.cPageNum != map.pageCount}">
+									<c:forEach var="i" begin="${(map.cPageNum-1)*map.pageSize}"	end="${map.cPageNum*map.pageSize-1}">
 										<div style=" border: 1px solid; padding: 5px 20px 5px 5px; height: 100px; display:flex ;justify-content: space-between;">
 											<div style="width: 15%; text-align: center; border-right: #ddd 1px double;">
 												<div>
@@ -235,9 +235,9 @@ textarea {
 										</div>
 									</c:forEach>
 								</c:if>
-								<c:if test="${cmap.cPageNum == cmap.pageCount }">
-									<c:forEach var="i" begin="${(cmap.cPageNum-1)*cmap.pageSize}"
-										end="${cmap.count-1}">
+								<c:if test="${map.cPageNum == map.pageCount }">
+									<c:forEach var="i" begin="${(map.cPageNum-1)*map.pageSize}"
+										end="${map.count-1}">
 										<div style=" border: 1px solid; padding: 5px 20px 5px 5px; height: 100px; display:flex ;justify-content: space-between;">
 											<div style="width: 15%; text-align: center; border-right: #ddd 1px double;">
 												<div>
@@ -275,30 +275,30 @@ textarea {
 								<div style="width: 100%; display: flex;">
 									<ul class="pagination pagination-sm no-margin pull-right"
 										style="margin: auto;">
-										<c:if test="${cmap.endPage <= cmap.pageBlock}">
+										<c:if test="${map.endPage <= map.pageBlock}">
 											<li></li>
 										</c:if>
-										<c:if test="${cmap.endPage > cmap.pageBlock}">
+										<c:if test="${map.endPage > map.pageBlock}">
 											<li><a
-												href="/board/read?b_no=${cmap.b_no}&cPageNum=${cmap.startPage - cmap.pageBlock}
+												href="/board/swRead?b_no=${map.b_no}&cPageNum=${map.startPage - map.pageBlock}
 												&b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}"
 												onclick="backPage();">«</a></li>
 										</c:if>
 
 
-										<c:forEach var="cPageNum" begin="${cmap.startPage}"
-											end="${cmap.endPage}">
+										<c:forEach var="cPageNum" begin="${map.startPage}"
+											end="${map.endPage}">
 											<li><a onclick="inputcPageNum(cPageNum);"
-												href="/board/read?b_no=${map.b_no}&cPageNum=${cPageNum}&b_category=${param.b_category}
+												href="/board/swRead?b_no=${map.b_no}&cPageNum=${cPageNum}&b_category=${param.b_category}
 												&search=${param.search}&pageNum=${param.pageNum}">${cPageNum}</a></li>
 										</c:forEach>
 
-										<c:if test="${cmap.pageCount <= cmap.endPage}">
+										<c:if test="${map.pageCount <= map.endPage}">
 											<li></li>
 										</c:if>
-										<c:if test="${cmap.pageCount > cmap.endPage}">
+										<c:if test="${map.pageCount > map.endPage}">
 											<li><a
-												href="/board/read?b_no=${cmap.b_no}&cPageNum=${cmap.startPage + cmap.pageBlock}
+												href="/board/swRead?b_no=${map.b_no}&cPageNum=${map.startPage + map.pageBlock}
 												&b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}"
 												onclick="nextPage();">»</a></li>
 										</c:if>
@@ -319,7 +319,7 @@ textarea {
 						var result = "${result}";
 						
 						if (result == "ok") {
-							alert("정상적으로 댓글 작성 완료!");
+							alert("댓글 작성 완료!");
 						}
 						if (result == "updOK") {
 							alert("댓글 수정 완료!");
@@ -340,7 +340,7 @@ textarea {
 						document.getElementById("pageNum1").value = pageNum; 
 		
 						function backList() {
-						 window.location.href = "community?b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}";
+						 window.location.href = "/board/community?b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}";
 						}
 						
 						$(document).ready(function(){
@@ -388,7 +388,7 @@ textarea {
 						       }
 						       if(m_id == ""){
 						    	   alert("로그인 후 댓글 작성이 가능합니다!");
-						    	   return location.href="/db/login";
+						    	   return location.href="/board/login";
 						       }
 								// 폼태그 이동주소 설정 /boards/modify
 								formObj.attr("action","/board/commentWrite");

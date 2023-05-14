@@ -13,30 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wolclass.domain.BoardVO;
 import com.wolclass.domain.MemberVO;
 import com.wolclass.service.AdminService;
 
-
-//1:1 문의 리스트 (관리자 메인)
-//1:1  문의 읽기
-//1:1  문의 답신
-//회원목록 출력
-//회원 정보 수정
-//회원 정보 삭제
-//클래스 등록대기 목록 출력
-//클래스 상세정보
-//클래스 등록 승인
-//클래스 등록 승인 거부
-//커뮤니티 목록
-//커뮤니티 읽기
-//공지사항 등록
-//커뮤니티 글 삭제
-//수강후기 리스트
-//수강후기 삭제
-//결제 리스트
 @RequestMapping("/admin/*")
 @Controller
 public class AdminController {
@@ -176,25 +157,20 @@ public class AdminController {
 		model.addAttribute("amap",map);
 	}
 	
-	
+	// 공지사항 - 글쓰기 정보 입력
+	@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
+	public void registGET() throws Exception {
+		logger.info(" registGET() - 글정보 입력! ");
+		logger.info(" 연결된 view페이지 이동 ");
+	}
 
-		// 공지사항 - 글쓰기 정보 입력
-		@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
-		public void registGET() throws Exception {
-			logger.info(" registGET() - 글정보 입력! ");
-			logger.info(" 연결된 view페이지 이동 ");
-		}
-
-		// 공지사항 - 글쓰기 정보 처리
-		@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
-		public String registPOST(BoardVO vo) throws Exception {
-			logger.info(" registPOST()  - 글쓰기처리! ");
-			logger.info(" 글쓰기 정보: " + vo);
-			service.writeBoard(vo);
-
-			return "redirect:/board/notice";
-		}
-	
-	
+	// 공지사항 - 글쓰기 정보 처리
+	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
+	public String registPOST(BoardVO vo) throws Exception {
+		logger.info(" registPOST()  - 글쓰기처리! ");
+		logger.info(" 글쓰기 정보: " + vo);
+		service.writeBoard(vo);
+		return "redirect:/board/notice";
+	}
 	
 }

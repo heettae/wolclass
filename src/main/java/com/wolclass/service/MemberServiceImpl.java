@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,8 +22,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wolclass.domain.BoardVO;
 import com.wolclass.domain.MemberVO;
+import com.wolclass.domain.RsrvPayVO;
+import com.wolclass.domain.SubscriptionVO;
 import com.wolclass.persistance.MemberDAO;
+import com.wolclass.utils.SerialMaker;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -92,7 +101,7 @@ private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.c
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=c6c8f231f2997186bfd65955c7b8f1ab");
-			sb.append("&redirect_uri=http://localhost:8080/db/kakao");
+			sb.append("&redirect_uri=http://localhost:8080/member/kakao");
 			sb.append("&code=" + code);
 			
 			bw.write(sb.toString());
@@ -160,23 +169,7 @@ private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.c
             if(email != null) result.put("email", email.toString().replaceAll("\"", ""));
             
             // 비밀번호 random
-            Random random = new Random();
-    		StringBuilder sb = new StringBuilder();
-    		for (int i = 0; i < 8; i++) {
-    		    int type = random.nextInt(3);
-    		    switch (type) {
-    		        case 0:
-    		            sb.append(random.nextInt(10));
-    		            break;
-    		        case 1:
-    		            sb.append((char) (random.nextInt(26) + 'A'));
-    		            break;
-    		        case 2:
-    		            sb.append((char) (random.nextInt(26) + 'a'));
-    		            break;
-    		    }
-    		}
-    		result.put("password", sb.toString());
+    		result.put("password", SerialMaker.getString(8));
 			
 			br.close();
 		} catch (Exception e) {
@@ -196,4 +189,151 @@ private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.c
 		MemberVO kfindIdVO = dao.kfindId(vo);
 		return kfindIdVO;
 	}
+	
+	// 프로필사진 변경 - 다빈	
+	@Override
+	public void updateProfile(MemberVO vo) throws Exception {
+		dao.updateProfile(vo);
+	}
+	
+	// 회원정보 수정 - 다빈
+	@Override
+	public void updateMember(Map<String,Object> map) throws Exception {
+		dao.updateMember(map);
+	}
+	
+	// 회원탈퇴 - 다빈
+	@Override
+	public void deleteMember(String m_id) throws Exception {
+		MemberVO vo = new MemberVO();
+		// 랜덤한  비밀번호 생성
+		vo.setM_id(m_id);
+	    vo.setM_pw(SerialMaker.getString(20));
+		dao.deleteMember(vo);
+	}
+	
+	// 결제내역 - 다빈
+	@Override
+	public List<Map<String,Object>> payList(Map<String,Object> map) throws Exception {
+		return getListByType(map, 4);
+	}
+	
+	// 내가 신청한클래스(예약클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList(Map<String,Object> map) throws Exception {
+		return getListByType(map, 0);
+	}
+	
+	// 내가 신청한클래스(지난클래스) - 다빈
+	@Override
+	public List<Map<String,Object>> classList2(Map<String,Object> map) throws Exception {
+		return getListByType(map, 1);
+	}
+	
+	// 메시지(받은) - 다빈
+	@Override
+	public List<BoardVO> msgList1(Map<String,Object> map) throws Exception {
+		return getListByType(map, 2);
+	}
+	// 메시지(보낸) - 다빈
+	@Override
+	public List<BoardVO> msgList2(Map<String,Object> map) throws Exception {
+		return getListByType(map, 3);
+	}
+	
+	// 구독(남은기간) - 다빈
+	@Override
+	public SubscriptionVO subscribe(String id) throws Exception {
+		return dao.subscribe(id);
+	}
+	
+	// 문의하기 - 다빈
+	@Override
+	public void myinquiry(RsrvPayVO vo) throws Exception {
+		dao.myinquiry(vo);
+	}
+	
+	// 문의하기 처리 - 다빈
+	@Override
+	public void myinquiryPro(Map<String, Object> map) throws Exception {
+		dao.myinquiryPro(map);
+	}
+	
+	// 마이페이지(후기등록) - 다빈
+	@Override
+	public void myreviewPro(Map<String, Object> map) throws Exception {
+		dao.myreviewPro(map);
+	}
+	
+	// 마이페이지(리뷰등록 완려) - 다빈
+	@Override
+	public void myreviewOK(String p_no) throws Exception {
+		dao.myreviewOk(p_no);
+	}
+	
+	// 페이징 처리 - 다빈
+	private List getListByType(Map<String, Object> map, int type) throws Exception {
+		// 데이터 전처리
+		if(!map.containsKey("pageNum")) map.put("pageNum", "1");
+		// 데이터 전처리
+		
+		// 페이징 계산
+		int pageSize = 5;
+		int pageBlock = 10;
+		int currentPage = Integer.parseInt((String)map.get("pageNum"));
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int count = 0;
+		switch (type) {
+		case 0: count = dao.getclassListCnt(map); break;
+		case 1: count = dao.getclassList2Cnt(map); break;
+		case 2: count = dao.getmsgListCnt(map); break;
+		case 3: count = dao.getmsgList2Cnt(map); break;
+		case 4: count = dao.getpayListCnt(map); break;
+		}
+		List list = new ArrayList<>();
+		map.put("startRow", startRow-1);
+		map.put("pageSize", pageSize);
+		if(count > 0) {    
+			switch (type) {
+			case 0: list = dao.classList(map); break;
+			case 1: list = dao.classList2(map); break;
+			case 2: list = dao.msgList1(map); break;
+			case 3: list = dao.msgList2(map); break;
+			case 4: list = dao.payList(map); break;
+			}
+		}
+		int pageCount = count/pageSize + (count%pageSize==0? 0:1);
+		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
+		int endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		// 페이징 계산
+		
+		// 페이징 처리에 필요한 데이터 셋팅
+		map.put("count", count);
+		map.put("pageCount", pageCount);
+		map.put("pageBlock", pageBlock);
+		map.put("pageSize", pageSize);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		// 페이징 처리에 필요한 데이터 셋팅
+		
+		return list;
+	}
+	
+	// 생일 1주일 전
+	@Override
+	public int oneWeekBeforeBirth(String m_id) throws Exception {
+		return dao.oneWeekBeforeBirth(m_id);
+	}
+	// 생일 1주일 전
+
+	// 반려견 나이 계산
+	@Override
+	public Integer calculateAge(Timestamp m_dogbirth) throws Exception {
+		LocalDate birthDate = m_dogbirth.toLocalDateTime().toLocalDate();
+		logger.info("Service - birthDate @@@@@@@@@@@@ " + m_dogbirth);
+		LocalDate now = LocalDate.now();
+		return Period.between(birthDate, now).getYears();
+	}
+	// 반려견 나이 계산
 }

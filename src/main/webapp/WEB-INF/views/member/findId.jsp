@@ -12,9 +12,11 @@
 
 
 <div class="col-mda-6">
-	<div class="box-for overflow">
+	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
 		<div class="col-md-12 col-xs-12 login-blocks">
-			<h2>아이디 찾기</h2>
+			<div style="text-align: center;">
+               	<h2>아이디 찾기</h2>
+           	</div>
 			<form id="findIdForm" method="post">
 				<div class="form-group">
 					<label for="m_name">이름</label>
@@ -28,9 +30,6 @@
 					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#findIdModal" id="findIdBtn">
 					  아이디 찾기
 					</button>
-					<button type="button" class="btn btn-default" id="loginBtn">
-					  로그인
-					</button>
 				</div>
 			</form>
 		</div>
@@ -38,10 +37,6 @@
 </div>
 
 <script type="text/javascript">
-	// 로그인 페이지 이동 - 다빈
-	$("#loginBtn").click(function(){
-		location.href="/member/login";
-	});
 	// 아이디 찾기(암호화) - 다빈
 	$(document).ready(function() {
 		$("#findIdBtn").click(function() {
@@ -94,16 +89,6 @@
         <div class="modal-body">
 	      <div class="col-md-6" style="position: absolute; display: contents;">
 			<div class="box-for overflow" >
-				<!-- 이름과 이메일이 일치하지 않을때 -->
-<%-- 				<c:if test="${check == 1 }"> --%>
-<!-- 					<h2>일치하는 정보가 존재하지 않습니다.</h2> -->
-<%-- 				</c:if> --%>
-				
-				<!-- 이름과 이메일이 일치할때 -->
-<%-- 				<c:if test="${check == 0 }"> --%>
-<!-- 					<h2>귀하의 아이디는</h2> -->
-<%-- 					<h1>${id }</h1> --%>
-<%-- 				</c:if> --%>
 			</div>
 		  </div>
         </div>
@@ -113,6 +98,7 @@
     </div>
   </div>
 </div>
+<!-- Modal 내용 -->
 
 
 

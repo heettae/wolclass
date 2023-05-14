@@ -171,7 +171,7 @@ textarea {
 						<!-- button   -->
 						<script type="text/javascript">
 							function backList() {
-								window.location.href="community?b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}"
+								window.location.href="/board/community?b_category=${param.b_category}&search=${param.search}&pageNum=${param.pageNum}"
 							}
 							
 							
@@ -274,20 +274,20 @@ textarea {
 						<li></li>
 						</c:if>
 						<c:if test="${map.endPage > map.pageBlock}">
-						<li><a href="swRead?b_no=${map.b_no}&pageNum=${map.startPage - map.pageBlock}" 
+						<li><a href="/board/swRead?b_no=${map.b_no}&pageNum=${map.startPage - map.pageBlock}" 
 						onclick="backPage();">«</a></li>
 						</c:if>
 						
 						
 						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="swRead?b_no=${map.b_no}&pageNum=${pageNum}">${pageNum}</a></li>
+							<li><a onclick="inputPageNum(pageNum);" href="/board/swRead?b_no=${map.b_no}&pageNum=${pageNum}">${pageNum}</a></li>
 						</c:forEach>
 						
 						<c:if test="${map.pageCount <= map.endPage}">
 						<li></li>
 						</c:if>
 						<c:if test="${map.pageCount > map.endPage}">
-						<li><a href="swRead?b_no=${map.b_no}&pageNum=${map.startPage + map.pageBlock}" 
+						<li><a href="/board/swRead?b_no=${map.b_no}&pageNum=${map.startPage + map.pageBlock}" 
 						onclick="nextPage();">»</a></li>
 						</c:if>
 									</ul>

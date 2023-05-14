@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../include/header.jsp" %>
+<%@ include file="../include/side.jsp" %>
 
 <!-- 클래스 리스트 HJ -->
 <div class="col-md-12 padding-top-40 properties-page">
@@ -52,7 +53,29 @@
 		</div>
 	</div>
 	<!-- 리스트 컨테이너 -->
+	
+	<!-- 페이징처리  -->
+		<div class="pagination">
+			<ul>
+				<c:if test="${amap.startPage > amap.pageBlock }">
+				<li><a id="prev" href="/member/wishList?pageNum=${amap.startPage-1}">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="${amap.startPage }" end="${amap.endPage }">
+				<li><a class="pageNumbers" href="/member/wishList?pageNum=${i}">${i }</a></li>
+				</c:forEach>
+				<c:if test="${amap.pageCount > amap.endPage }">
+				<li><a id="next" href="/member/wishList?pageNum=${amap.endPage+1}">다음</a></li>
+				</c:if>
+			</ul>
+	    </div>
+	<!-- 페이징처리  -->
+	
 </div>
 <!-- 클래스 리스트 HJ-->
+
+<!-- side.jsp -->
+</div>
+</section>
+<!-- side.jsp -->
 
 <%@ include file="../include/footer.jsp" %>

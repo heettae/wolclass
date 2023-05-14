@@ -16,62 +16,60 @@ public class ClassDAOImpl implements ClassDAO{
 	private static final Logger logger = LoggerFactory.getLogger(ClassDAOImpl.class);
 	
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlSession;
+	
+	// 온라인 리스트
+	@Override
+	public List<ClassVO> getOnlineList() throws Exception {
+		return sqlSession.selectList(NAMESPACE+".onlineClassList");
+	}
 	
 	// 키워드별 추천 - tj
 	@Override
 	public List<ClassVO> findByKeyword(String keyword) {
-		return session.selectList(NAMESPACE+".findByKeyword", keyword);
+		return sqlSession.selectList(NAMESPACE+".findByKeyword", keyword);
 	}
 	// 키워드별 추천 - tj
 
 	// 카테고리별 리스트
 	@Override
 	public List<ClassVO> getCategoryClassList() throws Exception {
-		return session.selectList(NAMESPACE+".getCategoryClassList");
+		return sqlSession.selectList(NAMESPACE+".getCategoryClassList");
 	}
 	// 카테고리별 리스트
 	
-	// 반려견 생일 1주일 전
-	@Override
-	public int oneWeekBeforeBirth(String m_id) throws Exception {
-		
-		return session.selectOne(NAMESPACE+".oneWeekBeforeBirth", m_id);
-	}
-	// 반려견 생일 1주일 전
-	
 	@Override
 	public void addClass(ClassVO vo) throws Exception {
-		session.insert(NAMESPACE+".addClass", vo);
+		sqlSession.insert(NAMESPACE+".addClass", vo);
 	}
 	
 	@Override
 	public List<ClassVO> registerClassList(String m_id) throws Exception {
 		
-		return session.selectList(NAMESPACE+".registerClassList", m_id);
+		return sqlSession.selectList(NAMESPACE+".registerClassList", m_id);
 	}
 	
 	@Override
 	public ClassVO selectClass(Integer c_no) throws Exception {
 		logger.info("dao-sql호출");
-		ClassVO resultVO = session.selectOne(NAMESPACE+".selectClass",c_no);
+		ClassVO resultVO = sqlSession.selectOne(NAMESPACE+".selectClass",c_no);
 		logger.info("dao-resultVO: "+resultVO);
 		return resultVO;
 	}
 	
 	@Override
 	public List<ClassVO> getNearbyClassList(Map<String, Object> map) throws Exception {
-		return session.selectList(NAMESPACE+".nearbyClassList", map);
+		return sqlSession.selectList(NAMESPACE+".nearbyClassList", map);
 	}
 
 	@Override
 	public int getClassListCnt(Map<String, Object> map) throws Exception {
-		return session.selectOne(NAMESPACE+".classListCnt", map);
+		return sqlSession.selectOne(NAMESPACE+".classListCnt", map);
 	}
 	
 	@Override
 	public List<ClassVO> getClassList(Map<String, Object> map) throws Exception {
-		return session.selectList(NAMESPACE+".classList", map);
+		return sqlSession.selectList(NAMESPACE+".classList", map);
 	}
 
 }

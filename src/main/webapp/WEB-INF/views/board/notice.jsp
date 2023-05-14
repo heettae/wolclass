@@ -39,31 +39,6 @@ th {
 						<div>
 							<h3 class="box-title" style="font-size: x-large;">글 목록</h3>
 						</div>
-<!-- 						<form role="form" method="get" -->
-<!-- 							style="margin-left: 68%; display: flex;"> -->
-<!-- 							<div class="category-search"> -->
-<!-- 								<select style="width: 100px;" name="b_category" id="b_category1"> -->
-<!-- 									<option value="">전체글</option> -->
-<!-- 									<option value="일반">일반글</option> -->
-<!-- 									<option value="모집">모집글</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-
-<!-- 							<div class="box-tools"> -->
-<!-- 								<div class="input-group input-group-sm hidden-xs"> -->
-<!-- 									<input style="width: 200px; margin-left: 58px;" type="text" -->
-<!-- 										name="search" class="form-control pull-right" -->
-<%-- 										placeholder="키워드를 입력해주세요" value="${nmap.search}"> --%>
-
-<!-- 									<div class="input-group-btn"> -->
-<!-- 										<button type="submit" class="btn btn-default"> -->
-<!-- 											<i class="fa fa-search"></i> -->
-<!-- 										</button> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-
 					</div>
 				</div>
 				<!-- search  -->
@@ -71,8 +46,6 @@ th {
 				<div class="box-body table-responsive no-padding">
 					<table class="table table-hover">
 						<tbody>
-
-
 							<tr>
 								<th style="width: 10%">글번호</th>
 								<th style="width: 25%">제목</th>

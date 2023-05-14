@@ -24,34 +24,36 @@
 
 	<!-- 해당 키워드 리스트 출력 -->
 	<select id="findByKeyword" resultType="ClassVO">
-		select *
-		from wc_class
-		WHERE c_name REGEXP #{keyword}
+		select c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+		from wc_class c left join  (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+        on c.c_no = r.c_no
+		WHERE c_name REGEXP #{keyword} AND c_confirm = 'Y'
+		ORDER BY c_regdate desc;
 	</select>
 	<!-- 해당 키워드 리스트 출력 -->
 	
 	<!-- 카테고리별 리스트 출력 -->	
 	<select id="getCategoryClassList" resultType="ClassVO">
-		SELECT *
-		FROM wc_class
+		SELECT c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+		from wc_class c left join  (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+        on c.c_no = r.c_no
 		WHERE c_category IN (
 		    SELECT DISTINCT c_category
 		    FROM wc_class
-		)
-		ORDER BY c_category
-		
+		) AND c_confirm = 'Y'
+		ORDER BY c_regdate desc
 	</select>
 	<!-- 카테고리별 리스트 출력 -->	
-
-	<!-- 반려견 생일 7일전 -->	
-	<select id="oneWeekBeforeBirth" resultType="int">
-	SELECT count(m_id) 
-	FROM wc_member 
-	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 7 DAY), '%m-%d') AND DATE_FORMAT(NOW(), '%m-%d') 
-	and m_id=#{m_id};
-	</select>
-	<!-- 반려견 생일 7일전 -->
 	
+	<!-- 온라인 클래스 출력(주소 null) -->
+	<select id="onlineClassList" resultType="ClassVO">
+		select *
+		from wc_class
+		where c_addr1 = '' and c_confirm = 'Y'
+		order by c_regdate desc
+	</select>
+	<!-- 온라인 클래스 출력(주소 null) -->
+
 	<!-- 클래스 조회 TH -->
 	<select id="selectClass" resultType="ClassVO">
 	select * from wc_class where c_no=#{c_no}
@@ -126,6 +128,7 @@
 		on c.c_no = r.c_no
 		where c_confirm = 'Y'
 		and c.c_lati is not null
+		and c.c_lati != ''
 		having distance <= 30
 	]]>
 		<if test="userAddr != null and userAddr != ''">

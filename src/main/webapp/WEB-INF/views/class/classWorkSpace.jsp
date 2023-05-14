@@ -42,7 +42,7 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+#sidebar li a:hover {
     background-color: #ddd;
 }
 
@@ -200,11 +200,11 @@ li a:hover {
 						    <span class="close" onclick="closeModal()">&times;</span>
 						    <h2>시간 등록</h2>
 						    <form id="timeForm" method="post">
-						    <input type="hidden" name="c_no">
-						    <input type="hidden" name="t_rem_p">
+						      <input type="hidden" name="c_no">
+						      <input type="hidden" name="t_rem_p">
 						      <div class="form-group">
 						        <label for="date">날짜</label>
-						        <input type="date" id="date" name="t_date">
+						        <input type="date" id="date" name="t_date" min="<?php echo date('Y-m-d'); ?>">
 						      </div>
 						      <div class="form-group">
 						        <label for="start-time">시작 시간</label>
@@ -214,7 +214,7 @@ li a:hover {
 						        <label for="end-time">끝나는 시간</label>
 						        <input type="time" id="end-time" name="t_end">
 						      </div>
-						      <button type="submit" class="btn btn-primary" id="addTime">등록</button>
+						      <button type="button" class="btn btn-primary" id="addTime">등록</button>
 						    </form>
 						  </div>
 						</div>
@@ -235,7 +235,7 @@ $(document).ready(function() {
 	  });
 	});
 
-	
+// 시간 등록 모달	
 function openModal() {
   document.getElementById("modal").style.display = "block";
 }
@@ -243,15 +243,34 @@ function openModal() {
 function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
+// 시간 등록 모달	
+
+// 오늘 날짜 전 미출력
+var today = new Date().toISOString().split('T')[0];
+document.getElementsByName("t_date")[0].setAttribute('min', today);
+// 오늘 날짜 전 미출력
 
 $(document).ready(function(){
 	
 	
-	
-	$('#addTime').click(function(){
-		$('#timeForm').attr('action', '/class/addTime');
-		$('#timeForm').submit();
-	});
+		$('#addTime').click(function(){
+			$.ajax({
+				type : 'POST',
+				url : '/class/addTime',
+				data : $('#timeForm').serialize(),
+				success : function(result){
+					if(result == 1){
+						alert('성공');
+						location.reload();
+					}else{
+						alert('이미 등록된 시간과 겹칩니다. 다시 시간을 선택해주세요.');
+					}
+				},
+				error : function(){
+					alert('등록 실패');
+				}
+			});
+		});
 	
 	$('.register-box').click(function(){
 		location.href="/class/addClass";

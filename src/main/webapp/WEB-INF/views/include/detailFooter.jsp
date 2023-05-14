@@ -132,32 +132,35 @@ hj(document).ready(function() {
 <!-- 사용자 위치정보 받아오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services"></script>
 <script>
-var geocoder = new kakao.maps.services.Geocoder();
-var coord = new kakao.maps.LatLng(${sessionScope.userLat}, ${sessionScope.userLng});
-var userAddr;
-var callback = function(result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-    	userAddr = result[0].address.region_1depth_name;
-    }
-};
+if('${userAddr}' == '') {
+	var geocoder = new kakao.maps.services.Geocoder();
+	var coord = new kakao.maps.LatLng(${sessionScope.userLat}, ${sessionScope.userLng});
+	var userAddr;
+	var callback = function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	    	userAddr = result[0].address.region_1depth_name;
+	    }
+	};
 
-geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-
-$(document).ready(function() {
-	$.ajax({
-		url: "/addr",
-		type: "POST",
-		data: {
-		  "userAddr": userAddr
-		},
-		success: function(data) {
-		 console.log("위치정보 데이터 처리 성공");
-		},
-		error: function(data) {
-		 console.log("위치정보 데이터 처리 실패 : "+data);
-		}
-	});
-});
+	geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+	
+	setTimeout(function(){
+		$.ajax({
+			url: "/addr",
+			type: "POST",
+			data: {
+			  "userAddr": userAddr
+			},
+			success: function(data) {
+			 console.log("위치정보 데이터 처리 성공");
+			},
+			error: function(data) {
+			 console.log("위치정보 데이터 처리 실패 : "+data);
+			}
+		});
+	},150);
+		
+}
 </script>
 <!-- 사용자 위치정보 받아오기 -->
 <script src="/resources/assets/js/modernizr-2.6.2.min.js"></script>

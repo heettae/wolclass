@@ -127,7 +127,7 @@ border-radius:6px;
 						  
 					  }else{
 					  
-					  formObj.attr("action","/board/write");
+					  formObj.attr("action","/board/swWrite");
 					  // 폼태그 이동방식 설정 GET
 					  formObj.attr("method","post");
 					  // 폼태그 정보 저장해서 페이지 이동

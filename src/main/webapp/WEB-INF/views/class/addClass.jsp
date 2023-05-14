@@ -2,22 +2,32 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>    
 
-<div class="box box-primary" style="width: max-content; margin: auto;">
-	<div class="box-header with-border">
-	<h3 class="box-title">클래스 등록</h3>
+<style>
+.iCheck-helper {
+  display: none;
+}
+
+#addClassBtn:hover{
+ background-color: #333;
+ color: #FDC600;
+}
+</style>
+
+
+		<div class="box box-primary" style="width: max-content; margin: auto; min-width: 500px">
+<div class="box-header with-border">
+<h3 class="box-title">클래스 등록</h3>
 </div>
 
 <!-- 오프라인 폼 -->
-<form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
-<input type="hidden" id="lat" name="c_lati">
-<input type="hidden" id="lng" name="c_longi">
-<div class="box-body">
 <div class="form-group">
 <label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="offline" name="way" value="off">
+<input type="radio" class="form-control" id="offline" name="way" value="off" checked>
 <label for="online">온라인</label>
 <input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
+<form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
+<div class="box-body">
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
@@ -54,9 +64,9 @@
 </div>
 <div class="form-group">
 <label for="c_level">난이도</label><span style="color: red">(필수)</span>
-<input type="radio" id="c_level" name="c_level" value="3">상
-<input type="radio" id="c_level" name="c_level" value="2">중
-<input type="radio" id="c_level" name="c_level" value="1">하
+<input type="radio" id="c_level" name="c_level" value="1">입문
+<input type="radio" id="c_level" name="c_level" value="2">중급
+<input type="radio" id="c_level" name="c_level" value="3">고급
 <div id="c_level_warning"></div>
 </div>
 
@@ -69,11 +79,11 @@
 <div class="form-group">
 <label for="addr_num">주소</label>
 <div class="group">
-<!-- <input type="text" id="postcode" name="postcode" placeholder="우편번호" /> -->
-<input type="button" onclick="DaumPostcode()" value="주소 찾기"><br>
+<input type="text" id="postcode" name="postcode" placeholder="우편번호" />
+<input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 </div>
 <!--     <label for="addr">주소</label> -->
-<input type="text" id="address" name="c_addr1" placeholder="주소" readonly="readonly"/><br>
+<input type="text" id="address" name="c_addr1" placeholder="주소"/><br>
 <!--  <label for="addr_detail">상세주소</label> -->
   <div class="group">
    <input type="text" id="detailAddress" name="c_addr2" placeholder="상세주소" />
@@ -102,14 +112,8 @@
 <!-- 오프라인 폼 -->
 
 <!-- 온라인 폼 -->
-<form role="form" style="display: none;" id="onlineForm" enctype="multipart/form-data" method="post">
+<form role="form" id="onlineForm" enctype="multipart/form-data" method="post" style="display: none;">
 <div class="box-body">
-<div class="form-group">
-<label for="offline">오프라인</label>
-<input type="radio" class="form-control" id="offline" name="way" value="off">
-<label for="online">온라인</label>
-<input type="radio" class="form-control" id="online" name="way" value="on">
-</div>
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
 <input type="text" class="form-control" id="className" placeholder="클래스명을 입력하세요." name="c_name" required>
@@ -130,8 +134,8 @@
 
 <div class="form-group">
 <label for="img1">대표 이미지</label><span style="color: red">(필수)</span>
-<input type="file" id="img1" name="c_img" required>
-<div id="c_img1_warning"></div>
+<input type="file" id="img1" name="c_img1" required>
+<div id="img1_warning"></div>
 </div>
 
 <div class="form-group" id="imgForm">
@@ -146,9 +150,9 @@
 </div>
 <div class="form-group">
 <label for="c_level">난이도</label><span style="color: red">(필수)</span>
-<input type="radio" id="c_level" name="c_level" value="3">상
-<input type="radio" id="c_level" name="c_level" value="2">중
-<input type="radio" id="c_level" name="c_level" value="1">하
+<input type="radio" id="c_level" name="c_level" value="1">입문
+<input type="radio" id="c_level" name="c_level" value="2">중급
+<input type="radio" id="c_level" name="c_level" value="3">고급
 <div id="c_level_warning"></div>
 </div>
 
@@ -215,13 +219,11 @@ function DaumPostcode() {
                 document.getElementById("sample6_extraAddress").value = '';
             }
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-//             document.getElementById('postcode').value = data.zonecode;
+            document.getElementById('postcode').value = data.zonecode;
             //변경불가능하게 만들기
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.querySelector("input[name=c_addr1]").focus();
-            
-            getLatLng(addr);
+            document.querySelector("input[name=c_addr1]").focus(); 
         }
     }).open();
 }
@@ -230,54 +232,43 @@ function DaumPostcode() {
 // 파일 추가
 var cnt = 2;
 function addFile() {
-    if(cnt < 5) { // 이미지 추가 태그가 3개 이하일 때만 실행
-        var html = "<div class='input-file-container'>";
-        html += "<input type='file' name='c_img" + cnt + "' required>";
-        html += "<button class='delete-file-btn'>삭제</button>";
-        html += "</div>";
-        $("#imgForm").append(html);
-        cnt++;
-
-        if(cnt === 5) { // 이미지 추가 태그가 3개일 경우, 버튼 비활성화
-            $("#img2").attr("disabled", true);
-        }
-    }
+	if(cnt == 5) {
+		alert('4개까지 등록가능');
+	}else{
+	    var html = "<div class='input-file-container'>";
+	    html += "<input type='file' name='c_img" + cnt + "' required>";
+	    html += "<button class='delete-file-btn'>삭제</button>";
+	    html += "</div>";
+	    $("#imgForm").append(html);
+	    cnt++;
+	}
 }
-
 
 $(document).on("click", ".delete-file-btn", function() {
     $(this).parent().remove();
+    cnt--;
+    if(cnt < 2) cnt = 2;
 });
 // 파일 추가
 </script>
-
-<!-- 좌표 얻기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services"></script>
-<script>
-function getLatLng(addr) { 
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch(addr, function(result, status) {
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-			document.getElementById('lat').value = result[0].y;
-			document.getElementById('lng').value = result[0].x;
-	    } 
-	});
-}
-</script>
-<!-- 좌표 얻기 -->
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 var tj = $.noConflict();
 	tj(document).ready(function() {
-	  tj('.iCheck-helper').click(function(){
-		  alert('ddddddddddd');
-		 tj('#offlineForm').css('display', 'none');
-		 tj('#onlineForm').css('display', 'block'); 
-	  });  
+		// iCheck-helper 클래스가 선택되었을 때 이벤트 처리
+		tj('.iCheck-helper').on('click', function() {
+		  // parent() 사용해서 부모 요소 div 태그 선택 후 find 사용해서 하위 input[name=way] 요소의 value값 가져오기
+		  var selectedValue = tj(this).parent().find('input[name="way"]:checked').val();
+		  
+		  if(selectedValue == 'on'){
+			  tj('#onlineForm').css('display', 'block');
+			  tj('#offlineForm').css('display', 'none');
+		  }else{
+			  tj('#offlineForm').css('display', 'block');
+			  tj('#onlineForm').css('display', 'none');
+		  }
+		});
+
 var formObj = tj('form[role="form"]');
 		
 		
@@ -351,7 +342,7 @@ var formObj = tj('form[role="form"]');
 
 // 클래스 등록 폼 전송
   $('#addClassBtn').click(function(){
-		formObj.attr("action","/tj/addClass");
+		formObj.attr("action","/class/addClass");
 		formObj.attr("method","post");
 	});
 // 클래스 등록 폼 전송

@@ -20,7 +20,7 @@ public class FileServiceImpl implements FileService{
 	private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 	
 	@Override
-	public String fileProcess(MultipartHttpServletRequest multiRequest) throws Exception {
+	public List<String> fileProcess(MultipartHttpServletRequest multiRequest) throws Exception {
 		List<String> fileList = new ArrayList<String>();
 
 		// input-file 파라메터정보를 가져오기
@@ -61,7 +61,8 @@ public class FileServiceImpl implements FileService{
 		logger.info("file 업로드 완료! ");
 
 		logger.info("fileList@@@@@@@@@@@ : "+fileList.toString());
-		return String.join(",", fileList);
+		
+		return fileList;
 	}
 
 }

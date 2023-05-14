@@ -168,42 +168,42 @@ margin-top: 18px;
 
 				<div class="menu_container">
 					<div style="font-size: x-large; font-weight: 550; color: white; text-align: center; margin: 10%;">
-						<a href="/db/mypage">마이페이지</a>
+						<a href="/member/mypage">마이페이지</a>
 					</div>
 					<div class="side_menu">
 						<div id="icon1" class="side_icon"></div>
 						<div>
-							<a href="/db/updateMember">회원정보 수정</a>
+							<a href="/member/updateMember">회원정보 수정</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon2" class="side_icon"></div>
 						<div>
-							<a href="/db/wishList">위시리스트</a>
+							<a href="/member/wishList">위시리스트</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon3" class="side_icon"></div>
 						<div>
-							<a href="/db/classList">내가신청한클래스</a>
+							<a href="/member/classList">내가신청한클래스</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon4" class="side_icon"></div>
 						<div>
-							<a href="/db/payList">결제내역</a>
+							<a href="/member/payList">결제내역</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon5" class="side_icon"></div>
 						<div>
-							<a href="/db/msgList">메시지</a>
+							<a href="/member/msgList">메시지</a>
 						</div>
 					</div>
 					<div class="side_menu">
 						<div id="icon6" class="side_icon"></div>
 						<div>
-							<a href="/db/subscribe">구독</a>
+							<a href="/member/subscribe">구독</a>
 						</div>
 					</div>
 					
@@ -213,7 +213,7 @@ margin-top: 18px;
 							<div class="side_menu">
 								<div id="icon7" class="side_icon"></div>
 								<div>
-									<a href="/db/deleteMember">회원탈퇴</a>
+									<a href="/member/deleteMember">회원탈퇴</a>
 								</div>
 							</div>
 						</c:if>

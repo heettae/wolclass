@@ -27,33 +27,27 @@ import com.wolclass.service.MemberService;
 import com.wolclass.service.WishService;
 import com.wolclass.utils.OpenweatherAPI;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private ClassService service;
+	private ClassService classService;
 	@Autowired
-	private WishService wservice;
+	private WishService wishService;
 	@Autowired
-	private MemberService mservice;
-	/**
-	 * 메인페이지 가는 메소드임
-	 */
-	// http://localhost:8080/
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session) throws Exception{
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
+	private MemberService memberService;
+	
+	// main 페이지 - tj
+	@RequestMapping(value = "/")
+	public String mainGET(@RequestParam Map<String, Object> map, Model model, HttpSession session) throws Exception {
+		logger.info(" mainGET() 호출 ");
 		List<ClassVO> recommendedClass;
-		String keyword;
+		String keyword = "";
 		// 카테고리별 리스트 출력
 		Map<String, List<ClassVO>> classMap = new HashMap<String, List<ClassVO>>();
-		List<ClassVO> categoryClassList = service.getCategoryClassList();
+		List<ClassVO> categoryClassList = classService.getCategoryClassList();
 		for (ClassVO classVO : categoryClassList) {
 			String category = classVO.getC_category();
 			List<ClassVO> categoryList = classMap.get(category);
@@ -64,59 +58,55 @@ public class HomeController {
 			categoryList.add(classVO);
 		}
 		String id = (String) session.getAttribute("id");
-		// 특정일 기준
-//		List<ClassVO> list = service.getClassList(map);
 
 		if (id != null) {
-			MemberVO vo = mservice.getMemberInfo(id);
+			MemberVO vo = memberService.getMemberInfo(id);
 			if (vo.getM_dogbirth() != null) {
-				int age = service.calculateAge(vo.getM_dogbirth());
-				int birth = service.oneWeekBeforeBirth(vo.getM_id());
-				if (age >= 8 && birth > 0) {
-					// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
-					keyword = "건강|훈련|영양|생일";
-					recommendedClass = service.findByKeyword(keyword);
-					model.addAttribute("recClass", recommendedClass);
-				} else if (age >= 8) {
-					keyword = "건강|훈련|영양";
-					recommendedClass = service.findByKeyword(keyword);
-					model.addAttribute("recClass", recommendedClass);
-				} else if (birth > 0) {
-					keyword = "명절|생일";
-					recommendedClass = service.findByKeyword(keyword);
+				int age = memberService.calculateAge(vo.getM_dogbirth());
+				int birth = memberService.oneWeekBeforeBirth(vo.getM_id());
+//				if (age >= 8 && birth > 0) {
+//					// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
+//					keyword = "건강|영양|생일";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				} else if (age >= 8) {
+//					keyword = "건강|영양";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				} else if (birth > 0) {
+//					keyword = "생일";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				}
+				List<String> keywords = new ArrayList<>();
+				if(birth > 0) keywords.add("생일");
+				if(age >= 8) {
+					keywords.add("건강");
+					keywords.add("영양");
+				}
+				if(keywords.size() > 0) {
+					recommendedClass = classService.findByKeyword(String.join("|", keywords.toArray(new String[0])));
 					model.addAttribute("recClass", recommendedClass);
 				}
 				logger.info("반려견 나이 : " + age);
 			}
 		}
+		
+		model.addAttribute("onlineList", classService.getOnlineList());
+		model.addAttribute("WDATA", OpenweatherAPI.getCurrentWeather((String)session.getAttribute("userLat"), (String)session.getAttribute("userLng")));
 		model.addAttribute("categoryList", classMap);
-		model.addAttribute("wishList", wservice.getCnoList((String) session.getAttribute("id")));
-		// 사용자 위치기반 날씨정보 얻어옴.
-		String wData = OpenweatherAPI.getCurrentWeather((String)session.getAttribute("userLat"), (String)session.getAttribute("userLng"));
-		model.addAttribute("WDATA", wData);
-		logger.info("wData : {}",wData);
+		model.addAttribute("wishList", wishService.getCnoList((String) session.getAttribute("id")));
+		logger.info("classMap@@@@@@@@@@@@@@@@@ : " + classMap.size());
 		
 		return "/main/main";
 	}
+	// main 페이지 - tj
 	
-	// 사용자 위치정보 세션에 저장 HJ
-	@RequestMapping(value = "/location", method = RequestMethod.POST)
-	@ResponseBody
-	public void setLocation(HttpSession session, @RequestParam("userLat") String lat, @RequestParam("userLng") String lng) {
-		logger.info(" setLocation() 호출 ");
-		logger.info("접속 위치정보  위도 {} , 경도 {}", lat, lng);
-		session.setAttribute("userLat", lat);
-		session.setAttribute("userLng", lng);
+	// 리뷰 이벤트 페이지
+	@RequestMapping(value = "/reviewEvent")
+	public String event() throws Exception{
+		return "/main/reviewEvent";
 	}
-	// 사용자 위치정보 세션에 저장 HJ
-	
-	// 사용자 위치정보 세션에 저장 HJ
-	@RequestMapping(value = "/addr", method = RequestMethod.POST)
-	@ResponseBody
-	public void setAddr(HttpSession session, @RequestParam("userAddr") String addr) {
-		logger.info(" setLocation() 호출 ");
-		logger.info("접속 위치정보 행정주소 {} ", addr);
-		session.setAttribute("userAddr", addr);
-	}
-	// 사용자 위치정보 세션에 저장 HJ
+	// 리뷰 이벤트 페이지
+
 }

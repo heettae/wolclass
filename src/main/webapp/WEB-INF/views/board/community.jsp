@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- header  -->
 <%@ include file="../include/header.jsp"%>
@@ -55,7 +55,7 @@ th {
 								<div class="input-group input-group-sm hidden-xs">
 									<input style="width: 200px; margin-left: 58px;" type="text"
 										name="search" class="form-control pull-right"
-										placeholder="키워드를 입력해주세요" value="${cmap.search}">
+										placeholder="키워드를 입력해주세요" value="${map.search}">
 
 									<div class="input-group-btn">
 										<button type="submit" class="btn btn-default">
@@ -83,8 +83,8 @@ th {
 								<th style="width: 10%">조회수</th>
 								<th style="width: 15%">작성일</th>
 							</tr>
-						<c:if test="${boardList.size() >0 && boardList != null && cmap.pageNum != cmap.pageCount}">
-								<c:forEach var="i" begin="${(cmap.pageNum-1)*cmap.pageSize}" end="${cmap.pageNum*cmap.pageSize-1}">
+						<c:if test="${boardList.size() >0 && boardList != null && map.pageNum != map.pageCount}">
+								<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.pageNum*map.pageSize-1}">
 									<tr>
 										<td>${boardList[i].b_no}</td>
 										<td><c:if test="${boardList[i].b_category == '일반'}">
@@ -92,8 +92,8 @@ th {
 									</c:if> <c:if test="${boardList[i].b_category == '모집'}">
 									모집글
 									</c:if> </td>
-										<td><a href="/board/read?b_no=${boardList[i].b_no }&b_category=${cmap.b_category}
-										&search=${cmap.search}&pageNum=${cmap.pageNum}">
+										<td><a href="/board/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
+										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
 										<td>${boardList[i].b_writer }</td>
 										<td><span class="badge bg-yellow">
@@ -102,8 +102,8 @@ th {
 									</tr>
 								</c:forEach>
 							</c:if>
-						<c:if test="${cmap.pageNum == cmap.pageCount }">
-								<c:forEach var="i" begin="${(cmap.pageNum-1)*cmap.pageSize}" end="${cmap.count-1}">
+						<c:if test="${map.pageNum == map.pageCount }">
+								<c:forEach var="i" begin="${(map.pageNum-1)*map.pageSize}" end="${map.count-1}">
 									<tr>
 										<td>${boardList[i].b_no}</td>
 											<td><c:if test="${boardList[i].b_category == '일반'}">
@@ -111,8 +111,8 @@ th {
 									</c:if> <c:if test="${boardList[i].b_category == '모집'}">
 									모집글
 									</c:if> </td>
-										<td><a href="/board/read?b_no=${boardList[i].b_no }&b_category=${cmap.b_category}
-										&search=${cmap.search}&pageNum=${cmap.pageNum}">
+										<td><a href="/board/swRead?b_no=${boardList[i].b_no }&b_category=${map.b_category}
+										&search=${map.search}&pageNum=${map.pageNum}">
 												${boardList[i].b_title } </a></td>
 										<td>${boardList[i].b_writer }</td>
 										<td><span class="badge bg-yellow">
@@ -128,7 +128,8 @@ th {
 				</div>
 				<div></div>
 			</div>
-
+			
+			
 			<a onclick="boardWrite();" style="margin: 10px 0 30px 85%; padding:5px 10px; border: #ddd solid 1px; border-radius: 6px; cursor: pointer;">
 				글작성
 			</a>
@@ -140,25 +141,25 @@ th {
 			<div class="box-footer clearfix">
 				<div>
 					<ul class="pagination pagination-sm no-margin " >
-						<c:if test="${cmap.endPage <= cmap.pageBlock}">
+						<c:if test="${map.endPage <= map.pageBlock}">
 						<li></li>
 						</c:if>
-						<c:if test="${cmap.endPage > cmap.pageBlock}">
-						<li><a href="/board/community?b_category=${cmap.b_category}&search=${cmap.search}&pageNum=${cmap.startPage - cmap.pageBlock}" 
+						<c:if test="${map.endPage > map.pageBlock}">
+						<li><a href="/board/community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage - map.pageBlock}" 
 						onclick="backPage();">«</a></li>
 						</c:if>
 						
 						
-						<c:forEach var="pageNum" begin="${cmap.startPage}" end="${cmap.endPage}">
-							<li><a onclick="inputPageNum(pageNum);" href="/board/community?b_category=${cmap.b_category}
-							&search=${cmap.search}&pageNum=${cpageNum}">${cpageNum}</a></li>
+						<c:forEach var="pageNum" begin="${map.startPage}" end="${map.endPage}">
+							<li><a onclick="inputPageNum(pageNum);" href="/board/community?b_category=${map.b_category}
+							&search=${map.search}&pageNum=${pageNum}">${pageNum}</a></li>
 						</c:forEach>
 						
-						<c:if test="${cmap.pageCount <= cmap.endPage}">
+						<c:if test="${map.pageCount <= map.endPage}">
 						<li></li>
 						</c:if>
-						<c:if test="${cmap.pageCount > cmap.endPage}">
-						<li><a href="/board/community?b_category=${cmap.b_category}&search=${cmap.search}&pageNum=${cmap.startPage + cmap.pageBlock}" 
+						<c:if test="${map.pageCount > map.endPage}">
+						<li><a href="/board/community?b_category=${map.b_category}&search=${map.search}&pageNum=${map.startPage + map.pageBlock}" 
 						onclick="nextPage();">»</a></li>
 						</c:if>
 					</ul>
@@ -189,28 +190,28 @@ th {
 		});
 	
 		function nextPage(){
-		    cmap.put("startPage", cmap.get("startPage") + cmap.get("pageSize"));
-		    cmap.put("endPage", cmap.get("endPage") + cmap.get("pageSize"));
-		    alert(cmap.get("startPage"));
-		    alert(cmap.get("endPage"));   
+		    map.put("startPage", map.get("startPage") + map.get("pageSize"));
+		    map.put("endPage", map.get("endPage") + map.get("pageSize"));
+		    alert(map.get("startPage"));
+		    alert(map.get("endPage"));   
 		};
 
 		function backPage(){
-		    cmap.put("startPage", cmap.get("startPage") - cmap.get("pageSize"));
-		    cmap.put("endPage", cmap.get("endPage") - cmap.get("pageSize"));
-		    alert(cmap.get("startPage"));
-		    alert(cmap.get("endPage"));
+		    map.put("startPage", map.get("startPage") - map.get("pageSize"));
+		    map.put("endPage", map.get("endPage") - map.get("pageSize"));
+		    alert(map.get("startPage"));
+		    alert(map.get("endPage"));
 		};
         
 		function inputPageNum(pageNum){
-			cmap.put("pageNum", pageNum);
+			map.put("pageNum", pageNum);
 		};
 		 
 		function boardWrite(){
 			if("${sessionScope.id}" == ""){
-				return location.href="/db/login";
+				return location.href="/member/login";
 			}
-			return location.href="/board/write";
+			return location.href="/board/swWrite";
 		}
 		
 		

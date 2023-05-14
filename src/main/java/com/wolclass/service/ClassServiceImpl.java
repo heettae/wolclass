@@ -1,8 +1,5 @@
 package com.wolclass.service;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +20,11 @@ public class ClassServiceImpl implements ClassService {
 	@Autowired
 	private ClassDAO dao;
 	
+	@Override
+	public List<ClassVO> getOnlineList() throws Exception {
+		return dao.getOnlineList();
+	}
+	
 	// 카테고리별 클래스 리스트 조회
 	@Override
 	public List<ClassVO> getCategoryClassList() throws Exception {
@@ -37,23 +39,6 @@ public class ClassServiceImpl implements ClassService {
 		return dao.findByKeyword(keyword);
 	}
 	// 키워드별 추천
-
-	// 생일 1주일 전
-	@Override
-	public int oneWeekBeforeBirth(String m_id) throws Exception {
-		return dao.oneWeekBeforeBirth(m_id);
-	}
-	// 생일 1주일 전
-
-	// 반려견 나이 계산
-	@Override
-	public Integer calculateAge(Timestamp m_dogbirth) throws Exception {
-		LocalDate birthDate = m_dogbirth.toLocalDateTime().toLocalDate();
-		logger.info("Service - birthDate @@@@@@@@@@@@ " + m_dogbirth);
-		LocalDate now = LocalDate.now();
-		return Period.between(birthDate, now).getYears();
-	}
-	// 반려견 나이 계산
 	
 	@Override
 	public void addClass(ClassVO vo) throws Exception {

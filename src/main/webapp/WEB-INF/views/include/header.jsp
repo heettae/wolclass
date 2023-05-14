@@ -17,27 +17,6 @@
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
-        <!-- Place favicon.ico  the root directory -->
-<!--         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
-<!--         <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
-
-		<!-- adminlte -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/bootstrap/dist/css/bootstrap.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/bootstrap-daterangepicker/daterangepicker.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/font-awesome/css/font-awesome.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/Ionicons/css/ionicons.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/morris.js/morris.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admibower_components/jvectormap/jquery-jvectormap.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admidist/css/skins/_all-skins.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admidist/css/skins/skin-blue.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admidist/css/AdminLTE.min.css"> -->
-<!-- 		<link rel="stylesheet" href="/resources/admiplugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> -->
- 		<!-- Google Font --> 
-<!-- 		<link rel="stylesheet" -->
-<!--         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
-		<!-- adminlte -->
-
         <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/resources/css/animate.css" media="screen">
         <link rel="stylesheet" href="/resources/assets/fonts/icon-7-stroke/css/helper.css">
@@ -397,7 +376,7 @@ background-color: #333;
 <input type="hidden" value="${sessionScope.id }" id="id">
 <nav class="navbar navbar-default " style="top: 0; left: 0; width: 100%; z-index: 9999; padding-bottom: 10px;">
                 <div class="navbar-header" style="margin-left: 100px;">
-				<a href="/tj/main">
+				<a href="/">
                     <img src="/resources/img/logo2.png" alt="wolClass" style="height: 90px;">
                 </a>
                 </div>
@@ -412,7 +391,7 @@ background-color: #333;
                                 <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Key word" id="search">
+                                    <input type="text" class="form-control" placeholder="Key word" id="search" value="${map.search }">
                                 </div>
                                 <button class="btn search-btn" type="button" id="searchBtn"><i class="fa fa-search"></i></button>
 								<div class="button navbar-right" style="padding: 0px;">
@@ -477,7 +456,7 @@ background-color: #333;
                   			    <!-- 더보기 팝업창 --> 
                   			     <div id="more-popup" class="more-popup">
                   			     <ul>
-                  			       <li><a href="/sw/community"> 커뮤니티</a></li>
+                  			       <li><a href="/board/community"> 커뮤니티</a></li>
                   			       <li><a href="/board/notice"> 공지사항</a></li>
                   			     </ul>
                   			     </div>
@@ -487,15 +466,15 @@ background-color: #333;
                   			    <div id="user-popup" class="user-popup">
 								  <ul>
 								    <c:if test="${sessionScope.id != 'admin'}">
-								    <li><a href="/db/mypage">마이페이지</a></li>
+								    <li><a href="/member/mypage">마이페이지</a></li>
 									</c:if>
 								    <c:set var="isKakao" value="${sessionScope.id.toString().replaceAll('[0-9]','') }" />
 									<c:if test="${sessionScope.id != null }">
 										<c:if test="${isKakao != '' && sessionScope.id.toString().length()<20}">
-											<li><a href="/db/logout">로그아웃</a></li>
+											<li><a href="/member/logout">로그아웃</a></li>
 										</c:if>
 										<c:if test="${isKakao == '' && sessionScope.id.toString().length()<20}">
-											<li><button type="button" class="btn btn-default" id="logoutBtn" onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=c6c8f231f2997186bfd65955c7b8f1ab&logout_redirect_uri=http://localhost:8080/db/logout'">
+											<li><button type="button" class="btn btn-default" id="logoutBtn" onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=c6c8f231f2997186bfd65955c7b8f1ab&logout_redirect_uri=http://localhost:8080/member/logout'">
 											로그아웃
 											</button>
 											</li>
@@ -580,7 +559,7 @@ background-color: #333;
                                                     <input type="checkbox" value="2" name="c_level" 
                                                     ${map.midlv == '2' ? 'checked' : '' }
                                                     style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-                                                     초급
+                                                    중급
                                             </div>
 
                                             <div class="checkbox" id="c_level">
@@ -753,7 +732,7 @@ $(document).ready(function(){
 		 		popup.close(); 
 		 	}); 
 		 	setTimeout(function(){ 
-		 		location.href="/db/logout"; 
+		 		location.href="/member/logout"; 
 		 	},150) 
 		 } 
 	$(document).ready(function(){
@@ -764,9 +743,9 @@ $(document).ready(function(){
 		    console.log(id);
 		    if (!id) {
 		    	alert('로그인이 필요합니다.');
-		        location.href="/db/login";
+		        location.href="/member/login";
 		    } else{
-		    	location.href='/tj/classWorkSpace';
+		    	location.href='/class/classWorkSpace';
 		    }
 		    return false;
 		  });
@@ -776,7 +755,7 @@ $(document).ready(function(){
 
 	// 로그인 submit - 다빈
 	$("#login").click(function(){
-		location.href="/db/login";
+		location.href="/member/login";
 	});
 	
 	$(document).ready(function() {
@@ -787,7 +766,7 @@ $(document).ready(function(){
 	    // 서버에서 알림 개수 조회
 	    $.ajax({
 	        type: "GET",
-	        url: "/tj/alertList",
+	        url: "/alertList",
 	        dataType: "json",
 	        success: function(data) {
 	        	var count = data.length;
@@ -811,7 +790,7 @@ $(document).ready(function(){
 	        if (!isOpen) {
 	            $.ajax({
 	                type: "GET",
-	                url: "/tj/alertList",
+	                url: "/alertList",
 	                dataType: "json",
 	                success: function(alertList) {
 	                    var html = "";
@@ -821,14 +800,14 @@ $(document).ready(function(){
 	                        	html += "<li> <a href='/class/detail?c_no="+alert.cate_no+"' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                        if(alert.category == 2){
-	                        	html += "<li> <a href='/db/classList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        	html += "<li> <a href='/member/classList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                        if(alert.category == 3){
-	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/db/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
+	                        	if('${sessionScope.id}' != 'admin'){html += "<li> <a href='/member/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
 	                        	else{html += "<li> <a href='/admin/msgList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";}
 	                        }
 	                        if(alert.category == 4){
-	                        	html += "<li> <a href='/db/subscribe' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        	html += "<li> <a href='/member/subscribe' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
 	                    });
 	                    $('#notification-list').html(html);
@@ -862,7 +841,7 @@ $(document).ready(function(){
 	        var $alertListItem = $(this).closest('li');
 	        $.ajax({
 	            type: "GET",
-	            url: "/tj/alertCheck",
+	            url: "/alertCheck",
 	            data: {a_no: a_no},
 	            success: function() {
 	                console.log("알림 읽음 처리 완료");
@@ -882,7 +861,7 @@ $(document).ready(function(){
 	 $(document).on('click', '#notification-read', function() {
     $.ajax({
         type: "GET",
-        url: "/tj/alertCheckAll",
+        url: "/alertCheckAll",
         success: function() {
             console.log("전체 알림 읽음 처리 완료");
             $(".notification-list").fadeOut(300, function() {
@@ -906,7 +885,7 @@ $(document).ready(function(){
 	    // 서버에서 알림 개수 조회
 	    $.ajax({
 	        type: "GET",
-	        url: "/tj/alertList",
+	        url: "/alertList",
 	        dataType: "json",
 	        success: function(data) {
 	            var count = data.length;

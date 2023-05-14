@@ -101,7 +101,7 @@ border-radius:6px;
 									<button type="submit" class="btn-write">작성하기 </button>
 								</div>
 								<div>
-									<button class="btn-backlist" onclick="location.href='/sw/community';"> 목록으로 </button>
+									<button class="btn-backlist" onclick="location.href='/board/community';"> 목록으로 </button>
 								</div>
 							</div>
 							<!-- button   -->

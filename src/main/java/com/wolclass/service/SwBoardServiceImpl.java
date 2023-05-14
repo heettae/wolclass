@@ -26,25 +26,25 @@ public class SwBoardServiceImpl implements SwBoardService {
 
 	
 	@Inject
-	private SwBoardDAO bdao;
+	private SwBoardDAO dao;
 	
 	// 디비 시간 정보 조회
 	@Override
 	public String itwillbs_getTime() {
-		return bdao.getDBTime();
+		return dao.getDBTime();
 	}
 
 	// 글쓰기 
 	@Override
 	public void writeBoard(BoardVO vo) throws Exception {
-		bdao.createBoard(vo);
+		dao.createBoard(vo);
 	}
 
 	// 전체 글목록 조회
 	@Override
 	public List<BoardVO> getBoardListAll(Map<String, Object> map) throws Exception {
 		
-		return bdao.getBoardListAll(map);
+		return dao.getBoardListAll(map);
 	}
 
 	// 페이징 처리 및 검색
@@ -56,7 +56,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 		if(!map.containsKey("pageNum")) map.put("pageNum", "1");
 		
 		// 리스트 총 개수
-		int count = bdao.selectPNBT(map);
+		int count = dao.selectPNBT(map);
 		int pageSize = 10;
 		int pageBlock = 10;
 		int currentPage = Integer.parseInt((String)map.get("pageNum"));
@@ -64,7 +64,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 		logger.info("currentPage {}",currentPage);
 		List<BoardVO> list = new ArrayList<>();
 		map.put("pageSize", pageSize);
-		if(count > 0) 	list = bdao.getBoardListAll(map);
+		if(count > 0) 	list = dao.getBoardListAll(map);
 		int pageCount = (count/pageSize) + (count % pageSize==0 ? 0:1);
 		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
 		int endPage = startPage + pageBlock - 1;
@@ -91,13 +91,13 @@ public class SwBoardServiceImpl implements SwBoardService {
 	// 특정글 정보 확인
 	@Override
 	public BoardVO getBoard(Integer b_no) throws Exception {
-		return bdao.getBoard(b_no);
+		return dao.getBoard(b_no);
 	}
 	
 	// 조회수 1씩 증가
 	@Override
 	public void incrementViewCnt(Integer b_no) throws Exception {
-		bdao.updateViewcnt(b_no);
+		dao.updateViewcnt(b_no);
 	}
 
 	// 특정글의 댓글 목록 가져오기
@@ -106,7 +106,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 		if(!map.containsKey("cPageNum")) map.put("cPageNum", "1");
 		
 		// 리스트 총 개수
-		int count = bdao.selectPNRT(map);
+		int count = dao.selectPNRT(map);
 		int pageSize = 10;
 		int pageBlock = 10;
 		int currentPage = Integer.parseInt((String)map.get("cPageNum"));
@@ -114,7 +114,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 		logger.info("currentPage {}",currentPage);
 		List<ReplyVO> list = new ArrayList<>();
 		map.put("pageSize", pageSize);
-		if(count > 0) 	list = bdao.getReplyList(map);
+		if(count > 0) 	list = dao.getReplyList(map);
 		int pageCount = (count/pageSize) + (count % pageSize==0 ? 0:1);
 		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
 		int endPage = startPage + pageBlock - 1;
@@ -144,32 +144,32 @@ public class SwBoardServiceImpl implements SwBoardService {
 	// 글 수정하기 
 	@Override
 	public Integer modifyBoard(BoardVO uvo) throws Exception {
-		return bdao.updateBoard(uvo);	
+		return dao.updateBoard(uvo);	
 	}
 
 	// 글 삭제하기 
 	@Override
 	public Integer removeBoard(Integer b_no) throws Exception {
-		return bdao.deleteBoard(b_no);
+		return dao.deleteBoard(b_no);
 	}
 
 	// 댓글쓰기
 	public void writeComment (Map<String, Object> cmap) throws Exception{
 		
 		
-		bdao.createComment(cmap);
+		dao.createComment(cmap);
 	}
 
 	// 댓글 수정하기 
 	@Override
 	public Integer modifyComment(ReplyVO ruvo) throws Exception {
-		return bdao.updateComment(ruvo);	
+		return dao.updateComment(ruvo);	
 	}
 	
 	// 댓글 삭제하기 
 	@Override
 	public Integer removeComment(Integer r_no) throws Exception {
-		return bdao.deleteComment(r_no);
+		return dao.deleteComment(r_no);
 	}
 
 	
@@ -180,7 +180,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 			if(!map.containsKey("pageNum")) map.put("pageNum", "1");
 			
 			// 리스트 총 개수
-			int count = bdao.selectPNRVT(map);
+			int count = dao.selectPNRVT(map);
 			int pageSize = 10;
 			int pageBlock = 10;
 			int currentPage = Integer.parseInt((String)map.get("pageNum"));
@@ -188,7 +188,7 @@ public class SwBoardServiceImpl implements SwBoardService {
 			logger.info("currentPage {}",currentPage);
 			List<ReplyVO> list = new ArrayList<>();
 			map.put("pageSize", pageSize);
-			if(count > 0) 	list = bdao.getReviewList(map);
+			if(count > 0) 	list = dao.getReviewList(map);
 			int pageCount = (count/pageSize) + (count % pageSize==0 ? 0:1);
 			int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
 			int endPage = startPage + pageBlock - 1;

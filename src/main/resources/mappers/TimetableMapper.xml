@@ -4,39 +4,51 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wolclass.mappers.TimetableMapper">
-	
-	<!-- 클래스 시간, 날짜 등록 TJ -->
+
+	<!-- 클래스 시간, 날짜 등록 -->
 	<insert id="addTime">
 		insert into wc_timetable (t_start, t_end, t_date, t_rem_p, c_no) 
 		values( #{t_start}, #{t_end}, #{t_date}, #{t_rem_p}, #{c_no})
 	</insert>
 	<!-- 클래스 시간, 날짜 등록 -->
 	
+	<!-- 시간 등록 중복 검사 -->
+	<select id="timeOverlapCheck" resultType="int">
+		<![CDATA[ 
+		select count(t_no)
+		from wc_timetable
+		where t_start < #{t_end}
+		and t_end > #{t_start}
+		and t_date=#{t_date} and c_no = #{c_no};
+		]]>
+	</select>
+	<!-- 시간 등록 중복 검사 -->
+	
 	<!-- 예약가능한 타임테이블 TH -->	
 	<select id="getTimetable" resultType="TimetableVO">
 	<![CDATA[  
 	select * from wc_timetable
-	where t_rem_p >0
+	where t_rem_p > 0
 	and c_no = #{c_no}
 	]]>
 	</select>
 	
-	<select id="cnt" resultType="int">
-	<![CDATA[  
-	
-	]]> 
+	<!-- 예약가능한 시간 타임테이블 TH(수정) -->	
+	<!-- t_rem_p  <= (select c_maxperson from wc_class where c_no=#{c_no}) -->
+	<select id="getTime" resultType="TimetableVO"> 
+	<![CDATA[
+	select t_no, t_start from wc_timetable
+	where t_date=#{t_date} and c_no = #{c_no}
+	and t_rem_p > 0
+	]]>
 	</select>
 	
-	<insert id="insert">
-	
-	</insert>
-	
-	<update id="updateMember">
-	
-	</update>
-	
-	<delete id="deleteMember">
-	
-	</delete>
+	<!-- 예약가능한 최대 인원 구하기 TH -->
+	<select id="getRemainNum" resultType="TimetableVO"> 
+	<![CDATA[
+	select t_no, t_rem_p from wc_timetable
+	where c_no=#{c_no} and t_date = #{t_date} and t_start=#{t_start}
+	]]>
+	</select>
 	
 </mapper>	

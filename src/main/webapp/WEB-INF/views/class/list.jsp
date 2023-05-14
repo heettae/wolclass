@@ -85,8 +85,7 @@ function openLocation(){
 			인기 검색어<br>
 			<c:if test="${psList != null && psList.size() > 0}">
 			<c:forEach var="ps" items="${psList }">
-				<button class="btn border-btn more-black" id="best"
-				onclick="location.href='/class/list?search=${ps }'">${ps }</button>
+				<button class="btn border-btn more-black bestBtn" id="best">${ps }</button>
 			</c:forEach>
 			</c:if>
 		</div>
@@ -163,13 +162,13 @@ function openLocation(){
 			        <div class="pagination">
 						<ul>
 							<c:if test="${map.startPage > map.pageBlock }">
-							<li><a id="prev">이전</a></li>
+							<li><a style="cursor: pointer;" id="prev">이전</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
 							<li><a style="cursor: pointer;" class="pageNumbers">${i }</a></li>
 							</c:forEach>
 							<c:if test="${map.pageCount > map.endPage }">
-							<li><a id="next">다음</a></li>
+							<li><a style="cursor: pointer;" id="next">다음</a></li>
 							</c:if>
 						</ul>
 			        </div>
@@ -181,6 +180,13 @@ function openLocation(){
 			<script type="text/javascript">
 			$(document).ready(function(){
 				var formObj = $("form[role='srch_frm']");
+				
+				// 인기검색어			
+				$(".bestBtn").click(function(){
+					$('input[name="pageNum"]').val(1);
+					$('input[name="search"]').val($(this).html());
+					formObj.submit();
+				});	
 				
 				// prev
 				$("#prev").click(function(){

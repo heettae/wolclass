@@ -44,7 +44,7 @@ public class TJController {
 	public void mainGET(@RequestParam Map<String, Object> map, Model model, HttpSession session) throws Exception {
 		logger.info(" mainGET() 호출 ");
 		List<ClassVO> recommendedClass;
-		String keyword;
+		String keyword = "";
 		// 카테고리별 리스트 출력
 		Map<String, List<ClassVO>> classMap = new HashMap<String, List<ClassVO>>();
 		List<ClassVO> categoryClassList = tjService.getCategoryClassList();
@@ -64,20 +64,30 @@ public class TJController {
 			if (vo.getM_dogbirth() != null) {
 				int age = tjService.calculateAge(vo.getM_dogbirth());
 				int birth = tjService.oneWeekBeforeBirth(vo.getM_id());
-				if (age >= 8 && birth > 0) {
-					// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
-					keyword = "건강|영양|생일";
-					recommendedClass = tjService.findByKeyword(keyword);
+//				if (age >= 8 && birth > 0) {
+//					// 반려견 나이 기준 8살 이상일때 건강 카테고리 추천
+//					keyword = "건강|영양|생일";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				} else if (age >= 8) {
+//					keyword = "건강|영양";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				} else if (birth > 0) {
+//					keyword = "생일";
+//					recommendedClass = tjService.findByKeyword(keyword);
+//					model.addAttribute("recClass", recommendedClass);
+//				}
+				List<String> keywords = new ArrayList<>();
+				if(birth > 0) keywords.add("생일");
+				if(age >= 8) {
+					keywords.add("건강");
+					keywords.add("영양");
+				}
+				if(keywords.size() > 0) {
+					recommendedClass = tjService.findByKeyword(String.join("|", keywords.toArray(new String[0])));
 					model.addAttribute("recClass", recommendedClass);
-				} else if (age >= 8) {
-					keyword = "건강|영양";
-					recommendedClass = tjService.findByKeyword(keyword);
-					model.addAttribute("recClass", recommendedClass);
-				} else if (birth > 0) {
-					keyword = "생일";
-					recommendedClass = tjService.findByKeyword(keyword);
-					model.addAttribute("recClass", recommendedClass);
-				} 
+				}
 				logger.info("반려견 나이 : " + age);
 			}
 		}

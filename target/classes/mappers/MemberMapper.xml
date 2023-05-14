@@ -13,7 +13,7 @@
 	</select>
 	<!-- 회원 정보 -->	
 	
- 	<!-- 회원가입 - 다빈  -->
+	<!-- 회원가입 - 다빈  -->
  	<insert id="memberJoin" parameterType="map">
  		insert into wc_member
  		values (#{m_id},#{m_pw},#{m_email},#{m_name},#{m_nick}, 
@@ -55,23 +55,167 @@
  		update wc_member set m_pw = #{m_pw} where m_id=#{m_id}
  	</update>
  	
- 	<!-- 카카오 - 다빈-->
+ 	<!-- 카카오  회원가입 - 다빈-->
  	<insert id="kakaoInsert" parameterType="map">
  		insert into wc_member(m_id,m_pw,m_email,m_name) 
  		values (#{m_id},#{m_pw},#{m_email},#{m_name})
  	</insert>
  	
- 	<!-- 카카오  - 다빈 -->
+ 	<!-- 카카오 로그인 - 다빈 -->
  	<select id="kfindId" resultType="MemberVO">
  		select * from wc_member where m_id = #{m_id} 
  	</select>
+
+ 	<!-- 프로필 사진 변경 - 다빈-->
+ 	<update id="profileImg" parameterType="MemberVO">
+ 		update wc_member set m_profile = #{m_profile} where m_id = #{m_id}
+ 	</update>
+ 	
+ 	<!-- 회원정보 수정 - 다빈 -->
+ 	<update id="updateMember">
+		update wc_member set m_pw=#{m_pw},m_nick=#{m_nick},m_phone=#{m_phone},
+		m_dogtype=#{m_dogtype},m_dogbirth=#{m_dogbirth}
+		where m_id=#{m_id}
+  	</update>
+  	
+  	<!-- 회원탈퇴 - 다빈 -->
+  	<update id="deleteMember">
+  		update wc_member set m_pw=#{m_pw},m_email=null,m_name=null,m_nick=null,
+  		m_regdate=null,m_phone=null,m_dogtype=null,m_dogbirth=null,m_profile=null,m_point=null
+  		where m_id = #{m_id}
+  	</update>
+  	
+  	<!-- 결제내역 - 다빈 -->
+  	<select id="payListCnt" resultType="int">
+  		select count(wr.p_no)
+		from wc_rsrv_pay wr join wc_class wc
+		on wr.c_no=wc.c_no
+		where wr.m_id=#{m_id}
+  	</select>
+  	<select id="payList" resultType="map">
+  		select wr.p_no,wr.m_id,wr.c_no,wr.p_peoplenum,wr.p_price,wr.p_paydate,wr.p_rsrvdate,wr.p_status,wc.c_name
+		from wc_rsrv_pay wr join wc_class wc
+		on wr.c_no=wc.c_no
+		where wr.m_id=#{m_id}
+		order by wr.p_paydate
+		limit #{pageSize,javaType=INTEGER}
+		offset #{startRow,javaType=INTEGER}
+  	</select>
+  	
+  	<!-- 내가신청한클래스(예약한클래스) - 다빈 -->
+  	<select id="classListCnt" resultType="int">
+  	  <![CDATA[
+	    select count(p.p_no)
+		from wc_rsrv_pay p join wc_class c
+		on p.c_no = c.c_no
+		where p.m_id = #{m_id}
+		and p.p_rsrvdate > current_timestamp()
+		and p.p_status = 'paid'
+	  ]]>
+  	</select>
+  	<select id="classList" resultType="map">
+  	  <![CDATA[
+	    select c.c_name, p.p_rsrvdate, c.c_addr1, c.c_addr2, c.c_addrdetails, c.m_id,c.c_no
+		from wc_rsrv_pay p join wc_class c
+		on p.c_no = c.c_no
+		where p.m_id = #{m_id}
+		and p.p_rsrvdate > current_timestamp()
+		and p.p_status = 'paid'
+		order by p.p_rsrvdate
+		limit #{pageSize,javaType=INTEGER}
+		offset #{startRow,javaType=INTEGER}
+	  ]]>
+  	</select>
+  	
+ 	<!-- 내가신청한클래스(지난클래스) - 다빈 -->
+ 	<select id="classList2Cnt" resultType="int">
+	  <![CDATA[
+	    select count(p.p_no)
+		from wc_rsrv_pay p join wc_class c
+		on p.c_no = c.c_no
+		where p.m_id = #{m_id}
+		and p.p_rsrvdate < current_timestamp()
+		and p.p_status in ('paid','complete')
+	  ]]>
+	</select>	
+ 	<select id="classList2" resultType="map">
+	  <![CDATA[
+	    select c.c_name, p.p_rsrvdate, c.c_addr1, c.c_addr2, c.c_addrdetails, p.p_status,c.c_no,p.p_no
+		from wc_rsrv_pay p join wc_class c
+		on p.c_no = c.c_no
+		where p.m_id = #{m_id}
+		and p.p_rsrvdate < current_timestamp()
+		and p.p_status in ('paid','complete')
+		order by p.p_rsrvdate desc
+		limit #{pageSize,javaType=INTEGER}
+		offset #{startRow,javaType=INTEGER}
+	  ]]>
+	</select>	
 	
-	<update id="updateMember">
+	<!-- 메시지(받은) - 다빈 -->
+	<select id="msgList1Cnt" resultType="int">
+		select count(b_no)
+		from wc_board where b_reciver=#{m_id} 
+	</select>
+	<select id="msgList1" resultType="BoardVO">
+		select *
+		from wc_board where b_reciver=#{m_id} 
+		order by b_regdate desc
+		limit #{pageSize,javaType=INTEGER}
+		offset #{startRow,javaType=INTEGER}
+	</select>
 	
+	<!-- 메시지(보낸) - 다빈 -->
+	<select id="msgList2Cnt" resultType="int">
+		select count(b_no)
+		from wc_board where b_writer=#{m_id} and b_reciver is not null
+	</select>
+	<select id="msgList2" resultType="BoardVO">
+		select *
+		from wc_board where b_writer=#{m_id} and b_reciver is not null
+		order by b_regdate desc
+		limit #{pageSize,javaType=INTEGER}
+		offset #{startRow,javaType=INTEGER}
+	</select>
+	
+	<!-- 구독(남은기간) - 다빈 -->
+	<select id="subday" resultType="SubscriptionVO">
+		select s_start,s_end,s_cnt
+		from wc_subscription
+		where m_id = #{m_id}
+	</select>
+	
+	<!-- 문의하기 - 다빈 -->
+	<select id="qna" resultType="ClassVO">
+		select * from wc_class where c_no=#{c_no}
+	</select>
+	
+	<!-- 문의하기 - 다빈 -->
+	<insert id="insertQna" parameterType="map">
+		insert into wc_board(b_title,b_writer,b_content,b_reciver)
+		values (#{b_title},#{b_writer},#{b_content},#{b_reciver})
+	</insert>	
+	
+	<!-- 마이페이지(후기등록) - 다빈 -->
+	<insert id="myreview" parameterType="map">
+		insert into wc_reply(m_id,r_content,c_no,r_score)
+		values (#{m_id},#{r_content},#{c_no},#{r_score})
+	</insert>
+	
+	<!-- 리뷰등록 완료 - 다빈 -->
+	<update id="reviewOK">
+		update wc_rsrv_pay
+        set p_status = 'complete'
+        where p_no= #{p_no}
 	</update>
 	
-	<delete id="deleteMember">
-	
-	</delete>
+	<!-- 반려견 생일 7일전 -->	
+	<select id="oneWeekBeforeBirth" resultType="int">
+	SELECT count(m_dogbirth) 
+	FROM wc_member 
+	WHERE DATE_FORMAT(m_dogbirth, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 7 DAY), '%m-%d') 
+	AND m_id=#{m_id};
+	</select>
+	<!-- 반려견 생일 7일전 -->	
 	
 </mapper>	

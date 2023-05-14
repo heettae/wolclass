@@ -7,11 +7,109 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
 
+
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <title>Insert title here</title>
+  <style>
+  
+  	body{
+  	font-size: 18px;
+  	}
+  
+    .sidebar-property {
+    background-color: #EEE;
+    padding: 15px 25px 25px;
+    margin-left: 15px;
+    border-radius: 15px;
+    }
+	.blog-asside-right {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    }
+
+    h4[id*=toggle]{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    }
+
+	#toggle4{
+	border-top: 1px solid #cdcdcd;
+    padding-top: 10px;
+    border-bottom: 0;
+    }
+	
+	h6{
+	margin-top: 1px;
+    margin-bottom: 1px;
+	}
+
+
+	.property-info-entry .property-info-label{
+	font-size: 20px;
+    margin-bottom: 3px;
+    color: #FFA500;
+    padding-bottom: 5px;
+	}
+	
+	.single-property-header{
+	padding-top: 50px;
+	}
+
+
+	#menu{
+	border-bottom: 5px solid #e7e7e7;
+	font-size: 20px;
+
+	}
+
+	#div_review{
+	border-bottom: 5px solid #e7e7e7;
+    margin-bottom: 15px;
+	}
+	
+	.review_list{
+	height: 350px;
+	}
+	
+	#div_review ul {
+     list-style: none;
+     display: table;
+ 	 width: 100%;
+ 	 padding-inline-start : 0px;
+	}
+	
+	#div_review li {
+	display: inline-block;
+
+	}
+	#div_review li:first-child {
+  	width: 150px
+	}
+	
+	#div_review li:last-child {
+	display: table-cell;
+  	text-align: right;
+  	width: 150px;
+	}
+	
+	.s-property-title {
+    margin-bottom: 25px;
+    color: #FFA500;
+    font-size: 25px;
+    }
+	.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+	}
+
+
+  </style>
 <script type="text/javascript">
 //특정날짜들 배열
 //var disabledDays = ["2023-4-23","2023-4-24","2023-5-1"];
@@ -22,10 +120,16 @@ var time = null;
 var t_start = new Array();
 var pNum = null;
 var price;
+var p_no = null;
 $(document).ready(function() {
 	console.log(date)
 	$("#time").hide();
 	$("#pNum").hide();
+ 	$("#toggle2, #toggle3,#toggle4, #discount").hide();
+
+	
+	
+	
     $( "#thdatepicker" ).datepicker({
     	 dateFormat: 'yy-mm-dd',
          prevText: '이전 달',
@@ -51,31 +155,27 @@ $(document).ready(function() {
    	 date = $("#thdatepicker").val();
    	 
    	 
-        alert(date);
+//         alert(date);
         if(date!=null){
        	 console.log(date+"null아님~!1111");
        	 
        	 //시간 선택
        	 $.ajax({
-				url:"/th/getTime",
+				url:"/class/getTime",
 				type:"post",
 			 	data: JSON.stringify({t_date:date, c_no:c_no}),
 			 	contentType: "application/json; charset=utf-8",
 				dataType:"json",
 				success:function(data){
-					alert("성공");
+// 					alert("성공");
 					console.log(data);
-				/* 	for(i=0; i<data.length; i++) {
-						t_start[i] = data[i].t_start;
-						$("#time").append(t_start[i]);
-					}  */
+
 					
-				 	$("#time").show();
-					/*
-					$('select').empty();
-					$('select').append("<option>"+data[0].t_start+"</option>");
-					$('#timeBtn').append("<input type='button' value="+data[0].t_start+">");
-*/
+				 	//$("#time").show();
+				 	
+				 	//$("#toggle1").click();
+				 	$("#toggle2").show();
+				 	$("#toggle2").click();
 			        var $time = $("#time");
 			        $time.empty(); // 기존 옵션을 모두 지웁니다.
 			       	var $dft = $("<option>").text("시간 선택").val(null);
@@ -113,26 +213,32 @@ function timeSelected(){
 	   // if($("#time").val()!=null){
 	    	time = $("#time").val();
 	    	
-	    	alert(time+"dd");
+// 	    	alert(time+"dd");
 	    	
 	    	
 	       	 // 최대 인원 가져오기ajax
 	       	 $.ajax({
-					url:"/th/getPNum",
+					url:"/class/getPNum",
 					type:"post",
 				 	data: JSON.stringify({t_date:date, c_no:c_no, t_start:time}),
 				 	contentType: "application/json; charset=utf-8",
 					dataType:"json",
 					success:function(data){
-						alert("인원 가져오기 성공");
+// 						alert("인원 가져오기 성공");
 						console.log(data.t_rem_p);
 						pNum=data.t_rem_p;
 						let t_no = data.t_no;
 						$("#t_no").val(t_no);
 						console.log(pNum);
-					 	$("#pNum").show();
+					 	//$("#pNum").show();
+					 	
+						//$("#toggle2").click();
+					 	$("#toggle3").show();
+					 	$("#toggle3").click();
+					 	$("#toggle4").show();
+					 	$("#toggle4").click();
 					 	$("#pNum").attr('max', pNum);
-					 	$('#pNum').attr('placeholder', '예약 가능한 최대 인원은 '+pNum+'명 입니다');
+					 	$('#pNumS').text('예약 가능한 최대 인원은 '+pNum+'명 입니다');
 					 	
 
 
@@ -146,27 +252,58 @@ function timeSelected(){
 	    };
 
 	function changePNum(){
-	 	if($("#pNum").val()>pNum){
-		 	alert($("#pNum").val());
-		 	alert(pNum+"이하로 입력하세요");
+// 	 	if($("#pNum").val()>pNum){
+		 	
+// 		 	alert(pNum+"명 이하로 입력하세요");
+// 		 	$("#pNum").val(1);
+// 		 	// 여기 바꾸기
+// 		 	}
+	}
 	
-		 	}
+	function changePoint(){
+	
+	// 	let point = ${memberVO.m_point };
+	// 	 	if($("#point").val()>point){
+	// 		 	alert("보유 포인트 초과 (보유 포인트 : "+point+"p)");
+	// 		 	}
 	}
 	
 	$(document).ready(function(){
-	  $('#pNum, #point, #subs').on('input', function(){
-		  
-		  if(!($('#point').val()>=0)){
-			  $('#point').val(0);
-		  }
+		  let memberPoint = Number('${memberVO.m_point }');
+	  $('#time, #pNum, #point, #subs').on('input', function(){
+// 		  if(!($('#point').val()>=0)){
+// 			  $('#point').val(0);
+// 		  }
+// 		  if(!($('#pNum').val()>=1)){
+// // 			  $('#pNum').val(0);
+// 			  parseInt($("#pNum").val(0));
+// 		  }
+
 		  var point = $('#point').val() ? $('#point').val() : 0;
 		  var subs = $('#subs').prop('checked') ? 0.5 : 1;
 		  var bPrice = ${classVO.c_price};
 		  price = (bPrice*subs)+(bPrice*($("#pNum").val()-1)) - point;
+		  if($("#point").val()>memberPoint){
+			 	alert("보유 포인트 초과 (보유 포인트 : "+memberPoint+"p)");
+			 	$('#point').val(memberPoint);
+		 	}
+		  
+// 	 	  if($("#pNum").val()>pNum){
+// 		 	alert(pNum+"명 이하로 입력하세요");
+// 		 	parseInt($("#pNum").val(0));
+// 		  }
+		  
+		  if(price < 0){
+			   $('#point').val(0);
+			   $('#subs').prop('checked', false);
+			   $("#priceDisplay").text(bPrice + "원");
+			   
+		  }else{
+			  
+	        var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
+	        $("#priceDisplay").text(formattedPrice + "원"); // 가격 출력
+		  }
 	  
-	   
-        var formattedPrice = new Intl.NumberFormat('ko-KR').format(price); // 가격 포맷
-        $("#priceDisplay").text(formattedPrice + "원"); // 가격 출력
 	   
 	  })
 	});
@@ -233,6 +370,25 @@ for(var i=0; i<ableDays.length; i++){
 	console.log(ableDays[i]);
 }
 
+$(document).ready(function(){
+	$("#toggle1").click(function(){
+		$("#thdatepicker").slideToggle();
+	});
+
+	
+	$("#toggle2").click(function(){
+		 $("#time").slideToggle();
+	});
+	$("#toggle3").click(function(){
+		$("#pNum").slideToggle();
+	});
+	$("#toggle4").click(function(){
+		$("#discount").slideToggle();
+	});
+	
+});
+
+
 </script>
 <body>
 <%-- <h1>${id }</h1> --%>
@@ -246,61 +402,52 @@ for(var i=0; i<ableDays.length; i++){
 
                 <div class="clearfix padding-top-40" >
 
-                    <div class="col-md-8 single-property-content prp-style-1 ">
+                    <div class="col-md-8 single-property-content prp-style-1 " id="main">
                         <div class="row">
+ 
                             <div class="light-slide-item">            
                                 <div class="clearfix">
                                     <div class="favorite-and-print">
-                                        <a class="add-to-fav" href="#login-modal" data-toggle="modal">
-                                            <i class="fa fa-star-o"></i>
-                                        </a>
-                                        <a class="printer-icon " href="javascript:window.print()">
-                                            <i class="fa fa-print"></i> 
-                                        </a>
+                                    
+                                    <!-- 위시리스트 -->
+									<c:if test="${not empty sessionScope.id }">
+							        <button class="wishlist-btn ${wishList.contains(classVO.c_no) ? 'active' : ''}" value="${classVO.c_no }">
+							          <i class="fas fa-heart"></i>
+							        </button>
+							        </c:if>
+
                                     </div> 
 
-                                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                        <li data-thumb="assets/img/property-1/property1.jpg"> 
-                                            <img src="assets/img/property-1/property1.jpg" />
-                                        </li>
-                                        <li data-thumb="assets/img/property-1/property2.jpg"> 
-                                            <img src="assets/img/property-1/property3.jpg" />
-                                        </li>
-                                        <li data-thumb="assets/img/property-1/property3.jpg"> 
-                                            <img src="assets/img/property-1/property3.jpg" />
-                                        </li>
-                                        <li data-thumb="assets/img/property-1/property4.jpg"> 
-                                            <img src="assets/img/property-1/property4.jpg" />
-                                        </li>                                         
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                    <img src="../resources/img/${classVO.c_img.split(',')[0] }" />
+                  					      
+                  					      
+
+                          	  </div>
+                        	</div>
+
+						</div>
+
 
                         <div class="single-property-wrapper">
                             <div class="single-property-header">                                          
                                 <h1 class="property-title pull-left">${classVO.c_name }</h1>
                                 <span class="property-price pull-right">
-                               <fmt:formatNumber value="${classVO.c_price }" groupingUsed="true"/>
+                               <fmt:formatNumber value="${classVO.c_price }" groupingUsed="true"/>원
                                 </span>
                             </div>
+
+     
 
                             <div class="property-meta entry-meta clearfix ">   
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info icon-area">
-                                        <img src="assets/img/icon/room-orange.png">
-                                    </span>
                                     <span class="property-info-entry">
                                         <span class="property-info-label">주소</span>
-                                        <span class="property-info-value">${classVO.c_addr1 }<b class="property-info-unit">Sq Ft</b></span>
+                                        <span class="property-info-value">${classVO.c_addr1 }</span>
                                     </span>
                                 </div>
                                 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-tag">                                        
-                                        <img src="assets/img/icon/sale-orange.png">
-                                    </span>
                                     <span class="property-info-entry">
                                         <span class="property-info-label">수업소요시간</span>
                                         <span class="property-info-value">${classVO.c_time }</span>
@@ -309,22 +456,24 @@ for(var i=0; i<ableDays.length; i++){
 
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-bed">
-                                        <img src="assets/img/icon/bed-orange.png">
-                                    </span>
                                     <span class="property-info-entry">
-                                        <span class="property-info-label">레벨</span>
-                                        <span class="property-info-value">${classVO.c_level }</span>
+                                        <span class="property-info-label">난이도</span>
+                                        <c:if test="${classVO.c_level==1 }">
+                                        <span class="property-info-value">입문</span>
+                                        </c:if>
+                                        <c:if test="${classVO.c_level==2 }">
+                                        <span class="property-info-value">중급</span>
+                                        </c:if>
+                                        <c:if test="${classVO.c_level==3 }">
+                                        <span class="property-info-value">고급</span>
+                                        </c:if>
                                     </span>
                                 </div>
 
                                 <div class="col-xs-6 col-sm-3 col-md-3 p-b-15">
-                                    <span class="property-info-icon icon-bed">
-                                        <img src="assets/img/icon/cars-orange.png">
-                                    </span>
                                     <span class="property-info-entry">
                                         <span class="property-info-label">최대인원</span>
-                                        <span class="property-info-value">${classVO.c_maxperson }</span>
+                                        <span class="property-info-value">${classVO.c_maxperson }명</span>
                                     </span>
                                 </div>
 
@@ -332,760 +481,427 @@ for(var i=0; i<ableDays.length; i++){
                             </div>
                             <!-- .property-meta -->
 
-                            <div class="section">
-                                <h4 class="s-property-title">Description</h4>
+
+							 <div class="section property-features">      
+
+<!--                                 <h4 class="s-property-title">Features</h4>                             -->
+                                <ul id="menu">
+                                    <li class="wow fadeInDown animated" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInDown;"><a href="#detail">클래스 소개</a></li>  
+                                    <li class="wow fadeInDown animated" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInDown;"><a href="#address">위치</a></li>  
+                                    <li class="wow fadeInDown animated" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInDown;"><a href="#review">후기</a></li>  
+
+                                </ul>
+
+                            </div>
+                          
+                            <!-- End features area  -->
+
+
+						<!-- 클래스 소개 -->
+                            <div class="section" id="detail">
+                                <h3 class="s-property-title">클래스 소개</h3>
+
+                              	<img src="../resources/img/${classVO.c_img.split(',')[1] }" />
+                           		<img src="../resources/img/${classVO.c_img.split(',')[2] }" />
+             					      
+                  					      
+
                                 <div class="s-property-content">
 									<p>${classVO.c_content }</p>
                                 </div>
                             </div>
-                            <!-- End description area  -->
-
+                         <!-- 클래스 소개  -->
+                            
+         			
+         			
+         				 <!-- 주소 -->
                             <div class="section additional-details">
 
-                                <h4 class="s-property-title">Additional Details</h4>
+                            <h4 class="s-property-title" id="address">위치</h4>
+                            <div id="map" style="width:100%;height:350px;"></div>
+							<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031"></script>
+							<script>
+							var lat = Number('${classVO.c_lati}');
+							var lng = Number('${classVO.c_longi}');
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							    mapOption = { 
+							        center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+							        level: 3 // 지도의 확대 레벨
+							    };
+							
+							var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+// 							map.setDraggable(false);
+// 							map.setZoomable(false);
+							
+							var markerPosition  = new kakao.maps.LatLng(lat, lng); 
 
-                                <ul class="additional-details-list clearfix">
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Waterfront</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">Yes</span>
-                                    </li>
+							var marker = new kakao.maps.Marker({
+							    position: markerPosition
+							});
 
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Built In</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">2003</span>
-                                    </li>
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Parking</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">2 Or More Spaces,Covered Parking,Valet Parking</span>
-                                    </li>
+							marker.setMap(map);
+							
+							</script>
 
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Waterfront</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">Yes</span>
-                                    </li>
-
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">View</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">Intracoastal View,Direct ew</span>
-                                    </li>
-
-                                    <li>
-                                        <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Waterfront Description:</span>
-                                        <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">Intracoastal Front,Ocean Access</span>
-                                    </li> 
-
-                                </ul>
+							<p style="font-size: 16px;">${classVO.c_addr1 } ${classVO.c_addr2 } ${classVO.c_addrdetails }</p>
+                                
                             </div>  
-                            <!-- End additional-details area  -->
+                            <!-- 주소  -->
 
-                            <div class="section property-features">      
-
-                                <h4 class="s-property-title">Features</h4>                            
-                                <ul>
-                                    <li><a href="properties.html">Swimming Pool</a></li>   
-                                    <li><a href="properties.html">3 Stories</a></li>
-                                    <li><a href="properties.html">Central Cooling</a></li>
-                                    <li><a href="properties.html">Jog Path 2</a></li>
-                                    <li><a href="properties.html">2 Lawn</a></li>
-                                    <li><a href="properties.html">Bike Path</a></li>
-                                </ul>
-
-                            </div>
-                            <!-- End features area  -->
+                 
 
                             <div class="section property-video"> 
-                                <h4 class="s-property-title">Property Video</h4> 
-                                <div class="video-thumb">
-                                    <a class="video-popup" href="yout" title="Virtual Tour">
-                                        <img src="assets/img/property-video.jpg" class="img-responsive wp-post-image" alt="Exterior">            
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- End video area  -->
-                            
-                            
+                                <h4 class="s-property-title" id="review">후기</h4> 
+<!-- 후기 -->
 
-                            <div class="section property-share"> 
-                                <h4 class="s-property-title">Share width your friends </h4> 
-                                <div class="roperty-social">
-                                    <ul> 
-                                        <li><a title="Share this on dribbble " href="#"><img src="assets/img/social_big/dribbble_grey.png"></a></li>                                         
-                                        <li><a title="Share this on facebok " href="#"><img src="assets/img/social_big/facebook_grey.png"></a></li> 
-                                        <li><a title="Share this on delicious " href="#"><img src="assets/img/social_big/delicious_grey.png"></a></li> 
-                                        <li><a title="Share this on tumblr " href="#"><img src="assets/img/social_big/tumblr_grey.png"></a></li> 
-                                        <li><a title="Share this on digg " href="#"><img src="assets/img/social_big/digg_grey.png"></a></li> 
-                                        <li><a title="Share this on twitter " href="#"><img src="assets/img/social_big/twitter_grey.png"></a></li> 
-                                        <li><a title="Share this on linkedin " href="#"><img src="assets/img/social_big/linkedin_grey.png"></a></li>                                        
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- End video area  -->
+							<div class="review_write_container">
+									<div class="review_list_container">
+										<div class="review_list">
+										<c:if test="${reviewList != null && reviewList.size() > 0}">
+											<c:forEach var="vo" items="${reviewList }">
+												<div id="div_review">
+													<div>
+													<ul>
+														<li>${vo.m_id}</li>
+														<li>
+														<c:forEach begin="1" end="${vo.r_score }">
+														   <img alt="별" src="/resources/img/star5.png">
+														   </c:forEach>
+														<c:if test="${vo.r_score < 5}">
+														   <c:forEach begin="1" end="${5-vo.r_score}">
+														   <img alt="빈별" src="/resources/img/star6.png">
+														   </c:forEach>
+														</c:if>
+														</li>
+														<li>
+														${vo.r_regdate.toString().split(' ')[0]}
+														</li>
+														</ul>
+													</div>
+													<div>${vo.r_content }</div>
+													</div>
+												</c:forEach>
+											</c:if>
+										</div>
+							        <!-- 후기페이징  -->
+									<div class="pagination">
+										<ul>
+											<c:if test="${map.startPage > map.pageBlock }">
+												<li><a style= "cursor: pointer;" onclick="getList(${map.startPage-1})">이전</a></li>
+											</c:if>
+											
+											<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
+												<li><a style= "cursor: pointer;" onclick="getList(${i})">${i }</a></li>
+											</c:forEach>
+											
+											<c:if test="${map.pageCount > map.endPage }">
+												<li><a style= "cursor: pointer;" onclick="getList(${map.endPage+1})">다음</a></li>
+											</c:if>
+										</ul>
+									</div>
+									<!-- 페이지 이동시 데이터 처리 -->
+									<script type="text/javascript">
+									const criteria = new Object();
+									criteria.c_no = Number('${map.c_no}');
+									criteria.pageNum = 1;
+									criteria.startPage = Number('${map.startPage}');
+									criteria.endPage = Number('${map.endPage}');
+									criteria.pageCount = Number('${map.pageCount}');
+									criteria.pageBlock = Number('${map.pageBlock}');
+
+									
+									function getList(pageNum){
+										criteria.pageNum = pageNum;
+										$.ajax({
+											url: "/replyrest/list",
+											type: "POST",
+											data: criteria,
+											success: function(data) {
+												var html = "";
+												$.each(data.reviewList, function(index, vo) { // 데이터를 순회하면서 HTML 코드 생성
+											        html += "<div id='div_review'>";
+											        html += "<div><ul><li>" + vo.m_id + "</li><li>";
+											        for (var i = 1; i <= vo.r_score; i++) {
+											          html += "<img alt='별' src='/resources/img/star5.png'>";
+											        }
+											        if (vo.r_score < 5) {
+											          for (var i = 1; i <= 5 - vo.r_score; i++) {
+											            html += "<img alt='빈별' src='/resources/img/star6.png'>";
+											          }
+											        }
+											        html += "</li><li>";
+											        html += new Date(vo.r_regdate).toISOString().split("T")[0];
+											        html += "</li>";
+											        html += "</div>";
+											        html += "<div>"+ vo.r_content + "</div>";
+											        html += "</div>";
+											      });
+												
+												
+												$('.review_list').html(html);
+												criteria.startPage = Number(data.map.startPage);
+												criteria.endPage = Number(data.map.endPage);
+												criteria.pageCount = Number(data.map.pageCount);
+												criteria.pageBlock = Number(data.map.pageBlock);
+												console.log(criteria);
+												html = "<ul>";
+												if(criteria.startPage > criteria.pageBlock) {
+													html += "<li><a style='cursor: pointer;' onclick='getList("+(criteria.startPage-1)+")'>이전</a></li>";
+												}
+												for(var i=criteria.startPage; i<=criteria.endPage; i++){
+													html += "<li><a style='cursor: pointer;' onclick='getList("+i+")'>"+i+"</a></li>";
+												}
+												if(criteria.pageCount > criteria.endPage) {
+													html += "<li><a style='cursor: pointer;' onclick='getList("+(criteria.endPage+1)+")'>다음</a></li>";
+												}
+												html += "</ul>";
+												$('.pagination').html(html);
+											},
+											error: function(data) {
+												console.log("후기 가져오기 실패 : "+data);
+											}
+										});
+									}
+									</script> 
+									<!-- 페이지 이동시 데이터 처리 -->
+									 <!-- 후기페이징  -->
+									</div>
+								</div>
+							</div>
+<!-- 후기 내용  -->
+
+
+
+                            
+                            
+						
+
                             
                         </div>
                     </div>
 
-					<!-- ㅋㅋ -->
-                    <div class="col-md-4 p0">
+					<!-- sidebar -->
+                    <div class="col-md-4 p0"  id="sidebar">
                         <aside class="sidebar sidebar-property blog-asside-right">
                      
-<!--                      <div id="thdatepicker"></div> -->
-<!--                      시간 선택 -->
-<!--                      <select id="time" class="selectpicker show-tick form-control" onchange="timeSelected()"></select> -->
-                     
-<!--                      <div id="timeBtn"></div> -->
-<!--                      인원 선택 -->
-<!--                      <input type="number" id="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum"> -->
-<%-- 					<c:if test="${id!=null }"> --%>
-<%-- 					보유 포인트 ${memberVO.m_point } p --%>
-<%-- 					 <input id="point" type="number" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0"> --%>
-<%-- 					<c:if test="${subscriptionVO!=null }"> --%>
-<%-- 					<input type="checkbox" id="subs">구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt }) --%>
-<%-- 					</c:if> --%>
-<%-- 					</c:if> --%>
-					
-<!-- 					<div id="price" class="single-property-header"> -->
-<!-- 						<span id="priceDisplay" class="property-price pull-right"> -->
-<%-- 						<fmt:formatNumber value="${classVO.c_price }"/>원 --%>
-<!-- 						</span> -->
-<!-- 					</div> -->
-					
-<!-- 					<button type="submit" class="navbar-btn nav-button wow bounceInRight" >클래스 예약하기</button> -->
-<!-- 					<fieldset> -->
-<!-- 						<div class="row"> -->
-<!-- 							<div class="col-xs-12"> -->
-<!-- 					<button type="submit" class="button btn largesearch-btn" >클래스 예약하기</button> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</fieldset>							 -->
-											
-											
-<!-- 							    <div class="dealer-widget"> -->
-<!--                                 <div class="dealer-content"> -->
-<!--                                 <div class="inner-wrapper"> -->
 
-<!--                                         <div class="clear"> -->
-<!--                                             <div class="col-xs-4 col-sm-4 dealer-face"> -->
-<!--                                                 <a href=""> -->
-<!--                                                     <img src="assets/img/client-face1.png" class="img-circle"> -->
-<!--                                                 </a> -->
-<!--                                             </div> -->
-<!--                                             <div class="col-xs-8 col-sm-8 "> -->
-<!--                                                 <h3 class="dealer-name"> -->
-<!--                                                     <a href="">Nathan James</a> -->
-<!--                                                     <span>Real Estate Agent</span>         -->
-<!--                                                 </h3> -->
-<!--                                                 <div class="dealer-social-media"> -->
-<!--                                                     <a class="twitter" target="_blank" href=""> -->
-<!--                                                         <i class="fa fa-twitter"></i> -->
-<!--                                                     </a> -->
-<!--                                                     <a class="facebook" target="_blank" href=""> -->
-<!--                                                         <i class="fa fa-facebook"></i> -->
-<!--                                                     </a> -->
-<!--                                                     <a class="gplus" target="_blank" href=""> -->
-<!--                                                         <i class="fa fa-google-plus"></i> -->
-<!--                                                     </a> -->
-<!--                                                     <a class="linkedin" target="_blank" href=""> -->
-<!--                                                         <i class="fa fa-linkedin"></i> -->
-<!--                                                     </a>  -->
-<!--                                                     <a class="instagram" target="_blank" href=""> -->
-<!--                                                         <i class="fa fa-instagram"></i> -->
-<!--                                                     </a>        -->
-<!--                                                 </div> -->
-
-<!--                                             </div> -->
-<!--                                         </div> -->
-
-<!--                                         <div class="clear"> -->
-<!--                                             <ul class="dealer-contacts">                                        -->
-<!--                                                 <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li> -->
-<!--                                                 <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li> -->
-<!--                                                 <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li> -->
-<!--                                             </ul> -->
-<!--                                             <p>Duis mollis  blandit tempus porttitor curabiturDuis mollis  blandit tempus porttitor curabitur , est non…</p> -->
-<!--                                         </div> -->
-
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-
-<!-- 							<div -->
-<!-- 								class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated"> -->
-<!-- 								<div class="panel-heading"> -->
-<!-- 									<h3 class="panel-title">Similar Properties</h3> -->
-<!-- 								</div> -->
-<!-- 								<div class="panel-body recent-property-widget"> -->
-<!-- 									<ul> -->
-<!-- 										<li> -->
-<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
-<!-- 												<a href="single.html"><img -->
-<!-- 													src="assets/img/demo/small-property-2.jpg"></a> <span -->
-<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
-<!-- 													class="b-2">S</b> -->
-<!-- 												</span> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
-<!-- 												<h6> -->
-<!-- 													<a href="single.html">Super nice villa </a> -->
-<!-- 												</h6> -->
-<!-- 												<span class="property-price">3000000$</span> -->
-<!-- 											</div> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<div class="col-md-3 col-sm-3  col-xs-3 blg-thumb p0"> -->
-<!-- 												<a href="single.html"><img -->
-<!-- 													src="assets/img/demo/small-property-1.jpg"></a> <span -->
-<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
-<!-- 													class="b-2">S</b> -->
-<!-- 												</span> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
-<!-- 												<h6> -->
-<!-- 													<a href="single.html">Super nice villa </a> -->
-<!-- 												</h6> -->
-<!-- 												<span class="property-price">3000000$</span> -->
-<!-- 											</div> -->
-<!-- 										</li> -->
-<!-- 										<li> -->
-<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
-<!-- 												<a href="single.html"><img -->
-<!-- 													src="assets/img/demo/small-property-3.jpg"></a> <span -->
-<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
-<!-- 													class="b-2">S</b> -->
-<!-- 												</span> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
-<!-- 												<h6> -->
-<!-- 													<a href="single.html">Super nice villa </a> -->
-<!-- 												</h6> -->
-<!-- 												<span class="property-price">3000000$</span> -->
-<!-- 											</div> -->
-<!-- 										</li> -->
-
-<!-- 										<li> -->
-<!-- 											<div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
-<!-- 												<a href="single.html"><img -->
-<!-- 													src="assets/img/demo/small-property-2.jpg"></a> <span -->
-<!-- 													class="property-seeker"> <b class="b-1">A</b> <b -->
-<!-- 													class="b-2">S</b> -->
-<!-- 												</span> -->
-<!-- 											</div> -->
-<!-- 											<div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
-<!-- 												<h6> -->
-<!-- 													<a href="single.html">Super nice villa </a> -->
-<!-- 												</h6> -->
-<!-- 												<span class="property-price">3000000$</span> -->
-<!-- 											</div> -->
-<!-- 										</li> -->
-
-<!-- 									</ul> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
 
 							<div
 								class="panel panel-default sidebar-menu wow fadeInRight animated">
 								
-								<!-- 요기로 옮기자 -->
+	
 								
-					<form role="form" method="post"> 
-					<input type="hidden" id="p_no" name="p_no">
-					<input type="hidden" id="t_no" name="t_no">
-					<input type="hidden" id="m_id" name="m_id" value="${id }">
-					<input type="hidden" id="selectedDate" name="selectedDate">
-					<input type="hidden" id="c_no" name="c_no" value="${classVO.c_no }">
-					<input type="hidden" id="c_price" name="c_price" value="${classVO.c_price }"> <!-- 클래스 가격 -->
-					<input type="hidden" id="price" name="price"> <!-- 계산된 가격 -->
-					<input type="hidden" id="p_key" name="p_key" value="card"> <!-- 임의 값 -->
-					
-					
+<!-- 					<form role="form" method="post">  -->
+<!-- 					<input type="hidden" id="p_no" name="p_no"> -->
+<!-- 					<input type="hidden" id="t_no" name="t_no"> -->
+<%-- 					<input type="hidden" id="m_id" name="m_id" value="${id }"> --%>
+<!-- 					<input type="hidden" id="selectedDate" name="selectedDate"> -->
+<%-- 					<input type="hidden" id="c_no" name="c_no" value="${classVO.c_no }"> --%>
+<%-- 					<input type="hidden" id="c_price" name="c_price" value="${classVO.c_price }"> <!-- 클래스 가격 --> --%>
+<!-- 					<input type="hidden" id="price" name="price"> 계산된 가격 -->
+					<h3>예약하기</h3>
+
+					<h4 id="toggle1">1. 날짜를 선택하세요.</h4>
 					<div id="thdatepicker"></div>
-                     시간 선택
+
+					<h4 id="toggle2">2. 시간을 선택하세요.</h4>
                      <select id="time" name="t_start" class="selectpicker show-tick form-control" onchange="timeSelected()"></select>
                      
-                     <!-- <div id="timeBtn"></div> -->
-                     인원 선택
-                     <input type="number" id="pNum" name="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum">
+                    <h4 id="toggle3" >3. 인원을 선택하세요.</h4>
+                    <small id = "pNumS"></small>
+                    <input type="number" id="pNum" name="pNum" class="selectpicker show-tick form-control" min="1" value="1" onchange="changePNum()">
+					
+                    <h4 id="toggle4">할인</h4>
+					<div id="discount">
 					<c:if test="${id!=null }">
-					보유 포인트 ${memberVO.m_point } p
-					 <input id="point" type="number" name="point" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0">
-					<c:if test="${subscriptionVO.s_no != null && subscriptionVO.s_cnt>0 }">
-					<input type="checkbox" id="subs" name="subs" >구독 사용하기 (남은 횟수 : ${subscriptionVO.s_cnt })
+						<label>포인트</label>
+						<small>(보유 포인트 <fmt:formatNumber value="${memberVO.m_point }"/>p)</small>
+						<input id="point" type="number" name="point" class="selectpicker show-tick form-control"  min="0" max="${memberVO.m_point }" step="100" value="0" onchange="changePoint()">
+						<c:if test="${subscriptionVO.s_no != null && subscriptionVO.s_cnt>0 }">
+						<br>
+						<input type="checkbox" id="subs" name="subs" style="width:18px; height:18px;">
+						<label>구독 사용하기</label> <small>(남은 횟수 : ${subscriptionVO.s_cnt })</small>
+						</c:if>
 					</c:if>
-					</c:if>
+					</div>
+					
 					
 					<div id="price" class="single-property-header">
 						<span id="priceDisplay" class="property-price pull-right">
 						<fmt:formatNumber value="${classVO.c_price }"/>원
 						</span>
 					</div>
-					</form>
-					<button type="submit" class="navbar-btn nav-button wow bounceInRight" id="reserve">클래스 예약하기</button>
-					<fieldset>
-						<div class="row">
-							<div class="col-xs-12">
-					<button type="submit" class="button btn largesearch-btn" >클래스 예약하기</button>
-							</div>
-						</div>
-					</fieldset>			
+<!-- 					</form> -->
+					<button type="submit" class="navbar-btn nav-button wow bounceInRight" id="reserve" style="width:100%">클래스 예약하기</button>		
 								
 								
 								
-								
-								<div class="panel-heading">
-									<h3 class="panel-title">Ads her</h3>
-								</div>
-								<div class="panel-body recent-property-widget">
-									<img src="assets/img/ads.jpg">
-								</div>
-							</div>
-
-							<div
-								class="panel panel-default sidebar-menu wow fadeInRight animated">
-								<div class="panel-heading">
-									<h3 class="panel-title">Smart search</h3>
-								</div>
-								<div class="panel-body search-widget">
-									<form action="" class=" form-inline">
-										<fieldset>
-											<div class="row">
-												<div class="col-xs-12">
-													<input type="text" class="form-control"
-														placeholder="Key word">
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset>
-											<div class="row">
-												<div class="col-xs-6">
-
-													<select id="lunchBegins" class="selectpicker"
-														data-live-search="true" data-live-search-style="begins"
-														title="Select Your City">
-
-														<option>New york, CA</option>
-														<option>Paris</option>
-														<option>Casablanca</option>
-														<option>Tokyo</option>
-														<option>Marraekch</option>
-														<option>kyoto , shibua</option>
-													</select>
-												</div>
-												<div class="col-xs-6">
-
-													<select id="basic"
-														class="selectpicker show-tick form-control">
-														<option>-Status-</option>
-														<option>Rent</option>
-														<option>Boy</option>
-														<option>used</option>
-
-													</select>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<label for="price-range">Price range ($):</label> <input
-														type="text" class="span2" value="" data-slider-min="0"
-														data-slider-max="600" data-slider-step="5"
-														data-slider-value="[0,450]" id="price-range"><br />
-													<b class="pull-left color">2000$</b> <b
-														class="pull-right color">100000$</b>
-												</div>
-												<div class="col-xs-6">
-													<label for="property-geo">Property geo (m2) :</label> <input
-														type="text" class="span2" value="" data-slider-min="0"
-														data-slider-max="600" data-slider-step="5"
-														data-slider-value="[50,450]" id="property-geo"><br />
-													<b class="pull-left color">40m</b> <b
-														class="pull-right color">12000m</b>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<label for="price-range">Min baths :</label> <input
-														type="text" class="span2" value="" data-slider-min="0"
-														data-slider-max="600" data-slider-step="5"
-														data-slider-value="[250,450]" id="min-baths"><br />
-													<b class="pull-left color">1</b> <b
-														class="pull-right color">120</b>
-												</div>
-
-												<div class="col-xs-6">
-													<label for="property-geo">Min bed :</label> <input
-														type="text" class="span2" value="" data-slider-min="0"
-														data-slider-max="600" data-slider-step="5"
-														data-slider-value="[250,450]" id="min-bed"><br />
-													<b class="pull-left color">1</b> <b
-														class="pull-right color">120</b>
-
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox" checked>
-															Fire Place
-														</label>
-													</div>
-												</div>
-
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox"> Dual Sinks
-														</label>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox" checked>
-															Swimming Pool
-														</label>
-													</div>
-												</div>
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox" checked> 2
-															Stories
-														</label>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label><input type="checkbox"> Laundry
-															Room </label>
-													</div>
-												</div>
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox"> Emergency
-															Exit
-														</label>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox" checked>
-															Jog Path
-														</label>
-													</div>
-												</div>
-												<div class="col-xs-6">
-													<div class="checkbox">
-														<label> <input type="checkbox"> 26'
-															Ceilings
-														</label>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset class="padding-5">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="checkbox">
-														<label> <input type="checkbox"> Hurricane
-															Shutters
-														</label>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-
-										<fieldset>
-											<div class="row">
-												<div class="col-xs-12">
-													<input class="button btn largesearch-btn" value="Search"
-														type="submit">
-												</div>
-											</div>
-										</fieldset>
-									</form>
-								</div>
-							</div>
-					</aside>
+							
                     </div>
+                    </aside>
                 </div>
 
             </div>
         </div>
-<!--        Footer area -->
-<!--         <div class="footer-area"> -->
 
-<!--             <div class=" footer"> -->
-<!--                 <div class="container"> -->
-<!--                     <div class="row"> -->
-
-<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
-<!--                             <div class="single-footer"> -->
-<!--                                 <h4>About us </h4> -->
-<!--                                 <div class="footer-title-line"></div> -->
-
-<!--                                 <img src="assets/img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s"> -->
-<!--                                 <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p> -->
-<!--                                 <ul class="footer-adress"> -->
-<!--                                     <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li> -->
-<!--                                     <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li> -->
-<!--                                     <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li> -->
-<!--                                 </ul> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
-<!--                             <div class="single-footer"> -->
-<!--                                 <h4>Quick links </h4> -->
-<!--                                 <div class="footer-title-line"></div> -->
-<!--                                 <ul class="footer-menu"> -->
-<!--                                     <li><a href="properties.html">Properties</a>  </li>  -->
-<!--                                     <li><a href="#">Services</a>  </li>  -->
-<!--                                     <li><a href="submit-property.html">Submit property </a></li>  -->
-<!--                                     <li><a href="contact.html">Contact us</a></li>  -->
-<!--                                     <li><a href="faq.html">fqa</a>  </li>  -->
-<!--                                     <li><a href="faq.html">Terms </a>  </li>  -->
-<!--                                 </ul> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
-<!--                             <div class="single-footer"> -->
-<!--                                 <h4>Last News</h4> -->
-<!--                                 <div class="footer-title-line"></div> -->
-<!--                                 <ul class="footer-blog"> -->
-<!--                                     <li> -->
-<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
-<!--                                             <a href="single.html"> -->
-<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
-<!--                                             </a> -->
-<!--                                             <span class="blg-date">12-12-2016</span> -->
-
-<!--                                         </div> -->
-<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
-<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
-<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
-<!--                                         </div> -->
-<!--                                     </li>  -->
-
-<!--                                     <li> -->
-<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
-<!--                                             <a href="single.html"> -->
-<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
-<!--                                             </a> -->
-<!--                                             <span class="blg-date">12-12-2016</span> -->
-
-<!--                                         </div> -->
-<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
-<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
-<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
-<!--                                         </div> -->
-<!--                                     </li>  -->
-
-<!--                                     <li> -->
-<!--                                         <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0"> -->
-<!--                                             <a href="single.html"> -->
-<!--                                                 <img src="assets/img/demo/small-proerty-2.jpg"> -->
-<!--                                             </a> -->
-<!--                                             <span class="blg-date">12-12-2016</span> -->
-
-<!--                                         </div> -->
-<!--                                         <div class="col-md-8  col-sm-8 col-xs-8  blg-entry"> -->
-<!--                                             <h6> <a href="single.html">Add news functions </a></h6>  -->
-<!--                                             <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p> -->
-<!--                                         </div> -->
-<!--                                     </li>  -->
-
-
-<!--                                 </ul> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                         <div class="col-md-3 col-sm-6 wow fadeInRight animated"> -->
-<!--                             <div class="single-footer news-letter"> -->
-<!--                                 <h4>Stay in touch</h4> -->
-<!--                                 <div class="footer-title-line"></div> -->
-<!--                                 <p>Lorem ipsum dolor sit amet, nulla  suscipit similique quisquam molestias. Vel unde, blanditiis.</p> -->
-
-<!--                                 <form> -->
-<!--                                     <div class="input-group"> -->
-<!--                                         <input class="form-control" type="text" placeholder="E-mail ... "> -->
-<!--                                         <span class="input-group-btn"> -->
-<!--                                             <button class="btn btn-primary subscribe" type="button"><i class="pe-7s-paper-plane pe-2x"></i></button> -->
-<!--                                         </span> -->
-<!--                                     </div> -->
-<!--                                     /input-group -->
-<!--                                 </form>  -->
-
-<!--                                 <div class="social pull-right">  -->
-<!--                                     <ul> -->
-<!--                                         <li><a class="wow fadeInUp animated" href="https://twitter.com/kimarotec"><i class="fa fa-twitter"></i></a></li> -->
-<!--                                         <li><a class="wow fadeInUp animated" href="https://www.facebook.com/kimarotec" data-wow-delay="0.2s"><i class="fa fa-facebook"></i></a></li> -->
-<!--                                         <li><a class="wow fadeInUp animated" href="https://plus.google.com/kimarotec" data-wow-delay="0.3s"><i class="fa fa-google-plus"></i></a></li> -->
-<!--                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.4s"><i class="fa fa-instagram"></i></a></li> -->
-<!--                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.6s"><i class="fa fa-dribbble"></i></a></li> -->
-<!--                                     </ul>  -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
-
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="footer-copy text-center"> -->
-<!--                 <div class="container"> -->
-<!--                     <div class="row"> -->
-<!--                         <div class="pull-left"> -->
-<!--                             <span> (C) <a href="http://www.KimaroTec.com">KimaroTheme</a> , All rights reserved 2016  </span>  -->
-<!--                         </div>  -->
-<!--                         <div class="bottom-menu pull-right">  -->
-<!--                             <ul>  -->
-<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.2s">Home</a></li> -->
-<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.3s">Property</a></li> -->
-<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.4s">Faq</a></li> -->
-<!--                                 <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s">Contact</a></li> -->
-<!--                             </ul>  -->
-<!--                         </div> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--         </div> -->
-
-<!--         <script src="/resources/assets/js/modernizr-2.6.2.min.js"></script> -->
-<!--         <script src="/resources/assets/js/jquery-1.10.2.min.js"></script> -->
-<!--         <script src="/resources/bootstrap/js/bootstrap.min.js"></script> -->
-<!--         <script src="/resources/assets/js/bootstrap-select.min.js"></script> -->
-<!--         <script src="/resources/assets/js/bootstrap-hover-dropdown.js"></script> -->
-<!--         <script src="/resources/assets/js/easypiechart.min.js"></script> -->
-<!--         <script src="/resources/assets/js/jquery.easypiechart.min.js"></script> -->
-<!--         <script src="/resources/assets/js/owl.carousel.min.js"></script> -->
-<!--         <script src="/resources/assets/js/wow.js"></script> -->
-<!--         <script src="/resources/assets/js/icheck.min.js"></script> -->
-<!--         <script src="/resources/assets/js/price-range.js"></script> -->
-<!--         <script type="text/javascript" src="/resources/assets/js/lightslider.min.js"></script> -->
-<!--         <script src="/resources/assets/js/main.js"></script> -->
-
-<!--         <script> -->
-<!-- //                             $(document).ready(function () { -->
-
-<!-- //                                 $('#image-gallery').lightSlider({ -->
-<!-- //                                     gallery: true, -->
-<!-- //                                     item: 1, -->
-<!-- //                                     thumbItem: 9, -->
-<!-- //                                     slideMargin: 0, -->
-<!-- //                                     speed: 500, -->
-<!-- //                                     auto: true, -->
-<!-- //                                     loop: true, -->
-<!-- //                                     onSliderLoad: function () { -->
-<!-- //                                         $('#image-gallery').removeClass('cS-hidden'); -->
-<!-- //                                     } -->
-<!-- //                                 }); -->
-<!-- //                             }); -->
-<!--         </script> -->
-
-
+</div>
 
 </body>
 
 <script type="text/javascript">
 $(document).ready(function(){
-	// 글 번호를 저장한 폼태그
- 	var formObj = $("form[role='form']"); 
-		  // 결제하기
-		  $("#reserve").click(function(){
-			 if( ${id == null}){
-			  location.href='/db/login';
-			  return;
-			 }
-			 
-				 alert('결제창띄우기');
-			        var IMP = window.IMP; 
-			        IMP.init("imp75550270"); 
-			       	
+
+  $("#reserve").click(function(){
+	 if( ${id == null}){
+	  location.href='/member/login';
+	  return;
+	 }
+
+		 //alert('결제창띄우기');
+	        var IMP = window.IMP; 
+	        IMP.init("imp75550270"); 
+	       	
+	        
+	        $.ajax({
+					url:"/payrest/getP_no",
+					type:"post",
+				 	//contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					success:function(data){
+						//alert("p_no 가져오기");
+						console.log(data);
+						p_no = data;
+						$('#p_no').val(p_no);
+					
+					},	
+					error:function(data){
+						alert("실패");
+						// 페이지 이동 후 실패했을 때 동작
+					}
+				}); // p_no ajax
+
+	       
+				//$("#d_file").append("<input type='hidden' name='file"+cnt+"'><br>");
+				
+				date = $("#thdatepicker").val();
+				$('#selectedDate').val(date);
+				$('#price').val(price);
+						
+					
+
+				IMP.request_pay({
+			    pg : 'html5_inicis.INIpayTest',
+			    pay_method : 'card',
+			    merchant_uid: p_no, // 상점에서 관리하는 주문 번호${p_no}
+			    name : "${classVO.c_name}",
+			    amount : price,
+			    buyer_email: "${memberVO.m_email}",
+			    buyer_name: "${memberVO.m_name}",
+			    buyer_tel: "${memberVO.m_phone}"
+			   // ,buyer_addr : '서울특별시 강남구 삼성동',
+			   // buyer_postcode : '123-456'
+			}, function(rsp) {
+				if ( rsp.success ) {
+// 			    alert("결제까지 성공했음");
+			    //alert($("#pNum").val());
+			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+			    	var result = {
+					"imp_uid" : rsp.imp_uid,
+					"merchant_uid" : rsp.merchant_uid,
+					"p_no" : p_no,
+					"t_no" : $("#t_no").val(),
+					"m_id" : "${id}",
+					"selectedDate": $("#thdatepicker").val(),
+					"c_no": c_no,
+					"t_start":$("#time").val(),
+					"peopleNum": $("#pNum").val(),
+					"point" : $('#point').val(),
+					"subs": $('#subs').is(':checked'),
+					"c_price" : "${classVO.c_price}" ,
+					"price" : rsp.paid_amount,
+					"status" : rsp.status
+					}
+			   		console.log(result);
+
+			    	jQuery.ajax({
+			    		url: "/payrest/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
+			    		type: 'POST',
+				    		//contentType : "application/json",
+			    		data: JSON.stringify(result),
+			    		contentType:'application/json;',
+				        success: function(res){
+					        console.log(res);
+				        	if (res === "ok") {		    	
+				        		//console.log("insert ok!");
+	
+				        	}else{
+					            console.log("Insert Fail!!!");
+					        }
+					     },
+				        error:function(){
+				          console.log("Insert ajax 통신 실패!!!");
+				        }
+			    	
+			    	
+			    	
+			    	}).done(function(data) {
+			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+			    		console.log("done"+data);
+			    		console.log("done"+rsp.imp_uid);
+			    		
+			    		 $.ajax({
+			    	            url: "/payrest/complete",
+			    	            type: "POST",
+					    		data: JSON.stringify(result),
+					    		contentType:'application/json;',
+						        success: function(r){
+						        	//alert("complete 호출")
+						        	console.log("r : "+r);
+						        	
+						        	 if (r === "success") {
+							    		 $.ajax({
+						    	            url: "/payrest/orderSuccess",
+						    	            type: "POST",
+								    		data: JSON.stringify(result),
+								    		contentType:'application/json;',
+									        success: function(orderSuccessCnt){
+									        	if(orderSuccessCnt >= 1) {
+									        		var msg = '결제가 완료되었습니다.';
+									    			msg += '\n고유ID : ' + rsp.imp_uid;
+									    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+									    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+									    			//msg += '\n카드 승인번호 : ' + rsp.apply_num;
+									    			alert(msg);
+									    			location.href='/member/classList';
+									        	}
+									        }
+						        		});
+						    		} else {
+						    			//[3] 아직 제대로 결제가 되지 않았습니다.
+						    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+						    		}	
+						        } // complete success
+			    		 }); // ajax
+
+			    		
+			    	}); // done
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
 			        
-			        $.ajax({
-							url:"/th/getP_no",
-							type:"post",
-						 	//contentType: "application/json; charset=utf-8",
-							dataType:"json",
-							success:function(data){
-								alert("p_no");
-								console.log(data);
-								let p_no = p_no
-								$('#p_no').val(p_no);
-							
-							},	
-							error:function(data){
-								alert("실패");
-								// 페이지 이동 후 실패했을 때 동작
-							}
-						}); // p_no ajax
+			        alert(msg);
+			    }
+			});					
+						
 
-			       
-						//$("#d_file").append("<input type='hidden' name='file"+cnt+"'><br>");
-						
-								date = $("#thdatepicker").val();
-								$('#selectedDate').val(date);
-								$('#price').val(price);
-								
-							
-								
-								
-				    	  formObj.submit();
-						
-				    IMP.request_pay({
-				      pg: "html5_inicis.INIpayTest",
-				      pay_method: "card",
-				      merchant_uid: "${p_no}",   // 주문번호
-				      name: "${classVO.c_name}",
-				      amount: 100,                         // 숫자 타입
-				      buyer_email: "${memberVO.m_email}",
-				      buyer_name: "${memberVO.m_name}",
-				      buyer_tel: "${memberVO.m_phone}",
-/* 				      buyer_addr: "서울특별시 강남구 신사동",
-				      buyer_postcode: "01181" */
-				    }, function (rsp) { // callback
-				      if (rsp.success) {
-				        // 결제 성공 시 로직
-				        
-				        
-				        
-				      } else {
-				        // 결제 실패 시 로직
-				      }
-				    });
-						
-					alert('@');
-						  
-		
-					  
-		  });
+			  
+  });
 
-		  // 수정하기
-// 	  $(".btn-success").click(function(){
-// 		 formObj.submit();
-// 	  });	
-		  
 		  
  });
+ 
+ 
+ 
+
 </script>
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../include/detailFooter.jsp" %>

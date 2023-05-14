@@ -7,25 +7,13 @@
 	
 	<!-- 구독정보 조회 TH -->
 	<select id="getSubsInfo" resultType="SubscriptionVO">
-	select * from wc_subscription where m_id=#{m_id} and s_end>=now()
+	select * from wc_subscription where m_id=#{m_id} and s_end>=now() and s_cnt>0
 	</select>
 	
-	<select id="cnt" resultType="int">
-	<![CDATA[  
-	
-	]]> 
-	</select>
-	
-	<insert id="insert">
-	
+	<!-- 구독 테이블 insert TH -->
+	<insert id="insertSubs">
+	insert into wc_subscription(m_id, s_start, s_end, s_cnt)
+	values(#{m_id}, now(), adddate(now(), interval 30 day), 5)
 	</insert>
-	
-	<update id="updateMember">
-	
-	</update>
-	
-	<delete id="deleteMember">
-	
-	</delete>
 	
 </mapper>	

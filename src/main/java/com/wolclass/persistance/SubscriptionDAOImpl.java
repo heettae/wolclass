@@ -13,15 +13,21 @@ public class SubscriptionDAOImpl implements SubscriptionDAO{
 	private static final Logger logger = LoggerFactory.getLogger(SubscriptionDAOImpl.class);
 	
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlSession;
 
 	@Override
 	public SubscriptionVO getSubsInfo(String m_id) throws Exception {
 		logger.info("dao.getSubInfo: "+m_id);
-		SubscriptionVO resultVO = session.selectOne(NAMESPACE+".getSubsInfo",m_id);
+		SubscriptionVO resultVO = sqlSession.selectOne(NAMESPACE+".getSubsInfo",m_id);
 		logger.info("dao.getSubInfo-resultVO: "+resultVO);
-		
 		return resultVO;
+	}
+	
+	@Override
+	public Integer insertSubs(String m_id) throws Exception {
+		int cnt = sqlSession.insert(NAMESPACE+".insertSubs",m_id);
+		logger.info("cnt : "+cnt);
+		return cnt;
 	}
 	
 }
