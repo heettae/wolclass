@@ -148,7 +148,7 @@ li a {
   <div id="sidebar">
     <h3 style="text-align: center;">클래스 워크스페이스</h3>
     <ul style="display: flex; flex-direction: column;">
-	  <li style="margin-bottom: 10px;"><a href="/tj/addClass" style="font-size: 18px;">클래스 등록</a></li>
+	  <li style="margin-bottom: 10px;"><a href="/class/addClass" style="font-size: 18px;">클래스 등록</a></li>
 	  <li style="margin-bottom: 10px;"><a href="#" style="font-size: 18px;">등록 완료 클래스</a></li>
 	</ul>
   </div>
@@ -260,7 +260,7 @@ $(document).ready(function(){
 				data : $('#timeForm').serialize(),
 				success : function(result){
 					if(result == 1){
-						alert('성공');
+						alert('시간이 등록되었습니다.');
 						location.reload();
 					}else{
 						alert('이미 등록된 시간과 겹칩니다. 다시 시간을 선택해주세요.');

@@ -47,8 +47,9 @@
 	
 	<!-- 온라인 클래스 출력(주소 null) -->
 	<select id="onlineClassList" resultType="ClassVO">
-		select *
-		from wc_class
+		select c.c_no, c.c_name, c.c_addr1, c.c_addr2, c.c_lati, c.c_longi, c.c_level, c.c_category, c.c_img, c.c_price, round(ifnull(r.score,0.0),1) score
+		from wc_class c left join  (select c_no, avg(r_score) score, count(*) cnt from wc_reply group by c_no) r
+		on c.c_no = r.c_no
 		where c_addr1 = '' and c_confirm = 'Y'
 		order by c_regdate desc
 	</select>

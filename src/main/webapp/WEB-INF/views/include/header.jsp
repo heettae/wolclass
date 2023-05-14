@@ -402,7 +402,7 @@ background-color: #333;
 								<!-- 더보기 버튼 -->
 								<c:choose>
 								  <c:when test="${sessionScope.id.equals('admin') }">
-                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s">관리자</button>
+                       			  <button type="button" class="navbar-btn nav-button wow bounceInRight class" id="admin-btn" data-wow-delay="0.4s">관리자</button>
 								  </c:when>
 								  <c:otherwise>
                        			  <button class="navbar-btn nav-button wow bounceInRight class" data-wow-delay="0.4s" 
@@ -756,6 +756,11 @@ $(document).ready(function(){
 	// 로그인 submit - 다빈
 	$("#login").click(function(){
 		location.href="/member/login";
+	});
+	
+	// 관리자 페이지 이동 버튼
+	$('#admin-btn').click(function(){
+		location.href="/admin/memberList";
 	});
 	
 	$(document).ready(function() {

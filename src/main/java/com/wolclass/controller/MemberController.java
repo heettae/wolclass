@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -404,12 +405,17 @@ public class MemberController {
 	
 	// 구독 페이지 - 다빈 
 	@GetMapping("/subscribe")
-	public void subscribe(HttpSession session, Model model) throws Exception{
-		logger.info("subscribe() 호출 ");
-		String id = (String)session.getAttribute("id");
-		
-		model.addAttribute("sub", memberService.subscribe(id));
+	public String subscribe(HttpSession session, Model model) throws Exception {
+	    logger.info("subscribe() 호출");
+	    String id = (String) session.getAttribute("id");
+	    if (id == null) {
+	    	return "redirect:/member/login";
+	    } else {
+	        model.addAttribute("sub", memberService.subscribe(id));
+	        return "/member/subscribe";
+	    }
 	}
+
 	
 	// 마이페이지(문의하기) - 다빈
 	@GetMapping("/myinquiry")

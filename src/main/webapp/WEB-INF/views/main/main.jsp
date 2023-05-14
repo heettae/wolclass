@@ -96,7 +96,7 @@
     <div id="bg-slider" class="owl-carousel owl-theme">
 
       <div class="item">
-        <a href="#">
+        <a href="/member/subscribe">
           <img src="/resources/img/sub.PNG" alt="구독">
         </a>
       </div>
