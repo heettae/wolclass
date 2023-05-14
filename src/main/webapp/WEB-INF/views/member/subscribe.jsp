@@ -84,25 +84,22 @@
 var p_no;
 $(document).ready(function(){
 	$('#subs').click(function(){
-		alert("구독하기 버튼 클릭!");
-		
+		// 구독 버튼
         var IMP = window.IMP; 
         IMP.init("imp75550270"); 
        	
         $.ajax({
 				url:"/payrest/getP_no",
 				type:"post",
-			 	//contentType: "application/json; charset=utf-8",
 				dataType:"json",
 				success:function(data){
-					alert("p_no 가져오기");
-					console.log(data);
+					console.log("p_no:"+data);
 					p_no = data;
 				
 				},	
 				error:function(data){
-					alert("실패");
 					// 페이지 이동 후 실패했을 때 동작
+					console.log("p_no 가져오기 실패");
 				}
 			}); // p_no ajax
 
@@ -112,10 +109,10 @@ $(document).ready(function(){
 		    pay_method : 'card',
 		    merchant_uid: p_no,
 		    name : "월클래스 구독",
-		    amount : 100 //구독료 수정하기
+		    amount : 9900 //구독료 수정하기
 		}, function(rsp) {
 			if ( rsp.success ) {
-		    alert("결제까지 성공했음");
+		    //alert("결제까지 성공했음");
 		    //alert($("#pNum").val());
 		    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 		    	var result = {
@@ -131,15 +128,14 @@ $(document).ready(function(){
 		    	jQuery.ajax({
 		    		url: "/payrest/insertPaymentInfo", //cross-domain error가 발생하지 않도록 주의해주세요
 		    		type: 'POST',
-			    		//contentType : "application/json",
 		    		data: JSON.stringify(result),
 		    		contentType:'application/json;',
 			        success: function(res){
 				        console.log(res);
 			        	if (res === "ok") { 	
-			        	alert("insert ok!");   	
+			        	 console.log("insert ok!");   	
 			        	}else{
-				             console.log("Insert Fail!!!");
+				         console.log("Insert Fail!!!");
 				        }
 				     },
 			        error:function(){
@@ -157,8 +153,7 @@ $(document).ready(function(){
 				    		data: JSON.stringify(result),
 				    		contentType:'application/json;',
 					        success: function(r){
-					        	alert("complete 호출")
-					        	console.log("r : "+r);
+					        	console.log("complete 호출 성공 : "+r);
 					        	
 					        	 if (r === "success") {	
 						    		 $.ajax({
@@ -168,7 +163,7 @@ $(document).ready(function(){
 							    		contentType:'application/json;',
 								        success: function(orderSuccessCnt){
 								        	console.log(orderSuccessCnt);
-								        	if(orderSuccessCnt > 1) {
+								        	if(orderSuccessCnt >= 1) {
 								        		var msg = '결제가 완료되었습니다.';
 								    			msg += '\n고유ID : ' + rsp.imp_uid;
 								    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
