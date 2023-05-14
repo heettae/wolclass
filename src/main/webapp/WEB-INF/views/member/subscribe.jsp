@@ -63,7 +63,9 @@
 		 <div class="box-big">
 		  <div class="box-content">
 		    <h1>구독시 5번 50% 할인<br>9,900원</h1>
-		    <button type="button" id="subs">구독하기</button>
+		    <c:if test="${vo == null }">
+		    	<button type="button" id="subs">구독하기</button>
+		    </c:if>
 		  </div>
 		</div>
 		<div style="margin: auto; width: 450px; padding-left: 45px" >

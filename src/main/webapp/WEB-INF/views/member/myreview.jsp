@@ -20,7 +20,7 @@
 				<div class="col-md-12 col-xs-12 login-blocks">
 					
 					 <div style="text-align: center;">
-			               <h2>WolClass(리뷰작성)</h2>${p_no }
+			               <h2>WolClass(리뷰작성)</h2>
 		             </div> 
 					<form method="post" id="review_form">
 						<input type="hidden" value="${sessionScope.id }" name="m_id">

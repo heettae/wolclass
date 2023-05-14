@@ -124,8 +124,8 @@ $(document).ready(function(){
 	$(".btn-default").click(function(){
 		// 최종 유효성 검사
 		var pw = $("#m_pw").val(); 			   // 비밀번호 입력란
-var pwck = $("#m_pw2").val();		   // 비밀번호 확인 입력란
-var phone = $("#m_phone").val();       // 전화번호 입력란
+		var pwck = $("#m_pw2").val();		   // 비밀번호 확인 입력란
+		var phone = $("#m_phone").val();       // 전화번호 입력란
 		if(pwCheck&&pwckCheck&&pwckcorCheck&&phoneCheck){
 		 	$("#update_form").submit(); 
         }
@@ -173,7 +173,7 @@ var phone = $("#m_phone").val();       // 전화번호 입력란
 			var data = {m_phone : m_phone}
 			
 			$.ajax({
-				url : "/member/phoneCheck",
+				url : "/memberrest/phoneCheck",
 				type : "post",
 				data : data,
 				success : function(result){

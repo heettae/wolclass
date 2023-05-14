@@ -19,15 +19,6 @@
 								class="form-control" id="b_title" name="b_title">
 						</div>
 						<div class="form-group">
-							<label for="b_category">카테고리</label> 
-							<select name="b_category">
-								<option>카테고리를 선택하세요</option>
-								<option value="일반">일반</option>
-								<option value="공지사항">공지사항</option>
-								<option value="모집">모집</option>
-							</select>
-						</div>
-						<div class="form-group">
 							<label for="b_reciver">받는사람</label> <input type="text"
 								class="form-control" id="b_reciver" name="b_reciver" value="${vo.m_id }" readonly>
 						</div>
