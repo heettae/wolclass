@@ -152,7 +152,7 @@ textarea {
 							<div class="button_container"
 								style="display: flex; margin: 30px 0 30px; justify-content: space-around;">
 								<div>
-									<input type="button" id="returnMsg" class="btn-detail" value="답신하기">
+									<input type="button" id="returnMsg" class="btn-detail" value="답변하기">
 								</div>
 								<div>
 									<input type="button" id="backMsgDetail" class="btn-detail" value="목록으로">
@@ -187,8 +187,7 @@ textarea {
 					    	
 							// 취소하기
 							  $("#backMsgDetail").click(function(){
-								    alert("답신취소!");
-								 	return location.href="/admin/readMsg?b_no=${boardVO.b_no}"; 
+								 	return location.href="/admin/msgList"; 
 							  });
 						});
 							

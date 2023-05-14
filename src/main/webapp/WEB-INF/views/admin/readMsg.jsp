@@ -158,7 +158,7 @@ textarea {
 							<div class="button_container"
 								style="display: flex; margin: 30px 0 30px; justify-content: space-around;">
 								<div>
-									<input type="button" id="returnMsgWrite" class="btn-detail" value="답신하기">
+									<input type="button" id="returnMsgWrite" class="btn-detail" value="답변하기">
 								</div>
 								<div>
 									<input type="button" id="backMsgList" class="btn-detail" value="목록으로">

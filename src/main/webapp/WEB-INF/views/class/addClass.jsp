@@ -83,7 +83,7 @@
 <input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 </div>
 <!--     <label for="addr">주소</label> -->
-<input type="text" id="address" name="c_addr1" placeholder="주소"/><br>
+<input type="text" id="address" name="c_addr1" placeholder="주소" readonly="readonly"/><br>
 <!--  <label for="addr_detail">상세주소</label> -->
   <div class="group">
    <input type="text" id="detailAddress" name="c_addr2" placeholder="상세주소" />

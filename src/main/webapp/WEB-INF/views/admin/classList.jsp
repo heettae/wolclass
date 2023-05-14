@@ -75,7 +75,7 @@
 		
 		 /* 삭제  */
 		 $(".delete").click(function(){
-			 if(confirm("개설 승인을 거절하시겠습니까?")){
+			 if(confirm("클래스 개설을 거절하시겠습니까?")){
 			 var id = $(this).attr('id');
 			 $.ajax({
 				  url: '/admin/deleteClass',
@@ -97,7 +97,7 @@
 		 
 		 /* 삭제  */
 		 $(".confirm").click(function(){
-			 if(confirm("클래스 개설을 하시겠습니다?")){
+			 if(confirm("클래스 개설을 승인하시겠습니까?")){
 			 var id = $(this).attr('id');
 			 $.ajax({
 				  url: '/admin/confirmClass',
