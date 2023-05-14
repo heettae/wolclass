@@ -59,7 +59,7 @@
 		      <tr>
 		        <td>${vo.p_no }</td>
 		        <td>${vo.m_id }</td>
-		        <td>${vo.c_name }</td>
+		        <td>${vo.c_name == null ? '월클래스 구독' : vo.c_name}</td>
 		        <td>${vo.p_peoplenum }</td>
 		        <td>${vo.p_price }</td>
 		        <td>${vo.p_paydate.toString().split('\\.')[0] }</td>
@@ -76,7 +76,7 @@
 			        </c:if>
 		        </td>
 		         <td>
-		          <c:if test="${vo.p_status == 'paid'}">
+		          <c:if test="${vo.p_status == 'paid' && vo.c_name != null}">
 		          	<input type="button" onclick="payCancel('${vo.p_no }')" value="환불하기" id="btn">
 		          </c:if> 
 				</td>
@@ -108,7 +108,7 @@
   crossorigin="anonymous"></script>
 <script type="text/javascript">
 function payCancel(pno){
-	alert("취소 버튼 클릭!");
+if(confirm("환불하시겠습니까?")) {
 
 	   jQuery.ajax({
 		      url: "/payrest/checkPayment", 
@@ -146,6 +146,7 @@ function payCancel(pno){
 		    	      }); // refund ajax
 		      } // ajax-check-success
 		    }); // ajax-check
+	}
 }
 
 

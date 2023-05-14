@@ -1,5 +1,6 @@
 package com.wolclass.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,14 @@ public class ClassController {
 		// 검색결과 및 페이징데이터 반환
 		List list = classService.getClassList(map);
 		model.addAttribute(list);
-		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(list));
+		List<ClassVO> toJSON = new ArrayList<>();
+		for(Object o : list) {
+			ClassVO vo = (ClassVO)o;
+			String addr = vo.getC_addr1();
+			if(addr == null || addr.equals("")) continue;
+			toJSON.add(vo);
+		}
+		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(toJSON));
 		model.addAttribute("map", map);
 		// 인기검색어 리스트
 		model.addAttribute("psList", searchDataService.getPSList());

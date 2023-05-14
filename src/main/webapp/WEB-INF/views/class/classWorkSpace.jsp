@@ -163,7 +163,7 @@ li a {
           <a href="#"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
         </div>
         <div class="item-entry overflow">
-          <h4><a href="/class/detail?c_no=${vo.c_no}">${vo.c_name}</a></h4>
+          <h4><a>${vo.c_name}</a></h4>
           <span class="pull-left"><b>${vo.c_addr1}</b> </span><br>
           <span class="proerty-price pull-left">
             <fmt:formatNumber value="${vo.c_price}"/> 원

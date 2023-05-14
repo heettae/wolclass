@@ -88,16 +88,16 @@
   	<!-- 결제내역 - 다빈 -->
   	<select id="payListCnt" resultType="int">
   		select count(wr.p_no)
-		from wc_rsrv_pay wr join wc_class wc
+		from wc_rsrv_pay wr left join wc_class wc
 		on wr.c_no=wc.c_no
 		where wr.m_id=#{m_id}
   	</select>
   	<select id="payList" resultType="map">
   		select wr.p_no,wr.m_id,wr.c_no,wr.p_peoplenum,wr.p_price,wr.p_paydate,wr.p_rsrvdate,wr.p_status,wc.c_name
-		from wc_rsrv_pay wr join wc_class wc
+		from wc_rsrv_pay wr left join wc_class wc
 		on wr.c_no=wc.c_no
 		where wr.m_id=#{m_id}
-		order by wr.p_paydate
+		order by wr.p_no desc
 		limit #{pageSize,javaType=INTEGER}
 		offset #{startRow,javaType=INTEGER}
   	</select>
