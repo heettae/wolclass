@@ -313,7 +313,7 @@ public class MemberController {
 	@GetMapping("/wishList")
 	public void listGET(HttpSession session, Model model) {
 		logger.info(" listGET() 호출 ");
-		model.addAttribute("wishList",wishService.getClassList((String)session.getAttribute("id")));
+		model.addAttribute(wishService.getClassList((String)session.getAttribute("id")));
 	}
 	
 	// 회원정보 수정 - 다빈

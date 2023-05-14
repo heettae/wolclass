@@ -34,11 +34,11 @@
 				<p style=" display: flex; justify-content: center;">
 					<!-- 카카오 로그인 -->
 					<a
-						href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/db/kakao&response_type=code">
+						href="https://kauth.kakao.com/oauth/authorize?client_id=c6c8f231f2997186bfd65955c7b8f1ab&redirect_uri=http://localhost:8080/member/kakao&response_type=code">
 						<img src="../resources/img/kakao_login_btn.png" width="190px"/>
 					</a>
 					<!-- 카카오 로그인 -->
-					<!-s- 네이버 -->
+					<!-- 네이버 -->
 						<div id="naverIdLogin" style="width: 190px; margin: 0 auto;"></div>
 					<!-- 네이버 -->
 				</p>
