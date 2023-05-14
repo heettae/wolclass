@@ -814,6 +814,9 @@ $(document).ready(function(){
 	                        if(alert.category == 4){
 	                        	html += "<li> <a href='/member/subscribe' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
 	                        }
+	                        if(alert.category == 5){
+	                        	html += "<li> <a href='/member/payList' id='alertCheck' data-a-no='" + alert.a_no + "'>" + alert.a_content + "</a></li>";
+	                        }
 	                    });
 	                    $('#notification-list').html(html);
 	                    notificationPopup.show();
