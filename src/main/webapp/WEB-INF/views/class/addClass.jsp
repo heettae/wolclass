@@ -20,13 +20,15 @@
 </div>
 
 <!-- 오프라인 폼 -->
-<div class="form-group">
+<div class="form-group">	
 <label for="offline">오프라인</label>
 <input type="radio" class="form-control" id="offline" name="way" value="off" checked>
 <label for="online">온라인</label>
 <input type="radio" class="form-control" id="online" name="way" value="on">
 </div>
 <form role="form" id="offlineForm" enctype="multipart/form-data" method="post">
+<input type="hidden" id="lat" name="c_lati">
+<input type="hidden" id="lng" name="c_longi">
 <div class="box-body">
 <div class="form-group">
 <label for="className">클래스명</label><span style="color: red">(필수)</span>
@@ -224,11 +226,33 @@ function DaumPostcode() {
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
             document.querySelector("input[name=c_addr1]").focus(); 
+            
+            getLatLng(addr);
         }
     }).open();
 }
 //주소 api
+</script>
 
+<!-- 좌표 얻기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0855a981db011b9c4778f98b0871b031&libraries=services"></script>
+<script>
+function getLatLng(addr) { 
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(addr, function(result, status) {
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+			document.getElementById('lat').value = result[0].y;
+			document.getElementById('lng').value = result[0].x;
+	    } 
+	});
+}
+</script>
+<!-- 좌표 얻기 -->
+
+<script>
 // 파일 추가
 var cnt = 2;
 function addFile() {
