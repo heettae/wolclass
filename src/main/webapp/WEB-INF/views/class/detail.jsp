@@ -64,6 +64,10 @@
 	font-size: 20px;
 
 	}
+	
+	#menu a{
+	font-size: 20px;
+	}
 
 	#div_review{
 	border-bottom: 5px solid #e7e7e7;
@@ -417,11 +421,9 @@ $(document).ready(function(){
 							        </c:if>
 
                                     </div> 
-
-                                    <img src="../resources/img/${classVO.c_img.split(',')[0] }" />
-                  					      
-                  					      
-
+                                    <div style="height:500px;">
+                                    <img src="../resources/img/${classVO.c_img.split(',')[0] }" width="100%"/>
+									</div>
                           	  </div>
                         	</div>
 
@@ -500,14 +502,18 @@ $(document).ready(function(){
 						<!-- 클래스 소개 -->
                             <div class="section" id="detail">
                                 <h3 class="s-property-title">클래스 소개</h3>
-
-                              	<img src="../resources/img/${classVO.c_img.split(',')[1] }" />
-                           		<img src="../resources/img/${classVO.c_img.split(',')[2] }" />
-             					      
-                  					      
-
+                                
+								<c:if test="${not empty classVO.c_img}">
+								  <c:set var="images" value="${fn:split(classVO.c_img, ',')}" />
+								  <c:forEach items="${images}" var="image" begin="1">
+								    <c:if test="${not empty image}">
+								      <img style="padding-bottom: 10px;" src="../resources/img/${image}"  width="100%"/>
+								    </c:if>
+								  </c:forEach>
+								</c:if>
+	
                                 <div class="s-property-content">
-									<p>${classVO.c_content }</p>
+									<p style="white-space: pre-line; font-size: 16px;">${classVO.c_content }</p>
                                 </div>
                             </div>
                          <!-- 클래스 소개  -->
@@ -543,7 +549,7 @@ $(document).ready(function(){
 							
 							</script>
 
-							<p style="font-size: 16px;">${classVO.c_addr1 } ${classVO.c_addr2 } ${classVO.c_addrdetails }</p>
+							<p style="font-size: 16px; padding-top: 10px;">${classVO.c_addr1 } ${classVO.c_addr2 } ${classVO.c_addrdetails }</p>
                                 
                             </div>  
                             <!-- 주소  -->
@@ -552,11 +558,15 @@ $(document).ready(function(){
 
                             <div class="section property-video"> 
                                 <h4 class="s-property-title" id="review">후기</h4> 
-<!-- 후기 -->
+							<!-- 후기 -->
 
 							<div class="review_write_container">
 									<div class="review_list_container">
 										<div class="review_list">
+										<c:if test="${reviewList.size() == 0}">
+										<div style="text-align-last: center;">아직 등록된 후기가 없어요</div>
+										</c:if>
+
 										<c:if test="${reviewList != null && reviewList.size() > 0}">
 											<c:forEach var="vo" items="${reviewList }">
 												<div id="div_review">
@@ -668,7 +678,7 @@ $(document).ready(function(){
 									</div>
 								</div>
 							</div>
-<!-- 후기 내용  -->
+							<!-- 후기 내용  -->
 
 
 
