@@ -23,7 +23,8 @@ a, button:hover {
 
 .body_sidebar_box {
 	width: 13%;
-	height: 99%;
+	height: 100%;
+	min-height: 650px;
 	background: #353942;
 	align-items: center;
 }
@@ -223,22 +224,6 @@ margin-top: 18px;
 						</c:if>
 					</c:if>
 	
-					<hr
-						style="border-top: 1px solid #777; width: 80%; margin-left: 10%;">
-					<div>
-						<div class="class_teacher">
-							<div>
-								<div id="icon8" class="side_icon"></div>
-
-							</div>
-							<div>강사용</div>
-
-						</div>
-						<div class="sub_menu">
-							-<a> 차트 </a> <br> -<a> 클래스신청정보 </a>
-
-						</div>
-					</div>
 
 
 
