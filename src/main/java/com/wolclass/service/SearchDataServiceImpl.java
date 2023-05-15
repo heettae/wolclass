@@ -24,8 +24,8 @@ public class SearchDataServiceImpl implements SearchDataService{
 	private SearchDataDAO dao;
 	
 	@Override
-	public List<String> getPSList() throws Exception {
-		return dao.getPSList();
+	public List<String> getPSList(String userAddr) throws Exception {
+		return dao.getPSList(userAddr);
 	}
 	
 	@Override
@@ -48,7 +48,6 @@ public class SearchDataServiceImpl implements SearchDataService{
 			Map<String,Object> map = new HashMap<>();
 			String word = iter.next();
 			map.put("word",word);
-			map.put("userAddr", srchMap.get("userAddr") == null ? "" : (String)srchMap.get("userAddr"));
 			if(dao.getClassCount(word)) map.put("exist",'Y');
 			else map.put("exist",'N');
 			dao.insert(map);

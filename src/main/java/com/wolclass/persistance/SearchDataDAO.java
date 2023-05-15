@@ -7,7 +7,7 @@ public interface SearchDataDAO {
 	String NAMESPACE = "com.wolclass.mappers.PSMapper";
 	
 	// 인기검색어 조회 hj
-	public List<String> getPSList() throws Exception;
+	public List<String> getPSList(String userAddr) throws Exception;
 
 	// 키워드에 해당하는 클래스가 있는지 조회 hj
 	public boolean getClassCount(String word) throws Exception;

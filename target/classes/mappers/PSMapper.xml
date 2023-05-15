@@ -12,6 +12,7 @@
 		from wc_popular_search
 		where datediff(now(), ps_regdate) < 7
 		and ps_isexist = 'Y'
+		and ps_addr like concat('%',#{userAddr},'%')
 		group by ps_text
 		order by count(*) desc, max(ps_regdate) desc
 		limit 10

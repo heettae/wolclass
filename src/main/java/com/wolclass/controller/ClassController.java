@@ -71,6 +71,9 @@ public class ClassController {
 			map.put("userLat", "0");
 			map.put("userLng", "0");
 		}
+		String userAddr = (String)session.getAttribute("userAddr");
+		userAddr = userAddr == null ? "" : userAddr;
+		map.put("userAddr", userAddr);
 		
 		// 위시리스트
 		model.addAttribute("wishList",wishService.getCnoList((String)session.getAttribute("id")));
@@ -88,12 +91,11 @@ public class ClassController {
 		model.addAttribute("jsonStr", new ObjectMapper().writeValueAsString(toJSON));
 		model.addAttribute("map", map);
 		// 인기검색어 리스트
-		model.addAttribute("psList", searchDataService.getPSList());
+		model.addAttribute("psList", searchDataService.getPSList(userAddr));
 		
 		// 검색데이터 분석 및 저장
 		new Thread(() -> {
 			if(map.containsKey("search"))
-				map.put("userAddr", (String)session.getAttribute("userAddr"));
 				try {
 					searchDataService.analyze(map);
 				} catch (Exception e) {

@@ -14,8 +14,8 @@ public class SearchDataDAOImpl implements SearchDataDAO{
 	private SqlSession session;
 	
 	@Override
-	public List<String> getPSList() throws Exception {
-		return session.selectList(NAMESPACE+".pslist");
+	public List<String> getPSList(String userAddr) throws Exception {
+		return session.selectList(NAMESPACE+".pslist", userAddr);
 	}
 
 	@Override
