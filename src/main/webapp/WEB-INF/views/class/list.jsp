@@ -128,22 +128,18 @@ function openLocation(){
 	                	</a>
 		            </div>
 					<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
+					   <div style="height: 60px"><h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4></div>
 					    <span class="pull-left"><b>${vo.c_addr1 }&nbsp;${vo.c_addr2 }</b> </span><br>
 					    <c:if test="${sessionScope.userLat != null && sessionScope.userLat != ''}">
 						    <span class="pull-left">
 							    <c:choose>
 							    
-								<c:when test="${vo.distance > 1}">
+								<c:when test="${vo.distance >= 1}">
 								<b><fmt:formatNumber value="${vo.distance}" pattern="'약' 0.0'km'" /></b>
 								</c:when>
-								
-								<c:when test="${vo.distance <= 0.5}">
-								<b>500m 이내</b>
-								</c:when>
-								
+													
 								<c:otherwise>
-								<b><fmt:formatNumber value="${vo.distance}" pattern="'약' 0'm'" /></b>
+								<b>1km 이내</b>
 								</c:otherwise>
 								
 								</c:choose>

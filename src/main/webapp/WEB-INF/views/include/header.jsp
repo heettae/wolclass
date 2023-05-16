@@ -706,11 +706,13 @@ $(document).ready(function(){
 	var formObj = $('form[role="srch_frm"]');
 	$('#search-btn').click(function(){
 		formObj.attr("action","/class/list");
+		 $('input[name="pageNum"]').val(1);
 		formObj.submit();
 	});
 	
 	$('#searchBtn').click(function(){
 		formObj.attr("action","/class/list");
+		$('input[name="pageNum"]').val(1);
 		formObj.submit();
 	});
 	 
