@@ -12,26 +12,28 @@
 
 
 <div class="col-mda-6">
-	<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
-		<div class="col-md-12 col-xs-12 login-blocks">
-			<div style="text-align: center;">
-               	<h2>아이디 찾기</h2>
-           	</div>
-			<form id="findIdForm" method="post">
-				<div class="form-group">
-					<label for="m_name">이름</label>
-					 <input type="text" class="form-control" id="m_name" name="m_name">
-				</div>
-				<div class="form-group">
-					<label for="m_email">이메일</label> 
-					<input type="text" class="form-control" id="m_email" name="m_email">
-				</div>
-				<div class="text-center">
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#findIdModal" id="findIdBtn">
-					  아이디 찾기
-					</button>
-				</div>
-			</form>
+	<div style="min-height: 600px; height: auto;">
+		<div class="box-for overflow" style="width: max-content; margin: auto; min-width: 500px; margin-top: 50px;">
+			<div class="col-md-12 col-xs-12 login-blocks">
+				<div style="text-align: center;">
+	               	<h2>아이디 찾기</h2>
+	           	</div>
+				<form id="findIdForm" method="post">
+					<div class="form-group">
+						<label for="m_name">이름</label>
+						 <input type="text" class="form-control" id="m_name" name="m_name">
+					</div>
+					<div class="form-group">
+						<label for="m_email">이메일</label> 
+						<input type="text" class="form-control" id="m_email" name="m_email">
+					</div>
+					<div class="text-center">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#findIdModal" id="findIdBtn">
+						  아이디 찾기
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
