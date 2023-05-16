@@ -66,9 +66,9 @@
 </div>
 <div class="form-group">
 <label for="c_level">난이도</label><span style="color: red">(필수)</span>
-<input type="radio" id="c_level" name="c_level" value="1">입문
-<input type="radio" id="c_level" name="c_level" value="2">중급
-<input type="radio" id="c_level" name="c_level" value="3">고급
+<input type="radio" id="c_level" name="c_level" value="1" required>입문
+<input type="radio" id="c_level" name="c_level" value="2" required>중급
+<input type="radio" id="c_level" name="c_level" value="3" required>고급
 <div id="c_level_warning"></div>
 </div>
 
@@ -152,9 +152,9 @@
 </div>
 <div class="form-group">
 <label for="c_level">난이도</label><span style="color: red">(필수)</span>
-<input type="radio" id="c_level" name="c_level" value="1">입문
-<input type="radio" id="c_level" name="c_level" value="2">중급
-<input type="radio" id="c_level" name="c_level" value="3">고급
+<input type="radio" id="c_level" name="c_level" value="1" required>입문
+<input type="radio" id="c_level" name="c_level" value="2" required>중급
+<input type="radio" id="c_level" name="c_level" value="3" required>고급
 <div id="c_level_warning"></div>
 </div>
 

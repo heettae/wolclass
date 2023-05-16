@@ -63,14 +63,12 @@
 							<tr>
 								<td>클래스 이름</td>
 								<td colspan="2">${classVO.c_name}</td>
-								<td>클래스 번호</td>
-								<td colspan="2">${classVO.c_no}</td>
 							</tr>
 				
 							<tr>
 								<td>신청자 ID</td>
 								<td colspan="2">${classVO.m_id}</td>
-								<td>클래스level</td>
+								<td>난이도</td>
 								<td colspan="2">
 								<c:if test="${classVO.c_level == 1}">입문</c:if>
 								<c:if test="${classVO.c_level == 2}">초급</c:if>
@@ -87,19 +85,21 @@
 								<td>클래스 시간</td>
 								<td colspan="2">${classVO.c_time}</td>
 								<td>가격</td>
-								<td colspan="2">${classVO.c_price}</td>
+								<td colspan="2">
+								<fmt:formatNumber value="${classVO.c_price}"/>
+								</td>
 							</tr>
 							<tr>
 								<td>신청날짜</td>
-								<td colspan="5">${classVO.c_regdate}</td>
+								<td colspan="5">${classVO.c_regdate.toString().split('\\.')[0]}</td>
 							</tr>
 							<tr>
 								<td>주소</td>
-								<td colspan="5">${classVO.c_addr1}</td>
+								<td colspan="5">${classVO.c_addr1} ${classVO.c_addr2}</td>
 							</tr>
 							<tr>
 								<td>상세주소</td>
-								<td colspan="5">${classVO.c_addr2} ${classVO.c_addrdetails}</td>
+								<td colspan="5">${classVO.c_addrdetails}</td>
 							</tr>
 							<tr>
 								<td>내용</td>
