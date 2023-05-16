@@ -46,6 +46,7 @@ public class SearchDataServiceImpl implements SearchDataService{
 		Iterator<String> iter = set.iterator();
 		while(iter.hasNext()) {
 			Map<String,Object> map = new HashMap<>();
+			map.put("userAddr",srchMap.get("userAddr"));
 			String word = iter.next();
 			map.put("word",word);
 			if(dao.getClassCount(word)) map.put("exist",'Y');
