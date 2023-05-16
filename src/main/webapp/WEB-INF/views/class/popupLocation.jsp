@@ -410,7 +410,7 @@ function MarkerTracker(map, target, tooltipText) {
 var container = document.getElementById('kakaoMapApi');
 var options = {
 	center: new kakao.maps.LatLng(33.450701, 126.570667),
-	level: 4
+	level: 6
 };
 var map = new kakao.maps.Map(container, options);
 
