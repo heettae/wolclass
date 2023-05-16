@@ -159,9 +159,9 @@ textarea {
 						<div>
 							<div class="button_container"
 								style="display: flex; margin: 30px 0 30px; justify-content: space-around;">
-								<%-- <div>
+							<div>
 									<input type="button" id="${boardVO.b_no}" class="btn-detail delete" value="삭제하기">
-								</div> --%>
+								</div>
 								<div>
 									<input type="button" id="backBoardList" class="btn-detail" value="목록으로">
 								</div>
@@ -235,7 +235,7 @@ textarea {
 								 	location.href='/admin/boardList';		  
 							  });
 					    	
-							/* // 글삭제하기
+							// 글삭제하기
 							 $(".delete").click(function(){
 								 if(confirm("게시물을 삭제 하시겠습니까?")){
 								 var b_no = $(this).attr('id');
@@ -246,7 +246,7 @@ textarea {
 									  success: function(response) {
 									    // 요청이 성공한 경우 처리할 로직
 									    setTimeout(function(){
-									   		location.reload();
+									    	location.href='/admin/boardList';
 									    },50);
 									  },
 									  error: function(xhr, status, error) {
@@ -255,7 +255,7 @@ textarea {
 									  }
 									});
 								 }
-							 });   */
+							 });  
 							// 삭제는되는데 오류메세지가 떠서 이동이 안됨
 							
 							  

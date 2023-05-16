@@ -42,10 +42,13 @@ public class ClassServiceImpl implements ClassService {
 	
 	@Override
 	public void addClass(ClassVO vo) throws Exception {
-		vo.setC_addrdetails(vo.getC_addr2()+" "+vo.getC_addrdetails());
-		String addr2tmp = vo.getC_addr1();
-		vo.setC_addr1(addr2tmp.split(" ")[0]);
-		vo.setC_addr2(addr2tmp.substring(vo.getC_addr1().length()+1));
+		// 온라인 클래스 예외처리
+		if(vo.getC_addr1().length() > 1) {
+			vo.setC_addrdetails(vo.getC_addr2()+" "+vo.getC_addrdetails());
+			String addr2tmp = vo.getC_addr1();
+			vo.setC_addr1(addr2tmp.split(" ")[0]);
+			vo.setC_addr2(addr2tmp.substring(vo.getC_addr1().length()+1));
+		}
 		dao.addClass(vo);
 	}
 	
