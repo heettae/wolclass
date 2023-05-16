@@ -32,7 +32,6 @@
 							<tr>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">아이디</th>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">성명</th>
-								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">생년월일</th>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">전화번호</th>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">이메일</th>
 								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">가입일</th>
@@ -43,7 +42,6 @@
 							<tr>
 								<td>${memList.m_id}</td>
 								<td>${memList.m_name}</td>
-								<td>${memList.m_dogbirth.toString().split(' ')[0]}</td>
 								<td>${memList.m_phone}</td>
 								<td>${memList.m_email}</td>
 								<td>${memList.m_regdate.toString().split(' ')[0]}</td>
@@ -87,7 +85,7 @@ $(document).ready(function(){
 	 
 	 /* 삭제  */
 	 $(".deleteMember").click(function(){
-		 if(confirm("정말로 삭제 하시겠습니다?")){
+		 if(confirm("정말로 삭제 하시겠습니까?")){
 		 var id = $(this).attr('id');
 		 $.ajax({
 			  url: '/admin/deleteMember',

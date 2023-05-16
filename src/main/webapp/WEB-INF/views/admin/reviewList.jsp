@@ -81,7 +81,7 @@ $(document).ready(function(){
 	 
 	 /* 삭제  */
 	 $(".deleteReview").click(function(){
-		 if(confirm("정말로 삭제 하시겠습니다?")){
+		 if(confirm("정말로 삭제 하시겠습니까?")){
 		 var r_no = $(this).attr('id');
 		 $.ajax({
 			  url: '/admin/deleteReview',
