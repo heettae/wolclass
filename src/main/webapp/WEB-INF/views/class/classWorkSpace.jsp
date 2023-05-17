@@ -169,7 +169,9 @@ li a {
             <fmt:formatNumber value="${vo.c_price}"/> 원
           </span> 
           <span class="pull-right">
+          <c:if test="${vo.c_confirm == 'Y' }">
             <button class="time-register-btn" data-c-no="${vo.c_no}" data-c-maxperson="${vo.c_maxperson}">시간 등록</button>
+          </c:if>
           </span>  
         </div>
         <input type="hidden" name="c_no" value="${vo.c_no }">
