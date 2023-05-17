@@ -129,17 +129,17 @@
 					<div class="col-sm-6 col-md-3 p0">
 						<div class="box-two proerty-item">
 							<div class="item-thumb">
-								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
+								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
 							</div>
 							<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${vo.c_name }</a></h4>
+					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
 					    <span class="proerty-price pull-left">
-					    <fmt:formatNumber value="${rvo.c_price }"/> 원
+					    <fmt:formatNumber value="${vo.c_price }"/> 원
 					    </span>
-					    <span class="pull-right"> 평점 :  </span>
+					    <span class="pull-right"> 평점 : ${vo.score }</span>
 					    <!-- 위시리스트 버튼 -->
 				        <c:if test="${not empty sessionScope.id }">
-				        <button class="wishlist-btn ${wishList.contains(rvo.c_no) ? 'active' : ''}" value="${rvo.c_no }">
+				        <button class="wishlist-btn ${wishList.contains(vo.c_no) ? 'active' : ''}" value="${vo.c_no }">
 				          <i class="fas fa-heart"></i>
 				        </button>
 				        </c:if>
