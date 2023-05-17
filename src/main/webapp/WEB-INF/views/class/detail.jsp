@@ -878,7 +878,8 @@ $(document).ready(function(){
 									        	if(orderSuccessCnt >= 1) {
 									        		var msg = '결제가 완료되었습니다.';
 									    			alert(msg);
-									    			location.href='/member/classList';
+									    			location.href='#';
+									    			location.reload();
 									        	}
 									        }
 						        		});

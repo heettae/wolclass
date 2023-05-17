@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <label for="m_email">이메일</label>  <span style="color: red">(필수)</span>
                                     <input type="text" class="form-control" id="m_email" name="m_email" required>
-                                    <button class="btn btn-warning" id="email_auth_btn">인증번호 전송</button>
+                                    <button class="btn btn-warning" id="email_auth_btn" type="button">인증번호 전송</button>
                                     <span class="final_mail_ck" style="display: none">이메일을 입력해주세요.</span>
 									<sapn class="mail_input_box_warn"></sapn>
                                 </div>
@@ -59,19 +59,19 @@
                                      placeholder="닉네임을 입력하세요.">
                                 </div>
                                   <div class="form-group">
-                                    <label for="m_phone">전화번호</label>  <span style="color: red">(필수)</span>
-                                    <input type="text" class="form-control" id="m_phone" name="m_phone" required
+                                    <label for="m_phone">전화번호</label>  <span>(선택)</span>
+                                    <input type="text" class="form-control" id="m_phone" name="m_phone" 
                                      oninput="hypenTel(this)" maxlength="13" placeholder="전화번호를 입력하세요">
                                      <span class="phone_input_re_1" style="color: green; display: none">사용 가능한 전화번호입니다.</span>
 								     <span class="phone_input_re_2" style="color: red; display: none">전화번호가 이미 존재합니다.</span>
                                      <span class="final_phone_ck" style="display: none">전화번호를 입력해주세요.</span>
                                 </div>
-                                  <div class="form-group">
-                                    <label for="m_dogtype">반려견 종류</label>   <span>(선택)</span>
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="대형">대형
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="중형">중형
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="소형">소형
-                                </div>
+<!--                                   <div class="form-group"> -->
+<!--                                     <label for="m_dogtype">반려견 종류</label>   <span>(선택)</span> -->
+<!--                                     <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="대형">대형 -->
+<!--                                     <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="중형">중형 -->
+<!--                                     <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="소형">소형 -->
+<!--                                 </div> -->
                                   <div class="form-group">
                                     <label for="m_dogbirth">반려견 생일</label>  <span>(선택)</span>
                                     <input type="date" class="form-control" id="m_dogbirth" name="m_dogbirth">

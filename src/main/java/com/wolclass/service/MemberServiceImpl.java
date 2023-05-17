@@ -45,6 +45,9 @@ private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.c
 	// 회원가입 - 다빈
 	@Override
 	public void memberJoin(Map<String,Object> map) throws Exception {
+		if(map.get("m_dogbirth").toString().equals("")) {
+			map.put("m_dogbirth", null);
+		}
 		dao.memberJoin(map);
 	}
 	// 아이디 중복검사 - 다빈
@@ -199,6 +202,9 @@ private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.c
 	// 회원정보 수정 - 다빈
 	@Override
 	public void updateMember(Map<String,Object> map) throws Exception {
+		if(map.get("m_dogbirth").toString().equals("")) {
+			map.put("m_dogbirth", null);
+		}
 		dao.updateMember(map);
 	}
 	
