@@ -44,19 +44,6 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="m_dogtype">반려견 종류</label> 
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="대형"
-                                    ${vo.m_dogtype eq "대형"  ?  ' checked' : '' }
-                                    >대형
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="중형"
-                                    ${vo.m_dogtype eq "중형"  ?  ' checked' : '' }
-                                    >중형
-                                    <input type="radio" class="form-control" id="m_dogtype" name="m_dogtype" value="소형"
-                                    ${vo.m_dogtype eq "소형"  ?  ' checked' : '' }
-                                    >소형
-                                </div>
-                                
-                                <div class="form-group">
                                     <label for="m_dogbirth">반려견 생일</label>
                                     <input type="date" class="form-control" id="m_dogbirth" name="m_dogbirth" 
                                     value = "<fmt:formatDate value='${vo.m_dogbirth }' pattern='yyyy-MM-dd'/>"
