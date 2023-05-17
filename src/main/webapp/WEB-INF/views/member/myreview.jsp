@@ -28,7 +28,7 @@
 						<input type="hidden" value="${p_no }" name="p_no">
 						<div class="form-group">
 							<label for="r_content">리뷰 내용</label><br> 
-							<textarea rows="5" cols="80" name="r_content" placeholder=" 리뷰 등록시 결제금액 3%할인 + 500 포인트"></textarea>
+							<textarea rows="5" cols="80" name="r_content" placeholder=" 리뷰 등록시 결제금액 3% + 500 포인트 적립"></textarea>
 						</div>
 						 <div class="form-group">
 					        <label for="r_score">별점</label><br> 
