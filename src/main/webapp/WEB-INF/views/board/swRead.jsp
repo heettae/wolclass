@@ -388,7 +388,7 @@ textarea {
 						       }
 						       if(m_id == ""){
 						    	   alert("로그인 후 댓글 작성이 가능합니다!");
-						    	   return location.href="/board/login";
+						    	   return location.href="/member/login";
 						       }
 								// 폼태그 이동주소 설정 /boards/modify
 								formObj.attr("action","/board/commentWrite");
