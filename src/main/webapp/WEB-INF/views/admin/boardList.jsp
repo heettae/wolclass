@@ -29,12 +29,12 @@
 
 
 							<tr>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">글번호</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">카테고리</th>
-								<th style="width: 25%; background: #FDC600;border-right: 2px solid;">제목</th>
-								<th style="width: 20%; background: #FDC600;border-right: 2px solid;">작성자</th>
-								<th style="width: 15%; background: #FDC600;border-right: 2px solid;">작성일</th>
-								<th style="width: 10%; background: #FDC600;border-right: 2px solid;">버튼</th>
+								<th style="width: 10%; background: #FDC600;border-right: 1px #ddd solid;">글번호</th>
+								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">카테고리</th>
+								<th style="width: 25%; background: #FDC600;border-right: 1px #ddd solid;">제목</th>
+								<th style="width: 20%; background: #FDC600;border-right: 1px #ddd solid;">작성자</th>
+								<th style="width: 15%; background: #FDC600;border-right: 1px #ddd solid;">작성일</th>
+								<th style="width: 10%; background: #FDC600;border-right: 1px #ddd solid;">버튼</th>
 							</tr>
 							<c:forEach var='vo' items='${boardVOList }'>
 							<tr>
