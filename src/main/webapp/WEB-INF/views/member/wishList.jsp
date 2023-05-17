@@ -17,7 +17,7 @@
 		        <div class="box-two proerty-item">
 		            <div class="item-thumb">
 		                <a href="/class/detail?c_no=${vo.c_no }">
-		                	<img src="/resources/img/${vo.c_img }" 
+		                	<img src="/resources/img/${vo.c_img.split(',')[0] }" 
 		                	onerror="this.onerror=null; this.src='/resources/img/no_img.PNG'">
 	                	</a>
 		            </div>
