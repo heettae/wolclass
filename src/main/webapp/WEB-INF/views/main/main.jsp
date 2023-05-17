@@ -132,7 +132,7 @@
 								<a href="/class/detail?c_no=${vo.c_no }"><img src="/resources/img/${vo.c_img.split(',')[0] }"></a>
 							</div>
 							<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4>
+					   <div style="height: 60px;"> <h4><a href="/class/detail?c_no=${vo.c_no }">${vo.c_name }</a></h4></div>
 					    <span class="proerty-price pull-left">
 					    <fmt:formatNumber value="${vo.c_price }"/> 원
 					    </span>
@@ -171,7 +171,7 @@
 								<a href="/class/detail?c_no=${rvo.c_no }"><img src="/resources/img/${rvo.c_img.split(',')[0] }"></a>
 							</div>
 							<div class="item-entry overflow">
-					    <h4><a href="/class/detail?c_no=${rvo.c_no }">${rvo.c_name }</a></h4>
+					    <div style="height: 60px;"><h4><a href="/class/detail?c_no=${rvo.c_no }">${rvo.c_name }</a></h4></div>
 					    <span class="pull-left"><b>${rvo.c_addr1 }</b> </span><br>
 					    <span class="proerty-price pull-left">
 					    <fmt:formatNumber value="${rvo.c_price }"/> 원
@@ -211,7 +211,7 @@
 		                <a href="/class/detail?c_no=${classVO.c_no }"><img src="/resources/img/${classVO.c_img.split(',')[0] }"></a>
 		              </div>
 		              <div class="item-entry overflow">
-		                <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4>
+		                <div style="height: 60px;"> <h4><a href="/class/detail?c_no=${classVO.c_no}">${classVO.c_name}</a></h4></div>
 		                <span class="pull-left"><b>${classVO.c_addr1}</b> </span><br>
 		                <span class="proerty-price pull-left">
 		                  <fmt:formatNumber value="${classVO.c_price}"/> 원
