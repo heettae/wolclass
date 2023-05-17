@@ -166,10 +166,7 @@ $(document).ready(function(){
 								        success: function(orderSuccessCnt){
 								        	console.log(orderSuccessCnt);
 								        	if(orderSuccessCnt >= 1) {
-								        		var msg = '결제가 완료되었습니다.';
-								    			msg += '\n고유ID : ' + rsp.imp_uid;
-								    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-								    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+								        		var msg = '구독이 완료되었습니다.';
 								    			alert(msg);
 								    			location.reload();
 								        	}
