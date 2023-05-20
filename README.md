@@ -29,7 +29,7 @@
   - 박세원 : 게시판, 관리자
 
 # 프로젝트 PPT
-https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
 
 # 프로젝트 전체 일정
 https://frequent-bench-4d9.notion.site/b72803c0c7744761a26b96b92634e2f4?v=fac3c8442aab4bf8a3501711bdafb779
