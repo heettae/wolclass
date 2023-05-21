@@ -29,13 +29,9 @@
   - 박세원 : 게시판, 관리자
 
 # [프로젝트 PPT](https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton "PPT")
-https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
 
-# 프로젝트 전체 일정
-https://frequent-bench-4d9.notion.site/b72803c0c7744761a26b96b92634e2f4?v=fac3c8442aab4bf8a3501711bdafb779
+# [프로젝트 전체 일정](https://frequent-bench-4d9.notion.site/b72803c0c7744761a26b96b92634e2f4?v=fac3c8442aab4bf8a3501711bdafb779 "일정")
 
-# 프로젝트 요구사항 정의서
-https://docs.google.com/document/d/1_JYkh_OLF8cuO3kLDSrQhIag_76cgm5Ve6XcmI-Vd_Q/edit?usp=sharing
+# [프로젝트 요구사항 정의서](https://docs.google.com/document/d/1_JYkh_OLF8cuO3kLDSrQhIag_76cgm5Ve6XcmI-Vd_Q/edit?usp=sharing "요구사항 정의서")
 
-# 프로젝트 DB 설계
-https://docs.google.com/spreadsheets/d/1_YzB7rUJBVIBOR88_pyBQMCuyy7pvIPw8uwEQHxXJnc/edit?usp=sharing
+# [프로젝트 DB 설계](https://docs.google.com/spreadsheets/d/1_YzB7rUJBVIBOR88_pyBQMCuyy7pvIPw8uwEQHxXJnc/edit?usp=sharing "DB 설계")
