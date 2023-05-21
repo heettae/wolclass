@@ -28,7 +28,7 @@
   - 임다빈 : 로그인(카카오,네이버)/회원가입, 마이페이지
   - 박세원 : 게시판, 관리자
 
-# 프로젝트 PPT
+# [프로젝트 PPT](https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton "PPT")
 https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
 
 # 프로젝트 전체 일정
