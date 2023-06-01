@@ -28,6 +28,8 @@
   - 임다빈 : 로그인(카카오,네이버)/회원가입, 마이페이지
   - 박세원 : 게시판, 관리자
 
+# [WolClass](Http://itwillbs22.cafe24.com/)
+
 # [프로젝트 PPT](https://www.canva.com/design/DAFjajnUxEg/ZvTmm4h1UHKIVi3tc89ofA/edit?utm_content=DAFjajnUxEg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton "PPT")
 
 # [프로젝트 전체 일정](https://frequent-bench-4d9.notion.site/b72803c0c7744761a26b96b92634e2f4?v=fac3c8442aab4bf8a3501711bdafb779 "일정")
